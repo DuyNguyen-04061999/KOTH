@@ -74,8 +74,8 @@ export default function Package(props) {
     const subarr = listPackage?.filter(
       (item) => item.packageCategory === "sub"
     );
-    const sortSubArray = subarr.reverse()
-    setItemSub(sortSubArray)
+    const sortSubArray = subarr.reverse();
+    setItemSub(sortSubArray);
   }, [listPackage]);
 
   useEffect(() => {
@@ -123,7 +123,7 @@ export default function Package(props) {
                 }}
               >
                 <Box>
-                  <Box className="subscription_pack" sx={{marginTop:"20px"}}>
+                  <Box className="subscription_pack" sx={{ marginTop: "20px" }}>
                     {(location && location?.pathname?.includes("home")) ||
                     pathname === "/" ? (
                       <SlickReact itemSub={itemSub} appendDot={true} />
@@ -149,7 +149,7 @@ export default function Package(props) {
                       >
                         {itemSub?.map((i, index) => {
                           return (
-                            <Grid 
+                            <Grid
                               item
                               sm={6}
                               md={6}
@@ -175,6 +175,7 @@ export default function Package(props) {
                                 avatarChristmas={i?.packageAvatarChristmas}
                                 des={i?.packageDescription}
                                 packageCategory={i?.packageCategory}
+                                packageTimeLoop={i?.packageTimeLoop}
                               />
                             </Grid>
                           );
@@ -260,6 +261,7 @@ export default function Package(props) {
                               avatarChristmas={i?.packageAvatarChristmas}
                               des={i?.packageDescription}
                               packageCategory={i?.packageCategory}
+                              packageTimeLoop={i?.packageTimeLoop}
                             />
                           </Grid>
                         );
@@ -369,6 +371,7 @@ export default function Package(props) {
                               avatarChristmas={i?.packageAvatarChristmas}
                               des={i?.packageDescription}
                               packageCategory={i?.packageCategory}
+                              packageTimeLoop={i?.packageTimeLoop}
                             />
                           </Box>
                         );
@@ -427,6 +430,7 @@ export default function Package(props) {
                               avatarChristmas={i?.packageAvatarChristmas}
                               des={i?.packageDescription}
                               packageCategory={i?.packageCategory}
+                              packageTimeLoop={i?.packageTimeLoop}
                             />
                           </Box>
                         );
@@ -522,6 +526,7 @@ export default function Package(props) {
                               avatarChristmas={i?.packageAvatarChristmas}
                               des={i?.packageDescription}
                               packageCategory={i?.packageCategory}
+                              packageTimeLoop={i?.packageTimeLoop}
                             />
                           </Box>
                         );

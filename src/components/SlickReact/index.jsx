@@ -166,6 +166,7 @@ export default function SlickReact(props) {
                 avatarChristmas={i?.packageAvatarChristmas}
                 des={i?.packageDescription}
                 packageCategory={i?.packageCategory}
+                packageTimeLoop={i?.packageTimeLoop}
               />
             </Box>
           );

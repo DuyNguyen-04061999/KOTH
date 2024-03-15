@@ -53,6 +53,7 @@ export default function ListPackage(props) {
     id,
     des,
     packageCategory,
+    packageTimeLoop,
   } = props;
   // const packageCategory = 'prenium flow'
   const [socket, setSocket] = useState(null);
@@ -80,6 +81,7 @@ export default function ListPackage(props) {
           packageReduceWatchAds,
           id,
           packageCategory,
+          packageTimeLoop
         })
       );
       dispatch(

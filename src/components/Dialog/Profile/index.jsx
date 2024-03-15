@@ -378,7 +378,7 @@ export default function DialogProfile(props) {
                             fontWeight: "300",
                           }}
                         >
-                          Remaining days: {uPack.remain}
+                          Remaining days: {`${uPack?.remain.slice(0,-1)}`}
                         </Typography>
                       </Box>
                     ) : (
@@ -1204,7 +1204,7 @@ export default function DialogProfile(props) {
                                 fontWeight: "500",
                               }}
                             >
-                               {uPack.remain}
+                               {`${uPack?.remain.slice(0,-1)}`}
                             </Typography>
                             <Box onClick={handleOpenRenewalBadgePopup}>
                               <Typography sx={{
@@ -1236,7 +1236,7 @@ export default function DialogProfile(props) {
         {tokenUser && userNameProfile === user?.userName && (
           <Grid item md={7} xs={12}>
             <Box
-              className={width > 576 ? "ms-4" : ""}
+              className={device === "Desktop" ? "ms-4" : ""}
               sx={{
                 display: "flex",
                 flexDirection: "column",

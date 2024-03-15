@@ -2,6 +2,7 @@ import {call, put, takeEvery} from "redux-saga/effects";
 import {showToastNotification} from "../reducers/alertReducer";
 import {notifyToGameWhenBuyPackageSuccess} from "../reducers/appReducer";
 import {
+    checkoutPaypalCancel,
     checkoutPaypalCancelComplete,
     checkoutPaypalCancelFail,
     checkoutPaypalSuccessComplete,
@@ -12,7 +13,7 @@ import {
 import {buyPackageSuccess} from "../reducers/packageReducer";
 import {toggleAlertStripeProcess} from "../reducers/stripeReducer";
 import {getUserInfoReady, updateCountTicket} from "../reducers/userReducer";
-import {deleteCurrentPackageFail, deleteCurrentPackageSuccess, toggleCheckWallet} from "../reducers/walletReducer";
+import {deleteCurrentPackage, deleteCurrentPackageFail, deleteCurrentPackageSuccess, toggleCheckWallet} from "../reducers/walletReducer";
 import CheckoutService from "../services/checkoutService";
 import ReactGA from "react-ga4";
 
@@ -49,7 +50,7 @@ function* getCheckOutSaga(dataRequest) {
 
 function* getCheckOutSagaSuccess(dataRequest) {
     try {
-        const packageRenewChanged = localStorage.getItem("packageRenew")
+        const packageRenewChanged = localStorage.getItem("previousPack")
         const {payload} = dataRequest;
         const {game} = payload
         const res = yield call(checkoutService.getCheckoutSuccess, payload);
@@ -78,7 +79,9 @@ function* getCheckOutSagaSuccess(dataRequest) {
             }
 
             if(packageRenewChanged){
-                yield call(checkoutService.getCheckOutAutoCancel, {})
+                yield put(deleteCurrentPackage({
+                    packageId: packageRenewChanged?.id
+                }));
             }
         } else {
             yield put(checkoutPaypalSuccessFail());
@@ -136,7 +139,7 @@ function* getCancelCurrentPackageSaga(dataRequest) {
         console.log(err);
         yield put(deleteCurrentPackageFail())
     }
-}
+} 
 
 function* checkoutSaga() {
     yield takeEvery("GET_CHECK_OUT", getCheckOutSaga)

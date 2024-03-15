@@ -54,7 +54,7 @@ export default function Signup(props) {
   const [validDisplayName, setValidDisplayName] = useState(false);
   const [validFirstName, setValidFirstName] = useState(false);
   const [validLastName, setValidLastName] = useState(false);
-  const [popupList,setPopupList] = useState(false)
+  const [popupList, setPopupList] = useState(false);
   const { refCodeRegister } = useSelector((state) => state.authReducer);
   const { listSetting } = useSelector((state) => state.settingReducer);
   const { isRegister } = useSelector((state) => state.userReducer);
@@ -132,7 +132,19 @@ export default function Signup(props) {
 
   const handleDisplaynameChange = (event, newValue) => {
     setDisplaynameValue(event?.target?.value);
-    setPopupList(false)
+    setPopupList(false);
+  };
+
+  const checkIfNumber = (event) => {
+    /**
+     * Allowing: Integers | Backspace | Tab | Delete | Left & Right arrow keys
+     **/
+
+    const regex = new RegExp(
+      /(^\d*$)|(Backspace|Tab|Delete|ArrowLeft|ArrowRight|\(|\)|-)/
+    );
+
+    return !event.key.match(regex) && event.preventDefault();
   };
 
   const handleChangePass = (e) => {
@@ -160,7 +172,7 @@ export default function Signup(props) {
           lastName: lastName,
         })
       );
-      setPopupList(true)
+      setPopupList(true);
     }
   }, [firstName, lastName]);
 
@@ -221,7 +233,6 @@ export default function Signup(props) {
     passOneNumber,
     passOneLetter,
   ]);
-
 
   const sendRegister = () => {
     if (!disabledBtn) {
@@ -426,8 +437,8 @@ export default function Signup(props) {
               (+1){" "}
             </Typography>
             <Input
-              type="number"
-              name="phone"
+              type="text"
+              name="number"
               onChange={(e) => {
                 setPhone(e.target.value);
               }}
@@ -451,6 +462,7 @@ export default function Signup(props) {
                 padding: "0px 0px 0px 60px !important",
                 width: "100%",
               }}
+              onKeyDown={checkIfNumber}
             />{" "}
             {validPhone && <CheckIconSVG />}
             {!validPhone && (
@@ -692,7 +704,7 @@ export default function Signup(props) {
             />{" "}
             <Box
               sx={{
-                display:popupList === true ? "inline-block" : "none",
+                display: popupList === true ? "inline-block" : "none",
                 position: "absolute",
                 top: 40,
                 left: 0,
@@ -705,10 +717,14 @@ export default function Signup(props) {
               <List>
                 {displayName?.map((e, index) => {
                   return (
-                    <ListItem disablePadding key={index} onClick={() => {
-                      setDisplaynameValue(e)
-                      setPopupList(false)
-                    }}>
+                    <ListItem
+                      disablePadding
+                      key={index}
+                      onClick={() => {
+                        setDisplaynameValue(e);
+                        setPopupList(false);
+                      }}
+                    >
                       <ListItemButton>
                         <ListItemText primary={e} />
                       </ListItemButton>

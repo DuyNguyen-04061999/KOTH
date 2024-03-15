@@ -9,12 +9,14 @@ import {
   MenuItem,
   Select,
   Typography,
+  Tooltip,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { createPortal } from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import _socket from "../../../redux-saga-middleware/config/socket";
+import { withStyles } from "@mui/styles";
 import { getCheckOut } from "../../../redux-saga-middleware/reducers/checkoutReducer";
 import {
   closeCheckWallet,
@@ -25,11 +27,21 @@ import { images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import AnimButton from "../../AnimButton";
 import "./index.scss";
+import { useTranslation } from "react-i18next";
+
+const BgWithTooltip = withStyles({
+  tooltip: {
+    color: "black",
+    backgroundColor: "white",
+    padding: "10px",
+  },
+})(Tooltip);
 
 export default function TicketCheckOut() {
   const { isCheckWallet, typeWallet, goldCombo, totalExtra } = useSelector(
     (state) => state.walletReducer
   );
+  const { t } = useTranslation("auth");
   const { idPackage } = useSelector((state) => state.authReducer);
   const { listSetting } = useSelector((state) => state.settingReducer);
 
@@ -54,7 +66,7 @@ export default function TicketCheckOut() {
   const [subscriptionValue, setSubscriptionValue] = useState({});
   const [renewOption, setRenewOption] = useState({});
   const [previousPackage, setPreviousPackage] = useState({});
-  
+
   useEffect(() => {
     if (typePayment === "skrill") {
       setFeeCheckout({
@@ -70,10 +82,10 @@ export default function TicketCheckOut() {
   }, [typePayment]);
 
   useEffect(() => {
-    if(dataPackage) {
-      setSubscriptionValue(dataPackage)
+    if (dataPackage) {
+      setSubscriptionValue(dataPackage);
     }
-  }, [dataPackage])
+  }, [dataPackage]);
 
   useEffect(() => {
     if (uPack) {
@@ -114,17 +126,18 @@ export default function TicketCheckOut() {
     setRenewOption(event.target.value);
   };
 
+  // useEffect(() => {
+  //   if (Number(renewOption?.id) === Number(uPack?.id)) {
+  //     localStorage.removeItem("packageRenew");
+  //   } else {
+  //     localStorage.setItem("packageRenew", JSON.stringify(subscriptionValue));
+  //   }
+  // }, [renewOption]);
+
   useEffect(() => {
-    if(Number(renewOption?.id) === Number(uPack?.id)){
-      localStorage.removeItem("packageRenew")
-    }
-    else{
-      localStorage.setItem("packageRenew", JSON.stringify(subscriptionValue));
-    }
-  }, [renewOption])
-  console.log(renewOption);
-  console.log(subscriptionValue);
-  console.log(previousPackage);
+    localStorage.setItem("previousPack", JSON.stringify(uPack));
+  },[uPack])
+
   const params = new URLSearchParams(window.location.search);
 
   const game = params.get("game");
@@ -144,7 +157,6 @@ export default function TicketCheckOut() {
     setSl(1);
     // dispatch(toggleCheckWallet());
   };
-
   const btnBuyTicket = (event) => {
     event.currentTarget.disabled = true;
     dispatch(
@@ -629,43 +641,84 @@ export default function TicketCheckOut() {
             />
             {typeWallet?.includes("sub") && (
               <Box
-                className="d-flex align-items-start"
                 sx={{
-                  paddingTop: "10px",
-                  paddingBottom: "10px",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
                 }}
               >
-                <input
-                  type="checkbox"
-                  className="me-2 custom-checkbox-input checkout checkboxtext"
-                  style={{ borderRadius: "50px", marginTop: "6px" }}
-                  readOnly
-                  onClick={() => {
-                    setAutoRecurring(!autoRecurring);
-                  }}
-                  checked={autoRecurring}
-                />
                 <Box
-                  className="text-white"
-                  sx={{ fontSize: "14px", fontWeight: "lighter !important" }}
+                  className="d-flex align-items-start"
+                  sx={{
+                    paddingTop: "10px",
+                    paddingBottom: "10px",
+                  }}
                 >
-                  <Typography
-                    variant="subtitle1"
-                    sx={{
-                      fontWeight: "lighter !important",
-                      fontSize: "14px",
-                      marginLeft: "0px !important",
-                      color: autoRecurring ? "#fff" : "#fc3c3c",
+                  <input
+                    type="checkbox"
+                    className="me-2 custom-checkbox-input checkout checkboxtext"
+                    style={{ borderRadius: "50px", marginTop: "6px" }}
+                    readOnly
+                    onClick={() => {
+                      setAutoRecurring(!autoRecurring);
                     }}
+                    checked={autoRecurring}
+                  />
+                  <Box
+                    className="text-white"
+                    sx={{ fontSize: "14px", fontWeight: "lighter !important" }}
                   >
-                    Automatic Renewal of Subscription Pack
-                  </Typography>
+                    <Typography
+                      variant="subtitle1"
+                      sx={{
+                        fontWeight: "lighter !important",
+                        fontSize: "14px",
+                        marginLeft: "0px !important",
+                        color: autoRecurring ? "#fff" : "#fc3c3c",
+                      }}
+                    >
+                      {`Automatic Renewal of  ${packageName}`}
+                    </Typography>
+                  </Box>
                 </Box>
+                <BgWithTooltip
+                  enterTouchDelay={0}
+                  enterDelay={0}
+                  enterNextDelay={0}
+                  title={
+                    <Box>
+                      {" "}
+                      <Typography sx={{ textAlign: "start", fontSize: "12px" }}>
+                        {t(
+                          "When you choose automatic renewal, we will cancel the automatic renewal of the previous package you purchased and switch to automatically renew the current package you have purchased."
+                        )}
+                      </Typography>
+                    </Box>
+                  }
+                  placement="top-end"
+                  sx={{
+                    backgroundColor: "white",
+                    color: "red",
+                  }}
+                >
+                  <Box
+                    sx={{
+                      // backgroundColor: "#1a132d",
+                      // position: "absolute",
+                      // right: "10px",
+                      // top: "8px",
+                      cursor: "pointer",
+                      zIndex: 1,
+                    }}
+                    component={"img"}
+                    src={images.ToolTipIcon}
+                  ></Box>
+                </BgWithTooltip>
               </Box>
             )}
 
             {/*  Dropdown Two subscription */}
-            <Box
+            {/* <Box
               sx={{
                 width: "100%",
                 display: "flex",
@@ -744,7 +797,7 @@ export default function TicketCheckOut() {
                   ) : (null)}
                 </Select>
               </FormControl>
-            </Box>
+            </Box> */}
 
             <Box
               className="d-flex align-items-start"
