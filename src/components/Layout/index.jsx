@@ -145,6 +145,15 @@ export default function Layout(props) {
     setOpenDropdown(false);
   };
 
+  const handleMouseEnter = () => {
+    dispatch(clickTabNav(true));
+  };
+
+  // Function to handle hover out
+  const handleMouseLeave = () => {
+    dispatch(clickTabNav(false));
+  };
+
   const { randomRender, countDownNewYear } = useSelector(
     (state) => state.appReducer
   );
@@ -253,6 +262,7 @@ export default function Layout(props) {
     };
     getRefCodeByUserName();
   }, [userName, dispatch, token]);
+
   const clickNavIcon = () => {
     dispatch(clickTabNav(!isNav));
   };
@@ -266,7 +276,7 @@ export default function Layout(props) {
     if (width < 1200 && width > 576) {
       dispatch(clickTabNav(false));
     } else {
-      dispatch(clickTabNav(true));
+      dispatch(clickTabNav(false));
     }
   }, [width, dispatch]);
 
@@ -496,19 +506,21 @@ export default function Layout(props) {
           )}
           {device === "Desktop" ? (
             <div className="d-flex align-items-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="30"
-                height="23"
-                viewBox="0 0 30 23"
-                fill="none"
-                onClick={clickNavIcon}
-                className="cursor-pointer"
-              >
-                <rect width="30" height="5" rx="2" fill="#A968E2" />
-                <rect y="9" width="30" height="5" rx="2" fill="#A968E2" />
-                <rect y="18" width="30" height="5" rx="2" fill="#A968E2" />
-              </svg>
+              <Box onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="30"
+                  height="23"
+                  viewBox="0 0 30 23"
+                  fill="none"
+                  // onClick={clickNavIcon}
+                  className="cursor-pointer"
+                >
+                  <rect width="30" height="5" rx="2" fill="#A968E2" />
+                  <rect y="9" width="30" height="5" rx="2" fill="#A968E2" />
+                  <rect y="18" width="30" height="5" rx="2" fill="#A968E2" />
+                </svg>
+              </Box>
               <div
                 className="inp-header mx-3 ps-4 cursor-pointer"
                 style={{ position: "relative" }}
@@ -708,6 +720,8 @@ export default function Layout(props) {
         device === "Tablet" ||
         (device === "Mobile" && orientation === "landscape" && width > 576) ? (
           <Grid
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
             item
             sm={1}
             md={isNav === true && device === "Desktop" ? 1.6 : 0.6}
