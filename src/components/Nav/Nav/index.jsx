@@ -18,13 +18,13 @@ import "../Nav/Nav.scss";
 import NavPromotionTablet from "./NavPromotionTablet";
 import {imagesReferral} from "../../../utils/imagesReferral";
 
-export default function Navbar() {
+export default function Navbar({isNav}) {
     const {t} = useTranslation("navigation");
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const [tablet, setTablet] = useState("");
-    const {isNav, isDropdownNav, isNavTablet} = useSelector(
+    const { isDropdownNav, isNavTablet} = useSelector(
         (state) => state.authReducer
     );
     const {device} = useSelector((state) => state.deviceReducer);

@@ -128,7 +128,7 @@ export default function Layout(props) {
   const { systemLanguage } = useSelector((state) => state.settingReducer);
   const { orientation } = useSelector((state) => state.gameReducer);
   const { isChangeLocation } = useSelector((state) => state.packageReducer);
-  const { isNav } = useSelector((state) => state.authReducer);
+  const [ isNav, setIsNav ] = useState(false);
   const { tokenUser: token, user } = useSelector((state) => state.userReducer);
   const { chatPopup, badgechat } = useSelector((state) => state.chatReducer);
   const { listSetting } = useSelector((state) => state.settingReducer);
@@ -140,18 +140,34 @@ export default function Layout(props) {
   const [socket, setSocket] = useState(null);
   const { device } = useSelector((state) => state.deviceReducer);
   const [openDropdown, setOpenDropdown] = useState(false);
-
+  const [debounceTab, setDebounceTab] = useState(false);
   const handleCloseDropDown = () => {
     setOpenDropdown(false);
   };
 
   const handleMouseEnter = () => {
-    dispatch(clickTabNav(true));
+    setDebounceTab(true)
   };
+
+  useEffect(()=>{
+    let timeOutId = undefined
+    if(debounceTab === false){
+      timeOutId = setTimeout(() =>{
+        setIsNav(false)
+      }, 1000)
+    }
+    else{
+      setIsNav(true)
+    }
+    return () => {
+      clearTimeout(timeOutId)
+    }
+  }, [debounceTab])
+
 
   // Function to handle hover out
   const handleMouseLeave = () => {
-    dispatch(clickTabNav(false));
+    setDebounceTab(false)
   };
 
   const { randomRender, countDownNewYear } = useSelector(
@@ -737,7 +753,7 @@ export default function Layout(props) {
                   : "block",
             }}
           >
-            <Navbar />
+            <Navbar  isNav={isNav}/>
           </Grid>
         ) : (
           <NavMobile />
