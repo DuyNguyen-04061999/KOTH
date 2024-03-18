@@ -81,20 +81,48 @@ export default function ListPackage(props) {
           packageReduceWatchAds,
           id,
           packageCategory,
-          packageTimeLoop
+          packageTimeLoop,
         })
       );
       dispatch(
-        // toggleCheckWallet({
-        //   type: packageCategory,
-        //   gold: packagePrice,
-        //   total: packageFreeTicketTournament,
-        // })
         openRenewalNotiPopup({
           type: packageCategory,
           gold: packagePrice,
           total: packageFreeTicketTournament,
         })
+      );
+      dispatch(getIdPackage(id));
+      ReactGA.event("start_subscription", {
+        category: "start_subscription",
+        action: "click",
+        nonInteraction: true,
+        transport: "xhr",
+      });
+    }
+    if (!uPack || uPack && uPack?.remain === "Expired") {
+      dispatch(
+        saveDataPackage({
+          packageName,
+          packageAvatar,
+          packagePrice,
+          packageFreeTicketTournament,
+          packageReduceWatchAds,
+          id,
+          packageCategory,
+          packageTimeLoop,
+        })
+      );
+      dispatch(
+        toggleCheckWallet({
+          type: packageCategory,
+          gold: packagePrice,
+          total: packageFreeTicketTournament,
+        })
+        // openRenewalNotiPopup({
+        //   type: packageCategory,
+        //   gold: packagePrice,
+        //   total: packageFreeTicketTournament,
+        // })
       );
       dispatch(getIdPackage(id));
       ReactGA.event("start_subscription", {

@@ -15,10 +15,10 @@ export default function RenewalNotiPopup(props) {
   const { isCheckRenewalNoti, typeWallet, goldCombo, totalExtra } = useSelector(
     (state) => state.walletReducer
   );
-  const {dataPackage} = useSelector((state) => state.packageReducer)
-  const {packageTimeLoop} = dataPackage
+  const { dataPackage } = useSelector((state) => state.packageReducer);
+  const { packageTimeLoop } = dataPackage;
   const { uPack } = useSelector((state) => state.userReducer);
-  const Remain = uPack?.remain
+  const Remain = uPack?.remain;
   const handleClose = () => {
     dispatch(closeRenewalNotiPopup());
   };
@@ -38,69 +38,75 @@ export default function RenewalNotiPopup(props) {
 
   return (
     <>
-      <Dialog
-        open={isCheckRenewalNoti}
-        onClose={handleClose}
-        sx={{
-          "& .css-hz1bth-MuiDialog-container": {
-            width: "100%",
-          },
-          "& .css-1t1j96h-MuiPaper-root-MuiDialog-paper": {
-            width: "100%",
-            borderRadius: 0,
-          },
-          "& .MuiDialog-paper": {
-            backgroundColor: "#271C39",
-            maxWidth: "490px",
-            padding: "15px",
-            borderRadius: 2
-          },
-        }}
-      >
-        <Box
+      {!uPack || uPack && uPack?.remain === "Expired" ? (
+        <></>
+      ) : (
+        <Dialog
+          open={isCheckRenewalNoti}
+          onClose={handleClose}
           sx={{
-            padding: "25px",
+            "& .css-hz1bth-MuiDialog-container": {
+              width: "100%",
+            },
+            "& .css-1t1j96h-MuiPaper-root-MuiDialog-paper": {
+              width: "100%",
+              borderRadius: 0,
+            },
+            "& .MuiDialog-paper": {
+              backgroundColor: "#271C39",
+              maxWidth: "490px",
+              padding: "15px",
+              borderRadius: 2,
+            },
           }}
         >
-          <Box>
-            <Typography
-              sx={{
-                fontSize: "18px",
-                marginBottom: "20px !important",
-                fontWeight: "400 !important",
-                color: "#9384B7",
-              }}
-              className="text-center"
-            >
-              You have {`${Remain?.slice(0,-1)}`} days left on your current subscription. Adding this
-              pack will extend your total subscription to {`${Number(Remain?.slice(0,-1)) + packageTimeLoop}`} day left on your
-              current. Confirm purchase?"
-            </Typography>
-          </Box>
-          <Box display={"flex"}>
-            <Box
-              sx={{
-                width: "100%",
-              }}
-            >
-              <AnimButton type="ghost" text="Cancel" onClick={handleClose} />
+          <Box
+            sx={{
+              padding: "25px",
+            }}
+          >
+            <Box>
+              <Typography
+                sx={{
+                  fontSize: "18px",
+                  marginBottom: "20px !important",
+                  fontWeight: "400 !important",
+                  color: "#9384B7",
+                }}
+                className="text-center"
+              >
+                You have {`${Remain?.slice(0, -1)}`} days left on your current
+                subscription. Adding this pack will extend your total
+                subscription to{" "}
+                {`${Number(Remain?.slice(0, -1)) + packageTimeLoop}`} day left
+                on your current. Confirm purchase?"
+              </Typography>
             </Box>
-            <Box
-              sx={{
-                width: "100%",
-                marginLeft: "20px",
-              }}
-            >
-              <AnimButton
-                type="primary"
-                text="Confirm"
-                onClick={handleConfrim}
-              />
+            <Box display={"flex"}>
+              <Box
+                sx={{
+                  width: "100%",
+                }}
+              >
+                <AnimButton type="ghost" text="Cancel" onClick={handleClose} />
+              </Box>
+              <Box
+                sx={{
+                  width: "100%",
+                  marginLeft: "20px",
+                }}
+              >
+                <AnimButton
+                  type="primary"
+                  text="Confirm"
+                  onClick={handleConfrim}
+                />
+              </Box>
             </Box>
           </Box>
-        </Box>
-        {/* <Package /> */}
-      </Dialog>
+          {/* <Package /> */}
+        </Dialog>
+      )}
     </>
   );
 }

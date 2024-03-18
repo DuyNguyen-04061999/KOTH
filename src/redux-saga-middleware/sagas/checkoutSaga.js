@@ -77,12 +77,6 @@ function* getCheckOutSagaSuccess(dataRequest) {
                 localStorage.setItem("newNumberTicket", Number(data?.data?.quantity || 0))
                 window.close()
             }
-
-            if(packageRenewChanged){
-                yield put(deleteCurrentPackage({
-                    packageId: packageRenewChanged?.id
-                }));
-            }
         } else {
             yield put(checkoutPaypalSuccessFail());
             yield put(toggleAlertStripeProcess({
@@ -138,6 +132,10 @@ function* getCancelCurrentPackageSaga(dataRequest) {
     } catch(err) {
         console.log(err);
         yield put(deleteCurrentPackageFail())
+        yield put(showToastNotification({
+            type: "error",
+            message: err?.message
+        }))
     }
 } 
 
@@ -145,7 +143,7 @@ function* checkoutSaga() {
     yield takeEvery("GET_CHECK_OUT", getCheckOutSaga)
     yield takeEvery("CHECKOUT_PAYPAL_SUCCESS", getCheckOutSagaSuccess)
     yield takeEvery("CHECKOUT_PAYPAL_CANCEL", getCheckOutSagaCancel)
-    yield takeEvery("DELETE_CURRENT_PACKAGE", getCancelCurrentPackageSaga)
+    yield takeEvery("CANCEL_RENEW_PACKAGE", getCancelCurrentPackageSaga)
 }
 
 export default checkoutSaga

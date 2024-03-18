@@ -20,6 +20,7 @@ import { withStyles } from "@mui/styles";
 import { getCheckOut } from "../../../redux-saga-middleware/reducers/checkoutReducer";
 import {
   closeCheckWallet,
+  deleteCurrentPackage,
   toggleCheckWallet,
 } from "../../../redux-saga-middleware/reducers/walletReducer";
 import { formatMoney } from "../../../utils/helper";
@@ -158,6 +159,9 @@ export default function TicketCheckOut() {
       })
     );
     setSl(1);
+        dispatch(
+      deleteCurrentPackage({})
+    );
     // dispatch(toggleCheckWallet());
   };
   const btnBuyTicket = (event) => {
