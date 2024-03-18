@@ -15,7 +15,7 @@ import {
 } from "../../../../redux-saga-middleware/reducers/authReducer";
 import { saveDataPackage } from "../../../../redux-saga-middleware/reducers/packageReducer";
 import { toggleCheckWallet } from "../../../../redux-saga-middleware/reducers/walletReducer";
-import { images } from "../../../../utils/images";
+import {imageHome, images} from "../../../../utils/images";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
 
 const BgWithTooltip = withStyles({
@@ -211,8 +211,8 @@ export default function ListPackage(props) {
                       component={"img"}
                       src={
                         packageAvatar
-                          ? "https://storage.googleapis.com/web-system-files/packages" +
-                            "/" +
+                          ? process.env.REACT_APP_SOCKET_SERVER +
+                          "/" +
                             packageAvatar
                           : images.christbg
                       }
