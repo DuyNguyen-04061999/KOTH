@@ -135,7 +135,10 @@ export default function TicketCheckOut() {
   // }, [renewOption]);
 
   useEffect(() => {
+    if(uPack){
     localStorage.setItem("previousPack", JSON.stringify(uPack));
+
+    }
   },[uPack])
 
   const params = new URLSearchParams(window.location.search);
