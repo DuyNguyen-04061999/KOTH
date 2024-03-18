@@ -27,7 +27,7 @@ export default function ReferralTable() {
           : "";
       },
       valueGetter: (item) => {
-        return item?.registerUser?.userNickName;
+        return item?.userNickName;
       },
     },
     {
@@ -36,7 +36,7 @@ export default function ReferralTable() {
         return moment(field)?.format("LL");
       },
       valueGetter: (item) => {
-        return item?.registerUser?.createdAt;
+        return item?.updatedAt;
       },
       field: "price",
     },

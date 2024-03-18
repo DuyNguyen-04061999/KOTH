@@ -12,6 +12,7 @@ import {
 } from "../reducers/referralReducer";
 import { toast } from "react-toastify";
 import { images } from "../../utils/images";
+import { updateCountTicket } from "../reducers/userReducer";
 const referralService = new ReferralService();
 function* getResSubList() {
   try {
@@ -52,6 +53,7 @@ function* claimPhysicalRewardSaga(dataRequest) {
 }
 function* claimAllRewardSaga(dataRequest) {
   try {
+    const { payload } = dataRequest;
     yield put(updateIsLoadingClaimAll(true));
     yield delay(1000);
     const res = yield call(referralService.claimAllReward);
@@ -69,6 +71,7 @@ function* claimAllRewardSaga(dataRequest) {
       });
       yield put(updateIsLoadingClaimAll(false));
       yield put(updateBonuses(res?.data));
+      yield put(updateCountTicket(payload));
     }
   } catch (error) {
     yield put(updateIsLoadingClaimAll(false));
