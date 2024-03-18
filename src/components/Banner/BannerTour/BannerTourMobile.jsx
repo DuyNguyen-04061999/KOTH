@@ -106,10 +106,11 @@ const BannerTourMobile = (props) => {
               backgroundColor: "#E90488",
               borderRadius: "5px",
               display: "flex",
-              justifyContent: "space-around",
+              // justifyContent: "space-around",
               padding: "5px",
               width: "100%",
-              alignItems: "baseline",
+              alignItems: "center",
+              flexDirection: "column",
             }}
           >
             <Box
