@@ -281,13 +281,6 @@ export default function NewHomePage() {
           <Box
             sx={{
               marginTop: width < 576 ? "24px" : "34px",
-            }}
-          >
-            {/* <FilterPromotion /> */}
-          </Box>
-          <Box
-            sx={{
-              marginTop: width < 576 ? "24px" : "34px",
               display: "flex",
               flexDirection: "column",
               marginBottom: width < 576 ? "24px" : "32px",

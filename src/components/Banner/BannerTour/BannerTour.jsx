@@ -117,7 +117,14 @@ const BannerTour = (props) => {
             padding: "10px 20px",
           }}
         >
-          <Box sx={{ display: "flex", alignItems: "center", width:"50%", justifyContent:"center" }}>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              width: "50%",
+              justifyContent: "center",
+            }}
+          >
             <Box
               sx={{
                 color: "#FFF",
@@ -133,30 +140,30 @@ const BannerTour = (props) => {
               />
             </Box>
           </Box>
-            <Box sx={{width:"50%"}}>
-                <button
-                    onClick={() => {
-                        if (tourId !== "undefined" && tourId) {
-                            navigate(`/promotion-detail/${tourId}`);
-                        }
-                    }}
-                    style={{
-                        background: "linear-gradient(270deg, #4AA1EC 0%, #5840E9 100%)",
-                        outline: "none",
-                        border: "none",
-                        borderRadius: "10px",
-                        color: "#fff",
-                        padding: checkTablet() ? "0px 20px" : "0px 32px",
-                        fontSize: checkTablet() ? "10px" : "20px",
-                        cursor: "pointer",
-                        fontWeight: 600,
-                        whiteSpace: "nowrap",
-                        width: "100%",
-                    }}
-                >
-                    PLAY NOW
-                </button>
-            </Box>
+          <Box sx={{ width: "50%" }}>
+            <button
+              onClick={() => {
+                if (tourId !== "undefined" && tourId) {
+                  navigate(`/promotion-detail/${tourId}`);
+                }
+              }}
+              style={{
+                background: "linear-gradient(270deg, #4AA1EC 0%, #5840E9 100%)",
+                outline: "none",
+                border: "none",
+                borderRadius: "10px",
+                color: "#fff",
+                padding: checkTablet() ? "0px 20px" : "0px 32px",
+                fontSize: checkTablet() ? "10px" : "20px",
+                cursor: "pointer",
+                fontWeight: 600,
+                whiteSpace: "nowrap",
+                width: "100%",
+              }}
+            >
+              PLAY NOW
+            </button>
+          </Box>
         </Box>
       </Box>
       <Box

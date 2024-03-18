@@ -236,14 +236,15 @@ export default function Layout(props) {
               dispatch(addRefCodeRegister(response?.data?.ref));
               dispatch(clickTab("signup"));
               dispatch(openLoginDialog());
-            } else {
-              dispatch(
-                showToastNotification({
-                  type: "warning",
-                  message: "Please logout and register again!",
-                })
-              );
             }
+            // else {
+            //   dispatch(
+            //     showToastNotification({
+            //       type: "warning",
+            //       message: "Please logout and register again!",
+            //     })
+            //   );
+            // }
           }
         } catch (error) {
           console.log(error);
