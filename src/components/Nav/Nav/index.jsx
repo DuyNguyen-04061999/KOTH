@@ -18,13 +18,13 @@ import "../Nav/Nav.scss";
 import NavPromotionTablet from "./NavPromotionTablet";
 import {imagesReferral} from "../../../utils/imagesReferral";
 
-export default function Navbar() {
+export default function Navbar({isNav}) {
     const {t} = useTranslation("navigation");
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const [tablet, setTablet] = useState("");
-    const {isNav, isDropdownNav, isNavTablet} = useSelector(
+    const { isDropdownNav, isNavTablet} = useSelector(
         (state) => state.authReducer
     );
     const {device} = useSelector((state) => state.deviceReducer);
@@ -51,7 +51,6 @@ export default function Navbar() {
             }
         }
     }, [isNavTablet, isNav]);
-
     const theme = useTheme();
     return (
         <Box style={{height: `100%`}} className={`nav-section1 ${tablet}`}>
@@ -64,12 +63,12 @@ export default function Navbar() {
                     flexDirection: "column",
                     justifyContent: "space-between",
                     paddingBottom: "9px",
-                    transitionDuration: "all 1s",
+                    transitionDuration: "all .4s",
                     paddingLeft: isNav === true ? "25px" : "7px",
                     paddingRight: isNav === true ? "25px" : "7px",
-                    transition: " all ease 1s",
                     overflow: "auto",
                     paddingTop: "60px",
+                    transition: ".4s ease-in-out"
                 }}
                 className="nav-animate"
             >
@@ -633,6 +632,7 @@ export default function Navbar() {
                                         textOverflow: "ellipsis",
                                         whiteSpace: "nowrap",
                                         overflow: "hidden",
+                                        transition: ".5s ease"
                                     }}
                                 >
                                     {t("Home")}
@@ -695,6 +695,8 @@ export default function Navbar() {
                                                     whiteSpace: "nowrap",
                                                     overflow: "hidden",
                                                     color: isDropdownNav ? "#fff" : "",
+                                        transition: ".5s ease"
+
                                                 }}
                                             >
                                                 {t("Promotion")}
@@ -1316,6 +1318,8 @@ export default function Navbar() {
                                         color:
                                             pathname && pathname?.includes("packages") && "white",
                                         paddingLeft: "6px",
+                                        transition: ".5s ease"
+
                                     }}
                                 >
                                     {t("Packages")}
@@ -1366,6 +1370,8 @@ export default function Navbar() {
                                         textOverflow: "ellipsis",
                                         whiteSpace: "nowrap",
                                         overflow: "hidden",
+                                        transition: ".5s ease"
+
                                     }}
                                 >
                                     Favorite Games
@@ -1549,6 +1555,8 @@ export default function Navbar() {
                                     overflow: "hidden",
                                     color: pathname && pathname?.includes("referral") && "white",
                                     paddingLeft: "5px",
+                                    transition: ".5s ease"
+
                                 }}
                             >
                                 Referral
@@ -1615,6 +1623,8 @@ export default function Navbar() {
                                     color:
                                         pathname && pathname?.includes("help-center") && "white",
                                     paddingLeft: "5px",
+                                    transition: ".5s ease"
+
                                 }}
                             >
                                 How it Works
@@ -1665,6 +1675,8 @@ export default function Navbar() {
                                     textOverflow: "ellipsis",
                                     whiteSpace: "nowrap",
                                     overflow: "hidden",
+                                    transition: ".5s ease"
+
                                 }}
                             >
                                 FAQs
@@ -1753,6 +1765,8 @@ export default function Navbar() {
                                     overflow: "hidden",
                                     color: pathname && pathname?.includes("support") && "white",
                                     paddingLeft: "5px",
+                                    transition: ".5s ease"
+
                                 }}
                             >
                                 {t("Support")}
