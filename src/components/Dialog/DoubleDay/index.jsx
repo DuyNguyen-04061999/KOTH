@@ -53,10 +53,18 @@ const DoubleDayDialog = () => {
                   top: "20px",
                   right: "20px",
                   cursor: "pointer",
+                  width: 40,
+                  height: 40,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  padding: "10px",
+                  borderRadius: "50%",
+                  backgroundColor: "black",
                 }}
-                component={"img"}
-                src={images.btn_back}
-              ></Box>
+              >
+                <Box component={"img"} src={images.btn_back}></Box>
+              </Box>
             </Box>
           </Dialog>
         </div>
@@ -87,10 +95,18 @@ const DoubleDayDialog = () => {
                   top: "20px",
                   right: "20px",
                   cursor: "pointer",
+                  width: 40,
+                  height: 40,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  padding: "10px",
+                  borderRadius: "50%",
+                  backgroundColor: "black",
                 }}
-                component={"img"}
-                src={images.btn_back}
-              ></Box>
+              >
+                <Box component={"img"} src={images.btn_back}></Box>
+              </Box>
             </Box>
           </Dialog>
         </div>
