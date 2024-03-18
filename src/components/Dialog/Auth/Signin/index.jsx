@@ -334,7 +334,6 @@ export default function Dialoglg() {
                       flexDirection={"column"}
                       justifyContent={"center"}
                       alignItems={"center"}
-                      sx={{ marginLeft: "-5px" }}
                     >
                       <Typography
                         style={{

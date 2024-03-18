@@ -11,13 +11,10 @@ export default function TotalReferralInfo() {
     totalPotentialBonuses,
   } = useSelector((state) => state.referralReducer);
   const { device } = useSelector((state) => state.deviceReducer);
-  const { orientation } = useSelector((state) => state.gameReducer);
-  const mobileCondition =
-    device === "Mobile" || (device === "Tablet" && orientation === "portrait");
   const { tokenUser } = useSelector((state) => state?.userReducer);
   const dispatch = useDispatch();
-  const hanleOnClickClaimAll = () => {
-    dispatch(claimAllReward());
+  const hanleOnClickClaimAll = (data) => {
+    dispatch(claimAllReward(data));
   };
   return (
     <Box
@@ -136,7 +133,9 @@ export default function TotalReferralInfo() {
         </button>
       ) : (
         <button
-          onClick={hanleOnClickClaimAll}
+          onClick={() => {
+            hanleOnClickClaimAll(totalPotentialBonuses);
+          }}
           style={{
             width: "100%",
             color: "#fff",
