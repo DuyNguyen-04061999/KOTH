@@ -128,7 +128,7 @@ export default function Layout(props) {
   const { systemLanguage } = useSelector((state) => state.settingReducer);
   const { orientation } = useSelector((state) => state.gameReducer);
   const { isChangeLocation } = useSelector((state) => state.packageReducer);
-  const { isNav } = useSelector((state) => state.authReducer);
+  const [isNav, setIsNav] = useState(false);
   const { tokenUser: token, user } = useSelector((state) => state.userReducer);
   const { chatPopup, badgechat } = useSelector((state) => state.chatReducer);
   const { listSetting } = useSelector((state) => state.settingReducer);
@@ -140,9 +140,32 @@ export default function Layout(props) {
   const [socket, setSocket] = useState(null);
   const { device } = useSelector((state) => state.deviceReducer);
   const [openDropdown, setOpenDropdown] = useState(false);
-
+  const [debounceTab, setDebounceTab] = useState(false);
   const handleCloseDropDown = () => {
     setOpenDropdown(false);
+  };
+
+  const handleMouseEnter = () => {
+    setDebounceTab(true);
+  };
+
+  useEffect(() => {
+    let timeOutId = undefined;
+    if (debounceTab === false) {
+      timeOutId = setTimeout(() => {
+        setIsNav(false);
+      }, 1000);
+    } else {
+      setIsNav(true);
+    }
+    return () => {
+      clearTimeout(timeOutId);
+    };
+  }, [debounceTab]);
+
+  // Function to handle hover out
+  const handleMouseLeave = () => {
+    setDebounceTab(false);
   };
 
   const { randomRender, countDownNewYear } = useSelector(
@@ -236,14 +259,15 @@ export default function Layout(props) {
               dispatch(addRefCodeRegister(response?.data?.ref));
               dispatch(clickTab("signup"));
               dispatch(openLoginDialog());
-            } else {
-              dispatch(
-                showToastNotification({
-                  type: "warning",
-                  message: "Please logout and register again!",
-                })
-              );
             }
+            // else {
+            //   dispatch(
+            //     showToastNotification({
+            //       type: "warning",
+            //       message: "Please logout and register again!",
+            //     })
+            //   );
+            // }
           }
         } catch (error) {
           console.log(error);
@@ -266,7 +290,7 @@ export default function Layout(props) {
     if (width < 1200 && width > 576) {
       dispatch(clickTabNav(false));
     } else {
-      dispatch(clickTabNav(true));
+      dispatch(clickTabNav(false));
     }
   }, [width, dispatch]);
 
@@ -439,13 +463,14 @@ export default function Layout(props) {
         <PackagePaypalDialog />
       )}
       <>
-        {randomRender === 1 ? (
-          <DoubleDayDialog />
+        {/* {randomRender === 1 ? (
+          <DoubleDayPackDialog />
         ) : randomRender === 2 ? (
           <DoubleDayDialog />
         ) : (
-          <DoubleDayDialog />
-        )}
+          <DoubleDayPackDialog />
+        )} */}{" "}
+        <DoubleDayDialog />
       </>
       {isProfileDialog && (
         <DialogProfile
@@ -495,19 +520,24 @@ export default function Layout(props) {
           )}
           {device === "Desktop" ? (
             <div className="d-flex align-items-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="30"
-                height="23"
-                viewBox="0 0 30 23"
-                fill="none"
-                onClick={clickNavIcon}
-                className="cursor-pointer"
+              <Box
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
               >
-                <rect width="30" height="5" rx="2" fill="#A968E2" />
-                <rect y="9" width="30" height="5" rx="2" fill="#A968E2" />
-                <rect y="18" width="30" height="5" rx="2" fill="#A968E2" />
-              </svg>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="30"
+                  height="23"
+                  viewBox="0 0 30 23"
+                  fill="none"
+                  // onClick={clickNavIcon}
+                  className="cursor-pointer"
+                >
+                  <rect width="30" height="5" rx="2" fill="#A968E2" />
+                  <rect y="9" width="30" height="5" rx="2" fill="#A968E2" />
+                  <rect y="18" width="30" height="5" rx="2" fill="#A968E2" />
+                </svg>
+              </Box>
               <div
                 className="inp-header mx-3 ps-4 cursor-pointer"
                 style={{ position: "relative" }}
@@ -707,6 +737,8 @@ export default function Layout(props) {
         device === "Tablet" ||
         (device === "Mobile" && orientation === "landscape" && width > 576) ? (
           <Grid
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
             item
             sm={1}
             md={isNav === true && device === "Desktop" ? 1.6 : 0.6}
@@ -722,7 +754,7 @@ export default function Layout(props) {
                   : "block",
             }}
           >
-            <Navbar />
+            <Navbar isNav={isNav} />
           </Grid>
         ) : (
           <NavMobile />

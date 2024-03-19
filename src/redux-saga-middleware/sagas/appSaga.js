@@ -6,6 +6,8 @@ import {
   getListBannerSuccess,
   getListBetFail,
   getListBetSuccess,
+  getListDisplayNameFail,
+  getListDisplayNameSuccess,
   getListFaqFail,
   getListFaqSuccess,
   getListWinnerFail,
@@ -110,6 +112,20 @@ function* findPeopleSaga(dataRequest) {
   }
 }
 
+function* getListDisplayNameSaga(dataRequest) {
+  try {
+    const {payload} = dataRequest;
+    const  res = yield call(appService.getDisplayName, payload)
+    const { status, data} = res
+    if(status === 200 || status === 201) {
+      yield put(getListDisplayNameSuccess(data?.data?.displayNames))
+    }
+  } catch (err) {
+    console.log(err);
+    yield put(getListDisplayNameFail())
+  }
+}
+
 function* appSaga() {
   yield takeEvery("GET_LIST_FAQ", getListFaqSaga);
   yield takeEvery("GET_LIST_BET", getListBetSaga);
@@ -118,6 +134,7 @@ function* appSaga() {
   yield takeEvery("GET_LIST_WINNER", getListWinnerSaga);
   yield takeEvery("FIND_PEOPLE", findPeopleSaga);
   yield takeEvery("CLOSE_NEWYEAR_POPUP", closeNewYearPopupSaga);
+  yield takeEvery("GET_LIST_DISPLAY_NAME", getListDisplayNameSaga)
 }
 
 export default appSaga;

@@ -16,6 +16,7 @@ import {
   // getCityAndStateProfile,
   getMyInfor,
   logoutReady,
+  removeTokenUser,
 } from "../../../../redux-saga-middleware/reducers/userReducer";
 import { getAppType } from "../../../../utils/helper";
 import { images } from "../../../../utils/images";
@@ -28,6 +29,12 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { closeChatPopup } from "../../../../redux-saga-middleware/reducers/chatReducer";
 import "./index.scss";
+import {
+  getListTier,
+  getResSubListFail,
+  updateBonuses,
+  updateCurrentLevel,
+} from "../../../../redux-saga-middleware/reducers/referralReducer";
 
 const BgWithTooltip = withStyles({
   tooltip: {
@@ -74,6 +81,10 @@ export default function Dialoglg() {
   const logout = () => {
     dispatch(logoutReady());
     dispatch(closeChatPopup(false));
+    dispatch(getResSubListFail());
+    dispatch(getListTier([]));
+    dispatch(updateCurrentLevel({}));
+    dispatch(updateBonuses({}));
   };
   const { width, height } = useWindowDimensions();
 
@@ -299,7 +310,10 @@ export default function Dialoglg() {
                   <img
                     style={{
                       borderRadius: 50,
-                      border: uPack && uPack.remain !== "Expired" ? "2px solid #FD9E0F" : "",
+                      border:
+                        uPack && uPack.remain !== "Expired"
+                          ? "2px solid #FD9E0F"
+                          : "",
                       objectFit: "cover",
                     }}
                     alt="Remy Sharp"
@@ -320,7 +334,6 @@ export default function Dialoglg() {
                       flexDirection={"column"}
                       justifyContent={"center"}
                       alignItems={"center"}
-                      sx={{ marginLeft: "-5px" }}
                     >
                       <Typography
                         style={{
@@ -404,7 +417,10 @@ export default function Dialoglg() {
                       ) : (
                         <img
                           style={{
-                            border: uPack && uPack.remain !== "Expired" ? "4px solid #FD9E0F" : "",
+                            border:
+                              uPack && uPack.remain !== "Expired"
+                                ? "4px solid #FD9E0F"
+                                : "",
                             borderRadius: 50,
                             width: width < 576 ? "50px" : "68px",
                             height: width < 576 ? "50px" : "68px",

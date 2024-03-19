@@ -141,16 +141,6 @@ export default function NewHomePage() {
           backgroundColor: "#211d28",
         }}
       >
-        {/* {process.env.REACT_APP_TEST === "test" && (
-          <Box
-            className="text-white mb-2"
-            onClick={() => {
-              navigate("/list-game-manager");
-            }}
-          >
-            List Game Manager
-          </Box>
-        )} */}
         <Box
           sx={{
             paddingBottom: "70px",
@@ -288,13 +278,6 @@ export default function NewHomePage() {
           ) : (
             ""
           )}
-          <Box
-            sx={{
-              marginTop: width < 576 ? "24px" : "34px",
-            }}
-          >
-            {/* <FilterPromotion /> */}
-          </Box>
           <Box
             sx={{
               marginTop: width < 576 ? "24px" : "34px",

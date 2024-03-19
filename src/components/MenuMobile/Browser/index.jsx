@@ -14,6 +14,7 @@ import {
 import { toggleGameLogDialog } from "../../../redux-saga-middleware/reducers/gameReducer";
 import { getAppType } from "../../../utils/helper";
 import { images, navbar } from "../../../utils/images";
+import { imagesReferral } from "../../../utils/imagesReferral";
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
@@ -1423,6 +1424,69 @@ export default function Browser(props) {
                     }}
                   >
                     How it Works
+                  </span>
+                </Box>
+                <Box
+                  className="cursor-pointer mb-3 p-2"
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    backgroundColor:
+                      pathname && pathname?.includes("referral")
+                        ? "#7648ED"
+                        : "transparent",
+                    transition:
+                      "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+                    color:
+                      pathname && pathname?.includes("referral")
+                        ? "white"
+                        : "#A89CD7",
+                  }}
+                  onClick={() => {
+                    if (!token) {
+                      dispatch(clickTab("login"));
+                      dispatch(toggleLoginDialog());
+                    } else {
+                      handleShowMenu();
+                      navigate(`/referral`);
+                    }
+                  }}
+                >
+                  {pathname && pathname?.includes("referral") ? (
+                    <Box
+                      component={"img"}
+                      src={imagesReferral.referralIconActive}
+                      sx={{
+                        width: "15px",
+                        height: "15px",
+                        marginRight: "15px",
+                      }}
+                    />
+                  ) : (
+                    <Box
+                      component={"img"}
+                      src={imagesReferral.referralIcon}
+                      sx={{
+                        width: "15px",
+                        height: "15px",
+                        marginRight: "15px",
+                      }}
+                    />
+                  )}
+                  <span
+                    className="hover-nav ms-2"
+                    style={{
+                      cursor: "pointer",
+                      fontWeight: "700",
+                      fontSize: "15px",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      color:
+                        pathname && pathname?.includes("referral") && "white",
+                    }}
+                  >
+                    Referral
                   </span>
                 </Box>
                 <Box

@@ -20,6 +20,7 @@ import GameTournament from "../assets/images/GameTournament.png";
 import goldIcon from "../assets/images/GoldIcon.png";
 import GoldIconWhite from "../assets/images/GoldIconWhite.png";
 import HouseIcon from "../assets/images/HouseIcon.png";
+import badgeBigSale from "../assets/images/badgeBigSale.png";
 import IconRewardTour from "../assets/images/IconRewardTour.png";
 import ltc from "../assets/images/LTC.webp";
 import Logo_Text from "../assets/images/Logo_Text.png";
@@ -216,6 +217,8 @@ import titleImageMobile from "../assets/imagesHome/titleImageMobile.png";
 import top1Icon from "../assets/imagesHome/top1Icon.png";
 import top1IconMobile from "../assets/imagesHome/top1IconMobile.png";
 
+import bannerSignup from "../assets/images/banners/bannerSignup.png";
+
 import AdminLogo from "../assets/images/lggame.png";
 import AdminLogoSvg from "../assets/images/logogame.svg";
 import bannertour5 from "../assets/imagesDesktop/bannertour5.png";
@@ -321,9 +324,8 @@ import numberOne from "../assets/images/banners/bannerTour/christmasBanner/numbe
 import stIcon from "../assets/images/banners/bannerTour/christmasBanner/stIcon.png";
 import winnerFrame from "../assets/images/banners/bannerTour/christmasBanner/winnerFrame.png";
 
-import stackingDK from "../assets/images/banners/stackingDK.png"
-import stackingMB from "../assets/images/banners/stackingMB.png"
-
+import stackingDK from "../assets/images/banners/stackingDK.png";
+import stackingMB from "../assets/images/banners/stackingMB.png";
 
 export const imageHome = {
   top1Icon: top1Icon,
@@ -397,6 +399,7 @@ export const navbar = {
 };
 
 export const images = {
+  bannerSignup: bannerSignup,
   bn1: DummyBanner1,
   sortIcon: sortIcon,
   btn_back: btn_back,
@@ -556,8 +559,10 @@ export const images = {
   ribbon: ribbon,
   bgchristmas: bgchristmas,
 
-  stackingDK:stackingDK,
-  stackingMB:stackingMB
+  stackingDK: stackingDK,
+  stackingMB: stackingMB,
+
+  badgeBigSale: badgeBigSale,
 };
 
 export const navigationImages = {

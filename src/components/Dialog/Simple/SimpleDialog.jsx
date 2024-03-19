@@ -55,17 +55,20 @@ export default function SimpleDialog(props) {
               height: "100%",
               width: "100%",
               zIndex: "1320",
+              ".MuiPaper-root": {
+                backgroundColor: "#291e3b",
+              },
             }}
           >
             <Box
               sx={{
                 backgroundColor: "#291e3b",
-                height: "100%",
+                // height: "100%",
                 width: "100%",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                overflowY: "auto",
+                // overflowY: "auto",
                 boxSizing: "border-box",
                 padding: "10px",
               }}
@@ -87,7 +90,7 @@ export default function SimpleDialog(props) {
               {currentTab === "login" ? (
                 <Login />
               ) : currentTab === "signup" ? (
-                <Box className="mt-5">
+                <Box>
                   <Signup />
                 </Box>
               ) : currentTab === "forgetPass" ? (
@@ -110,10 +113,11 @@ export default function SimpleDialog(props) {
             onClose={handleClose}
             open={isLoginDialog}
             maxWidth={"md"}
+            fullScreen={device === "Mobile" || device === "Tablet" ? true : false}
             sx={{
               ".MuiPaper-root": {
                 backgroundColor: "#291e3b",
-                height: width < 992 ? "75vh" : "calc(96vh - 64px)",
+                height: "100%",
                 overflowX: "hidden",
                 display: "flex",
                 flexDirection: "row",
@@ -121,116 +125,111 @@ export default function SimpleDialog(props) {
               },
             }}
           >
-            <Grid container flexWrap={"nowrap"}>
-              <Grid item md={6} sx={{ minWidth: width > 756 ? "50%" : "100%" }}>
+            <Box
+              sx={{
+                backgroundColor: "#291e3b",
+                height: "100%",
+                width: device === "Desktop" ? "50%" : "100%",
+                display: "flex",
+                alignItems: "center",
+                overflow:"auto"
+              }}
+              className="p-2"
+            >
+              {currentTab === "login" ? (
+                <Login />
+              ) : currentTab === "signup" ? (
+                <Signup />
+              ) : currentTab === "forgetPass" ? (
+                <ForgetPassword></ForgetPassword>
+              ) : currentTab === "otpVerifyAccount" ? (
+                <OTPVerifyAccount></OTPVerifyAccount>
+              ) : currentTab === "otpResetPassword" ? (
+                <OTPResetPassword></OTPResetPassword>
+              ) : currentTab === "createPass" ? (
+                <CreatePassword></CreatePassword>
+              ) : (
+                <Login></Login>
+              )}
+               <Box
+                  component={"img"}
+                  src={sign.btnBack}
+                  sx={{
+                    width: "20px",
+                    height: "20px",
+                    position: "absolute",
+                    zIndex: "100",
+                    top: "20px",
+                    right: "20px",
+                    cursor: "pointer",
+                  }}
+                  onClick={handleClose}
+                ></Box>
+            </Box>
+            {device === "Desktop" ? (
+              <Box
+                sx={{
+                  backgroundColor: "#19133e",
+                  color: "white",
+                  height: "100%",
+                  position: "relative",
+                  width:"50%",
+                }}
+              >
                 <Box
                   sx={{
-                    backgroundColor: "#291e3b",
-                    height: "100%",
                     width: "100%",
+                    height:
+                      device === "Mobile" && orientation === "landscape"
+                        ? "auto"
+                        : "100%",
+                    backgroundImage: `url(${imageHome.signInBgBanner})`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    backgroundRepeat: "no-repeat",
                     display: "flex",
+                    flexDirection: "column",
                     alignItems: "center",
+                    justifyContent: "center",
+                    boxSizing: "border-box",
+                    padding: "0px 20px",
                   }}
-                  className="p-2"
                 >
-                  {currentTab === "login" ? (
-                    <Login />
-                  ) : currentTab === "signup" ? (
-                    <Signup />
-                  ) : currentTab === "forgetPass" ? (
-                    <ForgetPassword></ForgetPassword>
-                  ) : currentTab === "otpVerifyAccount" ? (
-                    <OTPVerifyAccount></OTPVerifyAccount>
-                  ) : currentTab === "otpResetPassword" ? (
-                    <OTPResetPassword></OTPResetPassword>
-                  ) : currentTab === "createPass" ? (
-                    <CreatePassword></CreatePassword>
-                  ) : (
-                    <Login></Login>
-                  )}
-                </Box>
-              </Grid>
-              {width > 756 && (
-                <Grid item md={6}>
+                  <Box component={"img"} src={imageHome.signInTitle}></Box>
                   <Box
-                    sx={{
-                      backgroundColor: "#19133e",
-                      color: "white",
-                      height: "100%",
-                      position: "relative",
-                      minWidth: device === "Desktop" ? "450px" : "50%",
-                    }}
-                  >
-                    <Box
+                    sx={{ width: "100%" }}
+                    component={"img"}
+                    src={imageHome.imageSignIn}
+                  ></Box>
+                  <Box>
+                    <Typography
                       sx={{
-                        width: "100%",
-                        height:
-                          device === "Mobile" && orientation === "landscape"
-                            ? "auto"
-                            : "100%",
-                        backgroundImage: `url(${imageHome.signInBgBanner})`,
-                        backgroundSize: "cover",
-                        backgroundPosition: "center",
-                        backgroundRepeat: "no-repeat",
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        boxSizing: "border-box",
-                        padding: "0px 20px",
+                        fontSize: "20px",
+                        fontWeight: "800",
+                        marginTop: "20px",
+                        marginLeft: "0px !important",
                       }}
                     >
-                      <Box component={"img"} src={imageHome.signInTitle}></Box>
-                      <Box
-                        sx={{ width: "100%" }}
-                        component={"img"}
-                        src={imageHome.imageSignIn}
-                      ></Box>
-                      <Box>
-                        <Typography
-                          sx={{
-                            fontSize: "20px",
-                            fontWeight: "800",
-                            marginTop: "20px",
-                            marginLeft: "0px !important",
-                          }}
-                        >
-                          PLAY4PROMO
-                        </Typography>
-                        <Typography
-                          sx={{
-                            fontSize: "14px",
-                            color: "#D4D4D4",
-                            textAlign: "center",
-                            marginTop: "20px",
-                            marginLeft: "0px !important",
-                          }}
-                        >
-                          Play4Promo is a marketing platform that offers
-                          tournaments, where you can compete and have a fair
-                          chance to win corporate sponsored prizes. Free to sign
-                          up and join
-                        </Typography>
-                      </Box>
-                    </Box>
-                    <Box
-                      component={"img"}
-                      src={sign.btnBack}
+                      PLAY4PROMO
+                    </Typography>
+                    <Typography
                       sx={{
-                        width: "20px",
-                        height: "20px",
-                        position: "absolute",
-                        zIndex: "100",
-                        top: "20px",
-                        right: "20px",
-                        cursor: "pointer",
+                        fontSize: "14px",
+                        color: "#D4D4D4",
+                        textAlign: "center",
+                        marginTop: "20px",
+                        marginLeft: "0px !important",
                       }}
-                      onClick={handleClose}
-                    ></Box>
+                    >
+                      Play4Promo is a marketing platform that offers
+                      tournaments, where you can compete and have a fair chance
+                      to win corporate sponsored prizes. Free to sign up and
+                      join
+                    </Typography>
                   </Box>
-                </Grid>
-              )}
-            </Grid>
+                </Box>
+              </Box>
+            ) : (<></>)}
           </Dialog>
         </>
       )}

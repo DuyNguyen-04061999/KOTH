@@ -189,7 +189,6 @@ export const closePaypalPackageDialog = (data) => {
 };
 
 export const notifyToGameWhenBuyPackageSuccess = (data) => {
-  console.log(data);
   return {
     type: "NOTIFY_TO_GAME_WHEN_BUY_PACKAGE_SUCCESS",
     payload: data,
@@ -224,6 +223,27 @@ export const findPeopleFail = (data) => {
   };
 };
 
+export const getListDisplayName = (data) => {
+  return {
+    type: "GET_LIST_DISPLAY_NAME",
+    payload: data,
+  };
+};
+
+export const getListDisplayNameSuccess = (data) => {
+  return {
+    type: "GET_LIST_DISPLAY_NAME_SUCCESS",
+    payload: data,
+  };
+};
+
+export const getListDisplayNameFail = (data) => {
+  return {
+    type: "GET_LIST_DISPLAY_NAME_FAIL",
+    payload: data,
+  };
+};
+
 const appReducer = (
   state = {
     isFetchListFaq: false,
@@ -248,6 +268,8 @@ const appReducer = (
     isFindPeople: false,
     listFindPeople: [],
     countDownNewYear: 0,
+    listDisplayName: [],
+    isFetchDisplayName: false,
   },
   action
 ) => {
@@ -331,6 +353,12 @@ const appReducer = (
       return { ...state, isFindPeople: false, listFindPeople: payload || [] };
     case "FIND_PEOPLE_FAIL":
       return { ...state, isFindPeople: false };
+    case "GET_LIST_DISPLAY_NAME":
+      return { ...state, isFetchDisplayName: true };
+    case "GET_LIST_DISPLAY_NAME_SUCCESS":
+      return { ...state, listDisplayName: payload, isFetchDisplayName: false };
+    case "GET_LIST_DISPLAY_NAME_FAIL":
+      return { ...state, isFetchDisplayName: false };
     default:
       return { ...state };
   }

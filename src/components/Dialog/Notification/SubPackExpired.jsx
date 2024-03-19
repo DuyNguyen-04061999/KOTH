@@ -15,9 +15,11 @@ export default function SubPackExpired(props) {
       component={"div"}
       className="text-white"
       onClick={() => {
-        dispatch(readNotification({
-          id: id
-        }))
+        dispatch(
+          readNotification({
+            id: id,
+          })
+        );
       }}
       sx={{
         background: "#2E233D",

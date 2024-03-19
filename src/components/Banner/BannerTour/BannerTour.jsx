@@ -102,8 +102,8 @@ const BannerTour = (props) => {
               wordBreak: "break-word",
             }}
           >
-            {(rewardName || defaultRewardName).length > 14
-              ? (rewardName || defaultRewardName).slice(0, 14) + " ..."
+            {(rewardName || defaultRewardName).length > 45
+              ? (rewardName || defaultRewardName).slice(0, 40) + " ..."
               : rewardName || defaultRewardName}
           </Typography>
         </Box>
@@ -115,14 +115,21 @@ const BannerTour = (props) => {
             display: "flex",
             justifyContent: "space-between",
             padding: "10px 20px",
+            alignItems:"center"
           }}
         >
-          <Box sx={{ display: "flex", alignItems: "center", width:"50%", justifyContent:"center" }}>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              width: "50%",
+              justifyContent: "center",
+            }}
+          >
             <Box
               sx={{
                 color: "#FFF",
                 textAlign: "start",
-                fontSize: "14px ",
                 marginLeft: "0px !important",
                 marginRight: "5px",
                 fontWeight: 800,
@@ -133,30 +140,30 @@ const BannerTour = (props) => {
               />
             </Box>
           </Box>
-            <Box sx={{width:"50%"}}>
-                <button
-                    onClick={() => {
-                        if (tourId !== "undefined" && tourId) {
-                            navigate(`/promotion-detail/${tourId}`);
-                        }
-                    }}
-                    style={{
-                        background: "linear-gradient(270deg, #4AA1EC 0%, #5840E9 100%)",
-                        outline: "none",
-                        border: "none",
-                        borderRadius: "10px",
-                        color: "#fff",
-                        padding: checkTablet() ? "0px 20px" : "0px 32px",
-                        fontSize: checkTablet() ? "10px" : "20px",
-                        cursor: "pointer",
-                        fontWeight: 600,
-                        whiteSpace: "nowrap",
-                        width: "100%",
-                    }}
-                >
-                    PLAY NOW
-                </button>
-            </Box>
+          <Box sx={{ width: "50%" }}>
+            <button
+              onClick={() => {
+                if (tourId !== "undefined" && tourId) {
+                  navigate(`/promotion-detail/${tourId}`);
+                }
+              }}
+              style={{
+                background: "linear-gradient(270deg, #4AA1EC 0%, #5840E9 100%)",
+                outline: "none",
+                border: "none",
+                borderRadius: "10px",
+                color: "#fff",
+                // padding: checkTablet() ? "0px 20px" : "0px 32px",
+                fontSize: checkTablet() ? "14px" : "20px",
+                cursor: "pointer",
+                fontWeight: 600,
+                whiteSpace: "nowrap",
+                width:"100%"
+              }}
+            >
+              PLAY NOW
+            </button>
+          </Box>
         </Box>
       </Box>
       <Box

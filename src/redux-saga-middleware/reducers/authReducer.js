@@ -254,7 +254,7 @@ const authReducer = (
     currentTab: "login",
     isUpdateProfile: false,
     userChangeAvatar: "",
-    isNav: true,
+    isNav: false,
     resetInputValue: "",
     userId: "",
     mess: "",

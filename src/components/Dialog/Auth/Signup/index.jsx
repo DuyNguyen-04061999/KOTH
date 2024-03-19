@@ -4,7 +4,7 @@ import { Box, FormControl, Input, Tooltip, Typography } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import { withStyles } from "@mui/styles";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { showToastNotification } from "../../../../redux-saga-middleware/reducers/alertReducer";
@@ -18,6 +18,11 @@ import { validatePhoneNumber } from "../../../../utils/validatePhoneNumber";
 import { validateEmail } from "../../../../utils/validationEmail";
 import AnimButton from "../../../AnimButton";
 import "./index.scss";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemText from "@mui/material/ListItemText";
+import { getListDisplayName } from "../../../../redux-saga-middleware/reducers/appReducer";
 
 const BgWithTooltip = withStyles({
   tooltip: {
@@ -31,7 +36,7 @@ export default function Signup(props) {
   const { t } = useTranslation("auth");
   // const [gender] = useState(0);
   const dispatch = useDispatch();
-  const [displayName, setDisplayName] = useState("");
+  const [displayName, setDisplayName] = useState([]);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("");
@@ -49,9 +54,11 @@ export default function Signup(props) {
   const [validDisplayName, setValidDisplayName] = useState(false);
   const [validFirstName, setValidFirstName] = useState(false);
   const [validLastName, setValidLastName] = useState(false);
+  const [popupList, setPopupList] = useState(false);
   const { refCodeRegister } = useSelector((state) => state.authReducer);
   const { listSetting } = useSelector((state) => state.settingReducer);
   const { isRegister } = useSelector((state) => state.userReducer);
+  const { listDisplayName } = useSelector((state) => state.appReducer);
   const handleSetPassword = () => {
     setDisplayPassword(!displayPassword);
   };
@@ -59,12 +66,12 @@ export default function Signup(props) {
     setDisplayPasswordC(!displayPasswordC);
   };
 
-    useEffect(() => {
-        const combinedText = firstName + lastName;
-        setDisplayName(combinedText);
-    }, [firstName, lastName]);
+  // useEffect(() => {
+  //   const combinedText = firstName + lastName;
+  //   setDisplayName(combinedText);
+  // }, [firstName, lastName]);
 
-    const handleSubmitSignUp = (e) => {
+  const handleSubmitSignUp = (e) => {
     e.preventDefault();
     if (!listSetting?.signupEnabled) {
       dispatch(
@@ -115,16 +122,18 @@ export default function Signup(props) {
   const [passOneLetter, setPassOneLetter] = useState(false);
   const [hasUppercase, setHasUppercase] = useState(false);
   const [agree, setAgree] = useState(false);
-
+  const [displaynameValue, setDisplaynameValue] = useState("");
   const [gender, setGender] = useState(0);
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef(null);
 
   const handleChange = (event, newValue) => {
     setGender(Number(event.target.value));
   };
 
-  const handleDisplaynameChange = (event) => {
-    const newNickname = event.target.value;
-    setDisplayName(newNickname);
+  const handleDisplaynameChange = (event, newValue) => {
+    setDisplaynameValue(event?.target?.value);
+    setPopupList(false);
   };
 
   const handleChangePass = (e) => {
@@ -144,10 +153,58 @@ export default function Signup(props) {
     setPassOneLetter(containsSpecialCharacter);
   };
 
-  useEffect(() => {  
+  const checkIfNumber = (event) => {
+    /**
+     * Allowing: Integers | Backspace | Tab | Delete | Left & Right arrow keys
+     **/
+
+    const regex = new RegExp(
+      /(^\d*$)|(Backspace|Tab|Delete|ArrowLeft|ArrowRight|\(|\)|-)/
+    );
+
+    return !event.key.match(regex) && event.preventDefault();
+  };
+
+  useEffect(() => {
+    // Function to handle clicks outside of dropdown
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        // Clicked outside the dropdown, so close it
+        setIsOpen(false);
+      }
+    };
+
+    // Add event listener when component mounts
+    document.addEventListener("click", handleClickOutside);
+
+    // Clean up event listener when component unmounts
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (firstName !== "" && lastName !== "") {
+      dispatch(
+        getListDisplayName({
+          firstName: firstName,
+          lastName: lastName,
+        })
+      );
+      setIsOpen(true);
+    }
+  }, [firstName, lastName]);
+
+  useEffect(() => {
+    if (listDisplayName) {
+      setDisplayName(listDisplayName);
+    }
+  }, [listDisplayName]);
+
+  useEffect(() => {
     if (
       gender === "" ||
-      displayName === "" ||
+      displaynameValue === "" ||
       password === "" ||
       c_password === "" ||
       passSai === true ||
@@ -156,7 +213,7 @@ export default function Signup(props) {
       passOneNumber === false ||
       hasUppercase === false ||
       !validateEmail(email) ||
-      !validateNickName(displayName) ||
+      !validateNickName(displaynameValue) ||
       !validatePhoneNumber(phone) ||
       !agree
     ) {
@@ -174,7 +231,7 @@ export default function Signup(props) {
     passOneLetter,
     passOneNumber,
     passSai,
-    displayName,
+    displaynameValue,
     phone,
     agree,
   ]);
@@ -207,7 +264,7 @@ export default function Signup(props) {
           gender: gender,
           userFirstName: firstName,
           userLastName: lastName,
-          nickName: displayName,
+          nickName: displaynameValue,
         })
       );
     } else {
@@ -232,25 +289,19 @@ export default function Signup(props) {
   useEffect(() => {
     setValidEmail(validateEmail(email));
     setValidPhone(validatePhoneNumber(phone));
-    setValidDisplayName(validateNickName(displayName));
+    setValidDisplayName(validateNickName(displaynameValue));
     setValidFirstName(firstName?.length >= 1);
     setValidLastName(lastName?.length >= 1);
-  }, [email, phone, displayName, firstName, lastName]);
+  }, [email, phone, displaynameValue, firstName, lastName]);
   const { orientation } = useSelector((state) => state.gameReducer);
   const { device } = useSelector((state) => state.deviceReducer);
   return (
     <Box
       className="signup"
       sx={{
-        marginTop:
-          orientation === "landscape" && device === "Mobile"
-            ? "200px"
-            : "unset",
-        paddingTop:
-          orientation === "landscape" && device === "Mobile"
-            ? "200px"
-            : "unset",
-        height:"inherit"
+        width: "100%",
+        paddingTop: "30px",
+        height:"100%"
       }}
     >
       <Box component="form" className="p-2 ps-2 pe-3" noValidate>
@@ -400,13 +451,14 @@ export default function Signup(props) {
               (+1){" "}
             </Typography>
             <Input
-              type="number"
-              name="phone"
+              type="text"
+              name="number"
               onChange={(e) => {
                 setPhone(e.target.value);
               }}
               value={phone}
               placeholder={t("Phone number")}
+              onKeyDown={checkIfNumber}
               sx={{
                 "&:before": {
                   borderBottom: " 0px solid !important ",
@@ -572,6 +624,11 @@ export default function Signup(props) {
             marginBottom: width > 992 ? "16px" : "12px",
             flexDirection: "row",
             alignItems: "center",
+            color: "white",
+            "& .MuiInputBase-root": {
+              color: "white",
+            },
+            position: "relative",
           }}
         >
           <Box
@@ -580,14 +637,65 @@ export default function Signup(props) {
               flexDirection: "row",
               alignItems: "center",
               width: "100%",
+              color: "white",
             }}
           >
             <img src={sign.up01} alt="..." width={18} height={18} />
+            {/* <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={displaynameValue}
+              label="Display Name"
+              inputProps={{
+                MenuProps: {
+                  sx: {
+                    zIndex: 1321,
+                  },
+                  PaperProps: {
+                    sx: {
+                      backgroundColor: "#443565",
+                      color: "white",
+                    },
+                  },
+                },
+              }}
+              onChange={handleDisplaynameChange}
+              sx={{
+                marginLeft: "12px",
+                padding: "0px",
+                marginTop: "3px",
+                width: "100%",
+                "& .MuiSelect-nativeInput": {
+                  position: "relative",
+                  width: "2%",
+                },
+                "&:before": {
+                  borderBottom: " 0px solid !important ",
+                  "&:hover": {
+                    borderBottom: "0px solid !important",
+                  },
+                },
+                "&:after": {
+                  borderBottom: "0px solid !important",
+                },
+                "&:hover": {
+                  border: "none",
+                },
+                "& .MuiSvgIcon-root": {
+                  color: "#7C81F2",
+                },
+              }}
+              placeholder="Enter Your Display Name"
+            >
+              {displayName?.map((e,index) => {
+                return <MenuItem key={index} value={e}>{e}</MenuItem>
+              })}
+            </Select> */}
             <Input
               type="text"
               name="displayname"
               onChange={handleDisplaynameChange}
-              value={displayName}
+              value={displaynameValue}
               placeholder="Display Name"
               sx={{
                 "&:before": {
@@ -608,6 +716,44 @@ export default function Signup(props) {
                 width: "100%",
               }}
             />{" "}
+            <Box
+              ref={dropdownRef}
+              className="dropdown"
+              sx={{
+                display: "inline-block",
+                position: "absolute",
+                top: 40,
+                left: 0,
+                zIndex: 10,
+                backgroundColor: "#443565",
+                borderRadius: "8px",
+                width: "100%",
+              }}
+            >
+              {isOpen && (
+                <Box>
+                  <List>
+                    {displayName?.map((e, index) => {
+                      return (
+                        <ListItem
+                          disablePadding
+                          key={index}
+                          onClick={() => {
+                            setDisplaynameValue(e);
+                            setIsOpen(!isOpen);
+                            // setPopupList(false);
+                          }}
+                        >
+                          <ListItemButton>
+                            <ListItemText primary={e} />
+                          </ListItemButton>
+                        </ListItem>
+                      );
+                    })}
+                  </List>
+                </Box>
+              )}
+            </Box>
             {validDisplayName && <CheckIconSVG />}
             {!validDisplayName && (
               <BgWithTooltip
@@ -646,12 +792,13 @@ export default function Signup(props) {
             )}
           </Box>
         </FormControl>
-        {!validDisplayName && displayName !== "" && (
+        {!validDisplayName && displaynameValue !== "" && (
           <Typography
             sx={{
               textAlign: "start",
               color: "#F05153",
               fontSize: "13px",
+             paddingBottom:"10px"
             }}
           >
             Please enter a valid display name
@@ -660,7 +807,7 @@ export default function Signup(props) {
         <FormControl
           variant="standard"
           sx={{
-            marginTop: !validDisplayName && displayName ? "16px" : "",
+            marginTop:  "",
             width: "100%",
             backgroundColor: "#1a132d",
             borderRadius: width > 576 ? "5px" : "4px",

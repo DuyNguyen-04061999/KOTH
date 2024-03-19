@@ -3,6 +3,7 @@ import AddFriendComponent from "./AddFriendComponent";
 import PromotionNotification from "./PromotionNotification";
 import SubPackExpired from "./SubPackExpired";
 import WinPromotion from "./WinPromotion";
+import ReferralNotification from "./ReferralNotification";
 
 export default function NotificationItem(props) {
   const {
@@ -79,6 +80,20 @@ export default function NotificationItem(props) {
       if (content) {
         return (
           <SubPackExpired
+            content={content}
+            promotionId={promotionId}
+            createdAt={createdAt}
+            type={type}
+            id={id}
+            title={title}
+          />
+        );
+      } else return <></>;
+    }
+    case 16: {
+      if (content) {
+        return (
+          <ReferralNotification
             content={content}
             promotionId={promotionId}
             createdAt={createdAt}

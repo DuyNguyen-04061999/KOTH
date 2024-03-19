@@ -13,16 +13,18 @@ class AppService {
   }
 
   async getListBanner(dataRequest) {
-    const res = await PROMOTION_API.get("/api/get-banners")
-    return res
+    const res = await PROMOTION_API.get("/api/get-banners");
+    return res;
   }
 
   async getListWinner(dataRequest) {
-    const res = await PROMOTION_API.get("/api/promotions/get-list-winner-recently")
-    return res
+    const res = await PROMOTION_API.get(
+      "/api/promotions/get-list-winner-recently"
+    );
+    return res;
   }
 
-  async findPeople (dataRequest) {
+  async findPeople(dataRequest) {
     const res = await PROMOTION_API.get(
       `/api/socials/find-user/${dataRequest}`,
       {
@@ -36,7 +38,23 @@ class AppService {
     );
     return res;
   }
-}
 
+  async getDisplayName(dataRequest) {
+    console.log(dataRequest);
+    const res = await PROMOTION_API.post(
+      `/api/authenticate/generate-display-name`, 
+      {
+        firstName: dataRequest?.firstName,
+        lastName: dataRequest?.lastName,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return res;
+  }
+}
 
 export default AppService;

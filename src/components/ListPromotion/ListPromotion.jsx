@@ -20,7 +20,11 @@ const ListPromotion = (props) => {
   } = props;
 
   const { pathname } = useLocation();
-  if (pathname.includes("home") || pathname === "/") {
+  if (
+    pathname.includes("home") ||
+    pathname === "/" ||
+    pathname?.includes("influencers")
+  ) {
     return (
       <Box>
         {width < 576 ? (

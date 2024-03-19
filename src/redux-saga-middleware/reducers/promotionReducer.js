@@ -155,7 +155,7 @@ const promotionReducer = (
     hotPag: 0,
     upcomingPag: 0,
     endedPage: 0,
-    currentPromotionShare:{},
+    currentPromotionShare: {},
   },
   action
 ) => {
