@@ -123,7 +123,6 @@ export default function Signup(props) {
   const [hasUppercase, setHasUppercase] = useState(false);
   const [agree, setAgree] = useState(false);
   const [displaynameValue, setDisplaynameValue] = useState("");
-
   const [gender, setGender] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -152,6 +151,18 @@ export default function Signup(props) {
     setCharacterPass(isPasswordValid);
     setPassOneNumber(containNumber);
     setPassOneLetter(containsSpecialCharacter);
+  };
+
+  const checkIfNumber = (event) => {
+    /**
+     * Allowing: Integers | Backspace | Tab | Delete | Left & Right arrow keys
+     **/
+
+    const regex = new RegExp(
+      /(^\d*$)|(Backspace|Tab|Delete|ArrowLeft|ArrowRight|\(|\)|-)/
+    );
+
+    return !event.key.match(regex) && event.preventDefault();
   };
 
   useEffect(() => {
@@ -288,14 +299,9 @@ export default function Signup(props) {
     <Box
       className="signup"
       sx={{
-        marginTop:
-          orientation === "landscape" && device === "Mobile"
-            ? "200px"
-            : "unset",
-        paddingTop:
-          orientation === "landscape" && device === "Mobile"
-            ? "200px"
-            : "unset",
+        width: "100%",
+        paddingTop: "30px",
+        height:"100%"
       }}
     >
       <Box component="form" className="p-2 ps-2 pe-3" noValidate>
@@ -445,13 +451,14 @@ export default function Signup(props) {
               (+1){" "}
             </Typography>
             <Input
-              type="number"
-              name="phone"
+              type="text"
+              name="number"
               onChange={(e) => {
                 setPhone(e.target.value);
               }}
               value={phone}
               placeholder={t("Phone number")}
+              onKeyDown={checkIfNumber}
               sx={{
                 "&:before": {
                   borderBottom: " 0px solid !important ",
@@ -791,6 +798,7 @@ export default function Signup(props) {
               textAlign: "start",
               color: "#F05153",
               fontSize: "13px",
+             paddingBottom:"10px"
             }}
           >
             Please enter a valid display name
@@ -799,7 +807,7 @@ export default function Signup(props) {
         <FormControl
           variant="standard"
           sx={{
-            marginTop: !validDisplayName && displaynameValue ? "16px" : "",
+            marginTop:  "",
             width: "100%",
             backgroundColor: "#1a132d",
             borderRadius: width > 576 ? "5px" : "4px",

@@ -233,10 +233,9 @@ const Login = () => {
   return (
     <Box
       sx={{
-        marginTop:
-          orientation === "landscape" && device === "Mobile"
-            ? "200px"
-            : "unset",
+       width:"100%",
+       paddingTop:"90px",
+       height:"100%"
       }}
     >
       <Box sx={{ width: "100%", display: "flex", justifyContent: "center" }}>
