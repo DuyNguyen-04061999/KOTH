@@ -4,12 +4,16 @@ import { imagesReferral } from "../../../utils/imagesReferral";
 import TotalComponent from "./TotalComponent";
 import ShareLink from "./ShareLink";
 import { useSelector } from "react-redux";
+import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 export default function ReferralHeader() {
   const { device } = useSelector((state) => state.deviceReducer);
+  const { width } = useWindowDimensions();
   const { orientation } = useSelector((state) => state.gameReducer);
   const mobileCondition =
-    device === "Mobile" || (device === "Tablet" && orientation === "portrait");
+    device === "Mobile" ||
+    (device === "Tablet" && orientation === "portrait") ||
+    width < 1200;
   return (
     <Box
       sx={{

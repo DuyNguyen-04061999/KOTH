@@ -5,16 +5,18 @@ import { medalListIcon } from "../../../../utils/ReferralMedal";
 import ReferralReward from "./ReferralReward";
 import { useSelector } from "react-redux";
 import { ScrollingCarousel } from "@trendyol-js/react-carousel";
+import useWindowDimensions from "../../../../utils/useWindowDimensions";
 
 export default function ReferralMedalSection() {
   const [selected, setSelected] = useState("Bronze");
   const { currentLevel } = useSelector((state) => state.referralReducer);
+  const { width } = useWindowDimensions();
   const { device } = useSelector((state) => state.deviceReducer);
   useEffect(() => {
     setSelected(currentLevel?.nextTierName || "Bronze");
   }, [currentLevel]);
   const mobileCondition = () => {
-    return device === "Mobile" || device === "Tablet";
+    return device === "Mobile" || device === "Tablet" || width < 1200;
   };
   return (
     <>
