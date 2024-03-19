@@ -58,6 +58,7 @@ export default function ListPackage(props) {
     const socket = _socket;
     setSocket(socket);
   }, [socket]);
+  
   const handleBuyPackage = () => {
     if (token) {
       dispatch(
@@ -86,7 +87,7 @@ export default function ListPackage(props) {
         transport: "xhr",
       });
     }
-    if (token === null || token === "") {
+    if (token === null || token === "" || token === undefined) {
       dispatch(toggleLoginDialog());
     }
   };
@@ -210,7 +211,6 @@ export default function ListPackage(props) {
                       sx={{
                         width: "100%",
                         height: "100%",
-                        marginTop: "10px",
                       }}
                       component={"img"}
                       src={
@@ -439,7 +439,7 @@ export default function ListPackage(props) {
                 </Box>
               </Box>
               <Box
-                className="mb-2"
+                className="mb-1"
                 sx={{
                   display: "flex",
                   color: "white",
@@ -464,7 +464,7 @@ export default function ListPackage(props) {
                       marginTop: "5px !important",
                     }}
                   >
-                    {t("Down from $19.99/ day")}
+                    {t("Down from $19.99")}
                   </Typography>
                 ) : (
                   <></>
@@ -490,7 +490,7 @@ export default function ListPackage(props) {
                 <></>
               )}
               <Box
-                sx={{ marginTop: "6px", width: "100%", marginBottom: "20px" }}
+                sx={{ marginTop: "6px", width: "100%", marginBottom: "10px" }}
               >
                 <AnimButton
                   upperCase={false}
