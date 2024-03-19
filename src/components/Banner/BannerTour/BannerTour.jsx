@@ -115,6 +115,7 @@ const BannerTour = (props) => {
             display: "flex",
             justifyContent: "space-between",
             padding: "10px 20px",
+            alignItems:"center"
           }}
         >
           <Box
@@ -129,7 +130,6 @@ const BannerTour = (props) => {
               sx={{
                 color: "#FFF",
                 textAlign: "start",
-                fontSize: "14px ",
                 marginLeft: "0px !important",
                 marginRight: "5px",
                 fontWeight: 800,
@@ -153,12 +153,12 @@ const BannerTour = (props) => {
                 border: "none",
                 borderRadius: "10px",
                 color: "#fff",
-                padding: checkTablet() ? "0px 20px" : "0px 32px",
-                fontSize: checkTablet() ? "10px" : "20px",
+                // padding: checkTablet() ? "0px 20px" : "0px 32px",
+                fontSize: checkTablet() ? "14px" : "20px",
                 cursor: "pointer",
                 fontWeight: 600,
                 whiteSpace: "nowrap",
-                width: "100%",
+                width:"100%"
               }}
             >
               PLAY NOW
