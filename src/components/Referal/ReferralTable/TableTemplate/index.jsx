@@ -1,16 +1,5 @@
-import {
-  Box,
-  CircularProgress,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Typography,
-} from "@mui/material";
+import { Box, CircularProgress, Typography } from "@mui/material";
 import React from "react";
-import Paper from "@mui/material/Paper";
 import { useSelector } from "react-redux";
 import { sliceString } from "../../../../utils/stringSlice";
 
@@ -32,31 +21,33 @@ export default function TableTemplate({ row, data, isLoading, filter }) {
     >
       {
         <table style={{ width: "100%" }}>
-          <tr>
-            {row?.map((item, index) => {
-              return (
-                <th
-                  key={index}
-                  style={{
-                    borderBottom: "none",
-                    padding: device === "Mobile" ? "10px" : "15px",
-                    width: item?.header === "NO." ? "10%" : "30%",
-                  }}
-                >
-                  <Typography
-                    sx={{
-                      fontSize: device === "Mobile" ? "12px" : "14px",
-                      color: "#9384B7",
-                      fontWeight: "700",
-                      textAlign: "center",
+          <thead>
+            <tr>
+              {row?.map((item, index) => {
+                return (
+                  <th
+                    key={index}
+                    style={{
+                      borderBottom: "none",
+                      padding: device === "Mobile" ? "10px" : "15px",
+                      width: item?.header === "NO." ? "10%" : "30%",
                     }}
                   >
-                    {item?.header}
-                  </Typography>
-                </th>
-              );
-            })}
-          </tr>
+                    <Typography
+                      sx={{
+                        fontSize: device === "Mobile" ? "12px" : "14px",
+                        color: "#9384B7",
+                        fontWeight: "700",
+                        textAlign: "center",
+                      }}
+                    >
+                      {item?.header}
+                    </Typography>
+                  </th>
+                );
+              })}
+            </tr>
+          </thead>
           <tbody>
             {data?.length > 0 &&
               data
@@ -71,7 +62,6 @@ export default function TableTemplate({ row, data, isLoading, filter }) {
                   <tr
                     key={index1}
                     style={{
-                      "&:last-child td, &:last-child th": { border: 0 },
                       backgroundColor: index1 % 2 === 0 ? "#443565" : "",
                       height: "auto",
                     }}
