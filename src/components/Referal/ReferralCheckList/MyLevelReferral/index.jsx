@@ -4,15 +4,20 @@ import PlayerLinearProgress from "../PlayerLinearProgress";
 import { useSelector } from "react-redux";
 import { medalSmallIcon } from "../../../../utils/ReferralMedal";
 import ParagraphLoading from "../../../LoadingComponent/ParagraphLoading";
+import useWindowDimensions from "../../../../utils/useWindowDimensions";
 
 export default function MyLevelReferral() {
   const { registerList, currentLevel, isFetchingTier } = useSelector(
     (state) => state.referralReducer
   );
+  const { width } = useWindowDimensions();
+
   const { device } = useSelector((state) => state.deviceReducer);
   const { orientation } = useSelector((state) => state.gameReducer);
   const mobileCondition =
-    device === "Mobile" || (device === "Tablet" && orientation === "portrait");
+    device === "Mobile" ||
+    (device === "Tablet" && orientation === "portrait") ||
+    width < 1200;
   return (
     <Box
       sx={{

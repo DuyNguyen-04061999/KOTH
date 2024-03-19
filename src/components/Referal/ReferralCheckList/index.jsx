@@ -3,12 +3,16 @@ import React from "react";
 import { useSelector } from "react-redux";
 import MyLevelReferral from "./MyLevelReferral";
 import ReferralMedalSection from "./ReferralMedalSection";
+import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 export default function ReferralCheckList() {
   const { device } = useSelector((state) => state.deviceReducer);
   const { orientation } = useSelector((state) => state.gameReducer);
+  const { width } = useWindowDimensions();
   const mobileCondition =
-    device === "Mobile" || (device === "Tablet" && orientation === "portrait");
+    device === "Mobile" ||
+    (device === "Tablet" && orientation === "portrait") ||
+    width < 1200;
   return (
     <Box sx={{ marginTop: "32px" }}>
       <Typography

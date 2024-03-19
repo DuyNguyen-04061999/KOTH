@@ -257,7 +257,7 @@ export default function ChatFriendList() {
                 style={{ borderRadius: "50%" }}
                 className="ms-2 me-2"
               />
-              <Box display={"flex"} flexDirection={"column"}>
+              <Box display={"flex"} flexDirection={"column"} sx={{width:"150px"}}>
                 <h5
                   style={{
                     color: "#7C81F2",
@@ -268,7 +268,7 @@ export default function ChatFriendList() {
                 >
                   {e?.userNickName}
                 </h5>
-                <span
+                <p
                   style={{
                     color: "white",
                     fontWeight: "500 !important",
@@ -276,9 +276,9 @@ export default function ChatFriendList() {
                   }}
                 >
                   {e?.receiveMessages?.map((e_m, i_e_m) => (
-                    <span key={i_e_m}>{e_m?.messageContent?.slice(0, 15)}</span>
+                    <span style={{width:"140px"}} key={i_e_m}>{e_m?.messageContent?.slice(0, 10)}</span>
                   ))}
-                </span>
+                </p>
               </Box>
             </Box>
             <Box>

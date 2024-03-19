@@ -29,6 +29,7 @@ export default function ReferralTable() {
       valueGetter: (item) => {
         return item?.userNickName;
       },
+      field: "displayName",
     },
     {
       header: "Registration Date",
