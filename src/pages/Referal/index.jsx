@@ -44,7 +44,7 @@ export default function Referal() {
             width:
               device === "Mobile"
                 ? "none"
-                : device === "Tablet"
+                : device === "Tablet" || width < 1200
                 ? "100%"
                 : "1152px",
             boxSizing: "border-box",
@@ -53,13 +53,13 @@ export default function Referal() {
             paddingLeft:
               device === "Mobile"
                 ? "24px !important"
-                : device === "Tablet"
+                : device === "Tablet" || width < 1200
                 ? "42px !important"
                 : "0px !important",
             paddingRight:
               device === "Mobile"
                 ? "24px !important"
-                : device === "Tablet"
+                : device === "Tablet" || width < 1200
                 ? "32px !important"
                 : "0px !important",
           }}

@@ -12,44 +12,52 @@ import {
 import React from "react";
 import Paper from "@mui/material/Paper";
 import { useSelector } from "react-redux";
+import { sliceString } from "../../../../utils/stringSlice";
 
 export default function TableTemplate({ row, data, isLoading, filter }) {
   const { device } = useSelector((state) => state.deviceReducer);
   return (
-    <TableContainer
-      component={Paper}
+    <Box
       sx={{
         maxHeight: "500px",
         backgroundColor: "#2E233D !important",
         color: "white !important",
-        overflowY: "auto",
         marginTop: "35px",
         marginBottom: "70px",
+        overflowY: "scroll",
+        tableLayout: "fixed",
+        width: "100%",
+        maxWidth: "100%",
       }}
     >
       {
-        <Table aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              {row?.map((item, index) => {
-                return (
-                  <TableCell
-                    key={index}
+        <table style={{ width: "100%" }}>
+          <tr>
+            {row?.map((item, index) => {
+              return (
+                <th
+                  key={index}
+                  style={{
+                    borderBottom: "none",
+                    padding: device === "Mobile" ? "10px" : "15px",
+                    width: item?.header === "NO." ? "10%" : "30%",
+                  }}
+                >
+                  <Typography
                     sx={{
-                      borderBottom: "none",
-                      color: "#9384B7",
                       fontSize: device === "Mobile" ? "12px" : "14px",
+                      color: "#9384B7",
                       fontWeight: "700",
+                      textAlign: "center",
                     }}
-                    align="center"
                   >
                     {item?.header}
-                  </TableCell>
-                );
-              })}
-            </TableRow>
-          </TableHead>
-          <TableBody>
+                  </Typography>
+                </th>
+              );
+            })}
+          </tr>
+          <tbody>
             {data?.length > 0 &&
               data
                 .filter((n) => {
@@ -60,9 +68,9 @@ export default function TableTemplate({ row, data, isLoading, filter }) {
                     : n.hasBuySubscription === false;
                 })
                 .map((p, index1) => (
-                  <TableRow
+                  <tr
                     key={index1}
-                    sx={{
+                    style={{
                       "&:last-child td, &:last-child th": { border: 0 },
                       backgroundColor: index1 % 2 === 0 ? "#443565" : "",
                       height: "auto",
@@ -70,27 +78,38 @@ export default function TableTemplate({ row, data, isLoading, filter }) {
                   >
                     {row?.map((item, index) => {
                       return (
-                        <TableCell
+                        <td
                           key={index}
-                          sx={{
+                          style={{
                             borderBottom: "none",
                             color: "white",
-                            fontSize: device === "Mobile" ? "12px" : "14px",
+                            padding: device === "Mobile" ? "10px" : "15px",
+                            width: item?.header === "NO." ? "10%" : "30%",
                           }}
-                          align="center"
-                          component="th"
-                          scope="row"
                         >
-                          {item?.field === "index"
-                            ? index1 + 1
-                            : item?.condition(item?.valueGetter(p))}
-                        </TableCell>
+                          <Typography
+                            sx={{
+                              fontSize: device === "Mobile" ? "12px" : "14px",
+                              textAlign: "center",
+                            }}
+                          >
+                            {" "}
+                            {item?.field === "index"
+                              ? index1 + 1
+                              : item?.field === "displayName"
+                              ? sliceString(
+                                  item?.condition(item?.valueGetter(p)),
+                                  device === "Mobile" ? 4 : 10
+                                )
+                              : item?.condition(item?.valueGetter(p))}
+                          </Typography>
+                        </td>
                       );
                     })}
-                  </TableRow>
+                  </tr>
                 ))}
-          </TableBody>
-        </Table>
+          </tbody>
+        </table>
       }
 
       {isLoading && (
@@ -117,6 +136,6 @@ export default function TableTemplate({ row, data, isLoading, filter }) {
           <Typography>No data loaded!</Typography>
         </Box>
       )}
-    </TableContainer>
+    </Box>
   );
 }

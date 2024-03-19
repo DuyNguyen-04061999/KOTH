@@ -23,7 +23,7 @@ export default function ShareLink() {
       device === "Mobile" ||
       (device === "Tablet" && orientation === "landscape")
     ) {
-      return 25;
+      return 20;
     } else if (
       device === "Desktop" ||
       (device === "Tablet" && orientation === "portrait")
@@ -60,7 +60,8 @@ export default function ShareLink() {
               alignItems: "center",
               justifyContent: "center",
               width: "100%",
-              overflow: "auto",
+              overflowX: "hidden",
+              boxSizing: "border-box",
             }}
           >
             {sliceString(copyref, limitString())}
