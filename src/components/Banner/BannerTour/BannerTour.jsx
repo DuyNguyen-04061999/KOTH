@@ -140,7 +140,7 @@ const BannerTour = (props) => {
               />
             </Box>
           </Box>
-          <Box sx={{ width: "50%" }}>
+          <Box sx={{ width: "50%", marginLeft:"10px" }}>
             <button
               onClick={() => {
                 if (tourId !== "undefined" && tourId) {
