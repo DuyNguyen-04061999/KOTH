@@ -120,18 +120,6 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                   : "Username1"}
               </Typography>
               <Typography
-                sx={{
-                  color: "rgba(191, 190, 237, 0.60)",
-                  textAlign: "center",
-                  fontSize: 576 < width && width < 1200 ? "8px" : "10px",
-                  fontStyle: "normal",
-                }}
-              >
-                {top3 &&
-                  top3[1] &&
-                  moment(top3[1]?.updatedAt).format("MM/DD/YYYY")}
-              </Typography>
-              <Typography
                 className="textReward"
                 sx={{
                   textAlign: "center",
@@ -223,18 +211,6 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                   : "Username2"}
               </Typography>
               <Typography
-                sx={{
-                  color: "rgba(191, 190, 237, 0.60)",
-                  textAlign: "center",
-                  fontSize: 576 < width && width < 1200 ? "10px" : "12px",
-                  fontStyle: "normal",
-                }}
-              >
-                {top3 &&
-                  top3[0] &&
-                  moment(top3[0]?.updatedAt).format("MM/DD/YYYY")}
-              </Typography>
-              <Typography
                 className="textReward"
                 sx={{
                   textAlign: "center",
@@ -322,18 +298,6 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                   : top3[2]?.userNickName?.length < 10
                   ? top3[2]?.userNickName
                   : "Username3"}
-              </Typography>
-              <Typography
-                sx={{
-                  color: "rgba(191, 190, 237, 0.60)",
-                  textAlign: "center",
-                  fontSize: 576 < width && width < 1200 ? "8px" : "10px",
-                  fontStyle: "normal",
-                }}
-              >
-                {top3 &&
-                  top3[2] &&
-                  moment(top3[2]?.updatedAt).format("MM/DD/YYYY")}{" "}
               </Typography>
               <Typography
                 className="textReward"
@@ -1403,18 +1367,6 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                   : "Username1"}
               </Typography>
               <Typography
-                sx={{
-                  color: "rgba(191, 190, 237, 0.60)",
-                  textAlign: "center",
-                  fontSize: "10px",
-                  fontStyle: "normal",
-                }}
-              >
-                {top3 &&
-                  top3[1] &&
-                  moment(top3[1]?.updatedAt).format("MM/DD/YYYY")}
-              </Typography>
-              <Typography
                 className="textReward"
                 sx={{
                   textAlign: "center",
@@ -1496,18 +1448,6 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                   : "Username2"}
               </Typography>
               <Typography
-                sx={{
-                  color: "rgba(191, 190, 237, 0.60)",
-                  textAlign: "center",
-                  fontSize: "12px",
-                  fontStyle: "normal",
-                }}
-              >
-                {top3 &&
-                  top3[0] &&
-                  moment(top3[0]?.updatedAt).format("MM/DD/YYYY")}
-              </Typography>
-              <Typography
                 className="textReward"
                 sx={{
                   textAlign: "center",
@@ -1585,18 +1525,6 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                 {top3 && top3[2] && top3[2]?.userNickName
                   ? top3[2]?.userNickName
                   : "Username3"}
-              </Typography>
-              <Typography
-                sx={{
-                  color: "rgba(191, 190, 237, 0.60)",
-                  textAlign: "center",
-                  fontSize: "10px",
-                  fontStyle: "normal",
-                }}
-              >
-                {top3 &&
-                  top3[2] &&
-                  moment(top3[2]?.updatedAt).format("MM/DD/YYYY")}{" "}
               </Typography>
               <Typography
                 className="textReward"
