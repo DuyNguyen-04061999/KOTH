@@ -134,7 +134,7 @@ export default function SimpleDialog(props) {
                 width: device === "Desktop" ? "50%" : "100%",
                 display: "flex",
                 alignItems: "center",
-                overflow: "auto",
+                overflow: device === "Mobile" ? "visible" : "auto",
               }}
               className="p-2"
             >
