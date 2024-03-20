@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
+import { sliceString } from "../../../utils/stringSlice";
 
 export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
   const [top3, setTop3] = useState([]);
@@ -119,6 +120,17 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                   ? top3[1]?.userNickName
                   : "Username1"}
               </Typography>
+
+              <Typography
+                sx={{
+                  color: "rgba(191, 190, 237, 0.60)",
+                  textAlign: "center",
+                  fontSize: 576 < width && width < 1200 ? "8px" : "10px",
+                  fontStyle: "normal",
+                }}
+              >
+                Played: {(top3 && top3[1]?.totalPlay) || "0"} times
+              </Typography>
               <Typography
                 className="textReward"
                 sx={{
@@ -200,15 +212,22 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                   marginTop: "10px",
                 }}
               >
-                {top3 &&
-                top3[0] &&
-                top3[0]?.userNickName &&
-                top3[0]?.userNickName &&
-                top3[0]?.userNickName?.length > 10
-                  ? top3[0]?.userNickName?.slice(0, 8) + "..."
-                  : top3[0]?.userNickName?.length < 10
-                  ? top3[0]?.userNickName
+                {top3 && top3[0] && top3[0]?.userNickName
+                  ? sliceString(
+                      top3[0]?.userNickName,
+                      576 < width && width < 1200 ? 5 : 10
+                    )
                   : "Username2"}
+              </Typography>
+              <Typography
+                sx={{
+                  color: "rgba(191, 190, 237, 0.60)",
+                  textAlign: "center",
+                  fontSize: 576 < width && width < 1200 ? "10px" : "12px",
+                  fontStyle: "normal",
+                }}
+              >
+                Played: {(top3 && top3[0]?.totalPlay) || "0"} times
               </Typography>
               <Typography
                 className="textReward"
@@ -289,15 +308,22 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                   marginTop: "10px",
                 }}
               >
-                {top3 &&
-                top3[2] &&
-                top3[2]?.userNickName &&
-                top3[2]?.userNickName &&
-                top3[2]?.userNickName?.length > 10
-                  ? top3[2]?.userNickName?.slice(0, 8) + "..."
-                  : top3[2]?.userNickName?.length < 10
-                  ? top3[2]?.userNickName
+                {top3 && top3[2] && top3[2]?.userNickName
+                  ? sliceString(
+                      top3[2]?.userNickName,
+                      576 < width && width < 1200 ? 5 : 10
+                    )
                   : "Username3"}
+              </Typography>
+              <Typography
+                sx={{
+                  color: "rgba(191, 190, 237, 0.60)",
+                  textAlign: "center",
+                  fontSize: 576 < width && width < 1200 ? "8px" : "10px",
+                  fontStyle: "normal",
+                }}
+              >
+                Played: {(top3 && top3[2]?.totalPlay) || ""} times
               </Typography>
               <Typography
                 className="textReward"
@@ -1293,10 +1319,10 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
           {" "}
           <Box
             sx={{
-              padding: "28px 28px 0px 28px",
+              padding: "20px 20px 0px 20px",
               height: "auto",
               display: "flex",
-              justifyContent: "center",
+              justifyContent: "space-between",
             }}
           >
             <Box
@@ -1363,8 +1389,18 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                 }}
               >
                 {top3 && top3[1] && top3[1]?.userNickName
-                  ? top3[1]?.userNickName
+                  ? sliceString(top3[1]?.userNickName, 8)
                   : "Username1"}
+              </Typography>
+              <Typography
+                sx={{
+                  color: "rgba(191, 190, 237, 0.60)",
+                  textAlign: "center",
+                  fontSize: "10px",
+                  fontStyle: "normal",
+                }}
+              >
+                Played: {(top3 && top3[1]?.totalPlay) || ""} times
               </Typography>
               <Typography
                 className="textReward"
@@ -1438,14 +1474,24 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                 sx={{
                   color: "#BFBEED",
                   textAlign: "center",
-                  fontSize: "24px",
+                  fontSize: "16px",
                   fontStyle: "normal",
                   marginTop: "10px",
                 }}
               >
                 {top3 && top3[0] && top3[0]?.userNickName
-                  ? top3[0]?.userNickName
+                  ? sliceString(top3[0]?.userNickName, 8)
                   : "Username2"}
+              </Typography>
+              <Typography
+                sx={{
+                  color: "rgba(191, 190, 237, 0.60)",
+                  textAlign: "center",
+                  fontSize: "12px",
+                  fontStyle: "normal",
+                }}
+              >
+                Played: {(top3 && top3[0]?.totalPlay) || ""} times
               </Typography>
               <Typography
                 className="textReward"
@@ -1523,8 +1569,18 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                 }}
               >
                 {top3 && top3[2] && top3[2]?.userNickName
-                  ? top3[2]?.userNickName
+                  ? sliceString(top3[2]?.userNickName, 8)
                   : "Username3"}
+              </Typography>
+              <Typography
+                sx={{
+                  color: "rgba(191, 190, 237, 0.60)",
+                  textAlign: "center",
+                  fontSize: "10px",
+                  fontStyle: "normal",
+                }}
+              >
+                Played: {(top3 && top3[2]?.totalPlay) || ""} times
               </Typography>
               <Typography
                 className="textReward"
@@ -2028,6 +2084,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                           top3[2] &&
                           moment(top3[2]?.updatedAt).format("MM/DD/YYYY")}{" "}
                       </Typography>
+
                       <Typography
                         className="textReward"
                         sx={{

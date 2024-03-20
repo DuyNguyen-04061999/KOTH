@@ -98,6 +98,18 @@ export default function OTPVerifyAccount() {
     }
   };
 
+  const checkIfNumber = (event) => {
+    /**
+     * Allowing: Integers | Backspace | Tab | Delete | Left & Right arrow keys
+     **/
+
+    const regex = new RegExp(
+      /(^\d*$)|(Backspace|Tab|Delete|ArrowLeft|ArrowRight|\(|\)|-)/
+    );
+
+    return !event.key.match(regex) && event.preventDefault();
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
   };
@@ -164,9 +176,12 @@ export default function OTPVerifyAccount() {
                   borderBottom: "2px solid white !important",
                   borderRadius: "4px",
                 }}
-                type="number"
+                type="text"
+                name="number"
                 inputMode="numeric"
                 maxLength={1}
+              onKeyDown={checkIfNumber}
+                
               />
             </FormControl>
           )}
