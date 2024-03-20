@@ -60,7 +60,7 @@ export default function OTPVerifyAccount() {
             email: user?.userEmail,
             phone: user?.userPhone,
           })
-        )
+        );
         break;
       default:
         return false;

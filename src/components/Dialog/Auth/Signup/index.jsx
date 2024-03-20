@@ -301,7 +301,7 @@ export default function Signup(props) {
       sx={{
         width: "100%",
         paddingTop: "30px",
-        height:"100%"
+        height: "100%",
       }}
     >
       <Box component="form" className="p-2 ps-2 pe-3" noValidate>
@@ -798,7 +798,7 @@ export default function Signup(props) {
               textAlign: "start",
               color: "#F05153",
               fontSize: "13px",
-             paddingBottom:"10px"
+              paddingBottom: "10px",
             }}
           >
             Please enter a valid display name
@@ -807,7 +807,7 @@ export default function Signup(props) {
         <FormControl
           variant="standard"
           sx={{
-            marginTop:  "",
+            marginTop: "",
             width: "100%",
             backgroundColor: "#1a132d",
             borderRadius: width > 576 ? "5px" : "4px",
