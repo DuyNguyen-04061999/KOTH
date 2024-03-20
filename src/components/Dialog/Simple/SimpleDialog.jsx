@@ -113,7 +113,9 @@ export default function SimpleDialog(props) {
             onClose={handleClose}
             open={isLoginDialog}
             maxWidth={"md"}
-            fullScreen={device === "Mobile" || device === "Tablet" ? true : false}
+            fullScreen={
+              device === "Mobile" || device === "Tablet" ? true : false
+            }
             sx={{
               ".MuiPaper-root": {
                 backgroundColor: "#291e3b",
@@ -132,7 +134,7 @@ export default function SimpleDialog(props) {
                 width: device === "Desktop" ? "50%" : "100%",
                 display: "flex",
                 alignItems: "center",
-                overflow:"auto"
+                overflow: "auto",
               }}
               className="p-2"
             >
@@ -151,20 +153,20 @@ export default function SimpleDialog(props) {
               ) : (
                 <Login></Login>
               )}
-               <Box
-                  component={"img"}
-                  src={sign.btnBack}
-                  sx={{
-                    width: "20px",
-                    height: "20px",
-                    position: "absolute",
-                    zIndex: "100",
-                    top: "20px",
-                    right: "20px",
-                    cursor: "pointer",
-                  }}
-                  onClick={handleClose}
-                ></Box>
+              <Box
+                component={"img"}
+                src={sign.btnBack}
+                sx={{
+                  width: "20px",
+                  height: "20px",
+                  position: "absolute",
+                  zIndex: "100",
+                  top: "20px",
+                  right: "20px",
+                  cursor: "pointer",
+                }}
+                onClick={handleClose}
+              ></Box>
             </Box>
             {device === "Desktop" ? (
               <Box
@@ -173,7 +175,7 @@ export default function SimpleDialog(props) {
                   color: "white",
                   height: "100%",
                   position: "relative",
-                  width:"50%",
+                  width: "50%",
                 }}
               >
                 <Box
@@ -229,7 +231,9 @@ export default function SimpleDialog(props) {
                   </Box>
                 </Box>
               </Box>
-            ) : (<></>)}
+            ) : (
+              <></>
+            )}
           </Dialog>
         </>
       )}

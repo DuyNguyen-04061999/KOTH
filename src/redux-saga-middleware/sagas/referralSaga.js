@@ -88,6 +88,14 @@ function* getCurrentBonusesSaga(dataRequest) {
     console.log(error);
   }
 }
+function* closeCongraPopupSaga(dataRequest) {
+  try {
+    const res = yield call(referralService.closeCongraPopup);
+    console.log("Res: ", res);
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 function* referralSaga() {
   yield takeEvery("GET_REGISTER_SUBCRIBE_LIST_READY", getResSubList);
@@ -95,6 +103,7 @@ function* referralSaga() {
   yield takeEvery("CLAIM_PHYSICAL_REWARD", claimPhysicalRewardSaga);
   yield takeEvery("CLAIM_ALL_REWARD", claimAllRewardSaga);
   yield takeEvery("GET_CURRENT_BONUSES", getCurrentBonusesSaga);
+  yield takeEvery("CLOSE_UPLEVEL_DIALOG", closeCongraPopupSaga);
 }
 
 export default referralSaga;

@@ -27,6 +27,7 @@ import PlatinumIconSmall from "../../src/assets/imagesReferral/PlatinumIconSmall
 import DiamondIconSmall from "../../src/assets/imagesReferral/DiamondIconSmall.png";
 import checkedIcon from "../../src/assets/imagesReferral/checkedIcon.png";
 import uncheckIcon from "../../src/assets/imagesReferral/uncheckIcon.png";
+import upLevelCongra from "../../src/assets/imagesReferral/upLevelCongra.png";
 export const imagesReferral = {
   referralIcon: referralIcon,
   referralIconActive: referralIconActive,
@@ -59,4 +60,5 @@ export const imagesReferral = {
 
   checkedIcon: checkedIcon,
   uncheckIcon: uncheckIcon,
+  upLevelCongra: upLevelCongra,
 };

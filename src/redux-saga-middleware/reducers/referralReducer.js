@@ -93,6 +93,16 @@ export const getCurrentBonuses = (data) => {
     type: "GET_CURRENT_BONUSES",
   };
 };
+export const openUpLevelCongra = () => {
+  return {
+    type: "OPEN_UPLEVEL_DIALOG",
+  };
+};
+export const closeUpLevelCongra = () => {
+  return {
+    type: "CLOSE_UPLEVEL_DIALOG",
+  };
+};
 const referralReducer = (
   state = {
     registerList: [],
@@ -116,6 +126,8 @@ const referralReducer = (
     //-----------------
     totalBonuses: 0,
     totalPotentialBonuses: 0,
+    //-----------------
+    isCongraUpLevel: false,
   },
   action
 ) => {
@@ -195,6 +207,18 @@ const referralReducer = (
       return {
         ...state,
         isOpenShareDialog: false,
+      };
+    }
+    case "OPEN_UPLEVEL_DIALOG": {
+      return {
+        ...state,
+        isCongraUpLevel: true,
+      };
+    }
+    case "CLOSE_UPLEVEL_DIALOG": {
+      return {
+        ...state,
+        isCongraUpLevel: false,
       };
     }
     case "OPEN_TIER_REWARD_DIALOG": {
