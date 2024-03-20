@@ -80,6 +80,18 @@ export default function OTPResetPassword() {
     }
   };
 
+  const checkIfNumber = (event) => {
+    /**
+     * Allowing: Integers | Backspace | Tab | Delete | Left & Right arrow keys
+     **/
+
+    const regex = new RegExp(
+      /(^\d*$)|(Backspace|Tab|Delete|ArrowLeft|ArrowRight|\(|\)|-)/
+    );
+
+    return !event.key.match(regex) && event.preventDefault();
+  };
+
   return (
     <Box
       sx={{
@@ -138,9 +150,11 @@ export default function OTPResetPassword() {
                 borderBottom: "2px solid white !important",
                 borderRadius: "4px",
               }}
-              type="number"
+              type="text"
+              name="number"
               maxLength={1}
               inputMode="numeric"
+              onKeyDown={checkIfNumber}
             />
           )}
         />
