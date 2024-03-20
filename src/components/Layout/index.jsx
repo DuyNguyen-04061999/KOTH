@@ -278,7 +278,7 @@ export default function Layout(props) {
   }, [userName, dispatch, token]);
 
   const clickNavIcon = () => {
-    dispatch(clickTabNav(!isNav));
+    setIsNav(!isNav)
   };
 
   useEffect(() => {
@@ -530,7 +530,7 @@ export default function Layout(props) {
                   height="23"
                   viewBox="0 0 30 23"
                   fill="none"
-                  // onClick={clickNavIcon}
+                  onClick={clickNavIcon}
                   className="cursor-pointer"
                 >
                   <rect width="30" height="5" rx="2" fill="#A968E2" />
