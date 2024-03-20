@@ -36,6 +36,16 @@ class ReferralService {
     });
     return res;
   }
+  async closeCongraPopup(dataRequest) {
+    const headers = {
+      "x-access-refactor-token": localStorage.getItem("token"),
+      "Content-Type": "application/json",
+    };
+    const res = await PROMOTION_API.patch("/api/referral/close-popup", {
+      headers,
+    });
+    return res;
+  }
   async currentBonuses(dataRequest) {
     if (localStorage.getItem("token")) {
       const headers = {

@@ -4,10 +4,14 @@ import React from "react";
 import { useDispatch } from "react-redux";
 
 import { readNotification } from "../../../redux-saga-middleware/reducers/notificationReducer";
+import { closeNotificationDialog } from "../../../redux-saga-middleware/reducers/dialogReducer";
+import { useNavigate } from "react-router-dom";
 
 export default function ReferralNotification(props) {
   const { createdAt, content, title, id } = props;
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   return (
     <Box
       component={"div"}
@@ -45,7 +49,23 @@ export default function ReferralNotification(props) {
       >
         {moment(createdAt)?.format("M/D/YYYY, hh:mm a")}
       </Box>
-      <Box sx={{ fontSize: "12px", color: "#fff" }}>{content}</Box>
+      <Box sx={{ fontSize: "12px", color: "#fff" }}>{content}</Box>{" "}
+      <Typography
+        onClick={() => {
+          dispatch(closeNotificationDialog());
+          navigate("/referal");
+        }}
+        sx={{
+          marginLeft: "0px !important",
+          fontSize: 13,
+          textAlign: "end",
+          marginTop: "10px",
+          color: "#FF9F38",
+          cursor: "pointer",
+        }}
+      >
+        Renew now
+      </Typography>
     </Box>
   );
 }

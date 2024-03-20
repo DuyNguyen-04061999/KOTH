@@ -120,18 +120,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                   ? top3[1]?.userNickName
                   : "Username1"}
               </Typography>
-              <Typography
-                sx={{
-                  color: "rgba(191, 190, 237, 0.60)",
-                  textAlign: "center",
-                  fontSize: 576 < width && width < 1200 ? "8px" : "10px",
-                  fontStyle: "normal",
-                }}
-              >
-                {top3 &&
-                  top3[1] &&
-                  moment(top3[1]?.updatedAt).format("MM/DD/YYYY")}
-              </Typography>
+
               <Typography
                 sx={{
                   color: "rgba(191, 190, 237, 0.60)",
@@ -238,18 +227,6 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                   fontStyle: "normal",
                 }}
               >
-                {top3 &&
-                  top3[0] &&
-                  moment(top3[0]?.updatedAt).format("MM/DD/YYYY")}
-              </Typography>
-              <Typography
-                sx={{
-                  color: "rgba(191, 190, 237, 0.60)",
-                  textAlign: "center",
-                  fontSize: 576 < width && width < 1200 ? "10px" : "12px",
-                  fontStyle: "normal",
-                }}
-              >
                 Played: {(top3 && top3[0]?.totalPlay) || "0"} times
               </Typography>
               <Typography
@@ -337,18 +314,6 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                       576 < width && width < 1200 ? 5 : 10
                     )
                   : "Username3"}
-              </Typography>
-              <Typography
-                sx={{
-                  color: "rgba(191, 190, 237, 0.60)",
-                  textAlign: "center",
-                  fontSize: 576 < width && width < 1200 ? "8px" : "10px",
-                  fontStyle: "normal",
-                }}
-              >
-                {top3 && top3[2]
-                  ? moment(top3[2]?.updatedAt).format("MM/DD/YYYY")
-                  : "00/00/00"}{" "}
               </Typography>
               <Typography
                 sx={{
@@ -1435,18 +1400,6 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                   fontStyle: "normal",
                 }}
               >
-                {top3 &&
-                  top3[1] &&
-                  moment(top3[1]?.updatedAt).format("MM/DD/YYYY")}
-              </Typography>
-              <Typography
-                sx={{
-                  color: "rgba(191, 190, 237, 0.60)",
-                  textAlign: "center",
-                  fontSize: "10px",
-                  fontStyle: "normal",
-                }}
-              >
                 Played: {(top3 && top3[1]?.totalPlay) || ""} times
               </Typography>
               <Typography
@@ -1538,18 +1491,6 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                   fontStyle: "normal",
                 }}
               >
-                {top3 &&
-                  top3[0] &&
-                  moment(top3[0]?.updatedAt).format("MM/DD/YYYY")}
-              </Typography>
-              <Typography
-                sx={{
-                  color: "rgba(191, 190, 237, 0.60)",
-                  textAlign: "center",
-                  fontSize: "12px",
-                  fontStyle: "normal",
-                }}
-              >
                 Played: {(top3 && top3[0]?.totalPlay) || ""} times
               </Typography>
               <Typography
@@ -1630,18 +1571,6 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                 {top3 && top3[2] && top3[2]?.userNickName
                   ? sliceString(top3[2]?.userNickName, 8)
                   : "Username3"}
-              </Typography>
-              <Typography
-                sx={{
-                  color: "rgba(191, 190, 237, 0.60)",
-                  textAlign: "center",
-                  fontSize: "10px",
-                  fontStyle: "normal",
-                }}
-              >
-                {top3 && top3[2]
-                  ? moment(top3[2]?.updatedAt).format("MM/DD/YYYY")
-                  : "00/00/00"}
               </Typography>
               <Typography
                 sx={{
