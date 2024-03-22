@@ -53,7 +53,7 @@ export default function ReferralNotification(props) {
       <Typography
         onClick={() => {
           dispatch(closeNotificationDialog());
-          navigate("/referal");
+          navigate("/referral");
         }}
         sx={{
           marginLeft: "0px !important",
@@ -64,7 +64,7 @@ export default function ReferralNotification(props) {
           cursor: "pointer",
         }}
       >
-        Renew now
+        Details
       </Typography>
     </Box>
   );

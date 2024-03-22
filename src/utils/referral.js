@@ -25,3 +25,11 @@ export const isOpenCongraPopup = (tierList) => {
   }
   return false;
 };
+export const updatePopupClose = (tierList) => {
+  for (let i = 0; i < tierList.length; i++) {
+    if (tierList[i]?.popupClosed === false) {
+      tierList[i].popupClosed = true;
+    }
+  }
+  return tierList;
+};

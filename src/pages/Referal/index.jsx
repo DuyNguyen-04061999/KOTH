@@ -36,7 +36,6 @@ export default function Referal() {
   }, [dispatch]);
   useEffect(() => {
     dispatch(updateCurrentLevel(getCurrentNextLevel(registerList, tierList)));
-
     if (isOpenCongraPopup(tierList)) {
       dispatch(openUpLevelCongra());
     }

@@ -289,15 +289,13 @@ export default function Signup(props) {
   useEffect(() => {
     setValidEmail(validateEmail(email));
     setValidPhone(validatePhoneNumber(phone));
-  },[email,phone])
+  }, [email, phone]);
 
   useEffect(() => {
     setValidDisplayName(validateNickName(displaynameValue));
     setValidFirstName(firstName?.length >= 1);
     setValidLastName(lastName?.length >= 1);
-  }, [ displaynameValue, firstName, lastName]);
-
-  console.log(validDisplayName);
+  }, [displaynameValue, firstName, lastName]);
 
   const { orientation } = useSelector((state) => state.gameReducer);
   const { device } = useSelector((state) => state.deviceReducer);
@@ -798,7 +796,7 @@ export default function Signup(props) {
             )}
           </Box>
         </FormControl>
-        { displaynameValue.length > 12  && (
+        {displaynameValue.length > 12 && (
           <Typography
             sx={{
               textAlign: "start",
