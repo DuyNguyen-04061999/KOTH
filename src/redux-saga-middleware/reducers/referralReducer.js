@@ -1,3 +1,5 @@
+import { updatePopupClose } from "../../utils/referral";
+
 export const getResSubListReady = () => {
   return {
     type: "GET_REGISTER_SUBCRIBE_LIST_READY",
@@ -103,6 +105,16 @@ export const closeUpLevelCongra = () => {
     type: "CLOSE_UPLEVEL_DIALOG",
   };
 };
+export const closeUpLevelCongraSaga = () => {
+  return {
+    type: "CLOSE_UPLEVEL_DIALOG_SAGA",
+  };
+};
+export const updateEntireTierList = () => {
+  return {
+    type: "UPDATE_ENTIRE_TIER_LIST",
+  };
+};
 const referralReducer = (
   state = {
     registerList: [],
@@ -128,6 +140,7 @@ const referralReducer = (
     totalPotentialBonuses: 0,
     //-----------------
     isCongraUpLevel: false,
+    isFetchingUpLevel: false,
   },
   action
 ) => {
@@ -140,6 +153,12 @@ const referralReducer = (
         isGetRegisterSuccess: false,
         isGetRegisterFail: false,
         registerList: [],
+      };
+    }
+    case "CLOSE_UPLEVEL_DIALOG_SAGA": {
+      return {
+        ...state,
+        isFetchingUpLevel: true,
       };
     }
     case "GET_REGISTER_LIST_SUCCESS": {
@@ -177,6 +196,12 @@ const referralReducer = (
           }
           return item;
         }),
+      };
+    }
+    case "UPDATE_ENTIRE_TIER_LIST": {
+      return {
+        ...state,
+        tierList: updatePopupClose(state?.tierList),
       };
     }
     case "UPDATE_CURRENT_LEVEL": {
@@ -219,6 +244,7 @@ const referralReducer = (
       return {
         ...state,
         isCongraUpLevel: false,
+        isFetchingUpLevel: false,
       };
     }
     case "OPEN_TIER_REWARD_DIALOG": {

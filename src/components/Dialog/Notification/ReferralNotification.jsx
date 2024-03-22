@@ -64,7 +64,7 @@ export default function ReferralNotification(props) {
           cursor: "pointer",
         }}
       >
-        Renew now
+        Details
       </Typography>
     </Box>
   );
