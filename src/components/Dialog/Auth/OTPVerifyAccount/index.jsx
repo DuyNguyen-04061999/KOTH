@@ -180,8 +180,7 @@ export default function OTPVerifyAccount() {
                 name="number"
                 inputMode="numeric"
                 maxLength={1}
-              onKeyDown={checkIfNumber}
-                
+                onKeyDown={checkIfNumber}
               />
             </FormControl>
           )}

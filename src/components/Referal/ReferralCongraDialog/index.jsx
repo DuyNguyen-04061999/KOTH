@@ -1,11 +1,9 @@
 import { Box, Dialog, Typography } from "@mui/material";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  closeUpLevelCongra,
-  getListTierReady,
-} from "../../../redux-saga-middleware/reducers/referralReducer";
+import { closeUpLevelCongraSaga } from "../../../redux-saga-middleware/reducers/referralReducer";
 import { imagesReferral } from "../../../utils/imagesReferral";
+import PageLoading from "../PageLoading";
 
 export default function ReferralCongraDialog() {
   const { isCongraUpLevel } = useSelector((state) => state.referralReducer);
@@ -25,10 +23,10 @@ export default function ReferralCongraDialog() {
       }}
       open={isCongraUpLevel}
       onClose={() => {
-        dispatch(closeUpLevelCongra());
-        dispatch(getListTierReady());
+        dispatch(closeUpLevelCongraSaga());
       }}
     >
+      <PageLoading />
       <Box
         sx={{
           backgroundColor: "#352658",
@@ -48,8 +46,7 @@ export default function ReferralCongraDialog() {
         >
           <svg
             onClick={() => {
-              dispatch(closeUpLevelCongra());
-              dispatch(getListTierReady());
+              dispatch(closeUpLevelCongraSaga());
             }}
             xmlns="http://www.w3.org/2000/svg"
             width={device === "Mobile" ? "10" : "20"}
