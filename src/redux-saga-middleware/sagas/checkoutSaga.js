@@ -2,6 +2,7 @@ import {call, put, takeEvery} from "redux-saga/effects";
 import {showToastNotification} from "../reducers/alertReducer";
 import {notifyToGameWhenBuyPackageSuccess} from "../reducers/appReducer";
 import {
+    checkoutPaypalCancel,
     checkoutPaypalCancelComplete,
     checkoutPaypalCancelFail,
     checkoutPaypalSuccessComplete,
@@ -12,7 +13,7 @@ import {
 import {buyPackageSuccess} from "../reducers/packageReducer";
 import {toggleAlertStripeProcess} from "../reducers/stripeReducer";
 import {getUserInfoReady, updateCountTicket} from "../reducers/userReducer";
-import {toggleCheckWallet} from "../reducers/walletReducer";
+import {deleteCurrentPackage, deleteCurrentPackageFail, deleteCurrentPackageSuccess, toggleCheckWallet} from "../reducers/walletReducer";
 import CheckoutService from "../services/checkoutService";
 import ReactGA from "react-ga4";
 
@@ -49,6 +50,7 @@ function* getCheckOutSaga(dataRequest) {
 
 function* getCheckOutSagaSuccess(dataRequest) {
     try {
+        const packageRenewChanged = localStorage.getItem("previousPack")
         const {payload} = dataRequest;
         const {game} = payload
         const res = yield call(checkoutService.getCheckoutSuccess, payload);
@@ -119,10 +121,29 @@ function* getCheckOutSagaCancel(dataRequest) {
     }
 }
 
+function* getCancelCurrentPackageSaga(dataRequest) {
+    try{
+        const { payload } = dataRequest
+        const res = yield call(checkoutService.cancelCurentPackage, payload)
+        const {status , data} = res
+        if(status === 200 || status === 201) {
+            yield put(deleteCurrentPackageSuccess(data))
+        } 
+    } catch(err) {
+        console.log(err);
+        yield put(deleteCurrentPackageFail())
+        yield put(showToastNotification({
+            type: "error",
+            message: err?.message
+        }))
+    }
+} 
+
 function* checkoutSaga() {
     yield takeEvery("GET_CHECK_OUT", getCheckOutSaga)
     yield takeEvery("CHECKOUT_PAYPAL_SUCCESS", getCheckOutSagaSuccess)
     yield takeEvery("CHECKOUT_PAYPAL_CANCEL", getCheckOutSagaCancel)
+    yield takeEvery("CANCEL_RENEW_PACKAGE", getCancelCurrentPackageSaga)
 }
 
 export default checkoutSaga

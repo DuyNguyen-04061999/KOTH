@@ -24,9 +24,11 @@ class CheckoutService {
     const token = localStorage.getItem("token");
     const res = await PROMOTION_API.post(
       "/api/payments/paypal/buy-package/success",
+
       {
         ...dataRequest,
       },
+
       {
         headers: {
           "Content-Type": "application/json",
@@ -37,6 +39,46 @@ class CheckoutService {
       }
     );
     return res;
+  }
+
+  // async getCheckOutAutoCancel(dataRequest) {
+
+  //   const token = localStorage.getItem("token");
+  //   const res = await PROMOTION_API.post(
+  //     "/api/payments/paypal/auto/cancel",
+  //     {
+  //       packageId: Number(JSON.parse(packageRenewChanged?.id)),
+  //     },
+  //     {
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: token,
+  //         authorization: token,
+  //         "x-access-refactor-token": token,
+  //       },
+  //     }
+  //   );
+  //   return res
+  // }
+
+  async cancelCurentPackage(dataRequest) {
+    const packageRenewChanged = localStorage.getItem("previousPack")
+    const token = localStorage.getItem("token");
+    const res = await PROMOTION_API.post(
+      "/api/payments/paypal/auto/cancel",
+      {
+        packageId: Number(JSON.parse(packageRenewChanged)?.id),
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+          authorization: token,
+          "x-access-refactor-token": token,
+        },
+      }
+    );
+    return res
   }
 
   async getCheckoutCancel(dataRequest) {
@@ -60,3 +102,4 @@ class CheckoutService {
 }
 
 export default CheckoutService;
+ 

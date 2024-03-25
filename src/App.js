@@ -337,12 +337,15 @@ function App() {
     const subId = params.get("subscription_id");
 
     if (paymentType === "paypal" && paymentStatus === "success") {
+      let packageRenew = localStorage.getItem("packageRenew");
+      packageRenew = JSON.parse(packageRenew);
       store.dispatch(
         checkoutPaypalSuccess({
           paymentId: paymentId,
           subId: subId,
           payerId: PayerID,
           game: gameStatus ? true : false,
+          optionId: packageRenew?.id ? Number(packageRenew?.id) : undefined
         })
       );
     }
