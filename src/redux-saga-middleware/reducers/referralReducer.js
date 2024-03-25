@@ -1,3 +1,5 @@
+import { updatePopupClose } from "../../utils/referral";
+
 export const getResSubListReady = () => {
   return {
     type: "GET_REGISTER_SUBCRIBE_LIST_READY",
@@ -93,6 +95,26 @@ export const getCurrentBonuses = (data) => {
     type: "GET_CURRENT_BONUSES",
   };
 };
+export const openUpLevelCongra = () => {
+  return {
+    type: "OPEN_UPLEVEL_DIALOG",
+  };
+};
+export const closeUpLevelCongra = () => {
+  return {
+    type: "CLOSE_UPLEVEL_DIALOG",
+  };
+};
+export const closeUpLevelCongraSaga = () => {
+  return {
+    type: "CLOSE_UPLEVEL_DIALOG_SAGA",
+  };
+};
+export const updateEntireTierList = () => {
+  return {
+    type: "UPDATE_ENTIRE_TIER_LIST",
+  };
+};
 const referralReducer = (
   state = {
     registerList: [],
@@ -116,6 +138,9 @@ const referralReducer = (
     //-----------------
     totalBonuses: 0,
     totalPotentialBonuses: 0,
+    //-----------------
+    isCongraUpLevel: false,
+    isFetchingUpLevel: false,
   },
   action
 ) => {
@@ -128,6 +153,12 @@ const referralReducer = (
         isGetRegisterSuccess: false,
         isGetRegisterFail: false,
         registerList: [],
+      };
+    }
+    case "CLOSE_UPLEVEL_DIALOG_SAGA": {
+      return {
+        ...state,
+        isFetchingUpLevel: true,
       };
     }
     case "GET_REGISTER_LIST_SUCCESS": {
@@ -167,6 +198,12 @@ const referralReducer = (
         }),
       };
     }
+    case "UPDATE_ENTIRE_TIER_LIST": {
+      return {
+        ...state,
+        tierList: updatePopupClose(state?.tierList),
+      };
+    }
     case "UPDATE_CURRENT_LEVEL": {
       return {
         ...state,
@@ -195,6 +232,19 @@ const referralReducer = (
       return {
         ...state,
         isOpenShareDialog: false,
+      };
+    }
+    case "OPEN_UPLEVEL_DIALOG": {
+      return {
+        ...state,
+        isCongraUpLevel: true,
+      };
+    }
+    case "CLOSE_UPLEVEL_DIALOG": {
+      return {
+        ...state,
+        isCongraUpLevel: false,
+        isFetchingUpLevel: false,
       };
     }
     case "OPEN_TIER_REWARD_DIALOG": {

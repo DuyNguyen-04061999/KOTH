@@ -257,7 +257,7 @@ export default function ChatFriendList() {
                 style={{ borderRadius: "50%" }}
                 className="ms-2 me-2"
               />
-              <Box display={"flex"} flexDirection={"column"} sx={{width:"150px"}}>
+              <Box display={"flex"} flexDirection={"column"} sx={{width:"150px"}} alignItems={"flex-start"}>
                 <h5
                   style={{
                     color: "#7C81F2",

@@ -56,6 +56,18 @@ export default function TicketCheckOut() {
     }
   }, [typePayment]);
 
+  const checkIfNumber = (event) => {
+    /**
+     * Allowing: Integers | Backspace | Tab | Delete | Left & Right arrow keys
+     **/
+
+    const regex = new RegExp(
+      /(^\d*$)|(Backspace|Tab|Delete|ArrowLeft|ArrowRight|\(|\)|-)/
+    );
+
+    return !event.key.match(regex) && event.preventDefault();
+  };
+
   useEffect(() => {
     if (feeCheckout) {
       const mn =
@@ -339,7 +351,8 @@ export default function TicketCheckOut() {
                       <RemoveIcon />
                     </Button>
                     <input
-                      type="number"
+                      type="text"
+                      name="number"
                       className="input_check"
                       max={10}
                       min={1}
@@ -347,6 +360,7 @@ export default function TicketCheckOut() {
                         typeWallet?.includes("sub") ||
                         typeWallet?.includes("normal")
                       }
+                      onKeyDown={checkIfNumber}
                       onChange={handleChangeValue}
                       style={{
                         backgroundColor: typeWallet?.includes("sub")
@@ -523,7 +537,7 @@ export default function TicketCheckOut() {
               <Typography sx={{ fontSize: "14px" }}>
                 {typeWallet?.includes("sub")
                   ? "Subscription Pack x 1"
-                  : `Combo Pack x ${sl}` }
+                  : `Combo Pack x ${sl}`}
               </Typography>
               <Typography sx={{ color: "white", fontSize: "14px" }}>
                 {" "}
@@ -678,7 +692,9 @@ export default function TicketCheckOut() {
                       color: "#7848ED",
                     }}
                   >
-                    Persons under the age of 18 required to use this Website only with the supervision of an Adult. Payment Information must be provided by or with the permission of an Adult
+                    Persons under the age of 18 required to use this Website
+                    only with the supervision of an Adult. Payment Information
+                    must be provided by or with the permission of an Adult
                   </span>
                 </Box>
               </Box>

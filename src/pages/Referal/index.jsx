@@ -10,12 +10,14 @@ import {
   getCurrentBonuses,
   getListTierReady,
   getResSubListReady,
+  openUpLevelCongra,
   updateCurrentLevel,
 } from "../../redux-saga-middleware/reducers/referralReducer";
 import ReferralShare from "../../components/Referal/ReferralShare";
 import ReferralTierDialog from "../../components/Referal/ReferralTierDialog";
-import { getCurrentNextLevel } from "../../utils/referral";
+import { getCurrentNextLevel, isOpenCongraPopup } from "../../utils/referral";
 import { Navigate } from "react-router-dom";
+import ReferralCongraDialog from "../../components/Referal/ReferralCongraDialog";
 
 export default function Referal() {
   const { width } = useWindowDimensions();
@@ -34,6 +36,9 @@ export default function Referal() {
   }, [dispatch]);
   useEffect(() => {
     dispatch(updateCurrentLevel(getCurrentNextLevel(registerList, tierList)));
+    if (isOpenCongraPopup(tierList)) {
+      dispatch(openUpLevelCongra());
+    }
   }, [registerList, tierList, dispatch]);
   return tokenUser ? (
     <MainLayout
@@ -79,6 +84,7 @@ export default function Referal() {
           <ReferralShare />
           <ReferralHeader />
           <ReferralCheckList />
+          <ReferralCongraDialog />
           <ReferralTable />
         </Container>
       }

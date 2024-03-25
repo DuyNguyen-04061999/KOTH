@@ -1,3 +1,28 @@
+## [1.12.0](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/compare/1.11.0...1.12.0) (2024-03-25)
+
+
+### Features
+
+* Add total play time to leaderboard ([d1153ff](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/d1153ff02ecbd3b5259250ad230cf159051badd7))
+* Build levelup congratulation popup in referral ([51e9a47](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/51e9a474056bb9236f3ae96136687293e64ad239))
+* Fix levelup popup referral ([af7525c](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/af7525c47a8aa12f39c3bec929f7215b8a76b28b))
+* Fix popup appear twice when the user got the task done ([0b00533](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/0b00533052b470071c795553d4f8234531079ced))
+* Fix redirect to homepage when sign up new account with ref code ([ca24de2](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/ca24de2256abc45737beba1f7792f445d680a556))
+* Fix wrong text in navigate to referral page ([f738e67](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/f738e677b28d0a0695686bb3aca3eafa1ef10468))
+* Remove date in leaderboard ([11bfac3](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/11bfac3c1f9d8b4ebe88779853a0712d15d96f87))
+* Remove noti please logout when token existing in link with referral ([796dc0d](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/796dc0d2ef751f0b19635f9f14b2033deffb9107))
+
+
+### Bug Fixes
+
+* button close scroll to bottom ([0a9841d](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/0a9841dbd04cb5ab05181290fbbdbfc3babfe5fb))
+* Button playnow ([fb301bc](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/fb301bc452a06c1b5b555150ce459d99d552c37d))
+* Display the button to increase or decrease the number in the text box to enter the phone number of the Sign Up popup and OTP popup in Firefox browser ([adc1ddd](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/adc1ddda145de38c2625ce6efa895ef4dc360034))
+* Fix font size time banner mobile ([b27be18](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/b27be182a4863fb0bfdead0d9c13b9275c6d2b1f))
+* Fix onClick sidear with tablet ([ad52ea2](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/ad52ea21a88ebbace8457dce446d92f29c75f16c))
+* Fix text center chat Privite ([71bdeda](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/71bdedae45c497b2098368ed67282f860b691af3))
+* Fix text valid display name rerender ([8441e76](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/8441e760a9cb9afe5ec5eb59ca60432de7f6baf3))
+
 ## [1.11.0](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/compare/1.10.0...1.11.0) (2024-03-19)
 
 

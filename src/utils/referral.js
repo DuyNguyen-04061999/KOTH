@@ -17,3 +17,19 @@ export const getCurrentNextLevel = (registerList, tierList) => {
     nextSubcribersCondition: undefined,
   };
 };
+export const isOpenCongraPopup = (tierList) => {
+  for (let index = 0; index < tierList?.length; index++) {
+    if (tierList[index]?.popupClosed === false) {
+      return true;
+    }
+  }
+  return false;
+};
+export const updatePopupClose = (tierList) => {
+  for (let i = 0; i < tierList.length; i++) {
+    if (tierList[i]?.popupClosed === false) {
+      tierList[i].popupClosed = true;
+    }
+  }
+  return tierList;
+};

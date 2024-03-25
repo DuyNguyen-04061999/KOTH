@@ -278,7 +278,7 @@ export default function Layout(props) {
   }, [userName, dispatch, token]);
 
   const clickNavIcon = () => {
-    setIsNav(!isNav)
+    setIsNav(!isNav);
   };
 
   useEffect(() => {

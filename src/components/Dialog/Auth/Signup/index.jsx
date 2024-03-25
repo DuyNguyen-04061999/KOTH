@@ -51,7 +51,7 @@ export default function Signup(props) {
   const [displayPasswordC, setDisplayPasswordC] = useState(false);
   const [validEmail, setValidEmail] = useState(false);
   const [validPhone, setValidPhone] = useState(false);
-  const [validDisplayName, setValidDisplayName] = useState(false);
+  const [validDisplayName, setValidDisplayName] = useState(true);
   const [validFirstName, setValidFirstName] = useState(false);
   const [validLastName, setValidLastName] = useState(false);
   const [popupList, setPopupList] = useState(false);
@@ -289,10 +289,14 @@ export default function Signup(props) {
   useEffect(() => {
     setValidEmail(validateEmail(email));
     setValidPhone(validatePhoneNumber(phone));
+  }, [email, phone]);
+
+  useEffect(() => {
     setValidDisplayName(validateNickName(displaynameValue));
     setValidFirstName(firstName?.length >= 1);
     setValidLastName(lastName?.length >= 1);
-  }, [email, phone, displaynameValue, firstName, lastName]);
+  }, [displaynameValue, firstName, lastName]);
+
   const { orientation } = useSelector((state) => state.gameReducer);
   const { device } = useSelector((state) => state.deviceReducer);
   return (
@@ -301,7 +305,7 @@ export default function Signup(props) {
       sx={{
         width: "100%",
         paddingTop: "30px",
-        height:"100%"
+        height: "100%",
       }}
     >
       <Box component="form" className="p-2 ps-2 pe-3" noValidate>
@@ -792,13 +796,13 @@ export default function Signup(props) {
             )}
           </Box>
         </FormControl>
-        {!validDisplayName && displaynameValue !== "" && (
+        {displaynameValue.length > 12 && (
           <Typography
             sx={{
               textAlign: "start",
               color: "#F05153",
               fontSize: "13px",
-             paddingBottom:"10px"
+              paddingBottom: "10px",
             }}
           >
             Please enter a valid display name
@@ -807,7 +811,7 @@ export default function Signup(props) {
         <FormControl
           variant="standard"
           sx={{
-            marginTop:  "",
+            marginTop: "",
             width: "100%",
             backgroundColor: "#1a132d",
             borderRadius: width > 576 ? "5px" : "4px",

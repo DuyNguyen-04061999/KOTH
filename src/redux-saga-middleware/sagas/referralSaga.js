@@ -1,11 +1,13 @@
 import { call, delay, put, takeEvery } from "redux-saga/effects";
 import ReferralService from "../services/referralService";
 import {
+  closeUpLevelCongra,
   getListTier,
   getResSubListFail,
   getResSubListSuccess,
   openTierRewardDialog,
   updateBonuses,
+  updateEntireTierList,
   updateIsLoadingClaim,
   updateIsLoadingClaimAll,
   updateTierList,
@@ -88,6 +90,17 @@ function* getCurrentBonusesSaga(dataRequest) {
     console.log(error);
   }
 }
+function* closeCongraPopupSaga(dataRequest) {
+  try {
+    const res = yield call(referralService.closeCongraPopup);
+    if (res?.status === 200 || res?.status === 201) {
+      yield put(updateEntireTierList());
+      yield put(closeUpLevelCongra());
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 function* referralSaga() {
   yield takeEvery("GET_REGISTER_SUBCRIBE_LIST_READY", getResSubList);
@@ -95,6 +108,7 @@ function* referralSaga() {
   yield takeEvery("CLAIM_PHYSICAL_REWARD", claimPhysicalRewardSaga);
   yield takeEvery("CLAIM_ALL_REWARD", claimAllRewardSaga);
   yield takeEvery("GET_CURRENT_BONUSES", getCurrentBonusesSaga);
+  yield takeEvery("CLOSE_UPLEVEL_DIALOG_SAGA", closeCongraPopupSaga);
 }
 
 export default referralSaga;

@@ -233,9 +233,9 @@ const Login = () => {
   return (
     <Box
       sx={{
-       width:"100%",
-       paddingTop:"90px",
-       height:"100%"
+        width: "100%",
+        paddingTop: "90px",
+        height: "100%",
       }}
     >
       <Box sx={{ width: "100%", display: "flex", justifyContent: "center" }}>
