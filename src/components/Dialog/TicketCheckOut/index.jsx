@@ -82,6 +82,18 @@ export default function TicketCheckOut() {
     }
   }, [typePayment]);
 
+  const checkIfNumber = (event) => {
+    /**
+     * Allowing: Integers | Backspace | Tab | Delete | Left & Right arrow keys
+     **/
+
+    const regex = new RegExp(
+      /(^\d*$)|(Backspace|Tab|Delete|ArrowLeft|ArrowRight|\(|\)|-)/
+    );
+
+    return !event.key.match(regex) && event.preventDefault();
+  };
+
   useEffect(() => {
     if (dataPackage) {
       setSubscriptionValue(dataPackage);
@@ -400,7 +412,8 @@ export default function TicketCheckOut() {
                       <RemoveIcon />
                     </Button>
                     <input
-                      type="number"
+                      type="text"
+                      name="number"
                       className="input_check"
                       max={10}
                       min={1}
@@ -408,6 +421,7 @@ export default function TicketCheckOut() {
                         typeWallet?.includes("sub") ||
                         typeWallet?.includes("normal")
                       }
+                      onKeyDown={checkIfNumber}
                       onChange={handleChangeValue}
                       style={{
                         backgroundColor: typeWallet?.includes("sub")

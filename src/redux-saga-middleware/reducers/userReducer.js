@@ -340,6 +340,11 @@ export const getCityAndStateProfileFail = (data) => {
     payload: data,
   };
 };
+export const removeTokenUser = () => {
+  return {
+    type: "REMOVE_TOKEN_USER",
+  };
+};
 
 const userReducer = (
   state = {
@@ -468,7 +473,7 @@ const userReducer = (
         isRegister: false,
       };
     case "REMOVE_TOKEN_USER":
-      return { ...state, tokenUser: "" };
+      return { ...state, tokenUser: undefined };
     case "REGISTER_SUCCESS_FULLY":
       return { ...state, registerValue: payload };
     case "UPDATE_PROFILE_USER":
@@ -496,7 +501,7 @@ const userReducer = (
         uPack: null,
         listJoinedTour: [],
         countTicket: 0,
-        tokenUser: "",
+        tokenUser: undefined,
         userAvatar: "",
       };
     case "LOG_OUT_FAIL":

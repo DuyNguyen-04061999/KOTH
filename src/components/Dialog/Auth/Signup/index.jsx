@@ -4,7 +4,7 @@ import { Box, FormControl, Input, Tooltip, Typography } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import { withStyles } from "@mui/styles";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { showToastNotification } from "../../../../redux-saga-middleware/reducers/alertReducer";
@@ -51,7 +51,7 @@ export default function Signup(props) {
   const [displayPasswordC, setDisplayPasswordC] = useState(false);
   const [validEmail, setValidEmail] = useState(false);
   const [validPhone, setValidPhone] = useState(false);
-  const [validDisplayName, setValidDisplayName] = useState(false);
+  const [validDisplayName, setValidDisplayName] = useState(true);
   const [validFirstName, setValidFirstName] = useState(false);
   const [validLastName, setValidLastName] = useState(false);
   const [popupList, setPopupList] = useState(false);
@@ -123,8 +123,9 @@ export default function Signup(props) {
   const [hasUppercase, setHasUppercase] = useState(false);
   const [agree, setAgree] = useState(false);
   const [displaynameValue, setDisplaynameValue] = useState("");
-
   const [gender, setGender] = useState(0);
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef(null);
 
   const handleChange = (event, newValue) => {
     setGender(Number(event.target.value));
@@ -133,18 +134,6 @@ export default function Signup(props) {
   const handleDisplaynameChange = (event, newValue) => {
     setDisplaynameValue(event?.target?.value);
     setPopupList(false);
-  };
-
-  const checkIfNumber = (event) => {
-    /**
-     * Allowing: Integers | Backspace | Tab | Delete | Left & Right arrow keys
-     **/
-
-    const regex = new RegExp(
-      /(^\d*$)|(Backspace|Tab|Delete|ArrowLeft|ArrowRight|\(|\)|-)/
-    );
-
-    return !event.key.match(regex) && event.preventDefault();
   };
 
   const handleChangePass = (e) => {
@@ -163,6 +152,36 @@ export default function Signup(props) {
     setPassOneNumber(containNumber);
     setPassOneLetter(containsSpecialCharacter);
   };
+
+  const checkIfNumber = (event) => {
+    /**
+     * Allowing: Integers | Backspace | Tab | Delete | Left & Right arrow keys
+     **/
+
+    const regex = new RegExp(
+      /(^\d*$)|(Backspace|Tab|Delete|ArrowLeft|ArrowRight|\(|\)|-)/
+    );
+
+    return !event.key.match(regex) && event.preventDefault();
+  };
+
+  useEffect(() => {
+    // Function to handle clicks outside of dropdown
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        // Clicked outside the dropdown, so close it
+        setIsOpen(false);
+      }
+    };
+
+    // Add event listener when component mounts
+    document.addEventListener("click", handleClickOutside);
+
+    // Clean up event listener when component unmounts
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
 
   useEffect(() => {
     if (firstName !== "" && lastName !== "") {
@@ -270,24 +289,23 @@ export default function Signup(props) {
   useEffect(() => {
     setValidEmail(validateEmail(email));
     setValidPhone(validatePhoneNumber(phone));
+  }, [email, phone]);
+
+  useEffect(() => {
     setValidDisplayName(validateNickName(displaynameValue));
     setValidFirstName(firstName?.length >= 1);
     setValidLastName(lastName?.length >= 1);
-  }, [email, phone, displaynameValue, firstName, lastName]);
+  }, [displaynameValue, firstName, lastName]);
+
   const { orientation } = useSelector((state) => state.gameReducer);
   const { device } = useSelector((state) => state.deviceReducer);
   return (
     <Box
       className="signup"
       sx={{
-        marginTop:
-          orientation === "landscape" && device === "Mobile"
-            ? "200px"
-            : "unset",
-        paddingTop:
-          orientation === "landscape" && device === "Mobile"
-            ? "200px"
-            : "unset",
+        width: "100%",
+        paddingTop: "30px",
+        height: "100%",
       }}
     >
       <Box component="form" className="p-2 ps-2 pe-3" noValidate>
@@ -444,6 +462,7 @@ export default function Signup(props) {
               }}
               value={phone}
               placeholder={t("Phone number")}
+              onKeyDown={checkIfNumber}
               sx={{
                 "&:before": {
                   borderBottom: " 0px solid !important ",
@@ -462,7 +481,6 @@ export default function Signup(props) {
                 padding: "0px 0px 0px 60px !important",
                 width: "100%",
               }}
-              onKeyDown={checkIfNumber}
             />{" "}
             {validPhone && <CheckIconSVG />}
             {!validPhone && (
@@ -703,12 +721,14 @@ export default function Signup(props) {
               }}
             />{" "}
             <Box
+              ref={dropdownRef}
+              className="dropdown"
               sx={{
                 display: popupList === true ? "inline-block" : "none",
                 position: "absolute",
                 top: 40,
                 left: 0,
-                zIndex: 1,
+                zIndex: 10,
                 backgroundColor: "#443565",
                 borderRadius: "8px",
                 width: "100%",
@@ -771,12 +791,13 @@ export default function Signup(props) {
             )}
           </Box>
         </FormControl>
-        {!validDisplayName && displaynameValue !== "" && (
+        {displaynameValue.length > 12 && (
           <Typography
             sx={{
               textAlign: "start",
               color: "#F05153",
               fontSize: "13px",
+              paddingBottom: "10px",
             }}
           >
             Please enter a valid display name
@@ -785,7 +806,7 @@ export default function Signup(props) {
         <FormControl
           variant="standard"
           sx={{
-            marginTop: !validDisplayName && displaynameValue ? "16px" : "",
+            marginTop: "",
             width: "100%",
             backgroundColor: "#1a132d",
             borderRadius: width > 576 ? "5px" : "4px",

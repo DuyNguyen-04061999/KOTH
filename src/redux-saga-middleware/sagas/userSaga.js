@@ -1,4 +1,4 @@
-import Hotjar from '@hotjar/browser';
+import Hotjar from "@hotjar/browser";
 import ReactGA from "react-ga4";
 import { call, delay, getContext, put, takeEvery } from "redux-saga/effects";
 import i18n from "../../i18n/i18n";
@@ -43,6 +43,7 @@ import {
   reVerifyAccountSuccess,
   registerFail,
   registerSuccess,
+  removeTokenUser,
   resendOtpFail,
   resendOtpSuccess,
   resetPasswordFail,
@@ -74,11 +75,14 @@ function* loginSaga(dataRequest) {
           token: data?.data?.token,
         });
         if (payload?.remember) {
-          localStorage.setItem("account", payload?.email || payload?.phone || "")
-          localStorage.setItem("pass", payload?.password)
+          localStorage.setItem(
+            "account",
+            payload?.email || payload?.phone || ""
+          );
+          localStorage.setItem("pass", payload?.password);
         } else {
-          localStorage.removeItem("account")
-          localStorage.removeItem("pass")
+          localStorage.removeItem("account");
+          localStorage.removeItem("pass");
         }
         yield put(
           showToastNotification({
@@ -210,7 +214,7 @@ function* updateProfileSaga(dataRequest) {
           updateProfileUserSuccess({
             avatar: data?.data?.avatar,
             nickName: data?.data?.nickName,
-            checkFullInfor: data?.data?.checkFullInfor
+            checkFullInfor: data?.data?.checkFullInfor,
           })
         );
       } else {

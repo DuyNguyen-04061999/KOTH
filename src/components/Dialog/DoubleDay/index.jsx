@@ -15,12 +15,15 @@ const DoubleDayDialog = () => {
     (state) => state.appReducer
   );
 
-  console.log(showDoubleDayDialog);
-
   const handleClose = () => {
     dispatch(closeDoubleDayDialog());
   };
-
+  const {
+    hotTournament,
+    isFetchHot,
+    noDataHot,
+    // noDataEnd,
+  } = useSelector((state) => state.tournamentReducer);
   return ReactDOM.createPortal(
     <>
       {width < 576 ? (
@@ -37,8 +40,10 @@ const DoubleDayDialog = () => {
                 component={"img"}
                 src={images.stackingMB}
                 onClick={() => {
-                  handleClose();
-                  navigate("/promotion-detail/497");
+                  if (!isFetchHot && !noDataHot) {
+                    handleClose();
+                    navigate("/promotion-detail/" + hotTournament[0].id);
+                  }
                 }}
               ></Box>
               <Box
@@ -48,10 +53,18 @@ const DoubleDayDialog = () => {
                   top: "20px",
                   right: "20px",
                   cursor: "pointer",
+                  width: 40,
+                  height: 40,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  padding: "10px",
+                  borderRadius: "50%",
+                  backgroundColor: "black",
                 }}
-                component={"img"}
-                src={images.btn_back}
-              ></Box>
+              >
+                <Box component={"img"} src={images.btn_back}></Box>
+              </Box>
             </Box>
           </Dialog>
         </div>
@@ -69,8 +82,10 @@ const DoubleDayDialog = () => {
                 component={"img"}
                 src={images.stackingDK}
                 onClick={() => {
-                  handleClose();
-                  navigate("/promotion-detail/497");
+                  if (!isFetchHot && !noDataHot) {
+                    handleClose();
+                    navigate("/promotion-detail/" + hotTournament[0].id);
+                  }
                 }}
               ></Box>
               <Box
@@ -80,10 +95,18 @@ const DoubleDayDialog = () => {
                   top: "20px",
                   right: "20px",
                   cursor: "pointer",
+                  width: 40,
+                  height: 40,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  padding: "10px",
+                  borderRadius: "50%",
+                  backgroundColor: "black",
                 }}
-                component={"img"}
-                src={images.btn_back}
-              ></Box>
+              >
+                <Box component={"img"} src={images.btn_back}></Box>
+              </Box>
             </Box>
           </Dialog>
         </div>

@@ -63,6 +63,7 @@ export default function ListPackage(props) {
   const { t } = useTranslation("package");
 
   const { listSetting } = useSelector((state) => state.settingReducer);
+  const { device } = useSelector((state) => state.deviceReducer);
 
   const { width } = useWindowDimensions();
   const dispatch = useDispatch();
@@ -70,6 +71,7 @@ export default function ListPackage(props) {
     const socket = _socket;
     setSocket(socket);
   }, [socket]);
+  
   const handleBuyPackage = () => {
     if (token) {
       dispatch(
@@ -132,7 +134,7 @@ export default function ListPackage(props) {
         transport: "xhr",
       });
     }
-    if (token === null || token === "") {
+    if (token === null || token === "" || token === undefined) {
       dispatch(toggleLoginDialog());
     }
   };

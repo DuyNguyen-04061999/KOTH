@@ -63,6 +63,7 @@ import { getAppType } from "./utils/helper";
 import { images } from "./utils/images";
 import { useTracking } from "./utils/useTracking";
 import useWindowDimensions from "./utils/useWindowDimensions";
+import Referal from "./pages/Referal";
 
 const LazyNewHomePage = lazy(() => import("./pages/NewHomePageComponent"));
 const LazyPackage = lazy(() => import("./pages/PackagePage"));
@@ -126,7 +127,7 @@ function App() {
     }
   }, [width]);
 
-  useEffect(() => { });
+  useEffect(() => {});
   const isLandscape = () =>
     window.matchMedia("(orientation:landscape)").matches;
 
@@ -165,7 +166,7 @@ function App() {
     };
   }, [startGameCheck]);
 
-  useEffect(() => { }, [orientation, startGameCheck]);
+  useEffect(() => {}, [orientation, startGameCheck]);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -178,7 +179,7 @@ function App() {
     const token = localStorage.getItem("token");
 
     if (socket) {
-      socket?.once("connect", (data) => { });
+      socket?.once("connect", (data) => {});
 
       socket?.on("warning", (data, type) => {
         if (type && type !== "get") {
@@ -425,7 +426,6 @@ function App() {
   useEffect(() => {
     if (!loadingSetting) fetchGetSetting();
   }, []);
-
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline>
@@ -468,7 +468,7 @@ function App() {
                       getAppType() === "promote" ? (
                         <SuspenseWrapper child={<LazyNewHomePage />} />
                       ) : (
-                        <SuspenseWrapper child={<LazyNewHomePage />} />
+                        <></>
                       )
                     }
                   ></Route>
@@ -524,6 +524,10 @@ function App() {
                   <Route
                     path="game"
                     element={<SuspenseWrapper child={<GamePage />} />}
+                  />
+                  <Route
+                    path="referral"
+                    element={tokenUser ? <Referal /> : <Navigate to="/home" />}
                   />
                   {getAppType() === "promote" && (
                     <Route

@@ -28,7 +28,7 @@ export default function CountDownBannerHot({
     <Box sx={{ display: "flex", alignItems: "center", whiteSpace: "nowrap" }}>
       <Typography
         sx={{
-          fontSize: "8px",
+          fontSize: "10px",
           color: "white",
           marginLeft: "0px !important", fontWeight:"bold"
         }}
@@ -80,7 +80,7 @@ export default function CountDownBannerHot({
     <Box sx={{ display: "flex", alignItems: "center", whiteSpace: "nowrap" }}>
       <Typography
         sx={{
-          fontSize: device === "Tablet" ? "1vw" : "1vw",
+          fontSize: device === "Tablet" ? "14px" : "1vw",
           color: "white",
           marginLeft: "0px !important",
           lineHeight: 1.5,
