@@ -375,11 +375,6 @@ function* sendOtpSaga(dataRequest) {
           yield put(closeLoginDialog());
           yield put(openDialogGif());
           yield put(clickTab("login"));
-          if (window.location.pathname?.includes("influencers")) {
-            setTimeout(() => {
-              window.location.assign("/home");
-            }, 2000);
-          }
         }
       } else {
         yield put(sendOtpFail());
