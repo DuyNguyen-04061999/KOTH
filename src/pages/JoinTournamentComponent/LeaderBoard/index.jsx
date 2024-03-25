@@ -1924,7 +1924,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                           fontStyle: "normal",
                         }}
                       >
-                        Played: {(top3 && top3[2]?.totalPlay) || ""} times
+                        Played: {(top3 && top3[1]?.totalPlay) || ""} times
                       </Typography>
                       <Typography
                         className="textReward"
@@ -2029,7 +2029,7 @@ export default function LeaderBoard({ detailTournament, open, handleOnClose }) {
                           fontStyle: "normal",
                         }}
                       >
-                        Played: {(top3 && top3[2]?.totalPlay) || ""} times
+                        Played: {(top3 && top3[0]?.totalPlay) || ""} times
                       </Typography>
                       <Typography
                         className="textReward"
