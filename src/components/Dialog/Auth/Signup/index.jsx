@@ -191,7 +191,7 @@ export default function Signup(props) {
           lastName: lastName,
         })
       );
-      setIsOpen(true);
+      setPopupList(true);
     }
   }, [firstName, lastName]);
 
@@ -724,7 +724,7 @@ export default function Signup(props) {
               ref={dropdownRef}
               className="dropdown"
               sx={{
-                display: "inline-block",
+                display: popupList === true ? "inline-block" : "none",
                 position: "absolute",
                 top: 40,
                 left: 0,
@@ -734,29 +734,24 @@ export default function Signup(props) {
                 width: "100%",
               }}
             >
-              {isOpen && (
-                <Box>
-                  <List>
-                    {displayName?.map((e, index) => {
-                      return (
-                        <ListItem
-                          disablePadding
-                          key={index}
-                          onClick={() => {
-                            setDisplaynameValue(e);
-                            setIsOpen(!isOpen);
-                            // setPopupList(false);
-                          }}
-                        >
-                          <ListItemButton>
-                            <ListItemText primary={e} />
-                          </ListItemButton>
-                        </ListItem>
-                      );
-                    })}
-                  </List>
-                </Box>
-              )}
+              <List>
+                {displayName?.map((e, index) => {
+                  return (
+                    <ListItem
+                      disablePadding
+                      key={index}
+                      onClick={() => {
+                        setDisplaynameValue(e);
+                        setPopupList(false);
+                      }}
+                    >
+                      <ListItemButton>
+                        <ListItemText primary={e} />
+                      </ListItemButton>
+                    </ListItem>
+                  );
+                })}
+              </List>
             </Box>
             {validDisplayName && <CheckIconSVG />}
             {!validDisplayName && (

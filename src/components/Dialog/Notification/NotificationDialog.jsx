@@ -1,5 +1,5 @@
 import { Box, Dialog, Typography } from "@mui/material";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { closeNotificationDialog } from "../../../redux-saga-middleware/reducers/dialogReducer";
 import { getListNotification } from "../../../redux-saga-middleware/reducers/notificationReducer";
@@ -14,6 +14,8 @@ export default function NotificationDialog() {
   const { listNotifiaction } = useSelector(
     (state) => state.notificationReducer
   );
+  const [notiList, setNotiList] = useState([]);
+
 
   const dispatch = useDispatch();
 
@@ -25,7 +27,14 @@ export default function NotificationDialog() {
     if (tokenUser) {
       dispatch(getListNotification());
     }
-  }, [dispatch, tokenUser]);
+  }, [dispatch]);
+
+  useEffect(() => {
+    if(listNotifiaction){
+      setNotiList(listNotifiaction)
+    }
+  }, [listNotifiaction])
+
   const { width, height } = useWindowDimensions();
   return (
     <Dialog
@@ -77,8 +86,8 @@ export default function NotificationDialog() {
         <Typography> Notifications</Typography>
       </Box>
       <Box className="p-2 ps-3 pe-3">
-        {listNotifiaction && listNotifiaction?.length > 0 ? (
-          listNotifiaction?.map((noti, index) => {
+        {notiList && notiList?.length > 0 ? (
+          notiList?.map((noti, index) => {
             return (
               <NotificationItem
                 key={index}

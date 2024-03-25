@@ -1,14 +1,26 @@
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
-import { Box, Button, Dialog, Grid, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
+import {
+  Box,
+  Button,
+  Dialog,
+  FormControl,
+  Grid,
+  MenuItem,
+  Select,
+  Typography,
+  Tooltip,
+} from "@mui/material";
+import { useEffect, useState, useTransition } from "react";
 import { createPortal } from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import _socket from "../../../redux-saga-middleware/config/socket";
+import { withStyles } from "@mui/styles";
 import { getCheckOut } from "../../../redux-saga-middleware/reducers/checkoutReducer";
 import {
   closeCheckWallet,
+  deleteCurrentPackage,
   toggleCheckWallet,
 } from "../../../redux-saga-middleware/reducers/walletReducer";
 import { formatMoney } from "../../../utils/helper";
@@ -16,18 +28,29 @@ import { images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import AnimButton from "../../AnimButton";
 import "./index.scss";
+import { useTranslation } from "react-i18next";
+
+const BgWithTooltip = withStyles({
+  tooltip: {
+    color: "black",
+    backgroundColor: "white",
+    padding: "10px",
+  },
+})(Tooltip);
 
 export default function TicketCheckOut() {
   const { isCheckWallet, typeWallet, goldCombo, totalExtra } = useSelector(
     (state) => state.walletReducer
   );
+  const { t } = useTranslation("auth");
   const { idPackage } = useSelector((state) => state.authReducer);
   const { listSetting } = useSelector((state) => state.settingReducer);
 
   const { listPackage, dataPackage } = useSelector(
     (state) => state.packageReducer
   );
-  const { packageName } = dataPackage;
+  const { uPack } = useSelector((state) => state.userReducer);
+  const { id, packageName } = dataPackage;
   const [feeCheckout, setFeeCheckout] = useState({
     origin: 4.4 / 100,
     bonus: 0.3,
@@ -41,6 +64,9 @@ export default function TicketCheckOut() {
   const [totalMoney, setTotalMoney] = useState(0);
   const [sl, setSl] = useState(1);
   const [autoRecurring, setAutoRecurring] = useState(true);
+  const [subscriptionValue, setSubscriptionValue] = useState({});
+  const [renewOption, setRenewOption] = useState({});
+  const [previousPackage, setPreviousPackage] = useState({});
 
   useEffect(() => {
     if (typePayment === "skrill") {
@@ -67,6 +93,18 @@ export default function TicketCheckOut() {
 
     return !event.key.match(regex) && event.preventDefault();
   };
+
+  useEffect(() => {
+    if (dataPackage) {
+      setSubscriptionValue(dataPackage);
+    }
+  }, [dataPackage]);
+
+  useEffect(() => {
+    if (uPack) {
+      setPreviousPackage(uPack);
+    }
+  }, [uPack]);
 
   useEffect(() => {
     if (feeCheckout) {
@@ -97,7 +135,27 @@ export default function TicketCheckOut() {
     dispatch(toggleCheckWallet());
   };
 
+  const handleChangeSub = (event) => {
+    setRenewOption(event.target.value);
+  };
+
+  // useEffect(() => {
+  //   if (Number(renewOption?.id) === Number(uPack?.id)) {
+  //     localStorage.removeItem("packageRenew");
+  //   } else {
+  //     localStorage.setItem("packageRenew", JSON.stringify(subscriptionValue));
+  //   }
+  // }, [renewOption]);
+
+  useEffect(() => {
+    if(uPack){
+    localStorage.setItem("previousPack", JSON.stringify(uPack));
+
+    }
+  },[uPack])
+
   const params = new URLSearchParams(window.location.search);
+
   const game = params.get("game");
 
   const btnSubscription = (event) => {
@@ -113,6 +171,9 @@ export default function TicketCheckOut() {
       })
     );
     setSl(1);
+        dispatch(
+      deleteCurrentPackage({})
+    );
     // dispatch(toggleCheckWallet());
   };
   const btnBuyTicket = (event) => {
@@ -150,7 +211,7 @@ export default function TicketCheckOut() {
           "& .css-1hju3x6-MuiPaper-root-MuiDialog-paper": {
             borderRadius: "11px !important",
           },
-          zIndex: "1320",
+          zIndex: "1300",
           "& .MuiPaper-root": {
             backgroundColor: "transparent !important",
           },
@@ -255,7 +316,7 @@ export default function TicketCheckOut() {
                         className="mb-1"
                         sx={{ marginLeft: "0px !important", color: "#BE48ED " }}
                       >
-                        Subscription Pack
+                        {packageName}
                       </Typography>
                       <Typography
                         sx={{
@@ -601,40 +662,163 @@ export default function TicketCheckOut() {
             />
             {typeWallet?.includes("sub") && (
               <Box
-                className="d-flex align-items-start"
                 sx={{
-                  paddingTop: "10px",
-                  paddingBottom: "30px",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
                 }}
               >
-                <input
-                  type="checkbox"
-                  className="me-2 custom-checkbox-input checkout checkboxtext"
-                  style={{ borderRadius: "50px", marginTop: "6px" }}
-                  readOnly
-                  onClick={() => {
-                    setAutoRecurring(!autoRecurring);
-                  }}
-                  checked={autoRecurring}
-                />
                 <Box
-                  className="text-white"
-                  sx={{ fontSize: "14px", fontWeight: "lighter !important" }}
+                  className="d-flex align-items-start"
+                  sx={{
+                    paddingTop: "10px",
+                    paddingBottom: "10px",
+                  }}
                 >
-                  <Typography
-                    variant="subtitle1"
-                    sx={{
-                      fontWeight: "lighter !important",
-                      fontSize: "14px",
-                      marginLeft: "0px !important",
-                      color: autoRecurring ? "#fff" : "#fc3c3c",
+                  <input
+                    type="checkbox"
+                    className="me-2 custom-checkbox-input checkout checkboxtext"
+                    style={{ borderRadius: "50px", marginTop: "6px" }}
+                    readOnly
+                    onClick={() => {
+                      setAutoRecurring(!autoRecurring);
                     }}
+                    checked={autoRecurring}
+                  />
+                  <Box
+                    className="text-white"
+                    sx={{ fontSize: "14px", fontWeight: "lighter !important" }}
                   >
-                    Automatic Renewal of Subscription Pack
-                  </Typography>
+                    <Typography
+                      variant="subtitle1"
+                      sx={{
+                        fontWeight: "lighter !important",
+                        fontSize: "14px",
+                        marginLeft: "0px !important",
+                        color: autoRecurring ? "#fff" : "#fc3c3c",
+                      }}
+                    >
+                      {`Automatic Renewal of  ${packageName}`}
+                    </Typography>
+                  </Box>
                 </Box>
+                <BgWithTooltip
+                  enterTouchDelay={0}
+                  enterDelay={0}
+                  enterNextDelay={0}
+                  title={
+                    <Box>
+                      {" "}
+                      <Typography sx={{ textAlign: "start", fontSize: "12px" }}>
+                        {t(
+                          "When you choose automatic renewal, we will cancel the automatic renewal of the previous package you purchased and switch to automatically renew the current package you have purchased."
+                        )}
+                      </Typography>
+                    </Box>
+                  }
+                  placement="top-end"
+                  sx={{
+                    backgroundColor: "white",
+                    color: "red",
+                  }}
+                >
+                  <Box
+                    sx={{
+                      // backgroundColor: "#1a132d",
+                      // position: "absolute",
+                      // right: "10px",
+                      // top: "8px",
+                      cursor: "pointer",
+                      zIndex: 1,
+                    }}
+                    component={"img"}
+                    src={images.ToolTipIcon}
+                  ></Box>
+                </BgWithTooltip>
               </Box>
             )}
+
+            {/*  Dropdown Two subscription */}
+            {/* <Box
+              sx={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "space-between",
+                height: "100% !important",
+              }}
+            >
+              <FormControl
+                variant="standard"
+                sx={{
+                  width: "100%",
+                  backgroundColor: "#181223",
+                  borderRadius: "4px",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  color: "white",
+                  marginBottom: "0px !important",
+                  "& .MuiInputBase-root": {
+                    color: "white",
+                  },
+                  "& .MuiInputBase-input.Mui-disabled": {
+                    WebkitTextFillColor: "white",
+                  },
+                  paddingTop: "5px",
+                  paddingBottom: "3px",
+                }}
+              >
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={renewOption}
+                  inputProps={{
+                    MenuProps: {
+                      PaperProps: {
+                        sx: {
+                          backgroundColor: "#443565",
+                          color: "white",
+                        },
+                      },
+                    },
+                  }}
+                  onChange={handleChangeSub}
+                  sx={{
+                    width: "100%",
+                    "& .MuiSelect-nativeInput": {
+                      position: "relative",
+                      width: "2%",
+                    },
+                    "&:before": {
+                      borderBottom: " 0px solid !important ",
+                      "&:hover": {
+                        borderBottom: "0px solid !important",
+                      },
+                    },
+                    "&:after": {
+                      borderBottom: "0px solid !important",
+                    },
+                    "&:hover": {
+                      border: "none",
+                    },
+                    "& .MuiSvgIcon-root": {
+                      color: "#7C81F2",
+                    },
+                    "& .MuiModal-root-MuiPopover-root-MuiMenu-root": {
+                      zIndex: "1320 !important",
+                    },
+                    paddingLeft: "10px",
+                    paddingRight: "10px",
+                  }}
+                >
+                  <MenuItem value={dataPackage}>{packageName}</MenuItem>
+                  {packageName !== previousPackage?.packageName ? (
+                    <MenuItem value={previousPackage}>
+                      {previousPackage?.packageName}
+                    </MenuItem>
+                  ) : (null)}
+                </Select>
+              </FormControl>
+            </Box> */}
 
             <Box
               className="d-flex align-items-start"
