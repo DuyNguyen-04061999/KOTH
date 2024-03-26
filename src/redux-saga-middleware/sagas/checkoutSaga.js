@@ -143,7 +143,7 @@ function* checkoutSaga() {
     yield takeEvery("GET_CHECK_OUT", getCheckOutSaga)
     yield takeEvery("CHECKOUT_PAYPAL_SUCCESS", getCheckOutSagaSuccess)
     yield takeEvery("CHECKOUT_PAYPAL_CANCEL", getCheckOutSagaCancel)
-    yield takeEvery("CANCEL_RENEW_PACKAGE", getCancelCurrentPackageSaga)
+    yield takeEvery("DELETE_CURRENT_PACKAGE", getCancelCurrentPackageSaga)
 }
 
 export default checkoutSaga
