@@ -128,14 +128,19 @@ function* getCancelCurrentPackageSaga(dataRequest) {
         const {status , data} = res
         if(status === 200 || status === 201) {
             yield put(deleteCurrentPackageSuccess(data))
+            console.log(data);
+            yield put(showToastNotification({
+                type: "success",
+                message: data?.message
+            }))
         } 
     } catch(err) {
         console.log(err);
         yield put(deleteCurrentPackageFail())
-        yield put(showToastNotification({
-            type: "error",
-            message: err?.message
-        }))
+        // yield put(showToastNotification({
+        //     type: "error",
+        //     message: err?.message
+        // }))
     }
 } 
 
