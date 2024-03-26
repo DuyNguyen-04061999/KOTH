@@ -40,12 +40,11 @@ export default function SlickReact(props) {
   const settings = {
     dots: true,
     infinite: true,
-    autoplay: false,
     interval: 1000,
-    autoplaySpeed: 4000,
+    speed: 500,
     slidesToShow: 3,
     slidesToScroll: 1,
-    swipe: false,
+    swipe: true,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
     responsive: [
@@ -79,33 +78,33 @@ export default function SlickReact(props) {
         }}
       ></div>
     ),
-    appendDots: (dots) => {
-      if (dots?.length >= 10) {
-        dots = dots?.slice(0, 5);
-      }
-      return (
-        <Box
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            bottom: "-10px",
-            position: "absolute",
-            padding: "5px",
-            height: "20px",
-            // backgroundColor:  "rgba(0, 0, 0, 0.24)" ,
-            backdropFilter: "blur(2px)",
-            marginBottom: "0px",
-            width: "100%",
-          }}
-        >
-          {dots}
-        </Box>
-      );
-    },
+    // appendDots: (dots) => {
+    //   if (dots?.length >= 10) {
+    //     dots = dots?.slice(0, 5);
+    //   }
+    //   return (
+    //     <Box
+    //       style={{
+    //         display: "flex",
+    //         justifyContent: "center",
+    //         alignItems: "center",
+    //         bottom: "-10px",
+    //         position: "absolute",
+    //         padding: "5px",
+    //         height: "20px",
+    //         // backgroundColor:  "rgba(0, 0, 0, 0.24)" ,
+    //         backdropFilter: "blur(2px)",
+    //         marginBottom: "0px",
+    //         width: "100%",
+    //       }}
+    //     >
+    //       {dots}
+    //     </Box>
+    //   );
+    // },
   };
   return (
-    <>
+    <div className="slider-container">
       {/* <Box sx={{
         display:"flex",
         justifyContent:"flex-end",
@@ -172,6 +171,6 @@ export default function SlickReact(props) {
           );
         })}
       </Slider>
-    </>
+    </div>
   );
 }
