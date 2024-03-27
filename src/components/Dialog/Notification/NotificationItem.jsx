@@ -86,6 +86,7 @@ export default function NotificationItem(props) {
             type={type}
             id={id}
             title={title}
+            read={read}
           />
         );
       } else return <></>;
@@ -100,6 +101,7 @@ export default function NotificationItem(props) {
             type={type}
             id={id}
             title={title}
+            read={read}
           />
         );
       } else return <></>;
@@ -114,6 +116,7 @@ export default function NotificationItem(props) {
             type={type}
             id={id}
             title={title}
+             read={read}
           />
         );
       } else return <></>;
