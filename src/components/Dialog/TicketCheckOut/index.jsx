@@ -711,7 +711,7 @@ export default function TicketCheckOut() {
                       {" "}
                       <Typography sx={{ textAlign: "start", fontSize: "12px" }}>
                         {t(
-                          "When you choose automatic renewal, we will cancel the automatic renewal of the previous package you purchased and switch to automatically renew the current package you have purchased."
+                          "When you purchase a new Sub-pack, we will cancel the auto-renewal on any previous packs you have purchased and set the auto-renewal according to your choice on this new pack."
                         )}
                       </Typography>
                     </Box>
