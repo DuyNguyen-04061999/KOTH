@@ -77,7 +77,7 @@ export default function RenewalNotiPopup(props) {
               >
                 You have {`${Remain?.slice(0, -1)}`} days left on your current
                 subscription. Adding this pack will extend your total
-                subscription to
+                subscription to {""}
                 {`${Number(Remain?.slice(0, -1)) + packageTimeLoop}`} day left
                 on your current. Confirm purchase?
               </Typography>

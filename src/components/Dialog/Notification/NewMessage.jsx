@@ -13,6 +13,7 @@ export default function NewMessage(props) {
         background: "#2E233D",
         padding: "16px 0px",
         borderBottom: "solid 1px #443565",
+        position:"relative"
       }}
     >
       {otherAvatar ? (
@@ -88,6 +89,17 @@ export default function NewMessage(props) {
           Read message
         </Typography>
       </Box>
+      {read === 0 ? (
+        <Box sx={{
+          width:10,
+          height:10,
+          borderRadius:"50%",
+          backgroundColor:"#FF9F38",
+          position:"absolute",
+          top:20,
+          right:15
+        }}></Box>
+      ) : (<></>)}
     </Box>
   );
 }

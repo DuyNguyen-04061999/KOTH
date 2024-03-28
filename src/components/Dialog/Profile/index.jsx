@@ -83,7 +83,6 @@ export default function DialogProfile(props) {
   const { loadingState } = useSelector((state) => state.loadingReducer);
   const { tokenUser, stateProfile } = useSelector((state) => state.userReducer);
   const { listSendingRequest } = useSelector((state) => state.addFriendReducer);
-  console.log(uPack);
   const {
     id,
     email,
@@ -122,7 +121,6 @@ export default function DialogProfile(props) {
   const [cityOption, setCityOption] = useState(city);
   const [stateOption, setStateOption] = useState(state || "");
   const [gender, setGender] = useState(0);
-
   const handleChange = (event) => {
     setGender(Number(event.target.value));
   };
@@ -748,7 +746,17 @@ export default function DialogProfile(props) {
                           >
                             Remaining days
                           </Typography>
-                          <Typography
+                          {uPack?.remain === "undefined" ? (
+                            <Typography
+                            sx={{
+                              fontSize: "14px",
+                              fontWeight: "500",
+                            }}
+                          >
+                           You are not a VIP
+                          </Typography>
+                          ) : (
+                            <Typography
                             sx={{
                               fontSize: "14px",
                               fontWeight: "500",
@@ -756,6 +764,7 @@ export default function DialogProfile(props) {
                           >
                             {uPack.remain}
                           </Typography>
+                          )}
                           {uPack?.isRenewPackage === true ? (
                             <Box onClick={handleOpenRenewalBadgePopup}>
                             <Typography
@@ -1211,14 +1220,25 @@ export default function DialogProfile(props) {
                                 >
                                   Remaining days
                                 </Typography>
+                               {uPack?.remain === "undefined" ? (
+                                 <Typography
+                                 sx={{
+                                   fontSize: "14px",
+                                   fontWeight: "500",
+                                 }}
+                               >
+                                 You are not a VIP
+                               </Typography>
+                               ) : (
                                 <Typography
-                                  sx={{
-                                    fontSize: "14px",
-                                    fontWeight: "500",
-                                  }}
-                                >
-                                  {`${uPack?.remain.slice(0, -1)}`}
-                                </Typography>
+                                sx={{
+                                  fontSize: "14px",
+                                  fontWeight: "500",
+                                }}
+                              >
+                                {`${uPack?.remain.slice(0, -1)}`}
+                              </Typography>
+                               )}
                                 {uPack?.isRenewPackage === true ? (
                                   <Box onClick={handleOpenRenewalBadgePopup}>
                                   <Typography
