@@ -99,7 +99,7 @@ export default function NewMessage(props) {
           top:20,
           right:15
         }}></Box>
-      ) : ("")}
+      ) : (<></>)}
     </Box>
   );
 }

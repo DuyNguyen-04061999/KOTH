@@ -77,7 +77,7 @@ export default function ReferralNotification(props) {
           top:20,
           right:15
         }}></Box>
-      ) : ("")}
+      ) : (<></>)}
     </Box>
   );
 }

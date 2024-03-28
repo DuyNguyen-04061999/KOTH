@@ -127,7 +127,7 @@ export default function AddFriendComponent(props) {
           }}
         ></Box>
       ) : (
-        ""
+        <></>
       )}
     </Box>
   );

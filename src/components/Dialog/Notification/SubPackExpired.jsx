@@ -76,7 +76,7 @@ export default function SubPackExpired(props) {
           top:20,
           right:15
         }}></Box>
-      ) : ("")}
+      ) : (<></>)}
     </Box>
   );
 }

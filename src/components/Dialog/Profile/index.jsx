@@ -121,7 +121,6 @@ export default function DialogProfile(props) {
   const [cityOption, setCityOption] = useState(city);
   const [stateOption, setStateOption] = useState(state || "");
   const [gender, setGender] = useState(0);
-  console.log(uPack);
   const handleChange = (event) => {
     setGender(Number(event.target.value));
   };
