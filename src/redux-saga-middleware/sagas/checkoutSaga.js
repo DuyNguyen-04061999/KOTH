@@ -16,6 +16,7 @@ import {getUserInfoReady, updateCountTicket} from "../reducers/userReducer";
 import {deleteCurrentPackage, deleteCurrentPackageFail, deleteCurrentPackageSuccess, toggleCheckWallet} from "../reducers/walletReducer";
 import CheckoutService from "../services/checkoutService";
 import ReactGA from "react-ga4";
+import {exitEditProfile} from "../reducers/profileReducer";
 
 const checkoutService = new CheckoutService();
 
@@ -50,7 +51,7 @@ function* getCheckOutSaga(dataRequest) {
 
 function* getCheckOutSagaSuccess(dataRequest) {
     try {
-        const packageRenewChanged = localStorage.getItem("previousPack")
+        const packageRenewChanged = JSON.parse(localStorage.getItem("previousPack"))
         const {payload} = dataRequest;
         const {game} = payload
         const res = yield call(checkoutService.getCheckoutSuccess, payload);
@@ -76,6 +77,12 @@ function* getCheckOutSagaSuccess(dataRequest) {
                 localStorage.setItem("buyPackage", true)
                 localStorage.setItem("newNumberTicket", Number(data?.data?.quantity || 0))
                 window.close()
+            }
+            if(packageRenewChanged){
+                yield put(deleteCurrentPackage({
+                    packageId: +packageRenewChanged?.id,
+                    paypalSubsId: packageRenewChanged?.packagePaypalId
+                }));
             }
         } else {
             yield put(checkoutPaypalSuccessFail());
@@ -128,12 +135,14 @@ function* getCancelCurrentPackageSaga(dataRequest) {
         const {status , data} = res
         if(status === 200 || status === 201) {
             yield put(deleteCurrentPackageSuccess(data))
-            console.log(data);
             yield put(showToastNotification({
                 type: "success",
                 message: data?.message
             }))
-        } 
+            localStorage.removeItem("cancelPackage");
+            localStorage.removeItem("previousPack");
+            yield put(getUserInfoReady(localStorage.getItem("token")))
+        }
     } catch(err) {
         console.log(err);
         yield put(deleteCurrentPackageFail())

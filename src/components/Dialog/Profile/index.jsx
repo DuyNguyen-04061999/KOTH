@@ -161,7 +161,7 @@ export default function DialogProfile(props) {
   };
 
   const handleOpenRenewalBadgePopup = () => {
-    localStorage.setItem("cancelPackage", uPack?.id);
+    localStorage.setItem("cancelPackage", JSON.stringify(uPack));
     dispatch(openRenewalBadgePopup());
   };
 

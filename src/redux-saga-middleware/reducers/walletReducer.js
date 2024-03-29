@@ -114,7 +114,7 @@ const walletReducer = (
     totalExtra: 0,
     price: 0,
     isCheckRenewalNoti: false,
-    isChcekRenewalBadge: false,
+    isCheckRenewalPopup: false,
     isDeleteCurrentPackage: false,
   },
   action
@@ -169,9 +169,9 @@ const walletReducer = (
     case "CLOSE_RENEWAL_NOTI_POPUP":
       return { ...state, isCheckRenewalNoti: false };
     case "OPEN_RENEWAL_BADGE_POPUP":
-      return { ...state, isChcekRenewalBadge: true };
+      return { ...state, isCheckRenewalPopup: true };
     case "CLOSE_RENEWAL_BADGE_POPUP":
-      return { ...state, isChcekRenewalBadge: false };
+      return { ...state, isCheckRenewalPopup: false };
     case "DELETE_CURRENT_PACKAGE":
       return { ...state, isDeleteCurrentPackage: true };
     case "DELETE_CURRENT_PACKAGE_SUCCESS":
