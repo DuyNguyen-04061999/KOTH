@@ -8,7 +8,6 @@ import { readNotification } from "../../../redux-saga-middleware/reducers/notifi
 
 export default function PromotionNotification(props) {
   const { createdAt, content, promotionId, id, title, read } = props;
-  console.log(title);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   return (
@@ -81,7 +80,7 @@ export default function PromotionNotification(props) {
           }}
         ></Box>
       ) : (
-        ""
+        <></>
       )}
     </Box>
   );

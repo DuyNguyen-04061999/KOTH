@@ -8,7 +8,7 @@ import { closeNotificationDialog } from "../../../redux-saga-middleware/reducers
 import { useNavigate } from "react-router-dom";
 
 export default function ReferralNotification(props) {
-  const { createdAt, content, title, id } = props;
+  const { createdAt, content, title, id, read } = props;
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -27,6 +27,7 @@ export default function ReferralNotification(props) {
         background: "#2E233D",
         padding: "16px 0px",
         borderBottom: "solid 1px #443565",
+        position:"relative"
       }}
     >
       <Typography
@@ -66,6 +67,17 @@ export default function ReferralNotification(props) {
       >
         Details
       </Typography>
+      {read === 0 ? (
+        <Box sx={{
+          width:10,
+          height:10,
+          borderRadius:"50%",
+          backgroundColor:"#FF9F38",
+          position:"absolute",
+          top:20,
+          right:15
+        }}></Box>
+      ) : (<></>)}
     </Box>
   );
 }
