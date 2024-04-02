@@ -151,14 +151,15 @@ export default function Layout(props) {
     setDebounceTab(true);
   };
 
+
   useEffect(() => {
     let timeOutId = undefined;
     if (debounceTab === false) {
       timeOutId = setTimeout(() => {
-        setIsNav(false);
-      }, 1000);
+        setIsNav(true);
+      }, 500);
     } else {
-      setIsNav(true);
+      setIsNav(false);
     }
     return () => {
       clearTimeout(timeOutId);
