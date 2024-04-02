@@ -333,6 +333,7 @@ import event1 from "../assets/images/event1.png"
 import event2 from "../assets/images/event2.png"
 import check1 from "../assets/images/check1.png"
 import check2 from "../assets/images/check2.png"
+import news3 from "../assets/images/news3.png"
 
 
 export const imageHome = {
@@ -577,7 +578,8 @@ export const images = {
   check1:check1,
   check2:check2,
   event1:event1,
-  event2:event2
+  event2:event2,
+  news3:news3
 };
 
 export const navigationImages = {

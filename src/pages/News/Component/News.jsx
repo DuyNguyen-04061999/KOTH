@@ -1,7 +1,7 @@
 import { Box, Container, Grid, Typography, Button } from "@mui/material";
 import SlickSlider from "../../../components/SlickSlider";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { getListBanner } from "../../../redux-saga-middleware/reducers/appReducer";
 import SliderNews from "../SliderNews";
 import { images } from "../../../utils/images";
@@ -9,16 +9,53 @@ import Stack from "@mui/material/Stack";
 import Pagination from "@mui/material/Pagination";
 import IconButton from "@mui/material/IconButton";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import { getListNews, saveIdNews } from "../../../redux-saga-middleware/reducers/news";
+import dayjs from "dayjs";
+import { useNavigate } from "react-router-dom";
+const NewFooter = lazy(() => import("../../NewFooter"));
 
 export default function News() {
   const { threeBrandTour } = useSelector((state) => state.tournamentReducer);
-  const [currentTab, setCurrentTab] = useState("New");
+  const [currentTab, setCurrentTab] = useState("news");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10; // Number of items to display per page
   const totalItems = 100; // Total number of items in your list
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const [count, setCount] = useState(7);
+  const [start, setStart] = useState(0);
+  // const [tagNew,setTagNew] = useState("news")
+  const [dataNews, setDataNews] = useState([]);
+  const { listNews, total, idDetail } = useSelector((state) => state.newsReducer);
   const dispatch = useDispatch();
+  const navigate = useNavigate()
+  const PostTag = {
+    NEWS: "news",
+    UPDATE: "update",
+    EVENT: "event",
+  };
+
+  const totalPage = Math.ceil(total / count);
+
+  useEffect(() => {
+    dispatch(
+      getListNews({
+        start: start * count,
+        count: count,
+        tag: currentTab,
+      })
+    );
+  }, [dispatch, currentTab, start, count]);
+
+  useEffect(() => {
+    if (listNews) {
+      setDataNews(listNews);
+    }
+  }, [listNews]);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [start]);
 
   const itemList = Array.from(
     { length: totalItems },
@@ -27,9 +64,10 @@ export default function News() {
 
   // Get the items for the current page
   const currentItems = itemList.slice(indexOfFirstItem, indexOfLastItem);
-
   const handleChangePage = (event, page) => {
-    setCurrentPage(page);
+    if (start >= 0) {
+      setStart(page - 1);
+    }
   };
 
   const banner = [
@@ -81,7 +119,12 @@ export default function News() {
         <Box className="Slider-banner">
           <SliderNews appendDot={true} images={banner} tours={threeBrandTour} />
         </Box>
-        <Box className="News-Content">
+        <Box
+          className="News-Content"
+          sx={{
+            background: "#1D1329",
+          }}
+        >
           <Box
             sx={{
               marginTop: "56px",
@@ -102,23 +145,24 @@ export default function News() {
             >
               <Button
                 onClick={() => {
-                  setCurrentTab("New");
+                  setCurrentTab(PostTag.NEWS);
+                  setStart(0);
                 }}
                 sx={{
                   borderRadius: "8px",
                   backgroundColor:
-                    currentTab === "New" ? "#7848ED" : "transparent",
-                  color: currentTab === "New" ? "white" : "#7848ED",
+                    currentTab === PostTag.NEWS ? "#7848ED" : "transparent",
+                  color: currentTab === PostTag.NEWS ? "white" : "#7848ED",
                   padding: "12px 40px",
                   textTransform: "capitalize",
                   fontSize: "14px",
                   ":hover": {
                     backgroundColor:
-                      currentTab === "New" ? "#7848ED" : "transparent",
+                      currentTab === PostTag.NEWS ? "#7848ED" : "transparent",
                   },
                 }}
               >
-                {currentTab === "New" ? (
+                {currentTab === PostTag.NEWS ? (
                   <Box
                     component={"img"}
                     src={images.news1}
@@ -139,23 +183,24 @@ export default function News() {
               </Button>
               <Button
                 onClick={() => {
-                  setCurrentTab("Update");
+                  setCurrentTab(PostTag.UPDATE);
+                  setStart(0);
                 }}
                 sx={{
                   borderRadius: "8px",
                   backgroundColor:
-                    currentTab === "Update" ? "#7848ED" : "transparent",
-                  color: currentTab === "Update" ? "white" : "#7848ED",
+                    currentTab === PostTag.UPDATE ? "#7848ED" : "transparent",
+                  color: currentTab === PostTag.UPDATE ? "white" : "#7848ED",
                   padding: "12px 40px",
                   textTransform: "capitalize",
                   fontSize: "14px",
                   ":hover": {
                     backgroundColor:
-                      currentTab === "Update" ? "#7848ED" : "transparent",
+                      currentTab === PostTag.UPDATE ? "#7848ED" : "transparent",
                   },
                 }}
               >
-                {currentTab === "Update" ? (
+                {currentTab === PostTag.UPDATE ? (
                   <Box
                     component={"img"}
                     src={images.check1}
@@ -176,23 +221,24 @@ export default function News() {
               </Button>
               <Button
                 onClick={() => {
-                  setCurrentTab("Event");
+                  setCurrentTab(PostTag.EVENT);
+                  setStart(0);
                 }}
                 sx={{
                   borderRadius: "8px",
                   backgroundColor:
-                    currentTab === "Event" ? "#7848ED" : "transparent",
-                  color: currentTab === "Event" ? "white" : "#7848ED",
+                    currentTab === PostTag.EVENT ? "#7848ED" : "transparent",
+                  color: currentTab === PostTag.EVENT ? "white" : "#7848ED",
                   padding: "12px 40px",
                   textTransform: "capitalize",
                   fontSize: "14px",
                   ":hover": {
                     backgroundColor:
-                      currentTab === "Event" ? "#7848ED" : "transparent",
+                      currentTab === PostTag.EVENT ? "#7848ED" : "transparent",
                   },
                 }}
               >
-                {currentTab === "Event" ? (
+                {currentTab === PostTag.EVENT ? (
                   <Box
                     component={"img"}
                     src={images.event1}
@@ -213,21 +259,35 @@ export default function News() {
               </Button>
             </Box>
           </Box>
-          <Box className="content">
+          <Box className="content" sx={{ minHeight: "940px" }}>
             <Box>
-              {currentItems.map((item, index) => (
-                <Box key={index}
+              {dataNews?.map((item) => (
+                <Box
+                  key={item?.id}
                   className="card-item"
                   display={"flex"}
                   justifyContent={"flex-start"}
                   mt={2}
+                  onClick={() => {
+                    dispatch(saveIdNews({
+                      id: item?.id
+                    }))
+                    navigate(`/news/${item.id}`)
+                  }}
                 >
-                  <Box className="item-img" sx={{ width: "30%" }}>
+                  <Box
+                    className="item-img"
+                    sx={{ width: "30%", padding: "10px" }}
+                  >
                     <Box
                       component={"img"}
-                      src={images.bannerWin_Desktop}
+                      src={images.bannerbuyticket}
                       alt=""
-                      sx={{ width: "100%", height: "100%" }}
+                      sx={{
+                        width: "100%",
+                        height: "100%",
+                        borderRadius: "8px",
+                      }}
                     ></Box>
                   </Box>
                   <Box
@@ -238,6 +298,8 @@ export default function News() {
                       flexDirection: "column",
                       alignItems: "flex-start",
                       textAlign: "left",
+                      padding: "10px",
+                      justifyContent: "space-between",
                     }}
                   >
                     <Typography
@@ -250,8 +312,7 @@ export default function News() {
                         textAlign: "left",
                       }}
                     >
-                      Experience the Magic of Taylor Swift's "The Eras Tour" and
-                      Win Tickets to the Show! ${item}
+                      {item?.title}
                     </Typography>
                     <Typography
                       sx={{
@@ -263,13 +324,19 @@ export default function News() {
                         textAlign: "left",
                       }}
                     >
-                      In an unprecedented celebration of music and storytelling,
-                      Taylor Swift is taking the world by storm with her latest
-                      concert series, "The Eras Tour". This tour is a journey
-                      through the musical epochs of Swift's illustrious career,
-                      offering fans a chance to live through the evolutions of
-                      her sound, from country roots to pop anthems and indie
-                      folk narratives.....
+                      {item?.shortDesc === "string" ? (
+                        <>
+                          In an unprecedented celebration of music and
+                          storytelling, Taylor Swift is taking the world by
+                          storm with her latest concert series, "The Eras Tour".
+                          This tour is a journey through the musical epochs of
+                          Swift's illustrious career, offering fans a chance to
+                          live through the evolutions of her sound, from country
+                          roots to pop anthems and indie folk narratives.....
+                        </>
+                      ) : (
+                        <>{item?.shortDesc}</>
+                      )}
                     </Typography>
                     <Typography
                       sx={{
@@ -281,7 +348,7 @@ export default function News() {
                         textAlign: "left",
                       }}
                     >
-                      By Xanh Le, Bao Tran   February 21, 2024 | 06:10 am GMT+7
+                      {dayjs(item?.updatedAt).format("DD/MM/YYYY h:mm A")}
                     </Typography>
                   </Box>
                 </Box>
@@ -291,19 +358,33 @@ export default function News() {
         </Box>
         <Box
           sx={{
-            marginTop: "120px",
+            marginTop: "40px",
           }}
         >
-          <Stack spacing={2} mt={2} mb={5}>
+          <Stack spacing={2} mt={2} mb={5} alignItems={"center"}>
             <Pagination
-              count={Math.ceil(totalItems / itemsPerPage)} // Calculate total number of pages
-              page={currentPage}
+              count={totalPage} // Calculate total number of pages
+              page={start + 1}
               onChange={handleChangePage}
               variant="outlined"
               shape="rounded"
+              sx={{
+                "& .MuiButtonBase-root": {
+                  // background:"#7848ED",
+                  // border:"1px solid #7848ED",
+                  color: "white",
+                },
+                "& .MuiPaginationItem-root.Mui-selected": {
+                  backgroundColor: "#7848ED !important",
+                },
+                "& .MuiPaginationItem-previousNext": {
+                  backgroundColor: "#7848ED !important",
+                },
+              }}
             />
           </Stack>
         </Box>
+        <Suspense fallback="loading..." children={<NewFooter />} />
       </Container>
     </>
   );

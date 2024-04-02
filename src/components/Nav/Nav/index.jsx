@@ -1579,6 +1579,72 @@ export default function Navbar({isNav}) {
                                     backgroundColor: "#7848ED",
                                 },
                                 backgroundColor:
+                                    pathname && pathname?.includes("news") ? "#7848ED" : "",
+
+                                borderRadius: "5px",
+                                padding: "10px 5px",
+                                marginTop: "16px",
+                            }}
+                            onClick={() => {
+                                if (!token) {
+                                    dispatch(clickTab("login"));
+                                    dispatch(toggleLoginDialog());
+                                } else {
+                                    navigate(`/news`);
+                                }
+                            }}
+                        >
+                            {pathname && pathname?.includes("news") ? (
+                                <Box
+                                    component={"img"}
+                                    src={images.news1}
+                                    sx={{width: "18px", height: "18px"}}
+                                />
+                            ) : (
+                                <Box
+                                    component={"img"}
+                                    src={images.news3}
+                                    sx={{width: "18px", height: "18px"}}
+                                />
+                            )}
+
+                            <Typography
+                                className="hover-nav"
+                                style={{
+                                    cursor: "pointer",
+                                    fontWeight: "700",
+                                    fontSize: "15px",
+                                    marginLeft: "5px",
+                                    display: isNav === true ? "block" : "none",
+                                    textOverflow: "ellipsis",
+                                    whiteSpace: "nowrap",
+                                    overflow: "hidden",
+                                    color: pathname && pathname?.includes("news") && "white",
+                                    paddingLeft: "5px",
+                                    transition: ".5s ease"
+
+                                }}
+                            >
+                                News
+                            </Typography>
+                        </Box>
+                    ) : (
+                        <></>
+                    )}
+                    {getAppType() === "promote" ? (
+                        <Box
+                            className="cursor-pointer"
+                            sx={{
+                                cursor: "pointer",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: isNav === true ? "flex-start" : "center",
+                                // transition: "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+                                transition: "0.4s ease",
+                                ":hover": {
+                                    backgroundColor: "#7848ED",
+                                },
+                                backgroundColor:
                                     pathname && pathname?.includes("help-center")
                                         ? "#7848ED"
                                         : "",
