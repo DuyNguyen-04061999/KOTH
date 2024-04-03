@@ -17,6 +17,7 @@ import {deleteCurrentPackage, deleteCurrentPackageFail, deleteCurrentPackageSucc
 import CheckoutService from "../services/checkoutService";
 import ReactGA from "react-ga4";
 import {exitEditProfile} from "../reducers/profileReducer";
+import {getListNotification} from "../reducers/notificationReducer";
 
 const checkoutService = new CheckoutService();
 
@@ -84,6 +85,7 @@ function* getCheckOutSagaSuccess(dataRequest) {
                     paypalSubsId: packageRenewChanged?.packagePaypalId
                 }));
             }
+            yield put(getListNotification());
         } else {
             yield put(checkoutPaypalSuccessFail());
             yield put(toggleAlertStripeProcess({
@@ -134,14 +136,15 @@ function* getCancelCurrentPackageSaga(dataRequest) {
         const res = yield call(checkoutService.cancelCurentPackage, payload)
         const {status , data} = res
         if(status === 200 || status === 201) {
+            yield put(getUserInfoReady(localStorage.getItem("token")))
             yield put(deleteCurrentPackageSuccess(data))
             yield put(showToastNotification({
                 type: "success",
                 message: data?.message
             }))
+            yield put(getListNotification());
             localStorage.removeItem("cancelPackage");
             localStorage.removeItem("previousPack");
-            yield put(getUserInfoReady(localStorage.getItem("token")))
         }
     } catch(err) {
         console.log(err);
