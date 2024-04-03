@@ -151,7 +151,7 @@ const walletReducer = (
     case "TOGGLE_CHECK_WALLET":
       return {
         ...state,
-        isCheckWallet: !state.isCheckWallet,
+        isCheckWallet: true,
         typeWallet: payload?.type,
         goldCombo: payload?.gold,
         totalExtra: payload?.total,

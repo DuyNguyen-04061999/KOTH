@@ -50,7 +50,8 @@ export default function SubPackExpired(props) {
         {moment(createdAt)?.format("M/D/YYYY, hh:mm a")}
       </Box>
       <Box sx={{ fontSize: "12px", color: "#fff" }}>{content}</Box>
-      <Typography
+      {/* {title !== "Referral Notification" ? (
+        <Typography
         onClick={() => {
           dispatch(closeNotificationDialog());
           navigate("/packages");
@@ -66,6 +67,9 @@ export default function SubPackExpired(props) {
       >
         Renew now
       </Typography>
+      ) : (
+        <></>
+      )} */}
       {read === 0 ? (
         <Box sx={{
           width:10,

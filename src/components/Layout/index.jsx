@@ -151,14 +151,15 @@ export default function Layout(props) {
     setDebounceTab(true);
   };
 
+
   useEffect(() => {
     let timeOutId = undefined;
     if (debounceTab === false) {
       timeOutId = setTimeout(() => {
-        setIsNav(false);
-      }, 1000);
+        setIsNav(true);
+      }, 500);
     } else {
-      setIsNav(true);
+      setIsNav(false);
     }
     return () => {
       clearTimeout(timeOutId);
@@ -520,7 +521,7 @@ export default function Layout(props) {
               <rect y="18" width="30" height="5" rx="2" fill="#A968E2" />
             </svg>
           ) : (
-            ""
+           <></>
           )}
           {device === "Desktop" ? (
             <div className="d-flex align-items-center">
@@ -585,7 +586,7 @@ export default function Layout(props) {
               )}
             </Box>
           )}
-          <Box sx={{ flexGrow: 1 }}>{width > 1199 ? <Box></Box> : ""}</Box>
+          <Box sx={{ flexGrow: 1 }}>{width > 1199 ? <Box></Box> : <></>}</Box>
           <AvatarGroup className="d-flex align-items-center">
             <AuthDialog />
           </AvatarGroup>
