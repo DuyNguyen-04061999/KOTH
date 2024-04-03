@@ -17,13 +17,9 @@ const NewFooter = lazy(() => import("../../NewFooter"));
 export default function News() {
   const { threeBrandTour } = useSelector((state) => state.tournamentReducer);
   const [currentTab, setCurrentTab] = useState("news");
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10; // Number of items to display per page
-  const totalItems = 100; // Total number of items in your list
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const [count, setCount] = useState(7);
   const [start, setStart] = useState(0);
+  const { device } = useSelector((state) => state.deviceReducer);
   // const [tagNew,setTagNew] = useState("news")
   const [dataNews, setDataNews] = useState([]);
   const { listNews, total, idDetail } = useSelector((state) => state.newsReducer);
@@ -57,13 +53,8 @@ export default function News() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [start]);
 
-  const itemList = Array.from(
-    { length: totalItems },
-    (_, index) => `Item ${index + 1}`
-  );
 
   // Get the items for the current page
-  const currentItems = itemList.slice(indexOfFirstItem, indexOfLastItem);
   const handleChangePage = (event, page) => {
     if (start >= 0) {
       setStart(page - 1);
@@ -153,7 +144,7 @@ export default function News() {
                   backgroundColor:
                     currentTab === PostTag.NEWS ? "#7848ED" : "transparent",
                   color: currentTab === PostTag.NEWS ? "white" : "#7848ED",
-                  padding: "12px 40px",
+                  padding: device === "Mobile" ? "8px 30px" : "12px 40px",
                   textTransform: "capitalize",
                   fontSize: "14px",
                   ":hover": {
@@ -191,7 +182,7 @@ export default function News() {
                   backgroundColor:
                     currentTab === PostTag.UPDATE ? "#7848ED" : "transparent",
                   color: currentTab === PostTag.UPDATE ? "white" : "#7848ED",
-                  padding: "12px 40px",
+                  padding: device === "Mobile" ? "8px 30px" : "12px 40px",
                   textTransform: "capitalize",
                   fontSize: "14px",
                   ":hover": {
@@ -229,7 +220,7 @@ export default function News() {
                   backgroundColor:
                     currentTab === PostTag.EVENT ? "#7848ED" : "transparent",
                   color: currentTab === PostTag.EVENT ? "white" : "#7848ED",
-                  padding: "12px 40px",
+                  padding: device === "Mobile" ? "8px 30px" : "12px 40px",
                   textTransform: "capitalize",
                   fontSize: "14px",
                   ":hover": {
@@ -269,15 +260,12 @@ export default function News() {
                   justifyContent={"flex-start"}
                   mt={2}
                   onClick={() => {
-                    dispatch(saveIdNews({
-                      id: item?.id
-                    }))
                     navigate(`/news/${item.id}`)
                   }}
                 >
                   <Box
                     className="item-img"
-                    sx={{ width: "30%", padding: "10px" }}
+                    sx={{ width: device === "Mobile" ? "50%" : "30%", padding: "10px" }}
                   >
                     <Box
                       component={"img"}
@@ -293,7 +281,7 @@ export default function News() {
                   <Box
                     className="item-title"
                     sx={{
-                      width: "70%",
+                      width: device === "Mobile" ? "50%" : "70%",
                       display: "flex",
                       flexDirection: "column",
                       alignItems: "flex-start",

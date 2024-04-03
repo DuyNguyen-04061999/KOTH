@@ -17,7 +17,7 @@ class newsService {
   }
 
   async getListNewsDetailService(dataRequest) {
-    const res = await PROMOTION_API.get(`/api/news/5`, {
+    const res = await PROMOTION_API.get(`/api/news/${dataRequest?.id}`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: localStorage.getItem("token"),
