@@ -521,7 +521,7 @@ export default function Layout(props) {
               <rect y="18" width="30" height="5" rx="2" fill="#A968E2" />
             </svg>
           ) : (
-            ""
+           <></>
           )}
           {device === "Desktop" ? (
             <div className="d-flex align-items-center">
@@ -586,7 +586,7 @@ export default function Layout(props) {
               )}
             </Box>
           )}
-          <Box sx={{ flexGrow: 1 }}>{width > 1199 ? <Box></Box> : ""}</Box>
+          <Box sx={{ flexGrow: 1 }}>{width > 1199 ? <Box></Box> : <></>}</Box>
           <AvatarGroup className="d-flex align-items-center">
             <AuthDialog />
           </AvatarGroup>
