@@ -16,6 +16,7 @@ import addFriendSaga from "./addFriendSaga";
 import likeDislikeSaga from "./likeDislikeSaga";
 import referralSaga from "./referralSaga";
 import transactionSaga from "./transactionSaga";
+import listNewsSaga from "./newsSaga";
 
 function* watchAll() {
   yield all([
@@ -37,6 +38,7 @@ function* watchAll() {
     likeDislikeSaga(),
     referralSaga(),
     transactionSaga(),
+    listNewsSaga(),
   ]);
 }
 

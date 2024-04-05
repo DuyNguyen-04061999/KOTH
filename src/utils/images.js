@@ -331,6 +331,14 @@ import winnerFrame from "../assets/images/banners/bannerTour/christmasBanner/win
 import stackingDK from "../assets/images/banners/stackingDK.png";
 import stackingMB from "../assets/images/banners/stackingMB.png";
 
+import news1 from "../assets/images/news1.png";
+import news2 from "../assets/images/news2.png";
+import event1 from "../assets/images/event1.png";
+import event2 from "../assets/images/event2.png";
+import check1 from "../assets/images/check1.png";
+import check2 from "../assets/images/check2.png";
+import news3 from "../assets/images/news3.png";
+
 export const imageHome = {
   top1Icon: top1Icon,
   titleImage: titleImage,
@@ -572,6 +580,14 @@ export const images = {
 
   transactionActive: transactionActive,
   transactionPassvie: transactionPassvie,
+
+  news1: news1,
+  news2: news2,
+  check1: check1,
+  check2: check2,
+  event1: event1,
+  event2: event2,
+  news3: news3,
 };
 
 export const navigationImages = {

@@ -64,6 +64,8 @@ import { images } from "./utils/images";
 import { useTracking } from "./utils/useTracking";
 import useWindowDimensions from "./utils/useWindowDimensions";
 import Referal from "./pages/Referal";
+import { News } from "./pages/News/Component";
+import NewsDetail from "./pages/News/NewsDetail";
 
 const LazyNewHomePage = lazy(() => import("./pages/NewHomePageComponent"));
 const LazyPackage = lazy(() => import("./pages/PackagePage"));
@@ -528,6 +530,14 @@ function App() {
                   <Route
                     path="referral"
                     element={tokenUser ? <Referal /> : <Navigate to="/home" />}
+                  />
+                  <Route
+                    path="news"
+                    element={ <News /> }
+                  />
+                  <Route
+                    path="news/:id"
+                    element={ <NewsDetail /> }
                   />
                   {getAppType() === "promote" && (
                     <Route
