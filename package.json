@@ -40,6 +40,7 @@
     "react-iframe": "^1.8.5",
     "react-lazy-load-image-component": "^1.6.0",
     "react-otp-input": "^3.1.0",
+    "react-quill": "^2.0.0",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.8.1",
     "react-screen-orientation": "^0.0.4",
