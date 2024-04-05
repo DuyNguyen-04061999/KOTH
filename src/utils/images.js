@@ -12,6 +12,7 @@ import ContinueGameButton from "../assets/images/ContinueGameButton.png";
 import CupIcon from "../assets/images/CupIcon.png";
 import CupTournament from "../assets/images/CupTournament.png";
 import Discount10 from "../assets/images/Discount10.png";
+import transactionIcon from "../assets/images/transactionIcon.png";
 import Discount12 from "../assets/images/Discount12.png";
 import Discount25 from "../assets/images/Discount25.png";
 import Doge from "../assets/images/Doge.png";
@@ -43,6 +44,8 @@ import ZoomInIcon from "../assets/images/ZoomInIcon.png";
 import backGroundWiningReward from "../assets/images/backGroundWiningReward.png";
 import PepperBanner from "../assets/images/banner 01 1.png";
 import bannerLoading from "../assets/images/bannerLoading.png";
+import transactionActive from "../assets/images/transactionActive.png";
+import transactionPassvie from "../assets/images/transactionPassvie.png";
 import bannerTournament from "../assets/images/bannerTournament.png";
 import bannerTournament1 from "../assets/images/bannerTournament1.png";
 import bannerTournament2 from "../assets/images/bannerTournament2.png";
@@ -89,6 +92,7 @@ import successCloseButton from "../assets/images/successCloseButton.png";
 import successIcon from "../assets/images/successIcon.png";
 import ticketIcon from "../assets/images/ticketIcon.png";
 import ticketIconTournament from "../assets/images/ticketIconTournament.png";
+import emptyNoData from "../assets/images/emptyNoData.png";
 
 import undefinedAvatar from "../assets/images/undefinedAvatar.png";
 import userIcon from "../assets/images/userIcon.png";
@@ -480,6 +484,7 @@ export const images = {
   personTour: personTour,
   TimeTour: TimeTour,
   BannerTour: BannerTour,
+  emptyNoData: emptyNoData,
 
   backGroundWiningReward: backGroundWiningReward,
   winingMedal: winingMedal,
@@ -563,6 +568,10 @@ export const images = {
   stackingMB: stackingMB,
 
   badgeBigSale: badgeBigSale,
+  transactionIcon: transactionIcon,
+
+  transactionActive: transactionActive,
+  transactionPassvie: transactionPassvie,
 };
 
 export const navigationImages = {

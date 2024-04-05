@@ -88,6 +88,7 @@ import "./index.scss";
 import NotificationBage from "../NotificationBage";
 import RenewalBadgePopup from "../Dialog/Packages/NotiCheckout/renewalBadgePopup";
 import RenewalNotiPopup from "../Dialog/Packages/NotiCheckout/renewalNotiPopup";
+import TransactionHistory from "../Dialog/TransactionHistory";
 
 const Main = muiStyled("main", {
   shouldForwardProp: (prop) => prop !== "open",
@@ -131,7 +132,11 @@ export default function Layout(props) {
   const { orientation } = useSelector((state) => state.gameReducer);
   const { isChangeLocation } = useSelector((state) => state.packageReducer);
   const [isNav, setIsNav] = useState(false);
-  const { tokenUser: token, user } = useSelector((state) => state.userReducer);
+  const {
+    tokenUser: token,
+    user,
+    openTransactionDialog,
+  } = useSelector((state) => state.userReducer);
   const { chatPopup, badgechat } = useSelector((state) => state.chatReducer);
   const { listSetting } = useSelector((state) => state.settingReducer);
   const { router, startGameCheck, fromRouter, countDownDoubleDay } =
@@ -150,7 +155,6 @@ export default function Layout(props) {
   const handleMouseEnter = () => {
     setDebounceTab(true);
   };
-
 
   useEffect(() => {
     let timeOutId = undefined;
@@ -449,9 +453,9 @@ export default function Layout(props) {
       >
         {process.env.REACT_APP_ENV !== "development" ? <ChatBot /> : <></>}
       </Box> */}
-
       <SimpleDialog />
       <TicketCheckOut />
+      {openTransactionDialog && <TransactionHistory />}
       <StripeAlertComponent />
       <ShareTour />
       <SubscriptionDialog />
@@ -485,7 +489,6 @@ export default function Layout(props) {
           }}
         />
       )}
-
       <AppBar
         position="sticky"
         className={
@@ -521,7 +524,7 @@ export default function Layout(props) {
               <rect y="18" width="30" height="5" rx="2" fill="#A968E2" />
             </svg>
           ) : (
-           <></>
+            <></>
           )}
           {device === "Desktop" ? (
             <div className="d-flex align-items-center">
