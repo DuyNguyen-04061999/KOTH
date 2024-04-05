@@ -15,6 +15,7 @@ import { default as authSaga, default as userSaga } from "./userSaga";
 import addFriendSaga from "./addFriendSaga";
 import likeDislikeSaga from "./likeDislikeSaga";
 import referralSaga from "./referralSaga";
+import transactionSaga from "./transactionSaga";
 import listNewsSaga from "./newsSaga";
 
 function* watchAll() {
@@ -36,6 +37,7 @@ function* watchAll() {
     commentSaga(),
     likeDislikeSaga(),
     referralSaga(),
+    transactionSaga(),
     listNewsSaga(),
   ]);
 }
