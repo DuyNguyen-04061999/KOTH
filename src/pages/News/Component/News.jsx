@@ -1,4 +1,11 @@
-import { Box, Container, Grid, Typography, Button } from "@mui/material";
+import {
+  Box,
+  Container,
+  Grid,
+  Typography,
+  Button,
+  Skeleton,
+} from "@mui/material";
 import SlickSlider from "../../../components/SlickSlider";
 import { useDispatch, useSelector } from "react-redux";
 import { lazy, Suspense, useEffect, useState } from "react";
@@ -9,22 +16,33 @@ import Stack from "@mui/material/Stack";
 import Pagination from "@mui/material/Pagination";
 import IconButton from "@mui/material/IconButton";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import { getListNews, saveIdNews } from "../../../redux-saga-middleware/reducers/news";
+import {
+  getListNews,
+  saveIdNews,
+} from "../../../redux-saga-middleware/reducers/news";
 import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
+import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
+import ParagraphLoading from "../../../components/LoadingComponent/ParagraphLoading";
+import useWindowDimensions from "../../../utils/useWindowDimensions";
+import ListEmpty from "../../../components/LoadingComponent/ListEmpty"
 const NewFooter = lazy(() => import("../../NewFooter"));
 
 export default function News() {
+  const { width } = useWindowDimensions();
   const { threeBrandTour } = useSelector((state) => state.tournamentReducer);
   const [currentTab, setCurrentTab] = useState("news");
-  const [count, setCount] = useState(7);
+  const [count, setCount] = useState(4);
   const [start, setStart] = useState(0);
   const { device } = useSelector((state) => state.deviceReducer);
   // const [tagNew,setTagNew] = useState("news")
+  const [bannerThumbnail, setBannerThumbnail] = useState([]);
   const [dataNews, setDataNews] = useState([]);
-  const { listNews, total, idDetail } = useSelector((state) => state.newsReducer);
+  const { listNews, total, idDetail, isFetchListNews } = useSelector(
+    (state) => state.newsReducer
+  );
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const PostTag = {
     NEWS: "news",
     UPDATE: "update",
@@ -46,13 +64,13 @@ export default function News() {
   useEffect(() => {
     if (listNews) {
       setDataNews(listNews);
+      setBannerThumbnail(listNews?.thumbnail);
     }
   }, [listNews]);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [start]);
-
 
   // Get the items for the current page
   const handleChangePage = (event, page) => {
@@ -63,19 +81,19 @@ export default function News() {
 
   const banner = [
     {
-      bannerLinkDesktop: images.bannerWin_Desktop,
+      bannerLinkDesktop: images.bannerTournament2,
       bannerLinkMobile: images.bannerendmobile,
     },
     {
-      bannerLinkDesktop: images.bannerWin_Desktop,
+      bannerLinkDesktop: images.bannerTournament,
       bannerLinkMobile: images.bannerendmobile,
     },
     {
-      bannerLinkDesktop: images.bannerWin_Desktop,
+      bannerLinkDesktop: images.bannerTournament1,
       bannerLinkMobile: images.bannerendmobile,
     },
     {
-      bannerLinkDesktop: images.bannerWin_Desktop,
+      bannerLinkDesktop: images.bannerTournament2,
       bannerLinkMobile: images.bannerendmobile,
     },
   ];
@@ -250,98 +268,197 @@ export default function News() {
               </Button>
             </Box>
           </Box>
-          <Box className="content" sx={{ minHeight: "940px" }}>
-            <Box>
-              {dataNews?.map((item) => (
-                <Box
-                  key={item?.id}
-                  className="card-item"
-                  display={"flex"}
-                  justifyContent={"flex-start"}
-                  mt={2}
-                  onClick={() => {
-                    navigate(`/news/${item.id}`)
-                  }}
-                >
-                  <Box
-                    className="item-img"
-                    sx={{ width: device === "Mobile" ? "50%" : "30%", padding: "10px" }}
-                  >
+          <Box className="content" sx={{  }}>
+            {dataNews?.length ? (
+              <>
+                <Box>
+                  {dataNews?.map((item) => (
                     <Box
-                      component={"img"}
-                      src={images.bannerbuyticket}
-                      alt=""
-                      sx={{
-                        width: "100%",
-                        height: "100%",
-                        borderRadius: "8px",
-                      }}
-                    ></Box>
-                  </Box>
-                  <Box
-                    className="item-title"
-                    sx={{
-                      width: device === "Mobile" ? "50%" : "70%",
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "flex-start",
-                      textAlign: "left",
-                      padding: "10px",
-                      justifyContent: "space-between",
-                    }}
-                  >
-                    <Typography
-                      sx={{
-                        fontSize: "20px",
-                        fontWeight: 700,
-                        letterSpacing: "0.2px",
-                        lineHeight: "30px",
-                        color: "#fff",
-                        textAlign: "left",
+                      key={item?.id}
+                      className="card-item"
+                      display={"flex"}
+                      justifyContent={"flex-start"}
+                      mt={2}
+                      onClick={() => {
+                        navigate(`/news/${item.id}`);
                       }}
                     >
-                      {item?.title}
-                    </Typography>
-                    <Typography
-                      sx={{
-                        fontSize: "12px",
-                        fontWeight: 500,
-                        letterSpacing: "0.12px",
-                        lineHeight: "18px",
-                        color: "#fff",
-                        textAlign: "left",
-                      }}
-                    >
-                      {item?.shortDesc === "string" ? (
-                        <>
-                          In an unprecedented celebration of music and
-                          storytelling, Taylor Swift is taking the world by
-                          storm with her latest concert series, "The Eras Tour".
-                          This tour is a journey through the musical epochs of
-                          Swift's illustrious career, offering fans a chance to
-                          live through the evolutions of her sound, from country
-                          roots to pop anthems and indie folk narratives.....
-                        </>
-                      ) : (
-                        <>{item?.shortDesc}</>
-                      )}
-                    </Typography>
-                    <Typography
-                      sx={{
-                        fontSize: "10px",
-                        fontWeight: 400,
-                        letterSpacing: "0.269px",
-                        lineHeight: "15px",
-                        color: "#9384B7",
-                        textAlign: "left",
-                      }}
-                    >
-                      {dayjs(item?.updatedAt).format("DD/MM/YYYY h:mm A")}
-                    </Typography>
-                  </Box>
+                      <Box
+                        className="item-img"
+                        sx={{
+                          width: device === "Mobile" ? "50%" : "30%",
+                          padding: "10px",
+                        }}
+                      >
+                        {isFetchListNews ? (
+                          <>
+                            <Skeleton
+                              variant="rectangular"
+                              sx={{
+                                width: "100%",
+                                height: "200px",
+                                backgroundColor: "rgba(255,255,255,0.5)",
+                                borderRadius: "8px",
+                              }}
+                            />
+                          </>
+                        ) : (
+                          <Box>
+                            <Box
+                              component={"img"}
+                              src={`https://storage.googleapis.com/web-system-files/${item?.thumbnail}`}
+                              alt=""
+                              sx={{
+                                width: "100%",
+                                height: "200px",
+                                borderRadius: "8px",
+                                objectFit: "cover",
+                              }}
+                            ></Box>
+                          </Box>
+                        )}
+                      </Box>
+                      <Box
+                        className="item-title"
+                        sx={{
+                          width: device === "Mobile" ? "50%" : "70%",
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "flex-start",
+                          textAlign: "left",
+                          padding: "10px",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        {isFetchListNews ? (
+                          <>
+                            <Skeleton
+                              variant="text"
+                              sx={{
+                                fontSize: "1rem",
+                                width: "100%",
+                                backgroundColor: "rgba(255,255,255,0.5)",
+                              }}
+                            />
+                            <Skeleton
+                              variant="text"
+                              sx={{
+                                fontSize: "1rem",
+                                width: "70%",
+                                backgroundColor: "rgba(255,255,255,0.5)",
+                              }}
+                            />
+                          </>
+                        ) : (
+                          <Typography
+                            sx={{
+                              fontSize: "20px",
+                              fontWeight: 700,
+                              letterSpacing: "0.2px",
+                              lineHeight: "30px",
+                              color: "#fff",
+                              textAlign: "left",
+                            }}
+                          >
+                            {item?.title}
+                          </Typography>
+                        )}
+                        {isFetchListNews ? (
+                          <>
+                            <Skeleton
+                              variant="text"
+                              sx={{
+                                fontSize: "1rem",
+                                width: "100%",
+                                backgroundColor: "rgba(255,255,255,0.5)",
+                              }}
+                            />
+                            <Skeleton
+                              variant="text"
+                              sx={{
+                                fontSize: "1rem",
+                                width: "70%",
+                                backgroundColor: "rgba(255,255,255,0.5)",
+                              }}
+                            />
+                          </>
+                        ) : (
+                          <Typography
+                            sx={{
+                              fontSize: "12px",
+                              fontWeight: 500,
+                              letterSpacing: "0.12px",
+                              lineHeight: "18px",
+                              color: "#fff",
+                              textAlign: "left",
+                            }}
+                          >
+                            {item?.shortDesc === "string" ? (
+                              <>
+                                In an unprecedented celebration of music and
+                                storytelling, Taylor Swift is taking the world
+                                by storm with her latest concert series, "The
+                                Eras Tour". This tour is a journey through the
+                                musical epochs of Swift's illustrious career,
+                                offering fans a chance to live through the
+                                evolutions of her sound, from country roots to
+                                pop anthems and indie folk narratives.....
+                              </>
+                            ) : (
+                              <>{item?.shortDesc}</>
+                            )}
+                          </Typography>
+                        )}
+                        {isFetchListNews ? (
+                          <>
+                            <Skeleton
+                              variant="text"
+                              sx={{
+                                fontSize: "1rem",
+                                width: "100%",
+                                backgroundColor: "rgba(255,255,255,0.5)",
+                              }}
+                            />
+                            <Skeleton
+                              variant="text"
+                              sx={{
+                                fontSize: "1rem",
+                                width: "70%",
+                                backgroundColor: "rgba(255,255,255,0.5)",
+                              }}
+                            />
+                          </>
+                        ) : (
+                          <Typography
+                            sx={{
+                              fontSize: "10px",
+                              fontWeight: 400,
+                              letterSpacing: "0.269px",
+                              lineHeight: "15px",
+                              color: "#9384B7",
+                              textAlign: "left",
+                            }}
+                          >
+                            {dayjs(item?.updatedAt).format("DD/MM/YYYY h:mm A")}
+                          </Typography>
+                        )}
+                      </Box>
+                    </Box>
+                  ))}
                 </Box>
-              ))}
-            </Box>
+              </>
+            ) : (
+              <>
+                <Box sx={{paddingTop:"50px", paddingBottom:"50px"}}>
+                  <Typography sx={{
+                      color:"white",
+                      fontSize:"22px"
+                  }}>
+                    There are no new posts :( , please come back later
+                  </Typography>
+                </Box>
+              </>
+            )}
           </Box>
         </Box>
         <Box
