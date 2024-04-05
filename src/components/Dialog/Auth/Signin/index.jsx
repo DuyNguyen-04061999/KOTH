@@ -17,6 +17,7 @@ import {
   getMyInfor,
   logoutReady,
   removeTokenUser,
+  updateTransactionDialog,
 } from "../../../../redux-saga-middleware/reducers/userReducer";
 import { getAppType } from "../../../../utils/helper";
 import { images } from "../../../../utils/images";
@@ -399,7 +400,7 @@ export default function Dialoglg() {
                       display={"flex"}
                       alignItems={"center"}
                       justifyContent={"center"}
-                      sx={{ padding: "10px 15px" }}
+                      sx={{ padding: "5px 15px" }}
                     >
                       {userAvatar === null ? (
                         <img
@@ -523,7 +524,7 @@ export default function Dialoglg() {
                   <Box className="item">
                     <Grid
                       container
-                      sx={{ padding: "10px 15px 0px 15px", maxWidth: "300px" }}
+                      sx={{ padding: "5px 15px", maxWidth: "300px" }}
                     >
                       <Grid item xs={12} className="hover-dropdown">
                         <Dropdown.Item
@@ -677,6 +678,59 @@ export default function Dialoglg() {
                             }}
                           >
                             FAQ
+                          </button>
+                        </Dropdown.Item>
+                      </Grid>
+                    </Grid>
+                  </Box>
+                  <Box className="item">
+                    <Grid
+                      container
+                      sx={{ padding: "5px 15px", maxWidth: "300px" }}
+                    >
+                      <Grid item xs={12} className="hover-dropdown">
+                        <Dropdown.Item
+                          onMouseOver={() => {
+                            setHover(4);
+                          }}
+                          onMouseLeave={() => {
+                            setHover(0);
+                          }}
+                          style={{
+                            paddingRight: "0px",
+                            paddingLeft: "5px",
+                            display: "flex",
+                            alignItems: "center",
+                          }}
+                          onClick={() => {
+                            dispatch(updateTransactionDialog(true));
+                          }}
+                        >
+                          {hover === 4 ? (
+                            <Box
+                              component={"img"}
+                              src={images.transactionActive}
+                            ></Box>
+                          ) : (
+                            <Box
+                              component={"img"}
+                              src={images.transactionPassvie}
+                            ></Box>
+                          )}
+                          <button
+                            className="btn-logout"
+                            style={{
+                              fontWeight: "700",
+                              color: hover === 4 ? "#fff" : "#A89CD7",
+                              letterSpacing: "0.5px",
+                              marginLeft: "4px",
+                              fontSize: "14px",
+                              "&:hover": {
+                                color: "#ffff",
+                              },
+                            }}
+                          >
+                            Transaction
                           </button>
                         </Dropdown.Item>
                       </Grid>
