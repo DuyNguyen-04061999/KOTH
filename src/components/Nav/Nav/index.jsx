@@ -638,13 +638,14 @@ export default function Navbar({isNav}) {
                                     {t("Home")}
                                 </Typography>
                             </Box>
-                            {device === "Tablet" && !isNav ? (
-                                <NavPromotionTablet
-                                    isNav={isNav}
-                                    isDropdownNav={isDropdownNav}
-                                    toggleDropdown={toggleDropdown}
-                                />
-                            ) : (
+                            {
+                            //     device === "Tablet" && !isNav ? (
+                            //     <NavPromotionTablet
+                            //         isNav={isNav}
+                            //         isDropdownNav={isDropdownNav}
+                            //         toggleDropdown={toggleDropdown}
+                            //     />
+                            // ) : (
                                 <>
                                     {" "}
                                     <Box
@@ -665,7 +666,6 @@ export default function Navbar({isNav}) {
                                             sx={{
                                                 display: "flex",
                                                 flexDirection: "row",
-                                                alignItems: "center",
                                                 overflow: "hidden",
                                                 gap:"8px"
                                             }}
@@ -957,7 +957,7 @@ export default function Navbar({isNav}) {
                                         </Box>
                                     </Box>
                                 </>
-                            )}
+                            }
 
                             <Box
                                 sx={{
@@ -987,7 +987,7 @@ export default function Navbar({isNav}) {
                                     ":hover": {
                                         backgroundColor: "#7848ED",
                                     },
-                                    marginTop: "16px",
+                                    marginTop: "12px",
                                 }}
                                 onClick={() => {
                                     navigate("/packages");
