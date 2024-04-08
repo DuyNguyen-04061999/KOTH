@@ -5,6 +5,7 @@ import {
   Typography,
   Button,
   Skeleton,
+  styled,
 } from "@mui/material";
 import SlickSlider from "../../../components/SlickSlider";
 import { useDispatch, useSelector } from "react-redux";
@@ -25,7 +26,7 @@ import { useNavigate } from "react-router-dom";
 import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
 import ParagraphLoading from "../../../components/LoadingComponent/ParagraphLoading";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
-import ListEmpty from "../../../components/LoadingComponent/ListEmpty"
+import ListEmpty from "../../../components/LoadingComponent/ListEmpty";
 const NewFooter = lazy(() => import("../../NewFooter"));
 
 export default function News() {
@@ -108,24 +109,30 @@ export default function News() {
   return (
     <>
       <Container maxWidth={"lg"}>
+       {device === "Mobile" ? (
+        <></>
+       ) : (
         <Box
-          className="News-title"
-          sx={{ paddingTop: "60px", paddingBottom: "46px" }}
+        className="News-title"
+        sx={{ paddingTop: "60px", paddingBottom: "16px" }}
+      >
+        <Typography
+          sx={{
+            color: "#fff",
+            fontSize: "36px",
+            fontStyle: "normal",
+            fontWeight: 700,
+            lineHeight: "normal",
+            textAlign: "left",
+          }}
         >
-          <Typography
-            sx={{
-              color: "#fff",
-              fontSize: "36px",
-              fontStyle: "normal",
-              fontWeight: 700,
-              lineHeight: "normal",
-              textAlign: "left",
-            }}
-          >
-            News
-          </Typography>
-        </Box>
-        <Box className="Slider-banner">
+          News
+        </Typography>
+      </Box>
+       )}
+        <Box className="Slider-banner" sx={{
+          marginTop:"20px"
+        }}>
           <SliderNews appendDot={true} images={banner} tours={threeBrandTour} />
         </Box>
         <Box
@@ -149,7 +156,7 @@ export default function News() {
                 gap: "16px",
                 background: "#302642",
                 width: "100%",
-                padding: "12px 24px",
+                padding: device === "Mobile" ? "10px 12px" : "12px 24px",
               }}
             >
               <Button
@@ -190,6 +197,18 @@ export default function News() {
                 )}
                 News
               </Button>
+              {device === "Mobile" ? (
+                <></>
+              ) : (
+                <Box
+                  sx={{
+                    width: "1px",
+                    height: "50px",
+                    backgroundColor: "rgba(151, 151, 151, 0.40)",
+                    margin: "0 5px",
+                  }}
+                ></Box>
+              )}
               <Button
                 onClick={() => {
                   setCurrentTab(PostTag.UPDATE);
@@ -228,6 +247,18 @@ export default function News() {
                 )}
                 Update
               </Button>
+              {device === "Mobile" ? (
+                <></>
+              ) : (
+                <Box
+                  sx={{
+                    width: "1px",
+                    height: "50px",
+                    backgroundColor: "rgba(151, 151, 151, 0.40)",
+                    margin: "0 5px",
+                  }}
+                ></Box>
+              )}
               <Button
                 onClick={() => {
                   setCurrentTab(PostTag.EVENT);
@@ -268,7 +299,13 @@ export default function News() {
               </Button>
             </Box>
           </Box>
-          <Box className="content" sx={{  }}>
+          <Box
+            className="content"
+            sx={{
+              paddingLeft: "16px",
+              paddingRight: "16px",
+            }}
+          >
             {dataNews?.length ? (
               <>
                 <Box>
@@ -278,15 +315,22 @@ export default function News() {
                       className="card-item"
                       display={"flex"}
                       justifyContent={"flex-start"}
-                      mt={2}
+                      pt={2}
+                      pb={2}
                       onClick={() => {
                         navigate(`/news/${item.id}`);
+                      }}
+                      sx={{
+                        borderBottom: "2px solid #302642",
+                        ":last-child": {
+                          borderBottom: "none",
+                        },
                       }}
                     >
                       <Box
                         className="item-img"
                         sx={{
-                          width: device === "Mobile" ? "50%" : "30%",
+                          width: device === "Mobile" ? "45%" : "35%",
                           padding: "10px",
                         }}
                       >
@@ -296,7 +340,7 @@ export default function News() {
                               variant="rectangular"
                               sx={{
                                 width: "100%",
-                                height: "200px",
+                                height: device === "Mobile" ? "150px" : "200px",
                                 backgroundColor: "rgba(255,255,255,0.5)",
                                 borderRadius: "8px",
                               }}
@@ -310,7 +354,7 @@ export default function News() {
                               alt=""
                               sx={{
                                 width: "100%",
-                                height: "200px",
+                                height: device === "Mobile" ? "150px" : "200px",
                                 borderRadius: "8px",
                                 objectFit: "cover",
                               }}
@@ -321,7 +365,7 @@ export default function News() {
                       <Box
                         className="item-title"
                         sx={{
-                          width: device === "Mobile" ? "50%" : "70%",
+                          width: device === "Mobile" ? "55%" : "65%",
                           display: "flex",
                           flexDirection: "column",
                           alignItems: "flex-start",
@@ -352,10 +396,10 @@ export default function News() {
                         ) : (
                           <Typography
                             sx={{
-                              fontSize: "20px",
+                              fontSize: device === "Mobile" ? "14px" : "20px",
                               fontWeight: 700,
                               letterSpacing: "0.2px",
-                              lineHeight: "30px",
+                              lineHeight:device === "Mobile" ? "none" : "30px",
                               color: "#fff",
                               textAlign: "left",
                             }}
@@ -363,52 +407,61 @@ export default function News() {
                             {item?.title}
                           </Typography>
                         )}
-                        {isFetchListNews ? (
-                          <>
-                            <Skeleton
-                              variant="text"
-                              sx={{
-                                fontSize: "1rem",
-                                width: "100%",
-                                backgroundColor: "rgba(255,255,255,0.5)",
-                              }}
-                            />
-                            <Skeleton
-                              variant="text"
-                              sx={{
-                                fontSize: "1rem",
-                                width: "70%",
-                                backgroundColor: "rgba(255,255,255,0.5)",
-                              }}
-                            />
-                          </>
-                        ) : (
-                          <Typography
-                            sx={{
-                              fontSize: "12px",
-                              fontWeight: 500,
-                              letterSpacing: "0.12px",
-                              lineHeight: "18px",
-                              color: "#fff",
-                              textAlign: "left",
-                            }}
-                          >
-                            {item?.shortDesc === "string" ? (
-                              <>
-                                In an unprecedented celebration of music and
-                                storytelling, Taylor Swift is taking the world
-                                by storm with her latest concert series, "The
-                                Eras Tour". This tour is a journey through the
-                                musical epochs of Swift's illustrious career,
-                                offering fans a chance to live through the
-                                evolutions of her sound, from country roots to
-                                pop anthems and indie folk narratives.....
-                              </>
-                            ) : (
-                              <>{item?.shortDesc}</>
-                            )}
-                          </Typography>
-                        )}
+                        <>
+                          {device === "Mobile" ? (
+                            <></>
+                          ) : (
+                            <>
+                              {isFetchListNews ? (
+                                <>
+                                  <Skeleton
+                                    variant="text"
+                                    sx={{
+                                      fontSize: "1rem",
+                                      width: "100%",
+                                      backgroundColor: "rgba(255,255,255,0.5)",
+                                    }}
+                                  />
+                                  <Skeleton
+                                    variant="text"
+                                    sx={{
+                                      fontSize: "1rem",
+                                      width: "70%",
+                                      backgroundColor: "rgba(255,255,255,0.5)",
+                                    }}
+                                  />
+                                </>
+                              ) : (
+                                <Typography
+                                  sx={{
+                                    fontSize: "12px",
+                                    fontWeight: 500,
+                                    letterSpacing: "0.12px",
+                                    lineHeight: "18px",
+                                    color: "#fff",
+                                    textAlign: "left",
+                                  }}
+                                >
+                                  {item?.shortDesc === "string" ? (
+                                    <>
+                                      In an unprecedented celebration of music
+                                      and storytelling, Taylor Swift is taking
+                                      the world by storm with her latest concert
+                                      series, "The Eras Tour". This tour is a
+                                      journey through the musical epochs of
+                                      Swift's illustrious career, offering fans
+                                      a chance to live through the evolutions of
+                                      her sound, from country roots to pop
+                                      anthems and indie folk narratives.....
+                                    </>
+                                  ) : (
+                                    <>{item?.shortDesc}</>
+                                  )}
+                                </Typography>
+                              )}
+                            </>
+                          )}
+                        </>
                         {isFetchListNews ? (
                           <>
                             <Skeleton
@@ -449,11 +502,13 @@ export default function News() {
               </>
             ) : (
               <>
-                <Box sx={{paddingTop:"50px", paddingBottom:"50px"}}>
-                  <Typography sx={{
-                      color:"white",
-                      fontSize:"22px"
-                  }}>
+                <Box sx={{ paddingTop: "50px", paddingBottom: "50px" }}>
+                  <Typography
+                    sx={{
+                      color: "white",
+                      fontSize: "22px",
+                    }}
+                  >
                     There are no new posts :( , please come back later
                   </Typography>
                 </Box>
