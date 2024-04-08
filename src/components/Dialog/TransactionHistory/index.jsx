@@ -405,6 +405,7 @@ export default function TransactionHistory() {
           }}
         >
           <DataGrid
+            disableRowSelectionOnClick={true}
             getRowId={(row) => generateRandom()}
             rowHeight={device !== "Desktop" ? 50 : 60}
             disableColumnSelector={true}
