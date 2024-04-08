@@ -18,6 +18,7 @@ import Pagination from "@mui/material/Pagination";
 import IconButton from "@mui/material/IconButton";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import {
+  clickTabNews,
   getListNews,
   saveIdNews,
 } from "../../../redux-saga-middleware/reducers/news";
@@ -27,19 +28,19 @@ import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
 import ParagraphLoading from "../../../components/LoadingComponent/ParagraphLoading";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import ListEmpty from "../../../components/LoadingComponent/ListEmpty";
+import "../index.scss"
 const NewFooter = lazy(() => import("../../NewFooter"));
 
 export default function News() {
   const { width } = useWindowDimensions();
   const { threeBrandTour } = useSelector((state) => state.tournamentReducer);
-  const [currentTab, setCurrentTab] = useState("news");
   const [count, setCount] = useState(4);
   const [start, setStart] = useState(0);
   const { device } = useSelector((state) => state.deviceReducer);
   // const [tagNew,setTagNew] = useState("news")
   const [bannerThumbnail, setBannerThumbnail] = useState([]);
   const [dataNews, setDataNews] = useState([]);
-  const { listNews, total, idDetail, isFetchListNews } = useSelector(
+  const { listNews, total, idDetail, isFetchListNews, currentTab } = useSelector(
     (state) => state.newsReducer
   );
   const dispatch = useDispatch();
@@ -164,7 +165,9 @@ export default function News() {
             >
               <Button
                 onClick={() => {
-                  setCurrentTab(PostTag.NEWS);
+                  dispatch(clickTabNews({
+                    type:PostTag.NEWS
+                  }))
                   setStart(0);
                 }}
                 sx={{
@@ -214,7 +217,9 @@ export default function News() {
               )}
               <Button
                 onClick={() => {
-                  setCurrentTab(PostTag.UPDATE);
+                  dispatch(clickTabNews({
+                    type:PostTag.UPDATE
+                  }))
                   setStart(0);
                 }}
                 sx={{
@@ -264,7 +269,9 @@ export default function News() {
               )}
               <Button
                 onClick={() => {
-                  setCurrentTab(PostTag.EVENT);
+                  dispatch(clickTabNews({
+                    type:PostTag.EVENT
+                  }))
                   setStart(0);
                 }}
                 sx={{
@@ -315,7 +322,7 @@ export default function News() {
                   {dataNews?.map((item) => (
                     <Box
                       key={item?.id}
-                      className="card-item"
+                      className="card-item cursor-pointer"
                       display={"flex"}
                       justifyContent={"flex-start"}
                       pt={2}
@@ -360,6 +367,9 @@ export default function News() {
                                 height: device === "Mobile" ? "150px" : "200px",
                                 borderRadius: "8px",
                                 objectFit: "cover",
+                                marginLeft:"auto",
+                                marginRight:"auto",
+                                textAlign:"center"
                               }}
                             ></Box>
                           </Box>
@@ -375,6 +385,7 @@ export default function News() {
                           textAlign: "left",
                           padding: "10px",
                           justifyContent: "space-between",
+                          overflow:"hidden"
                         }}
                       >
                         {isFetchListNews ? (
@@ -405,6 +416,8 @@ export default function News() {
                               lineHeight: device === "Mobile" ? "none" : "30px",
                               color: "#fff",
                               textAlign: "left",
+                              overflow:"hidden",
+                              wordBreak:"break-all"
                             }}
                           >
                             {item?.title}
@@ -443,6 +456,8 @@ export default function News() {
                                     lineHeight: "18px",
                                     color: "#fff",
                                     textAlign: "left",
+                                    overflow:"hidden",
+                                    wordBreak:"break-all"
                                   }}
                                 >
                                   {item?.shortDesc === "string" ? (
@@ -493,6 +508,8 @@ export default function News() {
                               lineHeight: "15px",
                               color: "#9384B7",
                               textAlign: "left",
+                              overflow:"hidden",
+                              wordBreak:"break-all"
                             }}
                           >
                             {dayjs(item?.updatedAt).format("DD/MM/YYYY h:mm A")}
