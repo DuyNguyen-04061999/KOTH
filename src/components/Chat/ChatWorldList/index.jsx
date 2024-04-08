@@ -1,7 +1,7 @@
 import { PersonRemoveAlt1 } from "@mui/icons-material";
 import AddFriendIcon from "@mui/icons-material/Person";
 import PersonAddAlt1 from "@mui/icons-material/PersonAddAlt1";
-import { Avatar, Box , Button} from "@mui/material";
+import { Avatar, Box, Button } from "@mui/material";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
@@ -636,7 +636,7 @@ export default function ChatWorldList() {
           listSendingRequest &&
           listSendingRequest
             ?.map((item) => {
-              return item.userName;
+              return item?.userName;
             })
             .includes(messagefromName) ? (
             <MenuItem
@@ -690,11 +690,15 @@ export default function ChatWorldList() {
                   }}
                 >
                   <PersonAddAlt1 className="me-2 pb-1" />
-                  <Typography sx={{
-                    fontWeight:"700 !important",
-                    textTransform:"none",
-                    marginLeft:"0px !important"
-                  }}>Add Friend</Typography>
+                  <Typography
+                    sx={{
+                      fontWeight: "700 !important",
+                      textTransform: "none",
+                      marginLeft: "0px !important",
+                    }}
+                  >
+                    Add Friend
+                  </Typography>
                 </Button>
               )}
             </MenuItem>
