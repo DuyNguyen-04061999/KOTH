@@ -401,7 +401,7 @@ export default function DialogProfile(props) {
                     {listSendingRequest &&
                     listSendingRequest
                       ?.map((item) => {
-                        return item.userName;
+                        return item?.userName;
                       })
                       .includes(userNameProfile) ? (
                       <Box
@@ -826,7 +826,7 @@ export default function DialogProfile(props) {
                       {listSendingRequest &&
                       listSendingRequest
                         ?.map((item) => {
-                          return item.userName;
+                          return item?.userName;
                         })
                         .includes(userNameProfile) ? (
                         <Box
