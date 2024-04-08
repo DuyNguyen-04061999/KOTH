@@ -55,7 +55,7 @@ export default function TransactionHistory() {
               alignItems: "center",
             }}
           >
-            {params?.row?.transactionPackage?.packageName}
+            {sliceString(params?.row?.transactionPackage?.packageName, 22)}
           </Box>
         );
       },
@@ -242,6 +242,7 @@ export default function TransactionHistory() {
         spacing={2}
       >
         <Pagination
+          siblingCount={0}
           classes={{ ul: classes.ul, root: classes.root }}
           onChange={(e, value) => {
             setCurPage(value);
@@ -259,8 +260,8 @@ export default function TransactionHistory() {
                       color: "#fff",
                       alignItems: "center",
                       backgroundColor: "#7848ED",
-                      width: "96px",
-                      height: "36px",
+                      width: device === "Mobile" ? "40px" : "96px",
+                      height: device === "Mobile" ? "36px" : "36px",
                       borderRadius: "5px",
                       justifyContent: "center",
                     }}
@@ -270,6 +271,7 @@ export default function TransactionHistory() {
                         fontWeight: "lighter !important",
                         marginRight: "8px",
                         fontSize: device === "Mobile" ? "12px" : "16px",
+                        display: device === "Mobile" ? "none" : "block",
                       }}
                     >
                       Next
@@ -288,8 +290,8 @@ export default function TransactionHistory() {
                       color: "#fff",
                       alignItems: "center",
                       backgroundColor: "#7848ED",
-                      width: "96px",
-                      height: "36px",
+                      width: device === "Mobile" ? "40px" : "96px",
+                      height: device === "Mobile" ? "36px" : "36px",
                       borderRadius: "5px",
                       justifyContent: "center",
                     }}
@@ -305,6 +307,7 @@ export default function TransactionHistory() {
                         fontWeight: "lighter !important",
                         marginRight: "8px",
                         fontSize: device === "Mobile" ? "12px" : "16px",
+                        display: device === "Mobile" ? "none" : "block",
                       }}
                     >
                       Back
