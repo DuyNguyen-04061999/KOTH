@@ -1506,13 +1506,13 @@ export default function Browser(props) {
                         : "#A89CD7",
                   }}
                   onClick={() => {
-                    if (!token) {
-                      dispatch(clickTab("login"));
-                      dispatch(toggleLoginDialog());
-                    } else {
+                    // if (!token) {
+                      // dispatch(clickTab("login"));
+                      // dispatch(toggleLoginDialog());
+                    // } else {
                       handleShowMenu();
                       navigate(`/News`);
-                    }
+                    // }
                   }}
                 >
                   {pathname && pathname?.includes("News") ? (
