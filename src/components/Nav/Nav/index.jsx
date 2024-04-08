@@ -1674,6 +1674,73 @@ export default function Navbar({isNav}) {
                             </Typography>
                         </Box>
                     )}
+                      {getAppType() === "promote" ? (
+                        <Box
+                            className="cursor-pointer"
+                            sx={{
+                                cursor: "pointer",
+                                display: "flex",
+                                alignItems: "center",
+                                padding: "10px 12px",
+                                transition: "0.3s ease",
+                                backgroundColor:
+                                    (pathname && pathname?.includes("news"))
+                                        ? "#7848ED"
+                                        : "",
+                                borderRadius: "5px",
+                                color:
+                                    (pathname && pathname?.includes("news"))
+                                        ? "white"
+                                        : "#A89CD7",
+                                ":hover": {
+                                    backgroundColor: "#7848ED",
+                                },
+                                gap: "8px",
+                                marginTop: "16px"
+                            }}
+                            onClick={() => {
+                                dispatch({
+                                    type: "SET_TAB_HELPCENTER",
+                                    payload: 3,
+                                });
+                                navigate(`/news`);
+                            }}
+                        >
+                            {pathname && pathname?.includes("news") ? (
+                                <Box
+                                    component={"img"}
+                                    src={images.news1}
+                                    sx={{width: "18px", height: "18px"}}
+                                />
+                            ) : (
+                                <Box
+                                    component={"img"}
+                                    src={images.news3}
+                                    sx={{width: "18px", height: "18px"}}
+                                />
+                            )}
+
+                            <Typography
+                                className="hover-nav"
+                                style={{
+                                    cursor: "pointer",
+                                    fontWeight: "700",
+                                    fontSize: "15px",
+                                    textOverflow: "ellipsis",
+                                    whiteSpace: "nowrap",
+                                    overflow: "hidden",
+                                    color:
+                                        pathname && pathname?.includes("news") && "white",
+                                    transition: ".5s ease"
+
+                                }}
+                            >
+                                News
+                            </Typography>
+                        </Box>
+                    ) : (
+                       <></>
+                    )}
                     {getAppType() === "promote" ? (
                         <Box
                             className="cursor-pointer"

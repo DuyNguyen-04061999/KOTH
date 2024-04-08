@@ -32,6 +32,7 @@ import likeDislikeReducer from "../reducers/likeDislikeReducer";
 import referralReducer from "../reducers/referralReducer";
 import rootSaga from "../sagas";
 import sagaMiddleware from "./configSaga";
+import newsReducer from "../reducers/news";
 let rootReducer = combineReducers({
   alertReducer,
   authReducer,
@@ -62,6 +63,7 @@ let rootReducer = combineReducers({
   commentReducer,
   likeDislikeReducer,
   referralReducer,
+  newsReducer
 });
 
 const persistConfig = {
