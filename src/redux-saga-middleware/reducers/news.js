@@ -59,6 +59,13 @@ export const getListNewsSuccess = (data) => {
     }
   }
 
+  export const clickTabNews = (data) => {
+    return {
+      type: "CLICK_TAB_NEWS",
+      payload: data
+    }
+  }
+
 const newsReducer = (
   state = {
     isFetchListNews: false,
@@ -66,7 +73,8 @@ const newsReducer = (
     total:0,
     isNewsDetail: false,
     listNewDetail: {},
-    idDetail:0
+    idDetail:0,
+    currentTab:"news"
   },
   action
 ) => {
@@ -118,6 +126,12 @@ const newsReducer = (
             ...state,
             idDetail: payload?.id
         }
+    }
+    case "CLICK_TAB_NEWS" : {
+      return {
+        ...state,
+        currentTab: payload?.type
+      }
     }
     default:
       return { ...state };
