@@ -110,30 +110,33 @@ export default function News() {
   return (
     <>
       <Container maxWidth={"lg"}>
-       {device === "Mobile" ? (
-        <></>
-       ) : (
+        {device === "Mobile" ? (
+          <></>
+        ) : (
+          <Box
+            className="News-title"
+            sx={{ paddingTop: "60px", paddingBottom: "16px" }}
+          >
+            <Typography
+              sx={{
+                color: "#fff",
+                fontSize: "36px",
+                fontStyle: "normal",
+                fontWeight: 700,
+                lineHeight: "normal",
+                textAlign: "left",
+              }}
+            >
+              News
+            </Typography>
+          </Box>
+        )}
         <Box
-        className="News-title"
-        sx={{ paddingTop: "60px", paddingBottom: "16px" }}
-      >
-        <Typography
+          className="Slider-banner"
           sx={{
-            color: "#fff",
-            fontSize: "36px",
-            fontStyle: "normal",
-            fontWeight: 700,
-            lineHeight: "normal",
-            textAlign: "left",
+            marginTop: "20px",
           }}
         >
-          News
-        </Typography>
-      </Box>
-       )}
-        <Box className="Slider-banner" sx={{
-          marginTop:"20px"
-        }}>
           <SliderNews appendDot={true} images={banner} tours={threeBrandTour} />
         </Box>
         <Box
@@ -410,7 +413,7 @@ export default function News() {
                               fontSize: device === "Mobile" ? "14px" : "20px",
                               fontWeight: 700,
                               letterSpacing: "0.2px",
-                              lineHeight:device === "Mobile" ? "none" : "30px",
+                              lineHeight: device === "Mobile" ? "none" : "30px",
                               color: "#fff",
                               textAlign: "left",
                               overflow:"hidden",
