@@ -402,7 +402,7 @@ export default function TransactionHistory() {
         )}{" "}
         <Box
           sx={{
-            height: "92%",
+            height: device === "Tablet" ? "auto" : "auto",
             width: "100%",
             marginTop: "25px",
           }}
@@ -441,6 +441,7 @@ export default function TransactionHistory() {
                 color: "#fff",
                 fontSize: device === "Mobile" ? "10px" : "14px",
                 wordBreak: "break-all",
+                pointerEvents: "none",
               },
               "& .css-zylse7-MuiButtonBase-root-MuiIconButton-root": {
                 color: "#fff",
