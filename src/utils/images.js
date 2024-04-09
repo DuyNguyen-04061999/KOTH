@@ -338,6 +338,7 @@ import event2 from "../assets/images/event2.png";
 import check1 from "../assets/images/check1.png";
 import check2 from "../assets/images/check2.png";
 import news3 from "../assets/images/news3.png";
+import emptyNews from "../assets/images/emptyNews.png"
 
 export const imageHome = {
   top1Icon: top1Icon,
@@ -411,6 +412,7 @@ export const navbar = {
 };
 
 export const images = {
+  emptyNews:emptyNews,
   bannerSignup: bannerSignup,
   bn1: DummyBanner1,
   sortIcon: sortIcon,

@@ -75,77 +75,65 @@ export default function SliderNews(props) {
 
   const navigate = useNavigate();
 
-    return (
-      <Slider {...settings}>
-        {img?.map((item, index) => {
-          return (
-            <Box key={index}>
-              {width > 576 ? (
-                <Box
-                  key={index}
-                  sx={{
-                    height: "100%",
+  return (
+    <Slider {...settings}>
+      {img?.map((item, index) => {
+        return (
+          <Box key={index}>
+            {width > 576 ? (
+              <Box
+                key={index}
+                sx={{
+                  height: "100%",
+                }}
+              >
+                <LazyLoadImage
+                  style={{
+                    width: "100%",
+                    height: "363px",
+                    cursor: "pointer",
+                    borderRadius: "8px",
+                    objectFit: "contain",
                   }}
-                >
-                  <LazyLoadImage
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      cursor: "pointer",
-                      borderRadius: "8px",
-                      objectFit: "contain",
-                    }}
-                    effect="blur"
-                    wrapperProps={{
-                      style: {
-                        transitionDelay: "0.5s",
-                      },
-                    }}
-                    src={
-                      type && type === "tour"
-                        ? process.env.REACT_APP_SOCKET_SERVER +
-                          "/" +
-                          item?.bannerLinkDesktop
-                        : item?.bannerLinkDesktop
-                    }
-                  ></LazyLoadImage>
-                </Box>
-              ) : (
-                <Box
-                  key={index}
-                  sx={{
-                    height: "100%",
+                  effect="blur"
+                  wrapperProps={{
+                    style: {
+                      transitionDelay: "0.5s",
+                    },
                   }}
-                  component={"a"}
-                  href="mailto:support@play4promo.com"
-                >
-                  <LazyLoadImage
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      cursor: "pointer",
-                      borderRadius: "8px",
-                      objectFit: "contain",
-                    }}
-                    effect="blur"
-                    wrapperProps={{
-                      style: {
-                        transitionDelay: "0.5s",
-                      },
-                    }}
-                    src={
-                      type && type === "tour"
-                        ? process.env.REACT_APP_SOCKET_SERVER +
-                          "/" +
-                          item?.bannerLinkMobile
-                        : item?.bannerLinkMobile
-                    }
-                  ></LazyLoadImage>
-                </Box>
-              )}
-            </Box>
-          );
-        })}
-      </Slider>
-    );
+                  src={`https://storage.googleapis.com/web-system-files/${item?.thumbnail}`}
+                ></LazyLoadImage>
+              </Box>
+            ) : (
+              <Box
+                key={index}
+                sx={{
+                  height: "100%",
+                }}
+                component={"a"}
+                href="mailto:support@play4promo.com"
+              >
+                <LazyLoadImage
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    cursor: "pointer",
+                    borderRadius: "8px",
+                    objectFit: "contain",
+                  }}
+                  effect="blur"
+                  wrapperProps={{
+                    style: {
+                      transitionDelay: "0.5s",
+                    },
+                  }}
+                  src={`https://storage.googleapis.com/web-system-files/${item?.thumbnail}`}
+                ></LazyLoadImage>
+              </Box>
+            )}
+          </Box>
+        );
+      })}
+    </Slider>
+  );
 }
