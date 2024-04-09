@@ -19,6 +19,7 @@ import IconButton from "@mui/material/IconButton";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import {
   clickTabNews,
+  getListBannerNews,
   getListNews,
   saveIdNews,
 } from "../../../redux-saga-middleware/reducers/news";
@@ -28,7 +29,7 @@ import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
 import ParagraphLoading from "../../../components/LoadingComponent/ParagraphLoading";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import ListEmpty from "../../../components/LoadingComponent/ListEmpty";
-import "../index.scss"
+import "../index.scss";
 const NewFooter = lazy(() => import("../../NewFooter"));
 
 export default function News() {
@@ -37,12 +38,17 @@ export default function News() {
   const [count, setCount] = useState(4);
   const [start, setStart] = useState(0);
   const { device } = useSelector((state) => state.deviceReducer);
-  // const [tagNew,setTagNew] = useState("news")
-  const [bannerThumbnail, setBannerThumbnail] = useState([]);
   const [dataNews, setDataNews] = useState([]);
-  const { listNews, total, idDetail, isFetchListNews, currentTab } = useSelector(
-    (state) => state.newsReducer
-  );
+  const {
+    listNews,
+    total,
+    idDetail,
+    isFetchListNews,
+    currentTab,
+    listBanner,
+    nodataNews,
+  } = useSelector((state) => state.newsReducer);
+  const [banner, setBanner] = useState([]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const PostTag = {
@@ -50,7 +56,6 @@ export default function News() {
     UPDATE: "update",
     EVENT: "event",
   };
-
   const totalPage = Math.ceil(total / count);
 
   useEffect(() => {
@@ -66,9 +71,18 @@ export default function News() {
   useEffect(() => {
     if (listNews) {
       setDataNews(listNews);
-      setBannerThumbnail(listNews?.thumbnail);
     }
   }, [listNews]);
+
+  useEffect(() => {
+    dispatch(getListBannerNews());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (listBanner) {
+      setBanner(listBanner);
+    }
+  }, [listBanner]);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -80,32 +94,6 @@ export default function News() {
       setStart(page - 1);
     }
   };
-
-  const banner = [
-    {
-      bannerLinkDesktop: images.bannerTournament2,
-      bannerLinkMobile: images.bannerendmobile,
-    },
-    {
-      bannerLinkDesktop: images.bannerTournament,
-      bannerLinkMobile: images.bannerendmobile,
-    },
-    {
-      bannerLinkDesktop: images.bannerTournament1,
-      bannerLinkMobile: images.bannerendmobile,
-    },
-    {
-      bannerLinkDesktop: images.bannerTournament2,
-      bannerLinkMobile: images.bannerendmobile,
-    },
-  ];
-
-  useEffect(() => {
-    dispatch(getListBanner());
-    dispatch({
-      type: "GET_THREE_BRAND_TOUR",
-    });
-  }, [dispatch]);
 
   return (
     <>
@@ -165,9 +153,11 @@ export default function News() {
             >
               <Button
                 onClick={() => {
-                  dispatch(clickTabNews({
-                    type:PostTag.NEWS
-                  }))
+                  dispatch(
+                    clickTabNews({
+                      type: PostTag.NEWS,
+                    })
+                  );
                   setStart(0);
                 }}
                 sx={{
@@ -217,9 +207,11 @@ export default function News() {
               )}
               <Button
                 onClick={() => {
-                  dispatch(clickTabNews({
-                    type:PostTag.UPDATE
-                  }))
+                  dispatch(
+                    clickTabNews({
+                      type: PostTag.UPDATE,
+                    })
+                  );
                   setStart(0);
                 }}
                 sx={{
@@ -269,9 +261,11 @@ export default function News() {
               )}
               <Button
                 onClick={() => {
-                  dispatch(clickTabNews({
-                    type:PostTag.EVENT
-                  }))
+                  dispatch(
+                    clickTabNews({
+                      type: PostTag.EVENT,
+                    })
+                  );
                   setStart(0);
                 }}
                 sx={{
@@ -316,10 +310,11 @@ export default function News() {
               paddingRight: "16px",
             }}
           >
-            {dataNews?.length ? (
-              <>
-                <Box>
-                  {dataNews?.map((item) => (
+            <>
+              <Box>
+                {dataNews &&
+                  dataNews?.length > 0 &&
+                  dataNews?.map((item) => (
                     <Box
                       key={item?.id}
                       className="card-item cursor-pointer"
@@ -367,9 +362,9 @@ export default function News() {
                                 height: device === "Mobile" ? "150px" : "200px",
                                 borderRadius: "8px",
                                 objectFit: "cover",
-                                marginLeft:"auto",
-                                marginRight:"auto",
-                                textAlign:"center"
+                                marginLeft: "auto",
+                                marginRight: "auto",
+                                textAlign: "center",
                               }}
                             ></Box>
                           </Box>
@@ -385,7 +380,7 @@ export default function News() {
                           textAlign: "left",
                           padding: "10px",
                           justifyContent: "space-between",
-                          overflow:"hidden"
+                          overflow: "hidden",
                         }}
                       >
                         {isFetchListNews ? (
@@ -416,8 +411,8 @@ export default function News() {
                               lineHeight: device === "Mobile" ? "none" : "30px",
                               color: "#fff",
                               textAlign: "left",
-                              overflow:"hidden",
-                              wordBreak:"break-all"
+                              overflow: "hidden",
+                              wordBreak: "break-all",
                             }}
                           >
                             {item?.title}
@@ -456,8 +451,8 @@ export default function News() {
                                     lineHeight: "18px",
                                     color: "#fff",
                                     textAlign: "left",
-                                    overflow:"hidden",
-                                    wordBreak:"break-all"
+                                    overflow: "hidden",
+                                    wordBreak: "break-all",
                                   }}
                                 >
                                   {item?.shortDesc === "string" ? (
@@ -508,8 +503,8 @@ export default function News() {
                               lineHeight: "15px",
                               color: "#9384B7",
                               textAlign: "left",
-                              overflow:"hidden",
-                              wordBreak:"break-all"
+                              overflow: "hidden",
+                              wordBreak: "break-all",
                             }}
                           >
                             {dayjs(item?.updatedAt).format("DD/MM/YYYY h:mm A")}
@@ -518,22 +513,22 @@ export default function News() {
                       </Box>
                     </Box>
                   ))}
-                </Box>
-              </>
-            ) : (
-              <>
-                <Box sx={{ paddingTop: "50px", paddingBottom: "50px" }}>
-                  <Typography
+                {nodataNews && (
+                  <Box
                     sx={{
-                      color: "white",
-                      fontSize: "22px",
+                      display: "flex",
+                      justifyContent: "center",
                     }}
                   >
-                    There are no new posts :( , please come back later
-                  </Typography>
-                </Box>
-              </>
-            )}
+                    <Box
+                      component={"img"}
+                      src={images.emptyNews}
+                      alt="empty"
+                    ></Box>
+                  </Box>
+                )}
+              </Box>
+            </>
           </Box>
         </Box>
         <Box

@@ -7,9 +7,6 @@ class newsService {
       {
         headers: {
           "Content-Type": "application/json",
-          Authorization: localStorage.getItem("token"),
-          authorization: localStorage.getItem("token"),
-          "x-access-refactor-token": localStorage.getItem("token"),
         },
       }
     );
@@ -17,15 +14,21 @@ class newsService {
   }
 
   async getListNewsDetailService(dataRequest) {
-    const res = await PROMOTION_API.get(`/api/news/${dataRequest?.id}`, {
+    const res = await PROMOTION_API.get(`/api/news/detail/${dataRequest?.id}`, {
       headers: {
         "Content-Type": "application/json",
-        Authorization: localStorage.getItem("token"),
-        authorization: localStorage.getItem("token"),
-        "x-access-refactor-token": localStorage.getItem("token"),
       },
     });
     return res;
+  }
+  
+  async getListBannerNewsService(dataRequest) {
+    const res = await PROMOTION_API.get(`/api/news/get-list-banner`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+    return res
   }
 }
 
