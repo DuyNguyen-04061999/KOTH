@@ -1490,6 +1490,69 @@ export default function Browser(props) {
                   </span>
                 </Box>
                 <Box
+                  className="cursor-pointer mb-3 p-2"
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    backgroundColor:
+                      pathname && pathname?.includes("News")
+                        ? "#7648ED"
+                        : "transparent",
+                    transition:
+                      "transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms",
+                    color:
+                      pathname && pathname?.includes("News")
+                        ? "white"
+                        : "#A89CD7",
+                  }}
+                  onClick={() => {
+                    // if (!token) {
+                      // dispatch(clickTab("login"));
+                      // dispatch(toggleLoginDialog());
+                    // } else {
+                      handleShowMenu();
+                      navigate(`/News`);
+                    // }
+                  }}
+                >
+                  {pathname && pathname?.includes("News") ? (
+                    <Box
+                      component={"img"}
+                      src={images.news1}
+                      sx={{
+                        width: "15px",
+                        height: "15px",
+                        marginRight: "15px",
+                      }}
+                    />
+                  ) : (
+                    <Box
+                      component={"img"}
+                      src={images.news3}
+                      sx={{
+                        width: "15px",
+                        height: "15px",
+                        marginRight: "15px",
+                      }}
+                    />
+                  )}
+                  <span
+                    className="hover-nav ms-2"
+                    style={{
+                      cursor: "pointer",
+                      fontWeight: "700",
+                      fontSize: "15px",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      color:
+                        pathname && pathname?.includes("News") && "white",
+                    }}
+                  >
+                    News
+                  </span>
+                </Box>
+                <Box
                   className="cursor-pointer mt-2"
                   sx={{
                     display: "flex",

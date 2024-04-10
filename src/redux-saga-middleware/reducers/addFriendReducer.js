@@ -63,7 +63,7 @@ const addFriendReducer = (
         cancelRequestSuccess: true,
         cancelRequestFail: false,
         listSendingRequest: state.listSendingRequest.filter((item) => {
-          return item.userName !== payload;
+          return item?.userName !== payload;
         }),
       };
     case "CANCEL_REUQEST_FAIL":

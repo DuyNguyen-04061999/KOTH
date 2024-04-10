@@ -401,7 +401,7 @@ export default function DialogProfile(props) {
                     {listSendingRequest &&
                     listSendingRequest
                       ?.map((item) => {
-                        return item.userName;
+                        return item?.userName;
                       })
                       .includes(userNameProfile) ? (
                       <Box
@@ -748,37 +748,37 @@ export default function DialogProfile(props) {
                           </Typography>
                           {uPack?.remain === "undefined" ? (
                             <Typography
-                            sx={{
-                              fontSize: "14px",
-                              fontWeight: "500",
-                            }}
-                          >
-                           You are not a VIP
-                          </Typography>
+                              sx={{
+                                fontSize: "14px",
+                                fontWeight: "500",
+                              }}
+                            >
+                              You are not a VIP
+                            </Typography>
                           ) : (
                             <Typography
-                            sx={{
-                              fontSize: "14px",
-                              fontWeight: "500",
-                            }}
-                          >
-                            {uPack.remain}
-                          </Typography>
+                              sx={{
+                                fontSize: "14px",
+                                fontWeight: "500",
+                              }}
+                            >
+                              {uPack.remain}
+                            </Typography>
                           )}
                           {uPack?.isRenewPackage === true ? (
                             <Box onClick={handleOpenRenewalBadgePopup}>
-                            <Typography
-                              sx={{
-                                color: "#7C81F2",
-                                fontWeight: "500",
-                                marginBottom: "5px !important",
-                                fontSize: "14px",
-                                textDecoration: "underline #7C81F2",
-                              }}
-                            >
-                              Cancel Renewal
-                            </Typography>
-                          </Box>
+                              <Typography
+                                sx={{
+                                  color: "#7C81F2",
+                                  fontWeight: "500",
+                                  marginBottom: "5px !important",
+                                  fontSize: "14px",
+                                  textDecoration: "underline #7C81F2",
+                                }}
+                              >
+                                Cancel Renewal
+                              </Typography>
+                            </Box>
                           ) : (
                             <></>
                           )}
@@ -826,7 +826,7 @@ export default function DialogProfile(props) {
                       {listSendingRequest &&
                       listSendingRequest
                         ?.map((item) => {
-                          return item.userName;
+                          return item?.userName;
                         })
                         .includes(userNameProfile) ? (
                         <Box
@@ -1151,7 +1151,7 @@ export default function DialogProfile(props) {
                         marginTop: "0.5rem",
                       }}
                     />
-                    {uPack !== null || uPack !== undefined ? (
+                    {uPack ? (
                       <>
                         <Box className="Renewal d-flex align-items-center mb-2">
                           {isGetMyInfo ? (
@@ -1220,58 +1220,60 @@ export default function DialogProfile(props) {
                                 >
                                   Remaining days
                                 </Typography>
-                               {uPack?.remain === "undefined" ? (
-                                 <Typography
-                                 sx={{
-                                   fontSize: "14px",
-                                   fontWeight: "500",
-                                 }}
-                               >
-                                 You are not a VIP
-                               </Typography>
-                               ) : (
-                                <Typography
-                                sx={{
-                                  fontSize: "14px",
-                                  fontWeight: "500",
-                                }}
-                              >
-                                {`${uPack?.remain.slice(0, -1)}`}
-                              </Typography>
-                               )}
-                                {uPack?.isRenewPackage === true ? (
-                                  <Box onClick={handleOpenRenewalBadgePopup}>
+                                {!uPack?.remain || !uPack ? (
                                   <Typography
                                     sx={{
-                                      color: "#7C81F2",
-                                      fontWeight: "500",
-                                      marginBottom: "5px !important",
                                       fontSize: "14px",
-                                      textDecoration: "underline #7C81F2",
-                                      cursor: "pointer",
+                                      fontWeight: "500",
                                     }}
                                   >
-                                    Cancel Renewal
+                                    You are not a VIP
                                   </Typography>
-                                </Box>
-                                ) : (<></>)}
+                                ) : (
+                                  <Typography
+                                    sx={{
+                                      fontSize: "14px",
+                                      fontWeight: "500",
+                                    }}
+                                  >
+                                    {`${uPack?.remain.slice(0, -1)}`}
+                                  </Typography>
+                                )}
+                                {uPack?.isRenewPackage === true ? (
+                                  <Box onClick={handleOpenRenewalBadgePopup}>
+                                    <Typography
+                                      sx={{
+                                        color: "#7C81F2",
+                                        fontWeight: "500",
+                                        marginBottom: "5px !important",
+                                        fontSize: "14px",
+                                        textDecoration: "underline #7C81F2",
+                                        cursor: "pointer",
+                                      }}
+                                    >
+                                      Cancel Renewal
+                                    </Typography>
+                                  </Box>
+                                ) : (
+                                  <></>
+                                )}
                               </Box>
                             </>
                           )}
                         </Box>
+                        <hr
+                          style={{
+                            border: "1px solid #A89CD7",
+                            marginBottom: "0.5rem",
+                            marginTop: "0.5rem",
+                          }}
+                        />
                       </>
                     ) : (
                       <></>
                     )}
                   </Box>
                 )}
-                <hr
-                  style={{
-                    border: "1px solid #A89CD7",
-                    marginBottom: "0.5rem",
-                    marginTop: "0.5rem",
-                  }}
-                />
               </Box>
             </Box>
           )}
