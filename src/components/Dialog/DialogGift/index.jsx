@@ -5,7 +5,7 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { useDispatch, useSelector } from "react-redux";
 import { closeDialogGif } from "../../../redux-saga-middleware/reducers/appReducer";
-import { imageHome } from "../../../utils/images";
+import { imageHome, images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import AnimButton from "../../AnimButton";
 
@@ -31,19 +31,25 @@ const DialogGift = ({
     <div>
       <Dialog
         open={isDialogGif}
+        fullScreen={width < 576 ? true : false}
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
         color="#352658"
         sx={{
           "MuiDialog-paper": {
-            background: "#352658",
+            background: "#181223",
+          },
+          height: "100%",
+          "& .MuiPaper-root": {
+            backgroundColor: "#181223 !important",
+            justifyContent:"center"
           },
         }}
       >
         <Box
           sx={{
-            background: "#352658",
+            background: "#181223",
             padding: width < 576 ? "24px" : "36px",
             maxWidth: "420px",
           }}
@@ -56,7 +62,7 @@ const DialogGift = ({
               justifyContent: "center",
             }}
           >
-            <Box>
+            {/* <Box>
               <Typography
                 sx={{
                   fontSize: width < 576 ? "12px" : "14px",
@@ -66,22 +72,26 @@ const DialogGift = ({
               >
                 Welcome {isSecondDay} {user?.userNickName}!
               </Typography>
-            </Box>
+            </Box> */}
             <Box sx={{ marginTop: "8px" }}>
               <Typography
                 sx={{
-                  fontSize: width < 576 ? "16px" : "18px",
-                  fontWeight: 800,
+                  fontSize:'24px',
+                  fontWeight: 700,
                   color: "white",
-                  textTransform: "uppercase",
+                  textAlign:"center",
+                  fontStyle:"normal",
+                  lineHeight:"normal",
+                  textTransform:"capitalize"
+
                 }}
               >
-                Your Special Gift Awaits!
+                Welcome To Play4Promo!
               </Typography>
             </Box>
-            <Box sx={{ position: "relative", width: "100%" }}>
+            <Box sx={{ position: "relative", width: "100%" }} className="pt-3 pb-3">
               <LazyLoadImage
-                src={imageHome.BannerGift}
+                src={images.pepeTicket}
                 style={{ width: "100%" }}
                 effect="blur"
                 wrapperProps={{
@@ -90,56 +100,81 @@ const DialogGift = ({
                   },
                 }}
               />
-              <Box
-                sx={{
-                  position: "absolute",
-                  bottom: "-32px",
-                  left: "50%",
-                  transform: "translate(-50%,-50%)",
-                  width: "100%",
-                }}
-              >
-                <Typography
-                  sx={{
-                    fontSize: width < 576 ? "20px" : "26px",
-                    fontWeight: "800",
-                    textTransform: "uppercase",
-                    color: "white",
-                  }}
-                >
-                  20 bonus extras
-                </Typography>
-                <Typography
-                  sx={{
-                    fontSize: width < 576 ? "12px " : "16px",
-                    fontWeight: "800",
-                    textTransform: "uppercase",
-                    color: "white",
-                  }}
-                >
-                  Value extra pack
-                </Typography>
-              </Box>
             </Box>
-            <Box sx={{ marginTop: "24px" }}>
+            <Box
+              sx={{
+                width: "100%",
+              }}
+            >
               <Typography
                 sx={{
-                  fontSize: width < 576 ? "10px" : "14px",
+                  fontSize: width < 576 ? "16px" : "16px",
+                  fontWeight: "700",
                   color: "white",
-                  fontWeight: "500",
-                  lineHeight: "24px",
+                  lineHeight: "130%",
+                  fontStyle:"normal",
+                  whiteSpace:"nowrap",
+                  textOverflow:"ellipsis"
                 }}
               >
-                We're thrilled to have you here! To kick off your journey, we're
-                gifting you <span style={{ color: "#FB3" }}>{bonusName}</span>{" "}
-                with{" "}
-                <span style={{ color: "#FB3" }}>
-                  {bonusQuantity} bonus extras.
-                </span>{" "}
-                Use them across any promotions to compete and unlock rewards.
-                Click <span style={{ color: "#FB3" }}>'Claim Now'</span> to get
-                your exclusive offer!
+                Your temporary account name: {isSecondDay} {user?.userNickName}!
               </Typography>
+              <Box
+                sx={{
+                  display: "flex",
+                }}
+              >
+                <Typography
+                  sx={{
+                    fontSize: width < 576 ? "16px" : "16px",
+                    fontWeight: "700",
+                    color: "white",
+                    lineHeight: "130%",
+                    fontStyle:"normal",
+                    whiteSpace:"nowrap",
+                    textOverflow:"ellipsis"
+                  }}
+                >
+                  You gained
+                </Typography>
+                <Typography
+                  sx={{
+                    fontSize: width < 576 ? "16px" : "16px",
+                    fontWeight: "800",
+                    color: "#7848ED",
+                    textTransform: "uppercase",
+                    fontStyle:"normal",
+                    whiteSpace:"nowrap",
+                    textOverflow:"ellipsis"
+                  }}
+                >
+                  5 PROMOTION EXTRAS
+                </Typography>
+              </Box>
+              <Box
+                sx={{
+                  fontSize: width < 576 ? "16px" : "16px",
+                  fontWeight: "700",
+                  color: "white",
+                  lineHeight: "130%",
+                  fontStyle:"normal",
+                  whiteSpace:"nowrap",
+                  textOverflow:"ellipsis"
+                }}
+              >
+                Complete profile to gain 10
+                <Typography
+                sx={{
+                  fontSize: width < 576 ? "16px " : "16px",
+                  fontWeight: "800",
+                  textTransform: "uppercase",
+                  color: "#7848ED",
+                  textAlign:"center"
+                }}
+              >
+                PROMOTION EXTRAS
+              </Typography>
+              </Box>
             </Box>
           </Box>
           <DialogActions
@@ -151,7 +186,7 @@ const DialogGift = ({
             <AnimButton
               onClick={() => handleConfirm()}
               type="primary"
-              text="Claim Now"
+              text="Next"
             />
           </DialogActions>
         </Box>
