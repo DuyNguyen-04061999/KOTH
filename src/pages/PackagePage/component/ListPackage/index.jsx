@@ -280,9 +280,6 @@ export default function ListPackage(props) {
               sx={{
                 display: "flex",
                 justifyContent: "center",
-                position: "absolute",
-                top: -16,
-                left: 10,
               }}
             >
               {isFetchListPackage ? (
@@ -296,7 +293,6 @@ export default function ListPackage(props) {
                     sx={{
                       width: "100%",
                       height: "100%",
-                      marginTop: "10px",
                     }}
                     component={"img"}
                     src={
@@ -313,7 +309,7 @@ export default function ListPackage(props) {
             </Box>
 
             {/* salse */}
-            <Box>
+            <Box sx={{transform: "translate(0px,-12px)", minHeight:"30%"}}>
               <Box
                 sx={{
                   marginBottom: "0px",
