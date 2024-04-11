@@ -116,7 +116,7 @@ export default function SliderNews(props) {
                 <LazyLoadImage
                   style={{
                     width: "100%",
-                    height: "100%",
+                    height: "200px",
                     cursor: "pointer",
                     borderRadius: "8px",
                     objectFit: "contain",
