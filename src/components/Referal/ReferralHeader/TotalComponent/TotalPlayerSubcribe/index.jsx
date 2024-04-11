@@ -62,7 +62,7 @@ export default function TotalPlayerSubcribe() {
             textAlign: "center",
           }}
         >
-          Total Players Subscribed
+          Total Friends Subscribed
         </Typography>
       </Box>
     </Box>
