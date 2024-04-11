@@ -38,7 +38,8 @@ import {
   finishGame,
   finishVideo,
   getRefactorDetailAuthPromotion,
-  getRefactorDetailPromotion, saveCurrentPromotionShare,
+  getRefactorDetailPromotion,
+  saveCurrentPromotionShare,
   startGameInPromotion,
   startGameInPromotionFail,
 } from "../../../redux-saga-middleware/reducers/promotionReducer";
@@ -534,7 +535,7 @@ export default function JoinTournament() {
                           nonInteraction: true,
                           transport: "xhr",
                         });
-                        dispatch(saveCurrentPromotionShare(detailTournament))
+                        dispatch(saveCurrentPromotionShare(detailTournament));
                         dispatch(toggleShareTour());
                       }}
                       className="cursor-pointer"

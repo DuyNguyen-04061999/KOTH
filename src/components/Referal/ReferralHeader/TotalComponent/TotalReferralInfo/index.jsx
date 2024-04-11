@@ -42,7 +42,7 @@ export default function TotalReferralInfo() {
               color: "#9CA3AF",
             }}
           >
-            Total Players Registered
+            Total Friends Registered
           </Typography>
           <Typography
             sx={{

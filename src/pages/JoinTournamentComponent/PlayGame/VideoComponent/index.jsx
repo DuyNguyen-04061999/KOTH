@@ -7,6 +7,8 @@ import { useSelector } from "react-redux";
 import { video } from "../../../../utils/images";
 import { revealImg } from "../../../../utils/revealImages";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
+import { Link } from "react-router-dom";
+import { imageDesktop } from "../../../../utils/images";
 
 ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS_ID);
 
@@ -114,25 +116,21 @@ export default function VideoComponent(props) {
             type="video/mp4"
           />
         </video>
-        {detailTournament?.tournamentInfors &&
-          detailTournament?.tournamentInfors?.owner &&
-          detailTournament?.tournamentInfors?.owner?.brandName &&
-          String(detailTournament?.tournamentInfors?.owner?.brandName)
-            ?.toLowerCase()
-            ?.includes("reveal") && (
+        {detailTournament?.advertisingName &&
+          detailTournament?.advertisingLink && (
             <Box
               onClick={() => {
-                ReactGA.event("click_reveal_area", {
-                  category: "click_reveal_link",
+                ReactGA.event("click_ads_link", {
+                  category: "click_ads_link",
                   action: "click",
-                  label: "https://revealsuits.com", // optional
-                  value: 99, // optional, must be a number
-                  nonInteraction: true, // optional, true/false
-                  transport: "xhr", // optional, beacon/xhr/image
+                  nonInteraction: true,
+                  transport: "xhr",
+                  promotionId: detailTournament?.id,
+                  promotionName: detailTournament?.tournamentName,
+                  advertisingName: detailTournament?.advertisingName,
                 });
-                window.open("https://revealsuits.com", "_blank");
+                window.open(detailTournament?.advertisingLink, "_blank");
               }}
-              className="cursor-pointer"
               sx={{
                 position: width < 576 ? "unset" : "absolute",
                 marginTop: width < 576 ? "20px" : "unset",
@@ -147,41 +145,78 @@ export default function VideoComponent(props) {
                 justifyContent: "center",
                 alignItems: "center",
                 left: width < 576 ? "unset" : width < 1200 ? "15px" : "25px",
-                width: width < 576 ? "100%" : "auto",
+                width: width < 576 ? "100%" : "384px",
+                maxWidth: width < 576 ? "100%" : "384px",
               }}
             >
               <Box
                 component={"div"}
                 sx={{
-                  padding: "2px",
-                  borderRadius: "5px",
+                  padding: "4px",
+                  borderRadius: "12px",
                   backgroundColor: "#68399E",
                   justifyItems: "center",
                   alignItems: "center",
-                  paddingRight: "20px",
+                  paddingRight: "11px",
                 }}
                 className="d-flex"
               >
                 <Box
                   component={"img"}
-                  src={revealImg.reVealLogo}
+                  src={
+                    detailTournament?.advertisingThumbnail
+                      ? process.env.REACT_APP_SOCKET_SERVER +
+                        "/" +
+                        detailTournament?.advertisingThumbnail
+                      : imageDesktop.LogoCongTy
+                  }
                   sx={{
-                    width: "75px",
-                    height: "75px",
-                    borderRadius: "5px",
+                    maxWidth: "76px",
+                    maxHeight: "76px",
+                    width: "76px",
+                    height: "76px",
+                    borderRadius: "8px",
+                    cursor: "pointer",
                   }}
                 />
-                <Box className="ms-2 me-5">
+                <Box
+                  sx={{
+                    marginLeft: "12px",
+                    marginRight: "24px",
+                  }}
+                >
                   <Typography
                     className="text-white"
                     sx={{
                       fontWeight: "700",
+                      textTransform: "uppercase",
+                      textAlign: "start",
+                      textOverflow: "ellipsis",
+                      maxWidth: "146px",
+                      overflow: "hidden",
+                      whiteSpace: "nowrap",
                     }}
                   >
-                    REVEAL SUITS
+                    {detailTournament?.advertisingName
+                      ? detailTournament?.advertisingName
+                      : "Play4promo"}
                   </Typography>
-                  <Typography className="text-white">
-                    revealsuits.com
+                  <Typography
+                    className="text-white"
+                    sx={{
+                      fontWeight: "500",
+                      fontSize: "13px",
+                      textAlign: "start",
+                      textOverflow: "ellipsis",
+                      maxWidth: "146px",
+                      overflow: "hidden",
+                      whiteSpace: "nowrap",
+                      cursor: "pointer",
+                    }}
+                  >
+                    {detailTournament?.advertisingLink
+                      ? detailTournament?.advertisingLink
+                      : "Brand Name"}
                   </Typography>
                 </Box>
                 <Box
@@ -189,6 +224,7 @@ export default function VideoComponent(props) {
                     padding: "10px",
                     borderRadius: "5px",
                     backgroundColor: "#BF48ED",
+                    cursor: "pointer",
                   }}
                 >
                   <Typography
@@ -209,6 +245,14 @@ export default function VideoComponent(props) {
               if (second <= 0) {
                 setVideoGame(false);
                 setSeconds(null);
+                ReactGA.event("skip_ads_video", {
+                  category: "skip_ads_video",
+                  action: "click",
+                  nonInteraction: true,
+                  transport: "xhr",
+                  promotionId: detailTournament?.id,
+                  promotionName: detailTournament?.tournamentName,
+                });
               }
             }}
             sx={{

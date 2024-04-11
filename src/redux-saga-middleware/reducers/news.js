@@ -66,6 +66,27 @@ export const getListNewsSuccess = (data) => {
     }
   }
 
+  export const getListBannerNews = (data) => {
+    return {
+      type: "GET_LIST_BANNER_NEWS",
+      payload: data
+    }
+  }
+
+  export const getListBannerNewsSuccess = (data) => {
+    return {
+      type: "GET_LIST_BANNER_NEWS_SUCCESS",
+      payload: data
+    }
+  }
+
+  export const getListBannerNewsFail = (data) => {
+    return {
+      type: "GET_LIST_BANNER_NEWS_FAIL",
+      payload: data
+    }
+  }
+
 const newsReducer = (
   state = {
     isFetchListNews: false,
@@ -74,7 +95,10 @@ const newsReducer = (
     isNewsDetail: false,
     listNewDetail: {},
     idDetail:0,
-    currentTab:"news"
+    currentTab:"news",
+    listBanner: [],
+    isFetchListBanner: false,
+    nodataNews: false
   },
   action
 ) => {
@@ -93,7 +117,8 @@ const newsReducer = (
             ...state,
             isFetchListNews: false,
             listNews: payload?.rows,
-            total: payload?.count
+            total: payload?.count,
+            nodataNews: payload?.count <= 0 ? true : false,
         }
     }
     case  "GET_LIST_NEWS_FAIL" : {
@@ -131,6 +156,25 @@ const newsReducer = (
       return {
         ...state,
         currentTab: payload?.type
+      }
+    }
+    case "GET_LIST_BANNER_NEWS" : {
+      return {
+        ...state,
+        isFetchListBanner: true
+      }
+    }
+    case "GET_LIST_BANNER_NEWS_SUCCESS" : {
+      return {
+        ...state,
+        isFetchListBanner: false,
+        listBanner: payload
+      }
+    }
+    case "GET_LIST_BANNER_NEWS_FAIL" : {
+      return {
+        ...state,
+        isFetchListBanner: false
       }
     }
     default:
