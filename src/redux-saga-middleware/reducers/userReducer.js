@@ -369,6 +369,18 @@ export const updateTransactionDialog = (data) => {
     payload: data,
   };
 };
+export const openReasonDialogFunction = (data) => {
+  return {
+    type: "OPEN_REASON_DIALOG",
+    payload: data,
+  };
+};
+export const closeReasonDialogFunction = (data) => {
+  return {
+    type: "CLOSE_REASON_DIALOG",
+    payload: data,
+  };
+};
 
 const userReducer = (
   state = {
@@ -415,6 +427,8 @@ const userReducer = (
     isFetchTransaction: false,
     openTransactionDialog: false,
     totalTransaction: 0,
+    openReasonDialog: false,
+    currentGoingToBanUser: "",
   },
   action
 ) => {
@@ -636,6 +650,20 @@ const userReducer = (
         isFetchTransaction: false,
         transactionList: [],
         totalTransaction: 0,
+      };
+    }
+    case "OPEN_REASON_DIALOG": {
+      return {
+        ...state,
+        openReasonDialog: true,
+        currentGoingToBanUser: payload,
+      };
+    }
+    case "CLOSE_REASON_DIALOG": {
+      return {
+        ...state,
+        openReasonDialog: false,
+        currentGoingToBanUser: "",
       };
     }
     case "UPDATE_TRANSACTION_DIALOG": {

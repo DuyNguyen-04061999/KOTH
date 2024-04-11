@@ -84,6 +84,7 @@ export default function MyLevelReferral() {
             style={{
               color: "#9CA3AF",
               fontSize: mobileCondition ? "10px" : "12px",
+              textAlign: "center",
             }}
           >
             Your level
@@ -94,6 +95,7 @@ export default function MyLevelReferral() {
               fontSize: mobileCondition ? "12px" : "14px",
               fontWeight: "700",
               textTransform: "uppercase",
+              textAlign: "center",
             }}
           >
             {currentLevel?.tierName || "___"}
