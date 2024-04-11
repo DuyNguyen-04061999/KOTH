@@ -543,7 +543,9 @@ export default function ListPackage(props) {
                     marginTop: "5px !important",
                   }}
                 >
-                  {t(`Only ${(packagePrice / packageTimeLoop).toFixed(2) }/days`)}
+                  {t(
+                    `Only ${(packagePrice / packageTimeLoop).toFixed(2)}/days`
+                  )}
                 </Typography>
               ) : (
                 <></>
@@ -572,12 +574,14 @@ export default function ListPackage(props) {
               <AnimButton
                 upperCase={false}
                 text={t("Buy Now")}
-                type={"primary"}
-                onClick={handleBuyPackage}
+                // type={"primary"}
+                type={"disable"}
+                // onClick={handleBuyPackage}
                 style={{
                   padding: "8px 3px",
                   color: "white",
-                  background: "#BE48ED",
+                  // background: "#BE48ED",
+                  background: "#979797",
                   backdropFilter: " blur(4px)",
                   fontSize: "16px ",
                 }}
@@ -588,7 +592,12 @@ export default function ListPackage(props) {
       </Box>
       <Box className={"saleMobile"}>
         {packageName === PackageName.Monthly ? (
-          <Box component={"img"} src={images.badgeBigSale} alt="..." sx={{width:"70%", height:"100%"}}></Box>
+          <Box
+            component={"img"}
+            src={images.badgeBigSale}
+            alt="..."
+            sx={{ width: "70%", height: "100%" }}
+          ></Box>
         ) : (
           <></>
         )}
