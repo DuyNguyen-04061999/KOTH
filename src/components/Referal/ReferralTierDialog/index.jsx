@@ -68,6 +68,7 @@ export default function ReferralTierDialog() {
             fontWeight: "800 !important",
             marginLeft: "0px !important",
             fontSize: device === "Mobile" ? "16px" : "24px",
+            textAlign: "center",
           }}
         >
           congratulations
@@ -99,6 +100,7 @@ export default function ReferralTierDialog() {
             textTransform: "capitalize",
             fontSize: device === "Mobile" ? "12px" : "14px",
             wordWrap: "break-word",
+            textAlign: "center",
           }}
         >
           We have received your reward redemption request. The request will be

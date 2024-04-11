@@ -59,6 +59,7 @@ export default function TotalPlayerSubcribe() {
           sx={{
             fontSize: device === "Mobile" ? "10px" : "12px",
             marginLeft: "0px !important",
+            textAlign: "center",
           }}
         >
           Total Players Subscribed
