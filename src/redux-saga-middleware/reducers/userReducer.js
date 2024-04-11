@@ -345,6 +345,42 @@ export const removeTokenUser = () => {
     type: "REMOVE_TOKEN_USER",
   };
 };
+export const getTransactionReady = (data) => {
+  return {
+    type: "GET_TRANSACTION_READY",
+    payload: data,
+  };
+};
+export const getTransactionSuccess = (data) => {
+  return {
+    type: "GET_TRANSACTION_SUCCESS",
+    payload: data,
+  };
+};
+export const getTransactionFail = (data) => {
+  return {
+    type: "GET_TRANSACTION_FAIL",
+    payload: data,
+  };
+};
+export const updateTransactionDialog = (data) => {
+  return {
+    type: "UPDATE_TRANSACTION_DIALOG",
+    payload: data,
+  };
+};
+export const openReasonDialogFunction = (data) => {
+  return {
+    type: "OPEN_REASON_DIALOG",
+    payload: data,
+  };
+};
+export const closeReasonDialogFunction = (data) => {
+  return {
+    type: "CLOSE_REASON_DIALOG",
+    payload: data,
+  };
+};
 
 const userReducer = (
   state = {
@@ -387,6 +423,12 @@ const userReducer = (
     isFetchState: false,
     isLoginFail: false,
     isLoginSuccess: false,
+    transactionList: [],
+    isFetchTransaction: false,
+    openTransactionDialog: false,
+    totalTransaction: 0,
+    openReasonDialog: false,
+    currentGoingToBanUser: "",
   },
   action
 ) => {
@@ -591,6 +633,42 @@ const userReducer = (
       };
     case "GET_CITY_AND_STATE_PROFILE_FAIL":
       return { ...state, isFetchCity: false };
+    case "GET_TRANSACTION_READY": {
+      return { ...state, isFetchTransaction: true };
+    }
+    case "GET_TRANSACTION_SUCCESS": {
+      return {
+        ...state,
+        isFetchTransaction: false,
+        transactionList: payload?.histories,
+        totalTransaction: payload?.count,
+      };
+    }
+    case "GET_TRANSACTION_FAIL": {
+      return {
+        ...state,
+        isFetchTransaction: false,
+        transactionList: [],
+        totalTransaction: 0,
+      };
+    }
+    case "OPEN_REASON_DIALOG": {
+      return {
+        ...state,
+        openReasonDialog: true,
+        currentGoingToBanUser: payload,
+      };
+    }
+    case "CLOSE_REASON_DIALOG": {
+      return {
+        ...state,
+        openReasonDialog: false,
+        currentGoingToBanUser: "",
+      };
+    }
+    case "UPDATE_TRANSACTION_DIALOG": {
+      return { ...state, openTransactionDialog: payload };
+    }
     default:
       return state;
   }

@@ -7,7 +7,7 @@ import { closeNotificationDialog } from "../../../redux-saga-middleware/reducers
 import { readNotification } from "../../../redux-saga-middleware/reducers/notificationReducer";
 
 export default function SubPackExpired(props) {
-  const { createdAt, content, title, id } = props;
+  const { createdAt, content, title, id, read } = props;
   const navigate = useNavigate();
   const dispatch = useDispatch();
   return (
@@ -25,6 +25,7 @@ export default function SubPackExpired(props) {
         background: "#2E233D",
         padding: "16px 0px",
         borderBottom: "solid 1px #443565",
+        position:"relative"
       }}
     >
       <Typography
@@ -32,6 +33,7 @@ export default function SubPackExpired(props) {
           textAlign: "start",
           marginLeft: "0px !important",
           fontWeight: "700",
+          maxWidth:"250px"
         }}
       >
         {title}
@@ -48,7 +50,8 @@ export default function SubPackExpired(props) {
         {moment(createdAt)?.format("M/D/YYYY, hh:mm a")}
       </Box>
       <Box sx={{ fontSize: "12px", color: "#fff" }}>{content}</Box>
-      <Typography
+      {/* {title !== "Referral Notification" ? (
+        <Typography
         onClick={() => {
           dispatch(closeNotificationDialog());
           navigate("/packages");
@@ -64,6 +67,20 @@ export default function SubPackExpired(props) {
       >
         Renew now
       </Typography>
+      ) : (
+        <></>
+      )} */}
+      {read === 0 ? (
+        <Box sx={{
+          width:10,
+          height:10,
+          borderRadius:"50%",
+          backgroundColor:"#FF9F38",
+          position:"absolute",
+          top:20,
+          right:15
+        }}></Box>
+      ) : (<></>)}
     </Box>
   );
 }

@@ -1,7 +1,7 @@
 import { PersonRemoveAlt1 } from "@mui/icons-material";
 import AddFriendIcon from "@mui/icons-material/Person";
 import PersonAddAlt1 from "@mui/icons-material/PersonAddAlt1";
-import { Avatar, Box , Button} from "@mui/material";
+import { Avatar, Box, Button } from "@mui/material";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
@@ -18,7 +18,10 @@ import { showToastNotification } from "../../../redux-saga-middleware/reducers/a
 import { openLoginDialog } from "../../../redux-saga-middleware/reducers/authReducer";
 import { toggleProfileDialog } from "../../../redux-saga-middleware/reducers/profileReducer";
 import { setWaitingNav } from "../../../redux-saga-middleware/reducers/roomReducer";
-import { getUserByUsername } from "../../../redux-saga-middleware/reducers/userReducer";
+import {
+  getUserByUsername,
+  openReasonDialogFunction,
+} from "../../../redux-saga-middleware/reducers/userReducer";
 import { images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import UserChatLoadingList from "../../LoadingComponent/UserChatLoading";
@@ -52,7 +55,6 @@ export default function ChatWorldList() {
   useEffect(() => {
     setWorldMessage(chatWorld);
   }, [chatWorld]);
-
   useEffect(() => {
     const socket = _socket;
     setSocket(socket);
@@ -63,7 +65,6 @@ export default function ChatWorldList() {
       setIsFetching(false);
     }
   }, [chatWorld]);
-
   const handleClick = (event, userName) => {
     setAnchorEl(event.currentTarget);
     setMessFromName(userName);
@@ -352,22 +353,13 @@ export default function ChatWorldList() {
                     >
                       <span
                         style={{
-                          color: "#7C81F2",
+                          color: e?.isModMessage ? "#BE48ED" : "#7C81F2",
                           borderRadius: "5px",
-                          fontWeight: "500 !important",
-
+                          fontWeight: "700 !important",
                           letterSpacing: "0.5px",
                         }}
                       >
-                        <span
-                          style={{
-                            fontWeight: "500 !important",
-
-                            letterSpacing: "0.5px",
-                          }}
-                        >
-                          {e?.fromNickName}
-                        </span>
+                        {e?.fromNickName}
                       </span>
                       {e.checkFrom === true ? (
                         <Box
@@ -387,6 +379,28 @@ export default function ChatWorldList() {
                             }}
                           >
                             VIP
+                          </Typography>
+                        </Box>
+                      ) : e?.isModMessage ? (
+                        <Box
+                          sx={{
+                            borderRadius: "8px",
+                            backgroundColor: "#BE48ED",
+                            color: "white",
+                            marginLeft: "5px",
+                          }}
+                        >
+                          <Typography
+                            sx={{
+                              fontSize: "12px",
+                              marginLeft: "0px !important",
+                              paddingRight: "8px",
+                              paddingLeft: "8px",
+                              color: "#fff",
+                              fontWeight: "700 !important",
+                            }}
+                          >
+                            MOD
                           </Typography>
                         </Box>
                       ) : (
@@ -632,42 +646,139 @@ export default function ChatWorldList() {
               <span>View Profile</span>
             </Box>
           </MenuItem>
-          {tokenUser &&
-          listSendingRequest &&
-          listSendingRequest
-            ?.map((item) => {
-              return item.userName;
-            })
-            .includes(messagefromName) ? (
-            <MenuItem
-              onClick={() => {
-                dispatch(cancelRequestingFriend(messagefromName));
-              }}
-              sx={{
-                padding: "5px",
-              }}
-            >
-              <Box
-                className="p-1 text-white"
+          {user?.userRole === "Moderator" && (
+            <>
+              {" "}
+              <MenuItem
                 sx={{
-                  background: "linear-gradient(180deg, #843ff0, #7748ed)",
-                  width: "100%",
-                  borderRadius: "4px",
+                  padding: "5px",
                 }}
               >
-                <PersonRemoveAlt1 className="me-2 pb-1" />
-                Cancel Request
-              </Box>
-            </MenuItem>
-          ) : (
-            <MenuItem
-              sx={{
-                padding: "5px",
-              }}
-            >
-              {checkExistInFriendList(messagefromName) && tokenUser ? (
                 <Box
-                  onClick={() => handleDeleteFriend(messagefromName)}
+                  className="p-2 text-white"
+                  sx={{
+                    background: "linear-gradient(180deg, #843ff0, #7748ed)",
+                    width: "100%",
+                    fontWeight: "bold",
+                    borderRadius: "4px",
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    style={{ marginRight: "8px" }}
+                    viewBox="0 0 16 16"
+                    fill="none"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M9.0886 13.6506L8.72727 14.2613C8.40527 14.8053 7.6006 14.8053 7.27794 14.2613L6.9166 13.6506C6.6366 13.1773 6.4966 12.9399 6.27127 12.8093C6.04594 12.6779 5.7626 12.6733 5.19594 12.6633C4.3586 12.6493 3.83394 12.5979 3.39394 12.4153C2.98952 12.2478 2.62205 12.0022 2.31252 11.6927C2.00299 11.3832 1.75745 11.0157 1.58994 10.6113C1.33594 9.99927 1.33594 9.2226 1.33594 7.66927V7.0026C1.33594 4.8206 1.33594 3.72927 1.82727 2.92794C2.10197 2.4794 2.4789 2.10224 2.92727 1.82727C3.72927 1.33594 4.82127 1.33594 7.0026 1.33594H9.0026C11.1846 1.33594 12.2759 1.33594 13.0779 1.82727C13.5262 2.10205 13.9032 2.47898 14.1779 2.92727C14.6693 3.72927 14.6693 4.82127 14.6693 7.0026V7.66927C14.6693 9.2226 14.6693 9.99927 14.4159 10.6113C14.2483 11.0158 14.0027 11.3833 13.6931 11.6928C13.3834 12.0023 13.0158 12.2478 12.6113 12.4153C12.1713 12.5979 11.6466 12.6486 10.8093 12.6633C10.2426 12.6733 9.95927 12.6779 9.73394 12.8093C9.5086 12.9399 9.3686 13.1766 9.0886 13.6506ZM5.33594 7.83594C5.20333 7.83594 5.07615 7.88862 4.98238 7.98238C4.88862 8.07615 4.83594 8.20333 4.83594 8.33594C4.83594 8.46855 4.88862 8.59572 4.98238 8.68949C5.07615 8.78326 5.20333 8.83594 5.33594 8.83594H9.0026C9.13521 8.83594 9.26239 8.78326 9.35616 8.68949C9.44993 8.59572 9.5026 8.46855 9.5026 8.33594C9.5026 8.20333 9.44993 8.07615 9.35616 7.98238C9.26239 7.88862 9.13521 7.83594 9.0026 7.83594H5.33594ZM4.83594 6.0026C4.83594 5.87 4.88862 5.74282 4.98238 5.64905C5.07615 5.55528 5.20333 5.5026 5.33594 5.5026H10.6693C10.8019 5.5026 10.9291 5.55528 11.0228 5.64905C11.1166 5.74282 11.1693 5.87 11.1693 6.0026C11.1693 6.13521 11.1166 6.26239 11.0228 6.35616C10.9291 6.44993 10.8019 6.5026 10.6693 6.5026H5.33594C5.20333 6.5026 5.07615 6.44993 4.98238 6.35616C4.88862 6.26239 4.83594 6.13521 4.83594 6.0026Z"
+                      fill="white"
+                    />
+                  </svg>
+                  <span>Private chat</span>
+                </Box>
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  dispatch(openReasonDialogFunction(messagefromName));
+                }}
+                sx={{
+                  padding: "5px",
+                }}
+              >
+                <Box
+                  className="p-2 text-white"
+                  sx={{
+                    background: "#F05153",
+                    width: "100%",
+                    fontWeight: "bold",
+                    borderRadius: "4px",
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    style={{ marginRight: "8px" }}
+                    viewBox="0 0 14 14"
+                    fill="none"
+                  >
+                    <path
+                      d="M7 0C3.1 0 0 3.1 0 7C0 10.9 3.1 14 7 14C10.9 14 14 10.9 14 7C14 3.1 10.9 0 7 0ZM9.7 10.5L7 7.8L4.3 10.5L3.5 9.7L6.2 7L3.5 4.3L4.3 3.5L7 6.2L9.7 3.5L10.5 4.3L7.8 7L10.5 9.7L9.7 10.5Z"
+                      fill="white"
+                    />
+                  </svg>{" "}
+                  <span>Ban user</span>
+                </Box>
+              </MenuItem>
+              {/* <MenuItem
+                onClick={() => {
+                  dispatch(toggleProfileDialog(true));
+                  dispatch(
+                    getUserByUsername({
+                      username: messagefromName,
+                    })
+                  );
+                  handleClose();
+                }}
+                sx={{
+                  padding: "5px",
+                }}
+              >
+                <Box
+                  className="p-2 text-white"
+                  sx={{
+                    background: "#4FBF67",
+                    width: "100%",
+                    fontWeight: "bold",
+                    borderRadius: "4px",
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    style={{ marginRight: "8px" }}
+                    viewBox="0 0 16 16"
+                    fill="none"
+                  >
+                    <path
+                      d="M8 1C6.61553 1 5.26216 1.41054 4.11101 2.17971C2.95987 2.94888 2.06266 4.04213 1.53285 5.32122C1.00303 6.6003 0.86441 8.00776 1.13451 9.36563C1.4046 10.7235 2.07129 11.9708 3.05026 12.9497C4.02922 13.9287 5.2765 14.5954 6.63437 14.8655C7.99224 15.1356 9.3997 14.997 10.6788 14.4672C11.9579 13.9373 13.0511 13.0401 13.8203 11.889C14.5895 10.7378 15 9.38447 15 8C15 6.14348 14.2625 4.36301 12.9497 3.05025C11.637 1.7375 9.85652 1 8 1ZM7 10.795L4.5 8.295L5.295 7.5L7 9.205L10.705 5.5L11.503 6.293L7 10.795Z"
+                      fill="white"
+                    />
+                  </svg>{" "}
+                  <span>Active user</span>
+                </Box>
+              </MenuItem> */}
+            </>
+          )}
+
+          {user?.userRole !== "Moderator" &&
+            (tokenUser &&
+            listSendingRequest &&
+            listSendingRequest
+              ?.map((item) => {
+                return item?.userName;
+              })
+              .includes(messagefromName) ? (
+              <MenuItem
+                onClick={() => {
+                  dispatch(cancelRequestingFriend(messagefromName));
+                }}
+                sx={{
+                  padding: "5px",
+                }}
+              >
+                <Box
                   className="p-1 text-white"
                   sx={{
                     background: "linear-gradient(180deg, #843ff0, #7748ed)",
@@ -676,29 +787,53 @@ export default function ChatWorldList() {
                   }}
                 >
                   <PersonRemoveAlt1 className="me-2 pb-1" />
-                  Delete Friend
+                  Cancel Request
                 </Box>
-              ) : (
-                <Button
-                  disabled={isButtonDisabled}
-                  onClick={() => handleAddFriend(messagefromName)}
-                  className="p-1 text-white"
-                  sx={{
-                    background: "linear-gradient(180deg, #843ff0, #7748ed)",
-                    width: "100%",
-                    borderRadius: "4px",
-                  }}
-                >
-                  <PersonAddAlt1 className="me-2 pb-1" />
-                  <Typography sx={{
-                    fontWeight:"700 !important",
-                    textTransform:"none",
-                    marginLeft:"0px !important"
-                  }}>Add Friend</Typography>
-                </Button>
-              )}
-            </MenuItem>
-          )}
+              </MenuItem>
+            ) : (
+              <MenuItem
+                sx={{
+                  padding: "5px",
+                }}
+              >
+                {checkExistInFriendList(messagefromName) && tokenUser ? (
+                  <Box
+                    onClick={() => handleDeleteFriend(messagefromName)}
+                    className="p-1 text-white"
+                    sx={{
+                      background: "linear-gradient(180deg, #843ff0, #7748ed)",
+                      width: "100%",
+                      borderRadius: "4px",
+                    }}
+                  >
+                    <PersonRemoveAlt1 className="me-2 pb-1" />
+                    Delete Friend
+                  </Box>
+                ) : (
+                  <Button
+                    disabled={isButtonDisabled}
+                    onClick={() => handleAddFriend(messagefromName)}
+                    className="p-1 text-white"
+                    sx={{
+                      background: "linear-gradient(180deg, #843ff0, #7748ed)",
+                      width: "100%",
+                      borderRadius: "4px",
+                    }}
+                  >
+                    <PersonAddAlt1 className="me-2 pb-1" />
+                    <Typography
+                      sx={{
+                        fontWeight: "700 !important",
+                        textTransform: "none",
+                        marginLeft: "0px !important",
+                      }}
+                    >
+                      Add Friend
+                    </Typography>
+                  </Button>
+                )}
+              </MenuItem>
+            ))}
         </Menu>
         {renderChat}
         <span ref={endOfMessageRef}></span>

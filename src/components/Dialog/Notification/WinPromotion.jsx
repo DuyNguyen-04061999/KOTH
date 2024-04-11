@@ -58,7 +58,7 @@ export default function WinPromotion(props) {
           top:20,
           right:15
         }}></Box>
-      ) : ("")}
+      ) : (<></>)}
     </Box>
   );
 }

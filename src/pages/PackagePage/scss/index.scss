@@ -46,73 +46,108 @@
 .saleMobile {
   position: absolute;
   top: -17px;
-  right: -22px;
+  right: -72px;
   z-index: 2;
 }
 
-// .gradient-border-rounded{
-//   margin-top: 100px;
-// }
-.gradient-border-rounded1 {
-  margin-top: 0px;
-}
-.gradient-border-rounded2 {
-  margin-top: 0px;
-}
+  .gradient-border-rounded::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 24px;
+    padding: 3px; 
+    background: linear-gradient(215deg, #0F041D 0.05%, #B8CCDF 103.83%);
+  
+    -webkit-mask: 
+      linear-gradient(#fff 0 0) content-box, 
+      linear-gradient(#fff 0 0); 
+    -webkit-mask-composite: xor; 
+    mask-composite: exclude; 
+  }
+  
+  .gradient-border-rounded1::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 24px;
+    padding: 3px;
+    background: linear-gradient(215deg, #0F041D 0.05%, #A470FF 27.55%, #82F0FF 63.26%, #EB6FFF 103.83%);
+   
+    -webkit-mask: 
+      linear-gradient(#fff 0 0) content-box, 
+      linear-gradient(#fff 0 0); 
+    -webkit-mask-composite: xor; 
+    mask-composite: exclude; 
+  }
+  
+  .gradient-border-rounded2::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 24px;
+    padding: 3px; 
+    background: linear-gradient(215deg, #0F041D 0.05%, #F3CA78 103.83%);
+    -webkit-mask: 
+      linear-gradient(#fff 0 0) content-box, 
+      linear-gradient(#fff 0 0); 
+    -webkit-mask-composite: xor; 
+    mask-composite: exclude; 
+  }
 
-.gradient-border-rounded::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 24px;
-  padding: 3px; /* тут padding замість border-width */
-  background: #cdffe1;
-  /* 
-    * Магічні властивості, де
-    * [1] – охоплює лише область вмісту (без padding, який в нас замість border)
-    * [2] – охоплює всю площину елемента
-    * [3] – це виключить перший шар із другого, тож видимою буде лише область заповнення
-    */
-  -webkit-mask: linear-gradient(#fff 0 0) content-box,
-    /* [1] */ linear-gradient(#fff 0 0); /* [2] */
-  -webkit-mask-composite: xor; /* [3] для підтримки браузерів */
-  mask-composite: exclude; /* [3] */
-}
+  .gradient-border-rounded3::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 24px;
+    padding: 3px; 
+    background:  linear-gradient(215deg, #000000 0.02%, #BE48ED 100.05%);
+    -webkit-mask: 
+      linear-gradient(#fff 0 0) content-box, 
+      linear-gradient(#fff 0 0); 
+    -webkit-mask-composite: xor; 
+    mask-composite: exclude; 
+  }
 
-.gradient-border-rounded1::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 24px;
-  padding: 3px; /* тут padding замість border-width */
-  background: rgba(254, 252, 255, 0.86);
-  /* 
-    * Магічні властивості, де
-    * [1] – охоплює лише область вмісту (без padding, який в нас замість border)
-    * [2] – охоплює всю площину елемента
-    * [3] – це виключить перший шар із другого, тож видимою буде лише область заповнення
-    */
-  -webkit-mask: linear-gradient(#fff 0 0) content-box,
-    /* [1] */ linear-gradient(#fff 0 0); /* [2] */
-  -webkit-mask-composite: xor; /* [3] для підтримки браузерів */
-  mask-composite: exclude; /* [3] */
-}
 
-.gradient-border-rounded2::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 24px;
-  padding: 3px; /* тут padding замість border-width */
-  background: #feffef;
-  /* 
-    * Магічні властивості, де
-    * [1] – охоплює лише область вмісту (без padding, який в нас замість border)
-    * [2] – охоплює всю площину елемента
-    * [3] – це виключить перший шар із другого, тож видимою буде лише область заповнення
-    */
-  -webkit-mask: linear-gradient(#fff 0 0) content-box,
-    /* [1] */ linear-gradient(#fff 0 0); /* [2] */
-  -webkit-mask-composite: xor; /* [3] для підтримки браузерів */
-  mask-composite: exclude; /* [3] */
-}
+  .gradient-border-rounded4::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 24px;
+    padding: 3px; 
+    background: linear-gradient(215deg, #000000 0.02%, #F78E6D 100.05%);
+    -webkit-mask: 
+      linear-gradient(#fff 0 0) content-box, 
+      linear-gradient(#fff 0 0); 
+    -webkit-mask-composite: xor; 
+    mask-composite: exclude; 
+  }
+
+  .gradient-border-rounded5::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 24px;
+    padding: 3px; 
+    background: linear-gradient(215deg, #000000 0.02%, #E829BE 100.05%);
+    -webkit-mask: 
+      linear-gradient(#fff 0 0) content-box, 
+      linear-gradient(#fff 0 0); 
+    -webkit-mask-composite: xor; 
+    mask-composite: exclude; 
+  }
+
+
+
+  .elipse {
+    position: absolute;
+    bottom: -95px;
+    right: -20px;
+    width: 300px;
+    height: 260px;
+    border-radius: 50%;
+    background: linear-gradient(180deg, rgba(108, 41, 135, 0.29) 0%, rgba(108, 41, 135, 0.29) 14%, rgba(190, 72, 237, 0.29) 100%);
+    filter: blur(35.04999923706055px);
+    z-index: 0 ;
+  }
+  

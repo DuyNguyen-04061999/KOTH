@@ -86,6 +86,10 @@ import NavMobile from "../Nav/NavMobile";
 import history from "../Router/history";
 import "./index.scss";
 import NotificationBage from "../NotificationBage";
+import RenewalBadgePopup from "../Dialog/Packages/NotiCheckout/renewalBadgePopup";
+import RenewalNotiPopup from "../Dialog/Packages/NotiCheckout/renewalNotiPopup";
+import TransactionHistory from "../Dialog/TransactionHistory";
+import DialogBanUser from "../Dialog/DialogBanUser";
 
 const Main = muiStyled("main", {
   shouldForwardProp: (prop) => prop !== "open",
@@ -129,7 +133,11 @@ export default function Layout(props) {
   const { orientation } = useSelector((state) => state.gameReducer);
   const { isChangeLocation } = useSelector((state) => state.packageReducer);
   const [isNav, setIsNav] = useState(false);
-  const { tokenUser: token, user } = useSelector((state) => state.userReducer);
+  const {
+    tokenUser: token,
+    user,
+    openTransactionDialog,
+  } = useSelector((state) => state.userReducer);
   const { chatPopup, badgechat } = useSelector((state) => state.chatReducer);
   const { listSetting } = useSelector((state) => state.settingReducer);
   const { router, startGameCheck, fromRouter, countDownDoubleDay } =
@@ -153,10 +161,10 @@ export default function Layout(props) {
     let timeOutId = undefined;
     if (debounceTab === false) {
       timeOutId = setTimeout(() => {
-        setIsNav(false);
-      }, 1000);
+        setIsNav(true);
+      }, 500);
     } else {
-      setIsNav(true);
+      setIsNav(false);
     }
     return () => {
       clearTimeout(timeOutId);
@@ -446,10 +454,11 @@ export default function Layout(props) {
       >
         {process.env.REACT_APP_ENV !== "development" ? <ChatBot /> : <></>}
       </Box> */}
-
       <SimpleDialog />
       <TicketCheckOut />
+      {openTransactionDialog && <TransactionHistory />}
       <StripeAlertComponent />
+      <DialogBanUser />
       <ShareTour />
       <SubscriptionDialog />
       <TouramentShow />
@@ -459,6 +468,8 @@ export default function Layout(props) {
       <DialogExclusive />
       <NotiFunds />
       <NotificationDialog />
+      <RenewalBadgePopup />
+      <RenewalNotiPopup />
       {params && params?.get("game") && params?.get("game") === "revive" && (
         <PackagePaypalDialog />
       )}
@@ -480,7 +491,6 @@ export default function Layout(props) {
           }}
         />
       )}
-
       <AppBar
         position="sticky"
         className={
@@ -516,7 +526,7 @@ export default function Layout(props) {
               <rect y="18" width="30" height="5" rx="2" fill="#A968E2" />
             </svg>
           ) : (
-            ""
+            <></>
           )}
           {device === "Desktop" ? (
             <div className="d-flex align-items-center">
@@ -581,7 +591,7 @@ export default function Layout(props) {
               )}
             </Box>
           )}
-          <Box sx={{ flexGrow: 1 }}>{width > 1199 ? <Box></Box> : ""}</Box>
+          <Box sx={{ flexGrow: 1 }}>{width > 1199 ? <Box></Box> : <></>}</Box>
           <AvatarGroup className="d-flex align-items-center">
             <AuthDialog />
           </AvatarGroup>

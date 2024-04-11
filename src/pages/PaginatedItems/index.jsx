@@ -11,7 +11,7 @@ export default function PaginatedItems({
   defaultPage,
 }) {
   const { width } = useWindowDimensions();
-  const {t} = useTranslation('global');
+  const { t } = useTranslation("global");
   const useStyles = makeStyles(() => ({
     ul: {
       "& .MuiPaginationItem-root": {
@@ -152,7 +152,7 @@ export default function PaginatedItems({
                       fontSize: "16px",
                     }}
                   >
-                      {t('Next')}
+                    {t("Next")}
                   </Typography>
                   <Box
                     sx={{ width: "8px", height: "12px" }}
@@ -187,7 +187,7 @@ export default function PaginatedItems({
                       fontSize: "16px",
                     }}
                   >
-                      {t('Back')}
+                    {t("Back")}
                   </Typography>
                 </Box>
               ),
