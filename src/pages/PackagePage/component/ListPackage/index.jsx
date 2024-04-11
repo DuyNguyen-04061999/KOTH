@@ -297,7 +297,7 @@ export default function ListPackage(props) {
                     component={"img"}
                     src={
                       packageAvatar
-                        ? process.env.REACT_APP_SOCKET_SERVER + +
+                          ? process.env.REACT_APP_SOCKET_SERVER +
                           "/" +
                           packageAvatar
                         : images.christbg
