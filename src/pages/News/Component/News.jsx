@@ -358,7 +358,8 @@ export default function News() {
                               src={`https://storage.googleapis.com/web-system-files/${item?.thumbnail}`}
                               alt=""
                               sx={{
-                                width: "100%",
+                                width: "350px",
+                                maxWidth:"100%",
                                 height: device === "Mobile" ? "150px" : "200px",
                                 borderRadius: "8px",
                                 objectFit: "cover",
@@ -419,7 +420,7 @@ export default function News() {
                           </Typography>
                         )}
                         <>
-                          {device === "Mobile" ? (
+                          {device === "Mobile" || device === "Tablet" ? (
                             <></>
                           ) : (
                             <>
