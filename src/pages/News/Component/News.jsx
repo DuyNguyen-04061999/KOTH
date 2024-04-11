@@ -355,7 +355,7 @@ export default function News() {
                           <Box>
                             <Box
                               component={"img"}
-                              src={`https://storage.googleapis.com/web-system-files/${item?.thumbnail}`}
+                              src={`${process.env.REACT_APP_SOCKET_SERVER + item?.thumbnail}`}
                               alt=""
                               sx={{
                                 width: "350px",
