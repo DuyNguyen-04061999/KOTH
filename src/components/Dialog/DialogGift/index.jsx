@@ -186,7 +186,7 @@ const DialogGift = ({
             <AnimButton
               onClick={() => handleConfirm()}
               type="primary"
-              text="Next"
+              text="Ok"
             />
           </DialogActions>
         </Box>
