@@ -13,7 +13,7 @@ import { images, popup } from "../../../utils/images";
 import { images280423_l } from "../../../utils/images280423_l";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import ComponentChat from "../componentChat";
-import PriorityHigh from '@mui/icons-material/PriorityHigh'
+import PriorityHigh from "@mui/icons-material/PriorityHigh";
 
 const ChatRoot = styled.input`
   display: flex;

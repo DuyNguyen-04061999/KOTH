@@ -80,7 +80,7 @@ export default function PlayerLinearProgress({
               fontSize: mobileCondition ? "10px" : "14px",
             }}
           >
-            {type === "subscribe" ? "Players Subscribed" : "Players Registered"}
+            {type === "subscribe" ? "Friends Subscribed" : "Friends Registered"}
           </Typography>
           <Typography
             sx={{

@@ -89,6 +89,7 @@ import NotificationBage from "../NotificationBage";
 import RenewalBadgePopup from "../Dialog/Packages/NotiCheckout/renewalBadgePopup";
 import RenewalNotiPopup from "../Dialog/Packages/NotiCheckout/renewalNotiPopup";
 import TransactionHistory from "../Dialog/TransactionHistory";
+import DialogBanUser from "../Dialog/DialogBanUser";
 
 const Main = muiStyled("main", {
   shouldForwardProp: (prop) => prop !== "open",
@@ -457,6 +458,7 @@ export default function Layout(props) {
       <TicketCheckOut />
       {openTransactionDialog && <TransactionHistory />}
       <StripeAlertComponent />
+      <DialogBanUser />
       <ShareTour />
       <SubscriptionDialog />
       <TouramentShow />

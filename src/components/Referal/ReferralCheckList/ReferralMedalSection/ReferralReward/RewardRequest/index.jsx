@@ -27,7 +27,7 @@ export default function RewardRequest({ name, tierInfo }) {
         >
           <DetailRewardRequest
             barColor="#6C5DD3"
-            title="Players Subscribed"
+            title="Friends Subscribed"
             width={device === "Mobile" ? "100%" : "45%"}
             currentNumber={
               registerList?.filter((n) => {
@@ -39,7 +39,7 @@ export default function RewardRequest({ name, tierInfo }) {
           <Typography sx={{ ...textStyle }}>Or</Typography>
           <DetailRewardRequest
             barColor="#3F8CFF"
-            title="Players Registered"
+            title="Friends Registered"
             width={device === "Mobile" ? "100%" : "48%"}
             currentNumber={registerList?.length || 0}
             condition={tierInfo?.signUpCondition || 0}
@@ -58,7 +58,7 @@ export default function RewardRequest({ name, tierInfo }) {
         >
           <DetailRewardRequest
             barColor="#6C5DD3"
-            title="Players Subscribed"
+            title="Friends Subscribed"
             width={device === "Mobile" ? "100%" : "45%"}
             currentNumber={
               registerList?.filter((n) => {
@@ -70,7 +70,7 @@ export default function RewardRequest({ name, tierInfo }) {
           <Typography sx={{ ...textStyle }}>Or</Typography>{" "}
           <DetailRewardRequest
             barColor="#3F8CFF"
-            title="Players Registered"
+            title="Friends Registered"
             width={device === "Mobile" ? "100%" : "48%"}
             currentNumber={registerList?.length || 0}
             condition={tierInfo?.signUpCondition || 0}
@@ -82,7 +82,7 @@ export default function RewardRequest({ name, tierInfo }) {
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
           <DetailRewardRequest
             barColor="#6C5DD3"
-            title="Players Subscribed"
+            title="Friends Subscribed"
             width="100%"
             currentNumber={
               registerList?.filter((n) => {
@@ -98,7 +98,7 @@ export default function RewardRequest({ name, tierInfo }) {
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
           <DetailRewardRequest
             barColor="#6C5DD3"
-            title="Players Subscribed"
+            title="Friends Subscribed"
             width="100%"
             currentNumber={
               registerList?.filter((n) => {
@@ -114,7 +114,7 @@ export default function RewardRequest({ name, tierInfo }) {
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
           <DetailRewardRequest
             barColor="#6C5DD3"
-            title="Players Subscribed"
+            title="Friends Subscribed"
             width="100%"
             currentNumber={
               registerList?.filter((n) => {
@@ -130,7 +130,7 @@ export default function RewardRequest({ name, tierInfo }) {
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
           <DetailRewardRequest
             barColor="#6C5DD3"
-            title="Players Subscribed"
+            title="Friends Subscribed"
             width="100%"
             currentNumber={
               registerList?.filter((n) => {
