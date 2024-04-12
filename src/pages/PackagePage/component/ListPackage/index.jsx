@@ -178,6 +178,8 @@ export default function ListPackage(props) {
     return true;
   }
 
+  console.log(packageName);
+
   return (
     <Box
       sx={{
@@ -325,7 +327,7 @@ export default function ListPackage(props) {
                     //   packageCategory === Type.Subscription ? "10px" : "25px",
                   }}
                 >
-                  {packageCategory === Type.Subscription ? (
+                  {/* {packageCategory === Type.Subscription ? (
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="20"
@@ -457,10 +459,10 @@ export default function ListPackage(props) {
                         {Number(packageFreeTicketTournament)} {t("Extra plays")}
                       </Typography>
                     </Box>
-                  )}
+                  )} */}
                 </Box>
               </Box>
-              <Box>
+              <Box className="mt-3">
                 {isJson(des) &&
                 JSON.parse(des) &&
                 JSON.parse(des)?.length > 0 ? (
@@ -482,6 +484,7 @@ export default function ListPackage(props) {
                         height="12"
                         fill="none"
                         viewBox="0 0 18 18"
+                        style={{minWidth:"12px"}}
                       >
                         <g>
                           <path
@@ -531,18 +534,82 @@ export default function ListPackage(props) {
                 ${packagePrice}
               </Typography>
               {packageCategory === Type.Subscription ? (
-                <Typography
+                <>
+                  {packageName === "Monthly Subscription" ? (
+                    <Typography
+                    sx={{
+                      fontWeight: "700 !important",
+                      fontSize: "12px !important",
+                      color: "#979797",
+                      marginTop: "5px !important",
+                      textDecoration:"line-through"
+                    }}
+                  >
+                  
+                    {t(
+                      `$19.99`
+                    )}
+                  </Typography>
+                  ) : packageName === "Quarterly Subscription" ? (
+                    <Typography
                   sx={{
                     fontWeight: "700 !important",
                     fontSize: "12px !important",
                     color: "#979797",
                     marginTop: "5px !important",
+                    textDecoration:"line-through"
                   }}
                 >
+                 
                   {t(
-                    `Only ${(packagePrice / packageTimeLoop).toFixed(2)}/days`
+                    `$56.99`
                   )}
                 </Typography>
+                  ) : packageName === "Yearly Subscription" ? (
+                    <Typography
+                  sx={{
+                    fontWeight: "700 !important",
+                    fontSize: "12px !important",
+                    color: "#979797",
+                    marginTop: "5px !important",
+                    textDecoration:"line-through"
+                  }}
+                >
+             
+                  {t(
+                    `$215.99`
+                  )}
+                </Typography>
+                  ) : (
+                    <Typography
+                  sx={{
+                    fontWeight: "700 !important",
+                    fontSize: "12px !important",
+                    color: "#979797",
+                    marginTop: "5px !important",
+                    textDecoration:"line-through"
+                  }}
+                >
+                  {/* {t(
+                    `Only ${(packagePrice / packageTimeLoop).toFixed(2)}/days`
+                  )} */}
+                  {t(
+                    `$${packagePrice}`
+                  )}
+                </Typography>
+                  )}
+                {packageName === "Quarterly Subscription" ? (
+                   <Typography sx={{
+                    fontSize:"14px"
+                  }}>(SAVE 5%)</Typography>
+                ) : packageName === "Yearly Subscription" ? (
+                  <Typography sx={{
+                    fontSize:"14px"
+                  }}>(SAVE 10%)</Typography>
+                ) : (
+                  <></>
+                )}
+                </>
               ) : (
                 <></>
               )}
@@ -586,7 +653,7 @@ export default function ListPackage(props) {
           </Box>
         </Box>
       </Box>
-      <Box className={"saleMobile"}>
+      {/* <Box className={"saleMobile"}>
         {packageName === PackageName.Monthly ? (
           <Box
             component={"img"}
@@ -597,7 +664,7 @@ export default function ListPackage(props) {
         ) : (
           <></>
         )}
-      </Box>
+      </Box> */}
     </Box>
   );
 }
