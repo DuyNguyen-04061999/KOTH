@@ -656,9 +656,9 @@ export default function ListPackage(props) {
               alt="..."
               sx={{ width: "70%", height: "100%" }}
             ></Box>
-            <Box sx={{position:"absolute",top:5, right:"29px", transform:"rotateZ(48deg)", zIndex:3}}>
-              <Typography sx={{marginBottom:"0px !important" , fontSize:"14px", fontWeight:"700", color:"#fff"}}>ON</Typography>
-              <Typography sx={{marginBottom:"0px !important" , fontSize:"14px", fontWeight:"700" , color:"#fff"}}>SALE</Typography>
+            <Box sx={{position:"absolute",top:9, right:"36px", transform:"rotateZ(49deg)", zIndex:3}}>
+              <Typography sx={{marginBottom:"0px !important" , fontSize:"10px", fontWeight:"700", color:"#fff"}}>ON</Typography>
+              <Typography sx={{marginBottom:"0px !important" , fontSize:"10px", fontWeight:"700" , color:"#fff"}}>SALE</Typography>
             </Box>
           </>
         ) : (
