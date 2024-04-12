@@ -271,7 +271,7 @@ export default function ListPackage(props) {
               alignItems: "center",
               width: "100%",
               height: "100%",
-              justifyContent: "space-between",
+              justifyContent: "flex-end",
               paddingLeft: "10px",
               paddingRight: "10px",
             }}
@@ -309,7 +309,7 @@ export default function ListPackage(props) {
             </Box>
 
             {/* salse */}
-            <Box sx={{ transform: "translate(0px,-34px)", minHeight: "30%" }}>
+            <Box sx={{ transform: "translate(0px,-34px)", minHeight: packageCategory === "sub" ? "25%" : "20%" }}>
               <Box
                 sx={{
                   marginBottom: "0px",
