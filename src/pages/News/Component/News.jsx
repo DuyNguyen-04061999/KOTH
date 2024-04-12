@@ -15,8 +15,6 @@ import SliderNews from "../SliderNews";
 import {images} from "../../../utils/images";
 import Stack from "@mui/material/Stack";
 import Pagination from "@mui/material/Pagination";
-import IconButton from "@mui/material/IconButton";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import {
     clickTabNews,
     getListBannerNews,
@@ -28,7 +26,6 @@ import {useNavigate} from "react-router-dom";
 import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
 import ParagraphLoading from "../../../components/LoadingComponent/ParagraphLoading";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
-import ListEmpty from "../../../components/LoadingComponent/ListEmpty";
 import "../index.scss";
 
 const NewFooter = lazy(() => import("../../NewFooter"));
