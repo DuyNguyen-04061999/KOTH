@@ -127,7 +127,7 @@ export default function SliderNews(props) {
                       transitionDelay: "0.5s",
                     },
                   }}
-                  src={`https://storage.googleapis.com/web-system-files/${item?.thumbnail}`}
+                  src={`${item?.thumbnail ? process.env.REACT_APP_SOCKET_SERVER + "/" + item?.thumbnail : ""}`}
                 ></LazyLoadImage>
               </Box>
             )}
