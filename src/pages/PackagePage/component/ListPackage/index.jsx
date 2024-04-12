@@ -178,7 +178,6 @@ export default function ListPackage(props) {
     return true;
   }
 
-
   return (
     <Box
       sx={{
@@ -272,7 +271,7 @@ export default function ListPackage(props) {
               alignItems: "center",
               width: "100%",
               height: "100%",
-              justifyContent: "flex-end",
+              justifyContent: "space-between",
               paddingLeft: "10px",
               paddingRight: "10px",
             }}
@@ -298,7 +297,7 @@ export default function ListPackage(props) {
                     component={"img"}
                     src={
                       packageAvatar
-                          ? process.env.REACT_APP_SOCKET_SERVER +
+                        ? process.env.REACT_APP_SOCKET_SERVER +
                           "/" +
                           packageAvatar
                         : images.christbg
@@ -310,7 +309,7 @@ export default function ListPackage(props) {
             </Box>
 
             {/* salse */}
-            <Box sx={{transform: "translate(0px,-12px)", minHeight:"30%"}}>
+            <Box sx={{ transform: "translate(0px,-34px)", minHeight: "30%" }}>
               <Box
                 sx={{
                   marginBottom: "0px",
@@ -483,7 +482,7 @@ export default function ListPackage(props) {
                         height="12"
                         fill="none"
                         viewBox="0 0 18 18"
-                        style={{minWidth:"12px"}}
+                        style={{ minWidth: "12px" }}
                       >
                         <g>
                           <path
@@ -535,78 +534,75 @@ export default function ListPackage(props) {
                 <>
                   {packageName === "Monthly Subscription" ? (
                     <Typography
-                    sx={{
-                      fontWeight: "700 !important",
-                      fontSize: "12px !important",
-                      color: "#979797",
-                      marginTop: "5px !important",
-                      textDecoration:"line-through"
-                    }}
-                  >
-                  
-                    {t(
-                      `$19.99`
-                    )}
-                  </Typography>
+                      sx={{
+                        fontWeight: "700 !important",
+                        fontSize: "12px !important",
+                        color: "#979797",
+                        marginTop: "5px !important",
+                        textDecoration: "line-through",
+                      }}
+                    >
+                      {t(`$19.99`)}
+                    </Typography>
                   ) : packageName === "Quarterly Subscription" ? (
                     <Typography
-                  sx={{
-                    fontWeight: "700 !important",
-                    fontSize: "12px !important",
-                    color: "#979797",
-                    marginTop: "5px !important",
-                    textDecoration:"line-through"
-                  }}
-                >
-                 
-                  {t(
-                    `$56.99`
-                  )}
-                </Typography>
+                      sx={{
+                        fontWeight: "700 !important",
+                        fontSize: "12px !important",
+                        color: "#979797",
+                        marginTop: "5px !important",
+                        textDecoration: "line-through",
+                      }}
+                    >
+                      {t(`$56.99`)}
+                    </Typography>
                   ) : packageName === "Yearly Subscription" ? (
                     <Typography
-                  sx={{
-                    fontWeight: "700 !important",
-                    fontSize: "12px !important",
-                    color: "#979797",
-                    marginTop: "5px !important",
-                    textDecoration:"line-through"
-                  }}
-                >
-             
-                  {t(
-                    `$215.99`
-                  )}
-                </Typography>
+                      sx={{
+                        fontWeight: "700 !important",
+                        fontSize: "12px !important",
+                        color: "#979797",
+                        marginTop: "5px !important",
+                        textDecoration: "line-through",
+                      }}
+                    >
+                      {t(`$215.99`)}
+                    </Typography>
                   ) : (
                     <Typography
-                  sx={{
-                    fontWeight: "700 !important",
-                    fontSize: "12px !important",
-                    color: "#979797",
-                    marginTop: "5px !important",
-                    textDecoration:"line-through"
-                  }}
-                >
-                  {/* {t(
+                      sx={{
+                        fontWeight: "700 !important",
+                        fontSize: "12px !important",
+                        color: "#979797",
+                        marginTop: "5px !important",
+                        textDecoration: "line-through",
+                      }}
+                    >
+                      {/* {t(
                     `Only ${(packagePrice / packageTimeLoop).toFixed(2)}/days`
                   )} */}
-                  {t(
-                    `$${packagePrice}`
+                      {t(`$${packagePrice}`)}
+                    </Typography>
                   )}
-                </Typography>
+                  {packageName === "Quarterly Subscription" ? (
+                    <Typography
+                      sx={{
+                        fontSize: "14px",
+                      }}
+                    >
+                      (SAVE 5%)
+                    </Typography>
+                  ) : packageName === "Yearly Subscription" ? (
+                    <Typography
+                      sx={{
+                        fontSize: "14px",
+                      }}
+                    >
+                      (SAVE 10%)
+                    </Typography>
+                  ) : (
+                    <></>
                   )}
-                {packageName === "Quarterly Subscription" ? (
-                   <Typography sx={{
-                    fontSize:"14px"
-                  }}>(SAVE 5%)</Typography>
-                ) : packageName === "Yearly Subscription" ? (
-                  <Typography sx={{
-                    fontSize:"14px"
-                  }}>(SAVE 10%)</Typography>
-                ) : (
-                  <></>
-                )}
                 </>
               ) : (
                 <></>
@@ -651,18 +647,24 @@ export default function ListPackage(props) {
           </Box>
         </Box>
       </Box>
-      {/* <Box className={"saleMobile"}>
-        {packageName === PackageName.Monthly ? (
-          <Box
-            component={"img"}
-            src={images.badgeBigSale}
-            alt="..."
-            sx={{ width: "70%", height: "100%" }}
-          ></Box>
+      <Box className={"saleMobile"}>
+        {packageCategory === "sub" ? (
+          <>
+            <Box
+              component={"img"}
+              src={images.badgeBigSale}
+              alt="..."
+              sx={{ width: "70%", height: "100%" }}
+            ></Box>
+            <Box sx={{position:"absolute",top:5, right:"29px", transform:"rotateZ(48deg)", zIndex:3}}>
+              <Typography sx={{marginBottom:"0px !important" , fontSize:"14px", fontWeight:"700", color:"#fff"}}>ON</Typography>
+              <Typography sx={{marginBottom:"0px !important" , fontSize:"14px", fontWeight:"700" , color:"#fff"}}>SALE</Typography>
+            </Box>
+          </>
         ) : (
           <></>
         )}
-      </Box> */}
+      </Box>
     </Box>
   );
 }
