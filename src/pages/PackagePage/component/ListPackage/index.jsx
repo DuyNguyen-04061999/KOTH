@@ -503,7 +503,6 @@ export default function ListPackage(props) {
                           color: "#fff",
                           textAlign: "start",
                           fontWeight: "500 !important",
-                          marginLeft: "6px !important",
                         }}
                       >
                         {d}
