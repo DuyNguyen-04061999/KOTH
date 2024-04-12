@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import Slider from "react-slick";
 
 import useWindowDimensions from "../../../utils/useWindowDimensions";
+import { images } from "../../../utils/images";
 
 export default function SliderNews(props) {
   const [selectedIndex, setIndex] = useState(0);
@@ -26,7 +27,7 @@ export default function SliderNews(props) {
   const settings = {
     dots: true,
     arrows: false,
-    autoplay: true,
+    // autoplay: true,
     autoplaySpeed: 3000,
     speed: 1000,
     slidesToShow: 1,
@@ -84,51 +85,62 @@ export default function SliderNews(props) {
               <Box
                 key={index}
                 sx={{
-                  height: "100%",
+                  height: 0,
+                  paddingBottom: "400px",
+                  position: "relative",
+                  overflow: "hidden",
                 }}
               >
-                <LazyLoadImage
-                  style={{
-                    width: "100%",
-                    height: "363px",
-                    cursor: "pointer",
-                    borderRadius: "8px",
-                    objectFit: "contain",
+                <Box
+                  sx={{
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%,-50%)",
+                    maxWidth: "100%",
+                    height: "auto",
                   }}
-                  effect="blur"
-                  wrapperProps={{
-                    style: {
-                      transitionDelay: "0.5s",
-                    },
-                  }}
-                  src={`https://storage.googleapis.com/web-system-files/${item?.thumbnail}`}
-                ></LazyLoadImage>
+                  component={"img"}
+                  alt="..."
+                  // src={`https://storage.googleapis.com/play4promo_bucket/public/promotions/undefined_avatar_1712848051864.png`}
+                  src={
+                    item?.thumbnail
+                      ? process.env.REACT_APP_SOCKET_SERVER + "/" +
+                        item?.thumbnail
+                      : images.christbg
+                  }
+                ></Box>
               </Box>
             ) : (
               <Box
                 key={index}
                 sx={{
-                  height: "100%",
+                  height: 0,
+                  paddingBottom: "200px",
+                  position: "relative",
+                  overflow: "hidden",
                 }}
-                component={"a"}
-                href="mailto:support@play4promo.com"
+                // href="mailto:support@play4promo.com"
               >
-                <LazyLoadImage
-                  style={{
-                    width: "100%",
-                    height: "200px",
-                    cursor: "pointer",
-                    borderRadius: "8px",
-                    objectFit: "contain",
+                <Box
+                  sx={{
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%,-50%)",
+                    maxWidth: "100%",
+                    height: "auto",
                   }}
-                  effect="blur"
-                  wrapperProps={{
-                    style: {
-                      transitionDelay: "0.5s",
-                    },
-                  }}
-                  src={`https://storage.googleapis.com/web-system-files/${item?.thumbnail}`}
-                ></LazyLoadImage>
+                  component={"img"}
+                  alt="..."
+                  // src={images.BannerHomePageDesktop}
+                  src={
+                    item?.thumbnail
+                      ? process.env.REACT_APP_SOCKET_SERVER + "/" +
+                        item?.thumbnail
+                      : images.christbg
+                  }
+                ></Box>
               </Box>
             )}
           </Box>
