@@ -178,7 +178,6 @@ export default function ListPackage(props) {
     return true;
   }
 
-  console.log(packageName);
 
   return (
     <Box
