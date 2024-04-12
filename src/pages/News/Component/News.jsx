@@ -1,34 +1,24 @@
 import {
   Box,
   Container,
-  Grid,
   Typography,
   Button,
   Skeleton,
-  styled,
 } from "@mui/material";
-import SlickSlider from "../../../components/SlickSlider";
 import { useDispatch, useSelector } from "react-redux";
 import { lazy, Suspense, useEffect, useState } from "react";
-import { getListBanner } from "../../../redux-saga-middleware/reducers/appReducer";
 import SliderNews from "../SliderNews";
 import { images } from "../../../utils/images";
 import Stack from "@mui/material/Stack";
 import Pagination from "@mui/material/Pagination";
-import IconButton from "@mui/material/IconButton";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import {
   clickTabNews,
   getListBannerNews,
   getListNews,
-  saveIdNews,
 } from "../../../redux-saga-middleware/reducers/news";
 import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
-import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
-import ParagraphLoading from "../../../components/LoadingComponent/ParagraphLoading";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
-import ListEmpty from "../../../components/LoadingComponent/ListEmpty";
 import "../index.scss";
 const NewFooter = lazy(() => import("../../NewFooter"));
 
@@ -56,7 +46,18 @@ export default function News() {
     UPDATE: "update",
     EVENT: "event",
   };
+
   const totalPage = Math.ceil(total / count);
+
+  useEffect(() => {
+    dispatch(getListBannerNews());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (listBanner) {
+      setBanner(listBanner);
+    }
+  }, [listBanner]);
 
   useEffect(() => {
     dispatch(
@@ -73,16 +74,6 @@ export default function News() {
       setDataNews(listNews);
     }
   }, [listNews]);
-
-  useEffect(() => {
-    dispatch(getListBannerNews());
-  }, [dispatch]);
-
-  useEffect(() => {
-    if (listBanner) {
-      setBanner(listBanner);
-    }
-  }, [listBanner]);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -355,11 +346,16 @@ export default function News() {
                           <Box>
                             <Box
                               component={"img"}
-                              src={`https://storage.googleapis.com/web-system-files/${item?.thumbnail}`}
+                              src={
+                                item?.thumbnail
+                                  ? process.env.REACT_APP_SOCKET_SERVER + "/" +
+                                    item?.thumbnail
+                                  : images.christbg
+                              }
                               alt=""
                               sx={{
                                 width: "350px",
-                                maxWidth:"100%",
+                                maxWidth: "100%",
                                 height: device === "Mobile" ? "150px" : "200px",
                                 borderRadius: "8px",
                                 objectFit: "cover",
@@ -413,7 +409,7 @@ export default function News() {
                               color: "#fff",
                               textAlign: "left",
                               overflow: "hidden",
-                              wordBreak: "break-all",
+                              wordBreak: "break-word",
                             }}
                           >
                             {item?.title}
@@ -453,7 +449,7 @@ export default function News() {
                                     color: "#fff",
                                     textAlign: "left",
                                     overflow: "hidden",
-                                    wordBreak: "break-all",
+                                    wordBreak: "break-word",
                                   }}
                                 >
                                   {item?.shortDesc === "string" ? (
@@ -505,7 +501,7 @@ export default function News() {
                               color: "#9384B7",
                               textAlign: "left",
                               overflow: "hidden",
-                              wordBreak: "break-all",
+                              wordBreak: "break-word",
                             }}
                           >
                             {dayjs(item?.updatedAt).format("DD/MM/YYYY h:mm A")}
@@ -525,6 +521,9 @@ export default function News() {
                       component={"img"}
                       src={images.emptyNews}
                       alt="empty"
+                      sx={{
+                        width: width > 576 ? "auto" : "100%",
+                      }}
                     ></Box>
                   </Box>
                 )}
