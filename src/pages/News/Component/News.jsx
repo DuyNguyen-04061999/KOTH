@@ -525,6 +525,10 @@ export default function News() {
                       component={"img"}
                       src={images.emptyNews}
                       alt="empty"
+                      sx={{
+                        width: width > 576 ? "auto" : "100%",
+
+                      }}
                     ></Box>
                   </Box>
                 )}
