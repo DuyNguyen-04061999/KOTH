@@ -22,7 +22,7 @@ import useWindowDimensions from "../../../utils/useWindowDimensions";
 import MenuBrowser from "../../MenuMobile/Browser";
 import MenuChat from "../../MenuMobile/Chat";
 import "./index.scss";
-import {secondNotiComparison} from "../../../utils/timeDiff";
+import { secondNotiComparison } from "../../../utils/timeDiff";
 
 export default function NavMobile() {
   const { tokenUser: token } = useSelector((state) => state.userReducer);
@@ -57,7 +57,7 @@ export default function NavMobile() {
     (state) => state.notificationReducer
   );
 
-  const [read,setRead] = useState(true)
+  const [read, setRead] = useState(true);
 
   const checkNotificationRead = () => {
     let check = false;
@@ -74,10 +74,10 @@ export default function NavMobile() {
     for (let index = 0; index < listNotifiaction.length; index++) {
       const element = listNotifiaction[index];
       if (
-          !element?.notificationRead &&
-          secondNotiComparison(element?.createdAt, new Date()) &&
-          (!localStorage.getItem("newNotiId") ||
-              listNotifiaction[0]?.id !== localStorage.getItem("newNotiId"))
+        !element?.notificationRead &&
+        secondNotiComparison(element?.createdAt, new Date()) &&
+        (!localStorage.getItem("newNotiId") ||
+          listNotifiaction[0]?.id !== localStorage.getItem("newNotiId"))
       ) {
         setRead(false);
         return;
@@ -1076,7 +1076,10 @@ export default function NavMobile() {
                         if (token) {
                           dispatch(openNotificationDialog());
                           setRead(true);
-                          localStorage.setItem("newNotiId", listNotifiaction[0]?.id);
+                          localStorage.setItem(
+                            "newNotiId",
+                            listNotifiaction[0]?.id
+                          );
                         } else {
                           dispatch(openLoginDialog());
                         }
