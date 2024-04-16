@@ -1,18 +1,31 @@
-import React from "react";
-import { Box, Dialog, Typography } from "@mui/material";
+import React, { useState } from "react";
+import { Box, Dialog, Typography, CircularProgress } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { closeReasonDialogFunction } from "../../../redux-saga-middleware/reducers/userReducer";
+import {
+  banUserReady,
+  closeReasonDialogFunction,
+} from "../../../redux-saga-middleware/reducers/userReducer";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
+
 export default function DialogBanUser() {
-  const { openReasonDialog, currentGoingToBanUser } = useSelector(
-    (state) => state.userReducer
-  );
+  const isWhitespaceString = (str) => !str.replace(/\s/g, "").length;
+  const { openReasonDialog, currentGoingToBanUser, isFetchingBanUser } =
+    useSelector((state) => state.userReducer);
   const { width } = useWindowDimensions();
   const dispatch = useDispatch();
+  const [reason, setReason] = useState("");
+  const handleOnClickBanUser = () => {
+    dispatch(
+      banUserReady({
+        usernameBanned: currentGoingToBanUser,
+        banReason: reason,
+      })
+    );
+  };
   return (
     <Dialog
       onClose={() => {
-        dispatch(closeReasonDialogFunction());
+        !isFetchingBanUser && dispatch(closeReasonDialogFunction());
       }}
       open={openReasonDialog}
       sx={{
@@ -33,7 +46,7 @@ export default function DialogBanUser() {
         <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
           <svg
             onClick={() => {
-              dispatch(closeReasonDialogFunction());
+              !isFetchingBanUser && dispatch(closeReasonDialogFunction());
             }}
             xmlns="http://www.w3.org/2000/svg"
             width="16"
@@ -62,7 +75,8 @@ export default function DialogBanUser() {
             marginTop: "20px",
           }}
         >
-          You are going to ban <span style={{ color: "#7C81F2" }}>Yakult</span>
+          You are going to ban{" "}
+          <span style={{ color: "#7C81F2" }}>{currentGoingToBanUser}</span>
         </Typography>
         <Typography
           sx={{
@@ -84,6 +98,11 @@ export default function DialogBanUser() {
         >
           {" "}
           <textarea
+            value={reason}
+            onChange={(e) => {
+              setReason(e.target.value);
+            }}
+            disabled={isFetchingBanUser}
             placeholder="Banned reason"
             style={{
               width: "90%",
@@ -109,6 +128,9 @@ export default function DialogBanUser() {
           }}
         >
           <button
+            onClick={() => {
+              !isFetchingBanUser && dispatch(closeReasonDialogFunction());
+            }}
             style={{
               width: "48%",
               padding: "10px",
@@ -122,18 +144,26 @@ export default function DialogBanUser() {
             Cancel
           </button>
           <button
+            onClick={handleOnClickBanUser}
+            disabled={isWhitespaceString(reason) || isFetchingBanUser}
             style={{
               width: "48%",
               padding: "10px",
               borderRadius: "8px",
-              backgroundColor: "#979797",
+              backgroundColor:
+                isWhitespaceString(reason) || isFetchingBanUser
+                  ? "#979797"
+                  : "#7848ED",
               color: "#fff",
               border: "none",
               outline: "none",
               fontWeight: "700",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
             }}
           >
-            Confirm
+            {isFetchingBanUser ? <CircularProgress size={20} /> : "Confirm"}
           </button>
         </Box>
       </Box>
