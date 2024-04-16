@@ -17,7 +17,6 @@ export default function ComponentChat() {
   const [showScrollToBottomButton, setShowScrollToBottomButton] =
     useState(true);
   const chatBox = useRef(null);
-
   const { width, height } = useWindowDimensions();
   const { user } = useSelector((state) => state.userReducer);
   const userName = user?.userName || "";
@@ -274,13 +273,36 @@ export default function ComponentChat() {
               <Box className="d-flex justify-content-between align-items-center">
                 <span
                   style={{
-                    color: "#7C81F2",
+                    color: e?.isModMessage ? "#BE48ED" : "#7C81F2",
                     borderRadius: "5px",
                     fontWeight: "500 !important",
                   }}
                 >
                   <b style={{}}>{userFriendNickName}</b>
-                </span>
+                </span>{" "}
+                {e?.isModMessage && (
+                  <Box
+                    sx={{
+                      borderRadius: "8px",
+                      backgroundColor: "#BE48ED",
+                      color: "white",
+                      marginLeft: "5px",
+                    }}
+                  >
+                    <Typography
+                      sx={{
+                        fontSize: "12px",
+                        marginLeft: "0px !important",
+                        paddingRight: "8px",
+                        paddingLeft: "8px",
+                        color: "#fff",
+                        fontWeight: "700 !important",
+                      }}
+                    >
+                      MOD
+                    </Typography>
+                  </Box>
+                )}
                 <Box>
                   <span
                     style={{
