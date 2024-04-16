@@ -33,8 +33,8 @@ export default function TransactionHistory() {
   useEffect(() => {
     dispatch(
       getTransactionReady({
-        offset: (currentPage - 1) * 10,
-        count: 10,
+        offset: (currentPage - 1) * 8,
+        count: 8,
       })
     );
   }, [currentPage, dispatch]);
@@ -382,7 +382,7 @@ export default function TransactionHistory() {
               width: "100%",
               display: "flex",
               alignItems: "center",
-              zIndex: "10",
+              zIndex: "1305",
             }}
           >
             <Box
@@ -467,7 +467,7 @@ export default function TransactionHistory() {
             columns={device === "Mobile" ? mobileColumns : columns}
             initialState={{
               pagination: {
-                paginationModel: { pageSize: 10, page: currentPage },
+                paginationModel: { pageSize: 8, page: currentPage },
               },
             }}
             slots={{

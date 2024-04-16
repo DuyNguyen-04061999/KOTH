@@ -28,7 +28,7 @@ const BannerTour = (props) => {
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
-        height: "324px",
+        height: "360px",
         width: "100%",
         marginBottom: width < 576 ? "24px" : "32px",
         marginTop: width < 576 ? "24px" : "64px",
