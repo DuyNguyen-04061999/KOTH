@@ -382,6 +382,49 @@ export const closeReasonDialogFunction = (data) => {
   };
 };
 
+export const banUserReady = (data) => {
+  return {
+    type: "BAN_USER_READY",
+    payload: data,
+  };
+};
+export const banUserSuccess = (data) => {
+  return {
+    type: "BAN_USER_SUCCESS",
+    payload: data,
+  };
+};
+export const banUserFail = (data) => {
+  return {
+    type: "BAN_USER_FAIL",
+    payload: data,
+  };
+};
+export const unBanUserReady = (data) => {
+  return {
+    type: "UNBAN_USER_READY",
+    payload: data,
+  };
+};
+export const unBanUserSuccess = (data) => {
+  return {
+    type: "UNBAN_USER_SUCCESS",
+    payload: data,
+  };
+};
+export const unBanUserFail = (data) => {
+  return {
+    type: "UNBAN_USER_FAIL",
+    payload: data,
+  };
+};
+export const updateCurrentBannedUser = (data) => {
+  return {
+    type: "UPDATE_CURRENT_BANNED_USER",
+    payload: data,
+  };
+};
+
 const userReducer = (
   state = {
     tokenUser: "",
@@ -429,6 +472,8 @@ const userReducer = (
     totalTransaction: 0,
     openReasonDialog: false,
     currentGoingToBanUser: "",
+    isFetchingBanUser: false,
+    isFetchingUnbanUser: false,
   },
   action
 ) => {
@@ -659,6 +704,12 @@ const userReducer = (
         currentGoingToBanUser: payload,
       };
     }
+    case "UPDATE_CURRENT_BANNED_USER": {
+      return {
+        ...state,
+        currentGoingToBanUser: payload,
+      };
+    }
     case "CLOSE_REASON_DIALOG": {
       return {
         ...state,
@@ -669,6 +720,42 @@ const userReducer = (
     case "UPDATE_TRANSACTION_DIALOG": {
       return { ...state, openTransactionDialog: payload };
     }
+    case "BAN_USER_READY": {
+      return { ...state, isFetchingBanUser: true };
+    }
+    case "BAN_USER_SUCCESS": {
+      return {
+        ...state,
+        isFetchingBanUser: false,
+        openReasonDialog: false,
+        currentGoingToBanUser: "",
+      };
+    }
+    case "BAN_USER_FAIL": {
+      return {
+        ...state,
+        isFetchingBanUser: false,
+        openReasonDialog: false,
+        currentGoingToBanUser: "",
+      };
+    }
+    case "UNBAN_USER_READY": {
+      return { ...state, isFetchingUnbanUser: true };
+    }
+    case "UNBAN_USER_SUCCESS": {
+      return {
+        ...state,
+        isFetchingUnbanUser: false,
+      };
+    }
+    case "UNBAN_USER_FAIL": {
+      return {
+        ...state,
+        isFetchingUnbanUser: false,
+        currentGoingToBanUser: "",
+      };
+    }
+
     default:
       return state;
   }
