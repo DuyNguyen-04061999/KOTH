@@ -80,6 +80,7 @@ export default function DialogProfile(props) {
   const { open, handleShowProfile } = props;
   const { user, isGetMyInfo } = useSelector((state) => state.userReducer);
   const { uPack } = useSelector((state) => state.userReducer);
+  const { currContacter } = useSelector((state) => state.chatReducer);
   const { loadingState } = useSelector((state) => state.loadingReducer);
   const { tokenUser, stateProfile } = useSelector((state) => state.userReducer);
   const { listSendingRequest } = useSelector((state) => state.addFriendReducer);
@@ -419,35 +420,36 @@ export default function DialogProfile(props) {
                       </Box>
                     ) : (
                       <>
-                        {checkExistInFriendList() ? (
-                          <Box
-                            onClick={handleDeleteFriend}
-                            className="p-1 text-white d-flex justify-content-center pt-2 pb-2"
-                            sx={{
-                              background:
-                                "linear-gradient(180deg, #843ff0, #7748ed)",
-                              width: "100%",
-                              borderRadius: "4px",
-                            }}
-                          >
-                            <PersonRemoveAlt1 className="me-2 pb-1" />
-                            Delete Friend
-                          </Box>
-                        ) : (
-                          <Box
-                            onClick={handleAddFriend}
-                            className="p-1 text-white d-flex justify-content-center pt-2 pb-2"
-                            sx={{
-                              background:
-                                "linear-gradient(180deg, #843ff0, #7748ed)",
-                              width: "100%",
-                              borderRadius: "4px",
-                            }}
-                          >
-                            <PersonAddAlt1 className="me-2 pb-1" />
-                            Add Friend
-                          </Box>
-                        )}
+                        {!currContacter?.isModMessage &&
+                          (checkExistInFriendList() ? (
+                            <Box
+                              onClick={handleDeleteFriend}
+                              className="p-1 text-white d-flex justify-content-center pt-2 pb-2"
+                              sx={{
+                                background:
+                                  "linear-gradient(180deg, #843ff0, #7748ed)",
+                                width: "100%",
+                                borderRadius: "4px",
+                              }}
+                            >
+                              <PersonRemoveAlt1 className="me-2 pb-1" />
+                              Delete Friend
+                            </Box>
+                          ) : (
+                            <Box
+                              onClick={handleAddFriend}
+                              className="p-1 text-white d-flex justify-content-center pt-2 pb-2"
+                              sx={{
+                                background:
+                                  "linear-gradient(180deg, #843ff0, #7748ed)",
+                                width: "100%",
+                                borderRadius: "4px",
+                              }}
+                            >
+                              <PersonAddAlt1 className="me-2 pb-1" />
+                              Add Friend
+                            </Box>
+                          ))}
                       </>
                     )}
                   </Box>
@@ -844,35 +846,36 @@ export default function DialogProfile(props) {
                         </Box>
                       ) : (
                         <>
-                          {checkExistInFriendList() ? (
-                            <Box
-                              onClick={handleDeleteFriend}
-                              className="p-1 text-white d-flex justify-content-center pt-2 pb-2"
-                              sx={{
-                                background:
-                                  "linear-gradient(180deg, #843ff0, #7748ed)",
-                                width: "100%",
-                                borderRadius: "4px",
-                              }}
-                            >
-                              <PersonRemoveAlt1 className="me-2 pb-1" />
-                              Delete Friend
-                            </Box>
-                          ) : (
-                            <Box
-                              onClick={handleAddFriend}
-                              className="p-1 text-white d-flex justify-content-center pt-2 pb-2"
-                              sx={{
-                                background:
-                                  "linear-gradient(180deg, #843ff0, #7748ed)",
-                                width: "100%",
-                                borderRadius: "4px",
-                              }}
-                            >
-                              <PersonAddAlt1 className="me-2 pb-1" />
-                              Add Friend
-                            </Box>
-                          )}
+                          {!currContacter?.isModMessage &&
+                            (checkExistInFriendList() ? (
+                              <Box
+                                onClick={handleDeleteFriend}
+                                className="p-1 text-white d-flex justify-content-center pt-2 pb-2"
+                                sx={{
+                                  background:
+                                    "linear-gradient(180deg, #843ff0, #7748ed)",
+                                  width: "100%",
+                                  borderRadius: "4px",
+                                }}
+                              >
+                                <PersonRemoveAlt1 className="me-2 pb-1" />
+                                Delete Friend
+                              </Box>
+                            ) : (
+                              <Box
+                                onClick={handleAddFriend}
+                                className="p-1 text-white d-flex justify-content-center pt-2 pb-2"
+                                sx={{
+                                  background:
+                                    "linear-gradient(180deg, #843ff0, #7748ed)",
+                                  width: "100%",
+                                  borderRadius: "4px",
+                                }}
+                              >
+                                <PersonAddAlt1 className="me-2 pb-1" />
+                                Add Friend
+                              </Box>
+                            ))}
                         </>
                       )}
                     </MenuItem>
