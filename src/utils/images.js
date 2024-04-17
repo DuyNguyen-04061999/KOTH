@@ -74,6 +74,7 @@ import depositPassive from "../assets/images/depositPassive.png";
 import endAtTour from "../assets/images/endAtTour.png";
 import sortIcon from "../assets/images/sortIcon.png";
 import expandIcon from "../assets/images/expandIcon.png";
+import bannedavatar from "../assets/images/bannedavatar.png";
 import eyeIcon from "../assets/images/eyeIcon.png";
 import gameHotTournament from "../assets/images/gameHotTournament.png";
 import hatWinner from "../assets/images/hatWinner.png";
@@ -594,6 +595,7 @@ export const images = {
   event1: event1,
   event2: event2,
   news3: news3,
+  bannedavatar: bannedavatar,
 };
 
 export const navigationImages = {
