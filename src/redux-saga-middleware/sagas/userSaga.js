@@ -724,8 +724,6 @@ function* unBanUserSaga(dataRequest) {
       yield put(updateUnBannedChatWorld(payload?.usernameUnBanned));
       yield put(unBanUserSuccess());
     }
-
-    console.log(res);
   } catch (error) {
     yield put(
       showToastNotification({

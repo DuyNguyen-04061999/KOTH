@@ -6,6 +6,7 @@ import {
   closeReasonDialogFunction,
 } from "../../../redux-saga-middleware/reducers/userReducer";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
+import { sliceString } from "../../../utils/stringSlice";
 
 export default function DialogBanUser() {
   const isWhitespaceString = (str) => !str.replace(/\s/g, "").length;
@@ -24,6 +25,7 @@ export default function DialogBanUser() {
   };
   return (
     <Dialog
+      fullScreen={width < 576}
       onClose={() => {
         !isFetchingBanUser && dispatch(closeReasonDialogFunction());
       }}
@@ -42,7 +44,14 @@ export default function DialogBanUser() {
         },
       }}
     >
-      <Box sx={{ padding: "20px", width: "auto", backgroundColor: "#181223" }}>
+      <Box
+        sx={{
+          padding: "20px",
+          width: "auto",
+          backgroundColor: "#181223",
+          height: "100%",
+        }}
+      >
         <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
           <svg
             onClick={() => {
@@ -76,7 +85,9 @@ export default function DialogBanUser() {
           }}
         >
           You are going to ban{" "}
-          <span style={{ color: "#7C81F2" }}>{currentGoingToBanUser}</span>
+          <span style={{ color: "#7C81F2" }}>
+            {sliceString(currentGoingToBanUser, 10)}
+          </span>
         </Typography>
         <Typography
           sx={{

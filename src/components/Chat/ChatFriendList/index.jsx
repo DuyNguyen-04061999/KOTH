@@ -436,7 +436,7 @@ export default function ChatFriendList() {
           handleShow={() => {
             dispatch(updateFriendChat(false));
           }}
-          openFriendChat={openFriendChat}
+          openMess={openFriendChat}
         />
       )}
     </Box>

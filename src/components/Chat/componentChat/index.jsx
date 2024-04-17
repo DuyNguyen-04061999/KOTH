@@ -7,6 +7,7 @@ import _socket from "../../../redux-saga-middleware/config/socket";
 import { setWaitingNav } from "../../../redux-saga-middleware/reducers/roomReducer";
 import { images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
+import { sliceString } from "../../../utils/stringSlice";
 
 export default function ComponentChat() {
   const [friendMessages, setFriendMess] = useState([]);
@@ -278,7 +279,7 @@ export default function ComponentChat() {
                     fontWeight: "500 !important",
                   }}
                 >
-                  <b style={{}}>{userFriendNickName}</b>
+                  <b style={{}}>{sliceString(userFriendNickName, 14)}</b>
                 </span>{" "}
                 {e?.isModMessage && (
                   <Box
