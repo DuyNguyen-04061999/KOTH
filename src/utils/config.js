@@ -73,3 +73,11 @@ export const compareDate = (date1, date2) => {
     new Date(date1).getYear() === new Date(date2).getYear()
   );
 };
+
+export const compareDateInUSA = (currentDate, startDate, endDate) => {
+  console.log(currentDate);
+  return (
+    new Date(currentDate).getTime() >= new Date(startDate).getTime() &&
+    new Date(currentDate).getTime() <= new Date(endDate).getTime()
+  );
+};
