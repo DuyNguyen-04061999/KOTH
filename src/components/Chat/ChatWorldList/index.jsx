@@ -422,7 +422,25 @@ export default function ChatWorldList() {
                           </Typography>
                         </Box>
                       ) : (
-                        ""
+                        <Box
+                          sx={{
+                            borderRadius: "8px",
+                            backgroundColor: "#FFBB33",
+                            color: "white",
+                            marginLeft: "5px",
+                          }}
+                        >
+                          <Typography
+                            sx={{
+                              fontSize: "12px",
+                              marginLeft: "0px !important",
+                              paddingRight: "5px",
+                              paddingLeft: "5px",
+                            }}
+                          >
+                            VIP
+                          </Typography>
+                        </Box>
                       )}
                       {e?.isModMessage && (
                         <Box
