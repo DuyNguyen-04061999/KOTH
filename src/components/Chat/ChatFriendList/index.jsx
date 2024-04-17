@@ -326,7 +326,6 @@ export default function ChatFriendList() {
       sx={{
         height: checkHeightResponsive(),
         backgroundColor: "#2e233d",
-        overflow:"overlay"
       }}
     >
       <Box>
@@ -403,9 +402,9 @@ export default function ChatFriendList() {
       <Box
         className="chat-content p-3"
         sx={{
-          overflow: "hidden scroll !important",
-          // scrollbarWidth: "thin",
           backgroundColor: "#2e233d",
+          height:"100%",
+          overflow:"scroll",
           "&::-webkit-scrollbar": {
             width: "0rem",
           },
