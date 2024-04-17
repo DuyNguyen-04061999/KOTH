@@ -96,7 +96,7 @@ export default function ListWinner() {
                 ) : (
                   <TableCell
                     sx={{ borderBottom: "none", color: "#9384B7" }}
-                    align="right"
+                    align="left"
                   >
                     Score
                   </TableCell>
@@ -128,7 +128,7 @@ export default function ListWinner() {
                       sx={{ borderBottom: "none", color: "white" }}
                       align="left"
                     >
-                      {row.prizeName}
+                      {row.prizeName?.slice(0,15)}
                     </TableCell>
                   )}
                   <TableCell
@@ -136,7 +136,7 @@ export default function ListWinner() {
                     align="left"
                   >
                     <Box className="d-flex">
-                      {row.playerName}
+                      {row.playerName?.slice(0,15)}
                       {row?.isVip && (
                         <Box
                           sx={{
@@ -183,16 +183,16 @@ export default function ListWinner() {
                         }
                       ></Box>
                     )}
-                    {row?.gameName}
+                    {row?.gameName?.slice(0,15)}
                   </TableCell>
                   {device === "Mobile" ? (
                     ""
                   ) : (
                     <TableCell
                       sx={{ borderBottom: "none", color: "white" }}
-                      align="right"
+                      align="left"
                     >
-                      {row.score}
+                      {row?.score}
                     </TableCell>
                   )}
                 </TableRow>

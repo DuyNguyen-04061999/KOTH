@@ -326,6 +326,7 @@ export default function ChatFriendList() {
       sx={{
         height: checkHeightResponsive(),
         backgroundColor: "#2e233d",
+        overflow:"overlay"
       }}
     >
       <Box>
