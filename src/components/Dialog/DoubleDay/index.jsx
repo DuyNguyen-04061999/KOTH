@@ -38,7 +38,8 @@ const DoubleDayDialog = () => {
               <Box
                 sx={{ width: "100%" }}
                 component={"img"}
-                src={images.stackingMB}
+                // src={images.stackingMB}
+                src={images.free_sub_MB}
                 onClick={() => {
                   if (!isFetchHot && !noDataHot) {
                     handleClose();
@@ -80,7 +81,8 @@ const DoubleDayDialog = () => {
               <Box
                 sx={{ width: "100%" }}
                 component={"img"}
-                src={images.stackingDK}
+                // src={images.stackingDK}
+                src={images.free_sub_DK}
                 onClick={() => {
                   if (!isFetchHot && !noDataHot) {
                     handleClose();
