@@ -587,8 +587,10 @@ export default function Dialoglg() {
                             alignItems: "center",
                           }}
                           onClick={() => {
-                            dispatch(toggleProfileDialog(true));
-                            dispatch(getMyInfor());
+                            if (user?.userRole !== "Moderator") {
+                              dispatch(toggleProfileDialog(true));
+                              dispatch(getMyInfor());
+                            }
                             // dispatch(getCityAndStateProfile())
                           }}
                         >

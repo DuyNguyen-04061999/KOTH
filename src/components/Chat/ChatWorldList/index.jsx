@@ -344,12 +344,7 @@ export default function ChatWorldList() {
                     <Avatar
                       onClick={(event) => {
                         dispatch(updateCurrentContacter(e));
-                        handleClick(
-                          event,
-                          e?.messageFromName,
-                          e?.isActiveSender,
-                          e?.messageFromId
-                        );
+                        handleClick(event, e?.fromNickName);
                       }}
                       alt={e?.messageFromName}
                       src={
@@ -365,12 +360,7 @@ export default function ChatWorldList() {
                     <Avatar
                       onClick={(event) => {
                         dispatch(updateCurrentContacter(e));
-                        handleClick(
-                          event,
-                          e?.messageFromName,
-                          e?.isActiveSender,
-                          e?.messageFromId
-                        );
+                        handleClick(event, e?.fromNickName);
                       }}
                       alt={e?.messageFromName}
                       src={images.bannedavatar}
@@ -642,6 +632,7 @@ export default function ChatWorldList() {
     }
     return () => {};
   }, [socket, dispatch, tokenUser]);
+  console.log("message: ", chatWorld);
   return (
     <Box sx={{ position: "relative" }}>
       <Box
@@ -766,7 +757,7 @@ export default function ChatWorldList() {
               <MenuItem
                 onClick={() => {
                   dispatch(
-                    openReasonDialogFunction(currContacter?.messageFromName)
+                    openReasonDialogFunction(currContacter?.fromNickName)
                   );
                   handleClose();
                 }}
