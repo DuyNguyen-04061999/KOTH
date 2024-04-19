@@ -401,47 +401,48 @@ export default function ChatWorldList() {
                       >
                         {e?.fromNickName}
                       </span>
-                      {e.checkFrom === true ? (
-                        <Box
-                          sx={{
-                            borderRadius: "8px",
-                            backgroundColor: "#FFBB33",
-                            color: "white",
-                            marginLeft: "5px",
-                          }}
-                        >
-                          <Typography
+                      {!e?.isModMessage &&
+                        (e.checkFrom === true ? (
+                          <Box
                             sx={{
-                              fontSize: "12px",
-                              marginLeft: "0px !important",
-                              paddingRight: "5px",
-                              paddingLeft: "5px",
+                              borderRadius: "8px",
+                              backgroundColor: "#FFBB33",
+                              color: "white",
+                              marginLeft: "5px",
                             }}
                           >
-                            VIP
-                          </Typography>
-                        </Box>
-                      ) : (
-                        <Box
-                          sx={{
-                            borderRadius: "8px",
-                            backgroundColor: "#FFBB33",
-                            color: "white",
-                            marginLeft: "5px",
-                          }}
-                        >
-                          <Typography
+                            <Typography
+                              sx={{
+                                fontSize: "12px",
+                                marginLeft: "0px !important",
+                                paddingRight: "5px",
+                                paddingLeft: "5px",
+                              }}
+                            >
+                              VIP
+                            </Typography>
+                          </Box>
+                        ) : (
+                          <Box
                             sx={{
-                              fontSize: "12px",
-                              marginLeft: "0px !important",
-                              paddingRight: "5px",
-                              paddingLeft: "5px",
+                              borderRadius: "8px",
+                              backgroundColor: "#FFBB33",
+                              color: "white",
+                              marginLeft: "5px",
                             }}
                           >
-                            VIP
-                          </Typography>
-                        </Box>
-                      )}
+                            <Typography
+                              sx={{
+                                fontSize: "12px",
+                                marginLeft: "0px !important",
+                                paddingRight: "5px",
+                                paddingLeft: "5px",
+                              }}
+                            >
+                              VIP
+                            </Typography>
+                          </Box>
+                        ))}
                       {e?.isModMessage && (
                         <Box
                           sx={{
