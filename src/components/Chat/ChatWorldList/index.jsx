@@ -175,7 +175,6 @@ export default function ChatWorldList() {
       }, 1000); // Adjust the time as needed
     }
   };
-
   const renderChat = isFetching ? (
     <UserChatLoadingList />
   ) : (
@@ -344,12 +343,7 @@ export default function ChatWorldList() {
                     <Avatar
                       onClick={(event) => {
                         dispatch(updateCurrentContacter(e));
-                        handleClick(
-                          event,
-                          e?.messageFromName,
-                          e?.isActiveSender,
-                          e?.messageFromId
-                        );
+                        handleClick(event, e?.fromNickName);
                       }}
                       alt={e?.messageFromName}
                       src={
@@ -365,12 +359,7 @@ export default function ChatWorldList() {
                     <Avatar
                       onClick={(event) => {
                         dispatch(updateCurrentContacter(e));
-                        handleClick(
-                          event,
-                          e?.messageFromName,
-                          e?.isActiveSender,
-                          e?.messageFromId
-                        );
+                        handleClick(event, e?.fromNickName);
                       }}
                       alt={e?.messageFromName}
                       src={images.bannedavatar}
@@ -401,47 +390,48 @@ export default function ChatWorldList() {
                       >
                         {e?.fromNickName}
                       </span>
-                      {e.checkFrom === true ? (
-                        <Box
-                          sx={{
-                            borderRadius: "8px",
-                            backgroundColor: "#FFBB33",
-                            color: "white",
-                            marginLeft: "5px",
-                          }}
-                        >
-                          <Typography
+                      {!e?.isModMessage &&
+                        (e.checkFrom === true ? (
+                          <Box
                             sx={{
-                              fontSize: "12px",
-                              marginLeft: "0px !important",
-                              paddingRight: "5px",
-                              paddingLeft: "5px",
+                              borderRadius: "8px",
+                              backgroundColor: "#FFBB33",
+                              color: "white",
+                              marginLeft: "5px",
                             }}
                           >
-                            VIP
-                          </Typography>
-                        </Box>
-                      ) : (
-                        <Box
-                          sx={{
-                            borderRadius: "8px",
-                            backgroundColor: "#FFBB33",
-                            color: "white",
-                            marginLeft: "5px",
-                          }}
-                        >
-                          <Typography
+                            <Typography
+                              sx={{
+                                fontSize: "12px",
+                                marginLeft: "0px !important",
+                                paddingRight: "5px",
+                                paddingLeft: "5px",
+                              }}
+                            >
+                              VIP
+                            </Typography>
+                          </Box>
+                        ) : (
+                          <Box
                             sx={{
-                              fontSize: "12px",
-                              marginLeft: "0px !important",
-                              paddingRight: "5px",
-                              paddingLeft: "5px",
+                              borderRadius: "8px",
+                              backgroundColor: "#FFBB33",
+                              color: "white",
+                              marginLeft: "5px",
                             }}
                           >
-                            VIP
-                          </Typography>
-                        </Box>
-                      )}
+                            <Typography
+                              sx={{
+                                fontSize: "12px",
+                                marginLeft: "0px !important",
+                                paddingRight: "5px",
+                                paddingLeft: "5px",
+                              }}
+                            >
+                              VIP
+                            </Typography>
+                          </Box>
+                        ))}
                       {e?.isModMessage && (
                         <Box
                           sx={{
@@ -479,8 +469,11 @@ export default function ChatWorldList() {
                       {e?.updatedAt && moment(e?.updatedAt).format("LT")}{" "}
                     </span>{" "}
                   </Box>
-                  {e?.isNoticeWinner ? (
-                    <WinnerNotification />
+                  {e?.isWinnerMessage ? (
+                    <WinnerNotification
+                      winnerName={e?.toNickName}
+                      content={e?.messageContent}
+                    />
                   ) : (
                     <Box
                       sx={{
@@ -765,7 +758,7 @@ export default function ChatWorldList() {
               <MenuItem
                 onClick={() => {
                   dispatch(
-                    openReasonDialogFunction(currContacter?.messageFromName)
+                    openReasonDialogFunction(currContacter?.fromNickName)
                   );
                   handleClose();
                 }}
@@ -873,7 +866,8 @@ export default function ChatWorldList() {
                 </Box>
               </MenuItem>
             ) : (
-              !currContacter?.isModMessage && (
+              !currContacter?.isModMessage &&
+              currContacter?.isActiveSender && (
                 <MenuItem
                   sx={{
                     padding: "5px",
