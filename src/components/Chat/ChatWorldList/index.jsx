@@ -632,7 +632,6 @@ export default function ChatWorldList() {
     }
     return () => {};
   }, [socket, dispatch, tokenUser]);
-  console.log("message: ", chatWorld);
   return (
     <Box sx={{ position: "relative" }}>
       <Box

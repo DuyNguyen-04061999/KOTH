@@ -100,6 +100,7 @@ export default function ComponentChat() {
       // socket?.off()
     };
   }, [socket, roomId, gameId, navigate, dispatch]);
+  console.log(friendMessages);
   const renderChat = friendMessages.map((e, index) => {
     return (
       <Box
@@ -279,7 +280,7 @@ export default function ComponentChat() {
                     fontWeight: "500 !important",
                   }}
                 >
-                  <b style={{}}>{sliceString(userFriendNickName, 14)}</b>
+                  <b style={{}}>{sliceString(e?.fromNickName, 14)}</b>
                 </span>{" "}
                 {e?.isModMessage && (
                   <Box
