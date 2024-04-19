@@ -175,7 +175,6 @@ export default function ChatWorldList() {
       }, 1000); // Adjust the time as needed
     }
   };
-
   const renderChat = isFetching ? (
     <UserChatLoadingList />
   ) : (
@@ -470,8 +469,11 @@ export default function ChatWorldList() {
                       {e?.updatedAt && moment(e?.updatedAt).format("LT")}{" "}
                     </span>{" "}
                   </Box>
-                  {e?.isNoticeWinner ? (
-                    <WinnerNotification />
+                  {e?.isWinnerMessage ? (
+                    <WinnerNotification
+                      winnerName={e?.toNickName}
+                      content={e?.messageContent}
+                    />
                   ) : (
                     <Box
                       sx={{
