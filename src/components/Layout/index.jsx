@@ -137,6 +137,7 @@ export default function Layout(props) {
     tokenUser: token,
     user,
     openTransactionDialog,
+    openReasonDialog,
   } = useSelector((state) => state.userReducer);
   const { chatPopup, badgechat } = useSelector((state) => state.chatReducer);
   const { listSetting } = useSelector((state) => state.settingReducer);
@@ -482,7 +483,7 @@ export default function Layout(props) {
       <TicketCheckOut />
       {openTransactionDialog && <TransactionHistory />}
       <StripeAlertComponent />
-      <DialogBanUser />
+      {openReasonDialog && <DialogBanUser />}
       <ShareTour />
       <SubscriptionDialog />
       <TouramentShow />

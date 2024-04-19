@@ -3,7 +3,7 @@ import React from "react";
 import { images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 
-export default function WinnerNotification() {
+export default function WinnerNotification({ winnerName, content }) {
   const { width } = useWindowDimensions();
   return (
     <Box
@@ -39,7 +39,7 @@ export default function WinnerNotification() {
             CONGRATULATIONS!
           </p>
           <p style={{ color: "#7C81F2", fontSize: "12px", fontWeight: "700" }}>
-            Feng
+            {winnerName || ""}
           </p>
         </Box>
       </Box>
@@ -52,9 +52,7 @@ export default function WinnerNotification() {
           borderRadius: "4px",
         }}
       >
-        <p style={{ color: "#fff", fontSize: "12px" }}>
-          Won 2 Tickets to see Taylor Swift: The Eras Tour in New Orleans...
-        </p>
+        <p style={{ color: "#fff", fontSize: "12px" }}>{content || ""}</p>
       </Box>
     </Box>
   );
