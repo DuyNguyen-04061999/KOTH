@@ -865,7 +865,8 @@ export default function ChatWorldList() {
                 </Box>
               </MenuItem>
             ) : (
-              !currContacter?.isModMessage && (
+              !currContacter?.isModMessage &&
+              currContacter?.isActiveSender && (
                 <MenuItem
                   sx={{
                     padding: "5px",
