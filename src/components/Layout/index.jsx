@@ -140,7 +140,7 @@ export default function Layout(props) {
   } = useSelector((state) => state.userReducer);
   const { chatPopup, badgechat } = useSelector((state) => state.chatReducer);
   const { listSetting } = useSelector((state) => state.settingReducer);
-  const { router, startGameCheck, fromRouter, countDownDoubleDay } =
+  const { router, startGameCheck, fromRouter, countDownDoubleDay} =
     useSelector((state) => state.appReducer);
   const { width } = useWindowDimensions();
   const navigate = useNavigate();
@@ -152,10 +152,11 @@ export default function Layout(props) {
   const handleCloseDropDown = () => {
     setOpenDropdown(false);
   };
-
   const handleMouseEnter = () => {
     setDebounceTab(true);
   };
+
+  const guest = localStorage.getItem("tokenGuest")
 
   useEffect(() => {
     let timeOutId = undefined;

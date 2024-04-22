@@ -244,6 +244,27 @@ export const getListDisplayNameFail = (data) => {
   };
 };
 
+export const getUserGuest = (data) => {
+  return {
+    type: "GET_USER_GUEST",
+    payload: data,
+  };
+};
+
+export const getUserGuestSuccess = (data) => {
+  return {
+    type: "GET_USER_GUEST_SUCCESS",
+    payload: data,
+  };
+};
+
+export const getUserGuestFail = (data) => {
+  return {
+    type: "GET_USER_GUEST_FAIL",
+    payload: data,
+  };
+};
+
 const appReducer = (
   state = {
     isFetchListFaq: false,
@@ -270,6 +291,8 @@ const appReducer = (
     countDownNewYear: 0,
     listDisplayName: [],
     isFetchDisplayName: false,
+    isUserGuest: false,
+    tokenGuest:""
   },
   action
 ) => {
@@ -359,6 +382,12 @@ const appReducer = (
       return { ...state, listDisplayName: payload, isFetchDisplayName: false };
     case "GET_LIST_DISPLAY_NAME_FAIL":
       return { ...state, isFetchDisplayName: false };
+    case "GET_USER_GUEST":
+      return { ...state, isUserGuest: true };
+    case "GET_USER_GUEST_SUCCESS":
+      return { ...state, isUserGuest: false };
+    case "GET_USER_GUEST_FAIL ":
+      return { ...state, isUserGuest: false };
     default:
       return { ...state };
   }

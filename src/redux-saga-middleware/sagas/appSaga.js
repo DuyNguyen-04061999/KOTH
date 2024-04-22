@@ -12,6 +12,8 @@ import {
   getListFaqSuccess,
   getListWinnerFail,
   getListWinnerSuccess,
+  getUserGuestFail,
+  getUserGuestSuccess,
   saveTimeCloseDialog,
   saveTimeCloseNewYearDialog,
 } from "../reducers/appReducer";
@@ -126,6 +128,21 @@ function* getListDisplayNameSaga(dataRequest) {
   }
 }
 
+function* getUserGuestSaga(dataRequest) {
+  try{
+    const {payload} = dataRequest
+    const res = yield call(appService.getUserGuest, payload)
+    const {status, data} = res
+    if(status === 200 || status === 201) {
+      yield put(getUserGuestSuccess(data))
+      localStorage.setItem("token_guest", data?.data?.token)
+    }
+  } catch (err) {
+    console.log(err);
+    yield put(getUserGuestFail())
+  }
+}
+
 function* appSaga() {
   yield takeEvery("GET_LIST_FAQ", getListFaqSaga);
   yield takeEvery("GET_LIST_BET", getListBetSaga);
@@ -135,6 +152,7 @@ function* appSaga() {
   yield takeEvery("FIND_PEOPLE", findPeopleSaga);
   yield takeEvery("CLOSE_NEWYEAR_POPUP", closeNewYearPopupSaga);
   yield takeEvery("GET_LIST_DISPLAY_NAME", getListDisplayNameSaga)
+  yield takeEvery("GET_USER_GUEST",getUserGuestSaga)
 }
 
 export default appSaga;

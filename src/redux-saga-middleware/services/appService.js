@@ -55,6 +55,11 @@ class AppService {
     );
     return res;
   }
+
+  async getUserGuest(dataRequest) {
+    const res = await PROMOTION_API.post(`/api/guest`)
+    return res 
+  }
 }
 
 export default AppService;

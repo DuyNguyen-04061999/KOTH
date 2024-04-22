@@ -34,6 +34,7 @@ import {
 import {
   getListBet,
   getListWinner,
+  getUserGuest,
 } from "./redux-saga-middleware/reducers/appReducer";
 import {
   getNavTablet,
@@ -276,6 +277,7 @@ function App() {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!tokenUser || !token) {
+      store.dispatch(getUserGuest())
     }
   }, [tokenUser]);
 
