@@ -757,9 +757,7 @@ export default function ChatWorldList() {
             (currContacter?.isActiveSender ? (
               <MenuItem
                 onClick={() => {
-                  dispatch(
-                    openReasonDialogFunction(currContacter?.fromNickName)
-                  );
+                  dispatch(openReasonDialogFunction(currContacter));
                   handleClose();
                 }}
                 sx={{
@@ -798,7 +796,7 @@ export default function ChatWorldList() {
                 onClick={() => {
                   dispatch(
                     unBanUserReady({
-                      usernameUnBanned: currentGoingToBanUser,
+                      usernameUnBanned: currContacter?.messageFromName,
                     })
                   );
                   handleClose();
