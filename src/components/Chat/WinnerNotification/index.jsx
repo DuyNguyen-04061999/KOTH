@@ -3,7 +3,7 @@ import React from "react";
 import { images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 
-export default function WinnerNotification({ winnerName, content }) {
+export default function WinnerNotification({ winnerName, content, avatar }) {
   const { width } = useWindowDimensions();
   return (
     <Box
@@ -32,7 +32,11 @@ export default function WinnerNotification({ winnerName, content }) {
             borderRadius: "4px",
           }}
           component={"img"}
-          src={images.imageTutorial}
+          src={
+            avatar
+              ? process.env.REACT_APP_SOCKET_SERVER + "/" + avatar
+              : images.imageTutorial
+          }
         ></Box>
         <Box>
           <p style={{ color: "#fff", fontWeight: "700", fontSize: "12px" }}>
