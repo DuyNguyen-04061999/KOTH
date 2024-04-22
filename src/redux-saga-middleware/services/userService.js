@@ -226,6 +226,37 @@ class UserService {
     );
     return res;
   }
+
+  async banUser(dataRequest) {
+    const res = await PROMOTION_API.post(
+      "/api/authenticate/ban-user",
+      dataRequest,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "x-access-refactor-token": localStorage.getItem("token"),
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+    return res;
+  }
+  async unbanUser(dataRequest) {
+    const res = await PROMOTION_API.post(
+      "/api/authenticate/unban-user",
+      dataRequest,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "x-access-refactor-token": localStorage.getItem("token"),
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+    return res;
+  }
 }
 
 export default UserService;

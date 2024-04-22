@@ -74,6 +74,7 @@ import depositPassive from "../assets/images/depositPassive.png";
 import endAtTour from "../assets/images/endAtTour.png";
 import sortIcon from "../assets/images/sortIcon.png";
 import expandIcon from "../assets/images/expandIcon.png";
+import bannedavatar from "../assets/images/bannedavatar.png";
 import eyeIcon from "../assets/images/eyeIcon.png";
 import gameHotTournament from "../assets/images/gameHotTournament.png";
 import hatWinner from "../assets/images/hatWinner.png";
@@ -342,7 +343,9 @@ import event2 from "../assets/images/event2.png";
 import check1 from "../assets/images/check1.png";
 import check2 from "../assets/images/check2.png";
 import news3 from "../assets/images/news3.png";
-import emptyNews from "../assets/images/emptyNews.png"
+import free_sub_MB from "../assets/images/free_sub_MB.png";
+import free_sub_DK from "../assets/images/free_sub_DK.png";
+import emptyNews from "../assets/images/emptyNews.png";
 
 export const imageHome = {
  
@@ -421,6 +424,9 @@ export const images = {
   pepeGift:pepeGift,
   pepeGaming:pepeGaming,
   emptyNews:emptyNews,
+  emptyNews: emptyNews,
+  free_sub_DK: free_sub_DK,
+  free_sub_MB: free_sub_MB,
   bannerSignup: bannerSignup,
   bn1: DummyBanner1,
   sortIcon: sortIcon,
@@ -598,6 +604,7 @@ export const images = {
   event1: event1,
   event2: event2,
   news3: news3,
+  bannedavatar: bannedavatar,
 };
 
 export const navigationImages = {

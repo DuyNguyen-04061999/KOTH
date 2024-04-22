@@ -60,7 +60,7 @@ import {
 import { toggleAlertStripeProcess } from "../../redux-saga-middleware/reducers/stripeReducer";
 import { toggleCloseResultEndGame } from "../../redux-saga-middleware/reducers/tournamentReducer";
 import { getMyInfor, updateUserToken } from "../../redux-saga-middleware/reducers/userReducer";
-import { compareDate } from "../../utils/config";
+import { compareDate, compareDateInUSA } from "../../utils/config";
 import { imageDesktop, images } from "../../utils/images";
 import { systemNotification } from "../../utils/notification";
 import useWindowDimensions from "../../utils/useWindowDimensions";
@@ -140,6 +140,7 @@ export default function Layout(props) {
     tokenUser: token,
     user,
     openTransactionDialog,
+    openReasonDialog,
   } = useSelector((state) => state.userReducer);
   const { chatPopup, badgechat } = useSelector((state) => state.chatReducer);
   const { listSetting } = useSelector((state) => state.settingReducer);
@@ -422,11 +423,35 @@ export default function Layout(props) {
       currentDay.getTime() - closedPopupDay.getTime()
     );
     let oneDayInMillis = 24 * 60 * 60 * 1000;
-    if (timeDifference > oneDayInMillis) {
+    if (
+      timeDifference > oneDayInMillis &&
+      compareDateInUSA(
+        new Date().toLocaleString("en-US", {
+          timeZone: "America/New_York",
+          day: "numeric",
+          month: "numeric",
+          year: "numeric",
+        }),
+        "4/22/2024",
+        "6/22/2024"
+      )
+    ) {
       dispatch(randomRenderPopup());
       dispatch(openDoubleDayDialog());
     }
   }, [dispatch, countDownDoubleDay]);
+  // useEffect(() => {
+  //   let currentDay = new Date();
+  //   let closedPopupDay = new Date(countDownDoubleDay);
+  //   let timeDifference = Math.abs(
+  //     currentDay.getTime() - closedPopupDay.getTime()
+  //   );
+  //   let oneDayInMillis = 24 * 60 * 60 * 1000;
+  //   if (timeDifference > oneDayInMillis) {
+  //     dispatch(randomRenderPopup());
+  //     dispatch(openDoubleDayDialog());
+  //   }
+  // }, [dispatch, countDownDoubleDay]);
 
   useEffect(() => {
     let currentDay = new Date();
@@ -471,7 +496,7 @@ export default function Layout(props) {
       <TicketCheckOut />
       {openTransactionDialog && <TransactionHistory />}
       <StripeAlertComponent />
-      <DialogBanUser />
+      {openReasonDialog && <DialogBanUser />}
       <ShareTour />
       <SubscriptionDialog />
       <TouramentShow />

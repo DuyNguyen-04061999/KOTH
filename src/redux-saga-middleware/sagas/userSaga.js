@@ -15,7 +15,12 @@ import {
   saveCreateAccInfo,
   saveForgetPassInfo,
 } from "../reducers/authReducer";
-import { clickTabChat } from "../reducers/chatReducer";
+import {
+  clickTabChat,
+  updateBannedChatWorld,
+  updateIsActiveChatWorld,
+  updateUnBannedChatWorld,
+} from "../reducers/chatReducer";
 import {
   closeProfileDialog,
   exitEditProfile,
@@ -24,6 +29,8 @@ import {
   saveNickNameWhenLogin,
 } from "../reducers/profileReducer";
 import {
+  banUserFail,
+  banUserSuccess,
   forgetPasswordFail,
   forgetPasswordSuccess,
   getCityAndStateProfileFail,
@@ -55,6 +62,8 @@ import {
   resetPasswordSuccess,
   sendOtpFail,
   sendOtpSuccess,
+  unBanUserFail,
+  unBanUserSuccess,
   updateLoginFail,
   updateProfileFirstPlayFail,
   updateProfileFirstPlaySuccess,
@@ -777,6 +786,54 @@ function* getCityAndStateProfilSaga(dataRequest) {
     yield put(getCityAndStateProfileFail());
   }
 }
+function* banUserSaga(dataRequest) {
+  try {
+    const { payload } = dataRequest;
+    const res = yield call(userService.banUser, payload);
+    if (res?.status === 201) {
+      yield put(
+        showToastNotification({
+          type: "success",
+          message: res?.data?.message || "Something went wrong!",
+        })
+      );
+      yield put(updateBannedChatWorld(payload?.usernameBanned));
+      yield put(banUserSuccess());
+    }
+  } catch (error) {
+    yield put(
+      showToastNotification({
+        type: "error",
+        message: error?.message || "Something went wrong!",
+      })
+    );
+    yield put(banUserFail());
+  }
+}
+function* unBanUserSaga(dataRequest) {
+  try {
+    const { payload } = dataRequest;
+    const res = yield call(userService.unbanUser, payload);
+    if (res?.status === 201) {
+      yield put(
+        showToastNotification({
+          type: "success",
+          message: res?.data?.message || "Something went wrong!",
+        })
+      );
+      yield put(updateUnBannedChatWorld(payload?.usernameUnBanned));
+      yield put(unBanUserSuccess());
+    }
+  } catch (error) {
+    yield put(
+      showToastNotification({
+        type: "error",
+        message: error?.message || "Something went wrong!",
+      })
+    );
+    yield put(unBanUserFail());
+  }
+}
 
 let prizeInfo = 0;
 function* getClaimPrizeInfoSaga(dataRequest) {
@@ -823,6 +880,8 @@ function* getClaimPrizeOptionalSaga(dataRequest) {
 function* authSaga() {
   yield takeEvery("LOGIN_READY", loginSaga);
   yield takeEvery("REGISTER_READY", registerSaga);
+  yield takeEvery("BAN_USER_READY", banUserSaga);
+  yield takeEvery("UNBAN_USER_READY", unBanUserSaga);
   yield takeEvery("UPDATE_PROFILE_USER", updateProfileSaga);
   yield takeEvery("GET_USER_INFO_READY", userInfoSaga);
   yield takeEvery("LOG_OUT_READY", logoutSaga);

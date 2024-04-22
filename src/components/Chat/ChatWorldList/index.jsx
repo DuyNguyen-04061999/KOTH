@@ -21,23 +21,36 @@ import { setWaitingNav } from "../../../redux-saga-middleware/reducers/roomReduc
 import {
   getUserByUsername,
   openReasonDialogFunction,
+  unBanUserReady,
+  updateCurrentBannedUser,
 } from "../../../redux-saga-middleware/reducers/userReducer";
 import { images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import UserChatLoadingList from "../../LoadingComponent/UserChatLoading";
 import "./index.scss";
+import WinnerNotification from "../WinnerNotification";
+import {
+  clickTabChat,
+  updateContacterUsername,
+  updateCurrentContacter,
+  updateFriendChat,
+  updateFriendNickName,
+} from "../../../redux-saga-middleware/reducers/chatReducer";
 
 export default function ChatWorldList() {
   const chatBox = useRef(null);
   const [worldMessage, setWorldMessage] = useState([]);
   const [anchorEl, setAnchorEl] = useState(null);
-  const [messagefromName, setMessFromName] = useState(null);
   const [isFetching, setIsFetching] = useState(true);
   const [showScrollToBottomButton, setShowScrollToBottomButton] =
     useState(true);
-  const { chatWorld } = useSelector((state) => state.chatReducer);
+  const { chatWorld, currContacter } = useSelector(
+    (state) => state.chatReducer
+  );
   const endOfMessageRef = useRef(null);
-  const { tokenUser, user } = useSelector((state) => state.userReducer);
+  const { tokenUser, user, currentGoingToBanUser } = useSelector(
+    (state) => state.userReducer
+  );
   const userName = user?.userName || "";
 
   const dispatch = useDispatch();
@@ -67,7 +80,7 @@ export default function ChatWorldList() {
   }, [chatWorld]);
   const handleClick = (event, userName) => {
     setAnchorEl(event.currentTarget);
-    setMessFromName(userName);
+    dispatch(updateCurrentBannedUser(userName));
   };
 
   const handleClose = () => {
@@ -75,7 +88,6 @@ export default function ChatWorldList() {
   };
 
   const { height, width } = useWindowDimensions();
-
   const isScrolledToBottom = () => {
     if (chatBox.current) {
       const { scrollTop, scrollHeight, clientHeight } = chatBox.current;
@@ -180,7 +192,7 @@ export default function ChatWorldList() {
             }}
             className="d-flex"
           >
-            {e?.messageFromName === userName && tokenUser ? (
+            {e?.messageFromId === user?.id && tokenUser ? (
               <>
                 {e?.messageGameId > 0 && e?.messageRoomName ? (
                   <Box
@@ -327,20 +339,33 @@ export default function ChatWorldList() {
             ) : (
               <Box className="d-flex justify-content-between">
                 <Box className="pt-2">
-                  <Avatar
-                    onClick={(event) => {
-                      handleClick(event, e?.messageFromName);
-                    }}
-                    alt={e?.messageFromName}
-                    src={
-                      e?.messageFromAvatar
-                        ? process.env.REACT_APP_SOCKET_SERVER +
-                          "/" +
-                          e?.messageFromAvatar
-                        : images.undefinedAvatar
-                    }
-                    sx={{ borderRadius: "50%", marginLeft: "5px" }}
-                  />
+                  {e?.isActiveSender ? (
+                    <Avatar
+                      onClick={(event) => {
+                        dispatch(updateCurrentContacter(e));
+                        handleClick(event, e?.fromNickName);
+                      }}
+                      alt={e?.messageFromName}
+                      src={
+                        e?.messageFromAvatar
+                          ? process.env.REACT_APP_SOCKET_SERVER +
+                            "/" +
+                            e?.messageFromAvatar
+                          : images.undefinedAvatar
+                      }
+                      sx={{ borderRadius: "50%", marginLeft: "5px" }}
+                    />
+                  ) : (
+                    <Avatar
+                      onClick={(event) => {
+                        dispatch(updateCurrentContacter(e));
+                        handleClick(event, e?.fromNickName);
+                      }}
+                      alt={e?.messageFromName}
+                      src={images.bannedavatar}
+                      sx={{ borderRadius: "50%", marginLeft: "5px" }}
+                    />
+                  )}
                 </Box>
                 <Box className="mx-2" sx={{ borderRadius: "5px" }}>
                   <Box className="d-flex justify-content-between align-items-center">
@@ -353,7 +378,11 @@ export default function ChatWorldList() {
                     >
                       <span
                         style={{
-                          color: e?.isModMessage ? "#BE48ED" : "#7C81F2",
+                          color: e?.isModMessage
+                            ? "#BE48ED"
+                            : e?.isActiveSender
+                            ? "#7C81F2"
+                            : "#8B8891",
                           borderRadius: "5px",
                           fontWeight: "700 !important",
                           letterSpacing: "0.5px",
@@ -361,27 +390,49 @@ export default function ChatWorldList() {
                       >
                         {e?.fromNickName}
                       </span>
-                      {e.checkFrom === true ? (
-                        <Box
-                          sx={{
-                            borderRadius: "8px",
-                            backgroundColor: "#FFBB33",
-                            color: "white",
-                            marginLeft: "5px",
-                          }}
-                        >
-                          <Typography
+                      {!e?.isModMessage &&
+                        (e.checkFrom === true ? (
+                          <Box
                             sx={{
-                              fontSize: "12px",
-                              marginLeft: "0px !important",
-                              paddingRight: "5px",
-                              paddingLeft: "5px",
+                              borderRadius: "8px",
+                              backgroundColor: "#FFBB33",
+                              color: "white",
+                              marginLeft: "5px",
                             }}
                           >
-                            VIP
-                          </Typography>
-                        </Box>
-                      ) : e?.isModMessage ? (
+                            <Typography
+                              sx={{
+                                fontSize: "12px",
+                                marginLeft: "0px !important",
+                                paddingRight: "5px",
+                                paddingLeft: "5px",
+                              }}
+                            >
+                              VIP
+                            </Typography>
+                          </Box>
+                        ) : (
+                          <Box
+                            sx={{
+                              borderRadius: "8px",
+                              backgroundColor: "#FFBB33",
+                              color: "white",
+                              marginLeft: "5px",
+                            }}
+                          >
+                            <Typography
+                              sx={{
+                                fontSize: "12px",
+                                marginLeft: "0px !important",
+                                paddingRight: "5px",
+                                paddingLeft: "5px",
+                              }}
+                            >
+                              VIP
+                            </Typography>
+                          </Box>
+                        ))}
+                      {e?.isModMessage && (
                         <Box
                           sx={{
                             borderRadius: "8px",
@@ -403,8 +454,6 @@ export default function ChatWorldList() {
                             MOD
                           </Typography>
                         </Box>
-                      ) : (
-                        ""
                       )}
                     </Box>
                     <span
@@ -420,130 +469,137 @@ export default function ChatWorldList() {
                       {e?.updatedAt && moment(e?.updatedAt).format("LT")}{" "}
                     </span>{" "}
                   </Box>
-                  <Box
-                    sx={{
-                      background: "#443565",
-                      width: "fit-content",
-                      maxWidth: width < 576 ? width - 100 : 200,
-                      fontSize: "14px",
-                      fontWeight: "500",
-                      wordWrap: "break-word",
-                      borderRadius: "5px",
-
-                      letterSpacing: "0.5px",
-                    }}
-                    className="p-1 mt-2 d-flex ps-2 pe-2"
-                  >
-                    <div
-                      style={{
-                        color: "white",
-                        fontWeight: "500 !important",
+                  {e?.isWinnerMessage ? (
+                    <WinnerNotification
+                      winnerName={e?.toNickName}
+                      content={e?.messageContent}
+                    />
+                  ) : (
+                    <Box
+                      sx={{
+                        background: e?.isActiveSender ? "#443565" : "#8B8891",
+                        width: "fit-content",
+                        maxWidth: width < 576 ? width - 100 : 200,
                         fontSize: "14px",
-                        width: "100%",
-                        wordWrap: "break-word" /* IE 5.5-7 */,
-
+                        fontWeight: "500",
+                        wordWrap: "break-word",
+                        borderRadius: "5px",
                         letterSpacing: "0.5px",
                       }}
+                      className="p-1 mt-2 d-flex ps-2 pe-2"
                     >
-                      {e?.messageGameId > 0 && e?.messageRoomName ? (
-                        <Box
-                          className="d-flex justify-content-between"
-                          sx={{
-                            width: "100%",
-                          }}
-                        >
+                      <div
+                        style={{
+                          color: "white",
+                          fontWeight: "500 !important",
+                          fontSize: "14px",
+                          width: "100%",
+                          wordWrap: "break-word" /* IE 5.5-7 */,
+                          letterSpacing: "0.5px",
+                        }}
+                      >
+                        {e?.messageGameId > 0 && e?.messageRoomName ? (
                           <Box
+                            className="d-flex justify-content-between"
                             sx={{
-                              width: "fit-content",
-                              color: "#7878a7",
-                              fontSize: "14px",
+                              width: "100%",
                             }}
                           >
-                            <span
-                              style={{ fontWeight: "bold", color: "#9b9acf" }}
-                            >
-                              You're invited to play:
-                            </span>
                             <Box
-                              className="p-2 d-flex"
                               sx={{
-                                backgroundColor: "#2a1932",
+                                width: "fit-content",
+                                color: "#7878a7",
+                                fontSize: "14px",
                               }}
                             >
+                              <span
+                                style={{ fontWeight: "bold", color: "#9b9acf" }}
+                              >
+                                You're invited to play:
+                              </span>
                               <Box
+                                className="p-2 d-flex"
                                 sx={{
-                                  width: "40%",
-                                  height: "50px",
+                                  backgroundColor: "#2a1932",
                                 }}
                               >
-                                <img
-                                  src={
-                                    e &&
-                                    e?.messageGameAvatar &&
-                                    e?.messageGameAvatar !== "normal"
-                                      ? process.env.REACT_APP_SOCKET_SERVER +
-                                        "/" +
-                                        e?.messageGameAvatar
-                                      : images.Aa
-                                  }
-                                  alt="..."
-                                  width={"100%"}
-                                  height={"75px"}
-                                  style={{
-                                    objectFit: "cover",
-                                  }}
-                                />
-                              </Box>
-                              <Box
-                                className="ms-2 d-flex flex-column flex-end"
-                                sx={{ width: "60%" }}
-                              >
-                                <span
-                                  style={{
-                                    color: "white",
-                                    fontWeight: "bold",
-                                  }}
-                                >
-                                  {e?.messageGameName?.slice(0, 10) + `...`}
-                                </span>
-                                <span className="text-white font-weight-bold">
-                                  Price: {e?.messageBetPrice}
-                                </span>
                                 <Box
-                                  onClick={() =>
-                                    handleOnClickInviteGameMess(
-                                      e.messageGameId,
-                                      e.messageRoomId
-                                    )
-                                  }
-                                  className="p-1 mt-1 text-center text-white cursor-pointer"
                                   sx={{
-                                    width: "100%",
-                                    background:
-                                      "linear-gradient(0deg, rgba(138,57,240,1) 0%, rgba(116,73,237,1) 100%)",
-                                    fontWeight: "bold",
-                                    borderRadius: "4px",
+                                    width: "40%",
+                                    height: "50px",
                                   }}
                                 >
-                                  PLAY GAME
+                                  <img
+                                    src={
+                                      e &&
+                                      e?.messageGameAvatar &&
+                                      e?.messageGameAvatar !== "normal"
+                                        ? process.env.REACT_APP_SOCKET_SERVER +
+                                          "/" +
+                                          e?.messageGameAvatar
+                                        : images.Aa
+                                    }
+                                    alt="..."
+                                    width={"100%"}
+                                    height={"75px"}
+                                    style={{
+                                      objectFit: "cover",
+                                    }}
+                                  />
+                                </Box>
+                                <Box
+                                  className="ms-2 d-flex flex-column flex-end"
+                                  sx={{ width: "60%" }}
+                                >
+                                  <span
+                                    style={{
+                                      color: "white",
+                                      fontWeight: "bold",
+                                    }}
+                                  >
+                                    {e?.messageGameName?.slice(0, 10) + `...`}
+                                  </span>
+                                  <span className="text-white font-weight-bold">
+                                    Price: {e?.messageBetPrice}
+                                  </span>
+                                  <Box
+                                    onClick={() =>
+                                      handleOnClickInviteGameMess(
+                                        e.messageGameId,
+                                        e.messageRoomId
+                                      )
+                                    }
+                                    className="p-1 mt-1 text-center text-white cursor-pointer"
+                                    sx={{
+                                      width: "100%",
+                                      background:
+                                        "linear-gradient(0deg, rgba(138,57,240,1) 0%, rgba(116,73,237,1) 100%)",
+                                      fontWeight: "bold",
+                                      borderRadius: "4px",
+                                    }}
+                                  >
+                                    PLAY GAME
+                                  </Box>
                                 </Box>
                               </Box>
                             </Box>
                           </Box>
-                        </Box>
-                      ) : (
-                        <span
-                          style={{
-                            fontWeight: "500 !important",
+                        ) : e?.isActiveSender ? (
+                          <span
+                            style={{
+                              fontWeight: "500 !important",
 
-                            letterSpacing: "0.5px",
-                          }}
-                        >
-                          {e?.messageContent}
-                        </span>
-                      )}
-                    </div>
-                  </Box>
+                              letterSpacing: "0.5px",
+                            }}
+                          >
+                            {e?.messageContent}
+                          </span>
+                        ) : (
+                          <Box sx={{ fontWeight: "700" }}>Banned message</Box>
+                        )}
+                      </div>
+                    </Box>
+                  )}
                 </Box>
               </Box>
             )}
@@ -624,7 +680,7 @@ export default function ChatWorldList() {
               dispatch(toggleProfileDialog(true));
               dispatch(
                 getUserByUsername({
-                  username: messagefromName,
+                  username: currContacter?.messageFromName,
                 })
               );
               handleClose();
@@ -646,46 +702,65 @@ export default function ChatWorldList() {
               <span>View Profile</span>
             </Box>
           </MenuItem>
-          {user?.userRole === "Moderator" && (
-            <>
-              {" "}
-              <MenuItem
+          {(user?.userRole === "Moderator" || currContacter?.isModMessage) && (
+            <MenuItem
+              onClick={() => {
+                dispatch(clickTabChat(false));
+                dispatch(
+                  updateContacterUsername(
+                    currContacter?.messageFromName,
+                    currContacter?.messageFromId
+                  )
+                );
+                dispatch(updateFriendNickName(currContacter?.messageFromName));
+                if (width < 576) {
+                  dispatch(updateFriendChat(true));
+                } else {
+                  dispatch(updateFriendChat(true));
+                }
+              }}
+              sx={{
+                padding: "5px",
+              }}
+            >
+              <Box
+                className="p-2 text-white"
                 sx={{
-                  padding: "5px",
+                  background: "linear-gradient(180deg, #843ff0, #7748ed)",
+                  width: "100%",
+                  fontWeight: "bold",
+                  borderRadius: "4px",
+                  display: "flex",
+                  alignItems: "center",
                 }}
               >
-                <Box
-                  className="p-2 text-white"
-                  sx={{
-                    background: "linear-gradient(180deg, #843ff0, #7748ed)",
-                    width: "100%",
-                    fontWeight: "bold",
-                    borderRadius: "4px",
-                    display: "flex",
-                    alignItems: "center",
-                  }}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="18"
+                  height="18"
+                  style={{ marginRight: "8px" }}
+                  viewBox="0 0 16 16"
+                  fill="none"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="18"
-                    height="18"
-                    style={{ marginRight: "8px" }}
-                    viewBox="0 0 16 16"
-                    fill="none"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      clip-rule="evenodd"
-                      d="M9.0886 13.6506L8.72727 14.2613C8.40527 14.8053 7.6006 14.8053 7.27794 14.2613L6.9166 13.6506C6.6366 13.1773 6.4966 12.9399 6.27127 12.8093C6.04594 12.6779 5.7626 12.6733 5.19594 12.6633C4.3586 12.6493 3.83394 12.5979 3.39394 12.4153C2.98952 12.2478 2.62205 12.0022 2.31252 11.6927C2.00299 11.3832 1.75745 11.0157 1.58994 10.6113C1.33594 9.99927 1.33594 9.2226 1.33594 7.66927V7.0026C1.33594 4.8206 1.33594 3.72927 1.82727 2.92794C2.10197 2.4794 2.4789 2.10224 2.92727 1.82727C3.72927 1.33594 4.82127 1.33594 7.0026 1.33594H9.0026C11.1846 1.33594 12.2759 1.33594 13.0779 1.82727C13.5262 2.10205 13.9032 2.47898 14.1779 2.92727C14.6693 3.72927 14.6693 4.82127 14.6693 7.0026V7.66927C14.6693 9.2226 14.6693 9.99927 14.4159 10.6113C14.2483 11.0158 14.0027 11.3833 13.6931 11.6928C13.3834 12.0023 13.0158 12.2478 12.6113 12.4153C12.1713 12.5979 11.6466 12.6486 10.8093 12.6633C10.2426 12.6733 9.95927 12.6779 9.73394 12.8093C9.5086 12.9399 9.3686 13.1766 9.0886 13.6506ZM5.33594 7.83594C5.20333 7.83594 5.07615 7.88862 4.98238 7.98238C4.88862 8.07615 4.83594 8.20333 4.83594 8.33594C4.83594 8.46855 4.88862 8.59572 4.98238 8.68949C5.07615 8.78326 5.20333 8.83594 5.33594 8.83594H9.0026C9.13521 8.83594 9.26239 8.78326 9.35616 8.68949C9.44993 8.59572 9.5026 8.46855 9.5026 8.33594C9.5026 8.20333 9.44993 8.07615 9.35616 7.98238C9.26239 7.88862 9.13521 7.83594 9.0026 7.83594H5.33594ZM4.83594 6.0026C4.83594 5.87 4.88862 5.74282 4.98238 5.64905C5.07615 5.55528 5.20333 5.5026 5.33594 5.5026H10.6693C10.8019 5.5026 10.9291 5.55528 11.0228 5.64905C11.1166 5.74282 11.1693 5.87 11.1693 6.0026C11.1693 6.13521 11.1166 6.26239 11.0228 6.35616C10.9291 6.44993 10.8019 6.5026 10.6693 6.5026H5.33594C5.20333 6.5026 5.07615 6.44993 4.98238 6.35616C4.88862 6.26239 4.83594 6.13521 4.83594 6.0026Z"
-                      fill="white"
-                    />
-                  </svg>
-                  <span>Private chat</span>
-                </Box>
-              </MenuItem>
+                  <path
+                    fillRule="evenodd"
+                    clipRule="evenodd"
+                    d="M9.0886 13.6506L8.72727 14.2613C8.40527 14.8053 7.6006 14.8053 7.27794 14.2613L6.9166 13.6506C6.6366 13.1773 6.4966 12.9399 6.27127 12.8093C6.04594 12.6779 5.7626 12.6733 5.19594 12.6633C4.3586 12.6493 3.83394 12.5979 3.39394 12.4153C2.98952 12.2478 2.62205 12.0022 2.31252 11.6927C2.00299 11.3832 1.75745 11.0157 1.58994 10.6113C1.33594 9.99927 1.33594 9.2226 1.33594 7.66927V7.0026C1.33594 4.8206 1.33594 3.72927 1.82727 2.92794C2.10197 2.4794 2.4789 2.10224 2.92727 1.82727C3.72927 1.33594 4.82127 1.33594 7.0026 1.33594H9.0026C11.1846 1.33594 12.2759 1.33594 13.0779 1.82727C13.5262 2.10205 13.9032 2.47898 14.1779 2.92727C14.6693 3.72927 14.6693 4.82127 14.6693 7.0026V7.66927C14.6693 9.2226 14.6693 9.99927 14.4159 10.6113C14.2483 11.0158 14.0027 11.3833 13.6931 11.6928C13.3834 12.0023 13.0158 12.2478 12.6113 12.4153C12.1713 12.5979 11.6466 12.6486 10.8093 12.6633C10.2426 12.6733 9.95927 12.6779 9.73394 12.8093C9.5086 12.9399 9.3686 13.1766 9.0886 13.6506ZM5.33594 7.83594C5.20333 7.83594 5.07615 7.88862 4.98238 7.98238C4.88862 8.07615 4.83594 8.20333 4.83594 8.33594C4.83594 8.46855 4.88862 8.59572 4.98238 8.68949C5.07615 8.78326 5.20333 8.83594 5.33594 8.83594H9.0026C9.13521 8.83594 9.26239 8.78326 9.35616 8.68949C9.44993 8.59572 9.5026 8.46855 9.5026 8.33594C9.5026 8.20333 9.44993 8.07615 9.35616 7.98238C9.26239 7.88862 9.13521 7.83594 9.0026 7.83594H5.33594ZM4.83594 6.0026C4.83594 5.87 4.88862 5.74282 4.98238 5.64905C5.07615 5.55528 5.20333 5.5026 5.33594 5.5026H10.6693C10.8019 5.5026 10.9291 5.55528 11.0228 5.64905C11.1166 5.74282 11.1693 5.87 11.1693 6.0026C11.1693 6.13521 11.1166 6.26239 11.0228 6.35616C10.9291 6.44993 10.8019 6.5026 10.6693 6.5026H5.33594C5.20333 6.5026 5.07615 6.44993 4.98238 6.35616C4.88862 6.26239 4.83594 6.13521 4.83594 6.0026Z"
+                    fill="white"
+                  />
+                </svg>
+                <span>Private chat</span>
+              </Box>
+            </MenuItem>
+          )}
+          {user?.userRole === "Moderator" &&
+            (currContacter?.isActiveSender ? (
               <MenuItem
                 onClick={() => {
-                  dispatch(openReasonDialogFunction(messagefromName));
+                  dispatch(
+                    openReasonDialogFunction(currContacter?.fromNickName)
+                  );
+                  handleClose();
                 }}
                 sx={{
                   padding: "5px",
@@ -718,12 +793,12 @@ export default function ChatWorldList() {
                   <span>Ban user</span>
                 </Box>
               </MenuItem>
-              {/* <MenuItem
+            ) : (
+              <MenuItem
                 onClick={() => {
-                  dispatch(toggleProfileDialog(true));
                   dispatch(
-                    getUserByUsername({
-                      username: messagefromName,
+                    unBanUserReady({
+                      usernameUnBanned: currentGoingToBanUser,
                     })
                   );
                   handleClose();
@@ -758,10 +833,8 @@ export default function ChatWorldList() {
                   </svg>{" "}
                   <span>Active user</span>
                 </Box>
-              </MenuItem> */}
-            </>
-          )}
-
+              </MenuItem>
+            ))}
           {user?.userRole !== "Moderator" &&
             (tokenUser &&
             listSendingRequest &&
@@ -769,10 +842,12 @@ export default function ChatWorldList() {
               ?.map((item) => {
                 return item?.userName;
               })
-              .includes(messagefromName) ? (
+              .includes(currContacter?.messageFromName) ? (
               <MenuItem
                 onClick={() => {
-                  dispatch(cancelRequestingFriend(messagefromName));
+                  dispatch(
+                    cancelRequestingFriend(currContacter?.messageFromName)
+                  );
                 }}
                 sx={{
                   padding: "5px",
@@ -791,48 +866,56 @@ export default function ChatWorldList() {
                 </Box>
               </MenuItem>
             ) : (
-              <MenuItem
-                sx={{
-                  padding: "5px",
-                }}
-              >
-                {checkExistInFriendList(messagefromName) && tokenUser ? (
-                  <Box
-                    onClick={() => handleDeleteFriend(messagefromName)}
-                    className="p-1 text-white"
-                    sx={{
-                      background: "linear-gradient(180deg, #843ff0, #7748ed)",
-                      width: "100%",
-                      borderRadius: "4px",
-                    }}
-                  >
-                    <PersonRemoveAlt1 className="me-2 pb-1" />
-                    Delete Friend
-                  </Box>
-                ) : (
-                  <Button
-                    disabled={isButtonDisabled}
-                    onClick={() => handleAddFriend(messagefromName)}
-                    className="p-1 text-white"
-                    sx={{
-                      background: "linear-gradient(180deg, #843ff0, #7748ed)",
-                      width: "100%",
-                      borderRadius: "4px",
-                    }}
-                  >
-                    <PersonAddAlt1 className="me-2 pb-1" />
-                    <Typography
+              !currContacter?.isModMessage &&
+              currContacter?.isActiveSender && (
+                <MenuItem
+                  sx={{
+                    padding: "5px",
+                  }}
+                >
+                  {checkExistInFriendList(currContacter?.messageFromName) &&
+                  tokenUser ? (
+                    <Box
+                      onClick={() =>
+                        handleDeleteFriend(currContacter?.messageFromName)
+                      }
+                      className="p-1 text-white"
                       sx={{
-                        fontWeight: "700 !important",
-                        textTransform: "none",
-                        marginLeft: "0px !important",
+                        background: "linear-gradient(180deg, #843ff0, #7748ed)",
+                        width: "100%",
+                        borderRadius: "4px",
                       }}
                     >
-                      Add Friend
-                    </Typography>
-                  </Button>
-                )}
-              </MenuItem>
+                      <PersonRemoveAlt1 className="me-2 pb-1" />
+                      Delete Friend
+                    </Box>
+                  ) : (
+                    <Button
+                      disabled={isButtonDisabled}
+                      onClick={() =>
+                        handleAddFriend(currContacter?.messageFromName)
+                      }
+                      className="p-1 text-white"
+                      sx={{
+                        background: "linear-gradient(180deg, #843ff0, #7748ed)",
+                        width: "100%",
+                        borderRadius: "4px",
+                      }}
+                    >
+                      <PersonAddAlt1 className="me-2 pb-1" />
+                      <Typography
+                        sx={{
+                          fontWeight: "700 !important",
+                          textTransform: "none",
+                          marginLeft: "0px !important",
+                        }}
+                      >
+                        Add Friend
+                      </Typography>
+                    </Button>
+                  )}
+                </MenuItem>
+              )
             ))}
         </Menu>
         {renderChat}

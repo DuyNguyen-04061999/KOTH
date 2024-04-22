@@ -385,6 +385,48 @@ export const closeReasonDialogFunction = (data) => {
 export const updateProfileFirstPlay = (data) => {
   return {
     type: "UPDATE_PROFILE_FIRST_PLAY",
+    payload: data
+  }
+}
+export const banUserReady = (data) => {
+  return {
+    type: "BAN_USER_READY",
+    payload: data,
+  };
+};
+export const banUserSuccess = (data) => {
+  return {
+    type: "BAN_USER_SUCCESS",
+    payload: data,
+  };
+};
+export const banUserFail = (data) => {
+  return {
+    type: "BAN_USER_FAIL",
+    payload: data,
+  };
+};
+export const unBanUserReady = (data) => {
+  return {
+    type: "UNBAN_USER_READY",
+    payload: data,
+  };
+};
+export const unBanUserSuccess = (data) => {
+  return {
+    type: "UNBAN_USER_SUCCESS",
+    payload: data,
+  };
+};
+export const unBanUserFail = (data) => {
+  return {
+    type: "UNBAN_USER_FAIL",
+    payload: data,
+  };
+};
+export const updateCurrentBannedUser = (data) => {
+  return {
+    type: "UPDATE_CURRENT_BANNED_USER",
     payload: data,
   };
 };
@@ -495,6 +537,8 @@ const userReducer = (
     isUpdateProfileFirstPlay: false,
     isClaimPrizeInfo:false,
     isClaimPrizeOptional:false, 
+    isFetchingBanUser: false,
+    isFetchingUnbanUser: false,
   },
   action
 ) => {
@@ -725,6 +769,12 @@ const userReducer = (
         currentGoingToBanUser: payload,
       };
     }
+    case "UPDATE_CURRENT_BANNED_USER": {
+      return {
+        ...state,
+        currentGoingToBanUser: payload,
+      };
+    }
     case "CLOSE_REASON_DIALOG": {
       return {
         ...state,
@@ -766,6 +816,42 @@ const userReducer = (
     case "GET_CLAIM_PRIZE_OPTIONAL_FAIL" : {
       return {...state,isClaimPrizeOptional: false}
     }
+    case "BAN_USER_READY": {
+      return { ...state, isFetchingBanUser: true };
+    }
+    case "BAN_USER_SUCCESS": {
+      return {
+        ...state,
+        isFetchingBanUser: false,
+        openReasonDialog: false,
+        currentGoingToBanUser: "",
+      };
+    }
+    case "BAN_USER_FAIL": {
+      return {
+        ...state,
+        isFetchingBanUser: false,
+        openReasonDialog: false,
+        currentGoingToBanUser: "",
+      };
+    }
+    case "UNBAN_USER_READY": {
+      return { ...state, isFetchingUnbanUser: true };
+    }
+    case "UNBAN_USER_SUCCESS": {
+      return {
+        ...state,
+        isFetchingUnbanUser: false,
+      };
+    }
+    case "UNBAN_USER_FAIL": {
+      return {
+        ...state,
+        isFetchingUnbanUser: false,
+        currentGoingToBanUser: "",
+      };
+    }
+
     default:
       return state;
   }

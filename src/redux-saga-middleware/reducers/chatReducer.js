@@ -92,6 +92,30 @@ export const updateFriendNickName = (data) => {
     payload: data,
   };
 };
+export const updateBannedChatWorld = (data) => {
+  return {
+    type: "UPDATE_BANNED_CHAT_WORLD",
+    payload: data,
+  };
+};
+export const updateUnBannedChatWorld = (data) => {
+  return {
+    type: "UPDATE_UNBANNED_CHAT_WORLD",
+    payload: data,
+  };
+};
+export const updateFriendChat = (data) => {
+  return {
+    type: "UPDATE_FRIEND_CHAT",
+    payload: data,
+  };
+};
+export const updateCurrentContacter = (data) => {
+  return {
+    type: "UPDATE_CURRENT_CONTACTER",
+    payload: data,
+  };
+};
 
 const chatReducer = (
   state = {
@@ -106,11 +130,19 @@ const chatReducer = (
     openMess: false,
     openMenu: false,
     userFriendNickName: "",
+    openFriendChat: false,
+    currContacter: {},
   },
   action
 ) => {
   let { type, payload } = action;
   switch (type) {
+    case "UPDATE_CURRENT_CONTACTER": {
+      return {
+        ...state,
+        currContacter: payload,
+      };
+    }
     case "PUSH_CHAT_WORLD": {
       return {
         ...state,
@@ -129,6 +161,28 @@ const chatReducer = (
       return {
         ...state,
         friendList: payload,
+      };
+    }
+    case "UPDATE_BANNED_CHAT_WORLD": {
+      return {
+        ...state,
+        chatWorld: state.chatWorld?.map((item) => {
+          if (item?.messageFromName === payload) {
+            return { ...item, isActiveSender: false };
+          }
+          return item;
+        }),
+      };
+    }
+    case "UPDATE_UNBANNED_CHAT_WORLD": {
+      return {
+        ...state,
+        chatWorld: state.chatWorld?.map((item) => {
+          if (item?.messageFromName === payload) {
+            return { ...item, isActiveSender: true };
+          }
+          return item;
+        }),
       };
     }
     case "UPDATE_CHAT_WORLD": {
@@ -192,6 +246,12 @@ const chatReducer = (
       return {
         ...state,
         openMess: payload,
+      };
+    }
+    case "UPDATE_FRIEND_CHAT": {
+      return {
+        ...state,
+        openFriendChat: payload,
       };
     }
     case "UPDATE_OPEN_MENU": {
