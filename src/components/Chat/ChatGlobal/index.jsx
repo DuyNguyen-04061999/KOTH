@@ -167,7 +167,7 @@ export default function ChatGlobal(props) {
             zIndex: 2000,
           }}
         >
-          {!currContacter?.isModMessage && (
+          {!(contacter?.isMod === true) && (
             <Menu
               id="basic-menu"
               anchorEl={anchorEl}
