@@ -349,7 +349,7 @@ function App() {
           subId: subId,
           payerId: PayerID,
           game: gameStatus ? true : false,
-          optionId: packageRenew?.id ? Number(packageRenew?.id) : undefined
+          optionId: packageRenew?.id ? Number(packageRenew?.id) : undefined,
         })
       );
     }
@@ -533,14 +533,8 @@ function App() {
                     path="referral"
                     element={tokenUser ? <Referal /> : <Navigate to="/home" />}
                   />
-                  <Route
-                    path="news"
-                    element={ <News /> }
-                  />
-                  <Route
-                    path="news/:id"
-                    element={ <NewsDetail /> }
-                  />
+                  <Route path="news" element={<News />} />
+                  <Route path="news/:id" element={<NewsDetail />} />
                   {getAppType() === "promote" && (
                     <Route
                       path="/tournaments"

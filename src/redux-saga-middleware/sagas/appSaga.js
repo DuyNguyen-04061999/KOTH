@@ -14,6 +14,8 @@ import {
   getListWinnerSuccess,
   getUserGuestFail,
   getUserGuestSuccess,
+  getScoreGameFail,
+  getScoreGameSuccess,
   saveTimeCloseDialog,
   saveTimeCloseNewYearDialog,
 } from "../reducers/appReducer";
@@ -142,6 +144,19 @@ function* getUserGuestSaga(dataRequest) {
     yield put(getUserGuestFail())
   }
 }
+function* getScoreGameSaga(dataRequest) {
+  try {
+    const {payload} = dataRequest;
+    const res = yield call(appService.getScoreGame, payload)
+    const { status, data } = res
+    if(status === 200 || status === 201) {
+      yield put(getScoreGameSuccess(data))
+    }
+  } catch (err) {
+    console.log(err);
+    yield put(getScoreGameFail())
+  }
+}
 
 function* appSaga() {
   yield takeEvery("GET_LIST_FAQ", getListFaqSaga);
@@ -153,6 +168,7 @@ function* appSaga() {
   yield takeEvery("CLOSE_NEWYEAR_POPUP", closeNewYearPopupSaga);
   yield takeEvery("GET_LIST_DISPLAY_NAME", getListDisplayNameSaga)
   yield takeEvery("GET_USER_GUEST",getUserGuestSaga)
+  yield takeEvery("GET_SCORE_GAME", getScoreGameSaga)
 }
 
 export default appSaga;

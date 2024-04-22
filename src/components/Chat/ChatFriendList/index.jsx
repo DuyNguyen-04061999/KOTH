@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import _socket from "../../../redux-saga-middleware/config/socket";
 import {
   updateContacterUsername,
+  updateFriendChat,
   updateFriendNickName,
 } from "../../../redux-saga-middleware/reducers/chatReducer";
 import { images } from "../../../utils/images";
@@ -38,11 +39,12 @@ const Test = styled.input`
 `;
 
 export default function ChatFriendList() {
-  const [openMess, setOpenMess] = useState(false);
   const { width, height } = useWindowDimensions();
   const [socket, setSocket] = useState(null);
   const [searchFeild, setSearchFeild] = useState("");
-  const { friendList, chatWorld } = useSelector((state) => state.chatReducer);
+  const { friendList, chatWorld, openFriendChat } = useSelector(
+    (state) => state.chatReducer
+  );
   const { tokenUser } = useSelector((state) => state.userReducer);
   const [openFindPeople, setOpenFindPeople] = useState(false);
 
@@ -138,9 +140,9 @@ export default function ChatFriendList() {
                   dispatch(updateContacterUsername(e?.userName, e?.id));
                   dispatch(updateFriendNickName(e?.userNickName));
                   if (width < 576) {
-                    setOpenMess(true);
+                    dispatch(updateFriendChat(true));
                   } else {
-                    setOpenMess(true);
+                    dispatch(updateFriendChat(true));
                   }
                 }}
               >
@@ -236,9 +238,9 @@ export default function ChatFriendList() {
               dispatch(updateContacterUsername(e?.userName, e?.id));
               dispatch(updateFriendNickName(e?.userNickName));
               if (width < 576) {
-                setOpenMess(true);
+                dispatch(updateFriendChat(true));
               } else {
-                setOpenMess(true);
+                dispatch(updateFriendChat(true));
               }
             }}
           >
@@ -257,7 +259,12 @@ export default function ChatFriendList() {
                 style={{ borderRadius: "50%" }}
                 className="ms-2 me-2"
               />
-              <Box display={"flex"} flexDirection={"column"} sx={{width:"150px"}} alignItems={"flex-start"}>
+              <Box
+                display={"flex"}
+                flexDirection={"column"}
+                sx={{ width: "150px" }}
+                alignItems={"flex-start"}
+              >
                 <h5
                   style={{
                     color: "#7C81F2",
@@ -276,7 +283,9 @@ export default function ChatFriendList() {
                   }}
                 >
                   {e?.receiveMessages?.map((e_m, i_e_m) => (
-                    <span style={{width:"140px"}} key={i_e_m}>{e_m?.messageContent?.slice(0, 10)}</span>
+                    <span style={{ width: "140px" }} key={i_e_m}>
+                      {e_m?.messageContent?.slice(0, 10)}
+                    </span>
                   ))}
                 </p>
               </Box>
@@ -326,7 +335,6 @@ export default function ChatFriendList() {
       sx={{
         height: checkHeightResponsive(),
         backgroundColor: "#2e233d",
-        overflow:"overlay"
       }}
     >
       <Box>
@@ -403,9 +411,9 @@ export default function ChatFriendList() {
       <Box
         className="chat-content p-3"
         sx={{
-          overflow: "hidden scroll !important",
-          // scrollbarWidth: "thin",
           backgroundColor: "#2e233d",
+          height:"100%",
+          overflow:"scroll",
           "&::-webkit-scrollbar": {
             width: "0rem",
           },
@@ -423,12 +431,12 @@ export default function ChatFriendList() {
       >
         {renderListFriend}
       </Box>
-      {openMess && (
+      {openFriendChat && (
         <ChatGlobal
           handleShow={() => {
-            setOpenMess(false);
+            dispatch(updateFriendChat(false));
           }}
-          openMess={openMess}
+          openMess={openFriendChat}
         />
       )}
     </Box>

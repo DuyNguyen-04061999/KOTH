@@ -43,8 +43,10 @@ export default function ChatGlobal(props) {
   const [showChat] = useState(true);
   const dispatch = useDispatch();
   const chatInput = useRef("");
-  const { contacter } = useSelector((state) => state.chatReducer);
-  const { tokenUser } = useSelector((state) => state.userReducer);
+  const { contacter, currContacter } = useSelector(
+    (state) => state.chatReducer
+  );
+  const { tokenUser, user } = useSelector((state) => state.userReducer);
   const { startGameCheck } = useSelector((state) => state.appReducer);
 
   const [socket, setSocket] = useState(null);
@@ -150,7 +152,6 @@ export default function ChatGlobal(props) {
       username: contacter.userName,
     });
   };
-
   return (
     <>
       {width > 576 ? (
@@ -166,62 +167,69 @@ export default function ChatGlobal(props) {
             zIndex: 2000,
           }}
         >
-          <Menu
-            id="basic-menu"
-            anchorEl={anchorEl}
-            open={openOption}
-            onClose={handleClose}
-            MenuListProps={{
-              "aria-labelledby": "basic-button",
-            }}
-            disableScrollLock={true}
-            sx={{
-              ".MuiMenu-paper": { backgroundColor: "#291B3C !important" },
-            }}
-          >
-            <MenuItem onClick={handleClose}>
-              <Box
-                className="p-2 text-white"
-                onClick={() => {
-                  dispatch(toggleProfileDialog(true));
-                  dispatch(
-                    getUserByUsername({
-                      username: contacter.userName,
-                    })
-                  );
-                }}
-                sx={{
-                  background: "linear-gradient(180deg, #843ff0, #7748ed)",
-                  width: "100%",
-                  borderRadius: 1,
-                  fontWeight: "bold",
-                }}
-              >
-                <AddFriendIcon className="me-2 pb-1" />
-                View Profile
-              </Box>
-            </MenuItem>
-            <MenuItem onClick={handleDeleteFriend}>
-              <Box
-                className="p-2 text-white cursor-pointer"
-                onClick={() => {
-                  if (width < 576) {
-                    handleShow();
-                  } else {
-                  }
-                }}
-                sx={{
-                  background: "linear-gradient(180deg, #843ff0, #7748ed)",
-                  width: "100%",
-                  borderRadius: 1,
-                  fontWeight: "bold",
-                }}
-              >
-                <DeleteFriendIcon className="me-2 pb-1" />
-                Delete Friend
-              </Box>
-            </MenuItem>
-          </Menu>
+          {!currContacter?.isModMessage && (
+            <Menu
+              id="basic-menu"
+              anchorEl={anchorEl}
+              open={openOption}
+              onClose={handleClose}
+              MenuListProps={{
+                "aria-labelledby": "basic-button",
+              }}
+              disableScrollLock={true}
+              sx={{
+                ".MuiMenu-paper": { backgroundColor: "#291B3C !important" },
+              }}
+            >
+              <MenuItem onClick={handleClose}>
+                <Box
+                  className="p-2 text-white"
+                  onClick={() => {
+                    dispatch(toggleProfileDialog(true));
+                    dispatch(
+                      getUserByUsername({
+                        username: contacter.userName,
+                      })
+                    );
+                  }}
+                  sx={{
+                    background: "linear-gradient(180deg, #843ff0, #7748ed)",
+                    width: "100%",
+                    borderRadius: 1,
+                    fontWeight: "bold",
+                  }}
+                >
+                  <AddFriendIcon className="me-2 pb-1" />
+                  View Profile
+                </Box>
+              </MenuItem>
+              {user?.userRole === "Moderator" ? (
+                <></>
+              ) : (
+                <MenuItem onClick={handleDeleteFriend}>
+                  <Box
+                    className="p-2 text-white cursor-pointer"
+                    onClick={() => {
+                      if (width < 576) {
+                        handleShow();
+                      } else {
+                      }
+                    }}
+                    sx={{
+                      background: "linear-gradient(180deg, #843ff0, #7748ed)",
+                      width: "100%",
+                      borderRadius: 1,
+                      fontWeight: "bold",
+                    }}
+                  >
+                    <DeleteFriendIcon className="me-2 pb-1" />
+                    Delete Friend
+                  </Box>
+                </MenuItem>
+              )}
+            </Menu>
+          )}
+
           <Box
             sx={{
               background: "#2e233d",
@@ -320,62 +328,64 @@ export default function ChatGlobal(props) {
         </Box>
       ) : (
         <Dialog open={openMess} fullScreen>
-          <Menu
-            id="basic-menu"
-            anchorEl={anchorEl}
-            open={openOption}
-            onClose={handleClose}
-            MenuListProps={{
-              "aria-labelledby": "basic-button",
-            }}
-            disableScrollLock={true}
-            sx={{
-              ".MuiMenu-paper": { backgroundColor: "#291B3C !important" },
-            }}
-          >
-            <MenuItem onClick={handleClose}>
-              <Box
-                className="p-2 text-white"
-                onClick={() => {
-                  dispatch(toggleProfileDialog(true));
-                  dispatch(
-                    getUserByUsername({
-                      username: contacter.userName,
-                    })
-                  );
-                }}
-                sx={{
-                  background: "linear-gradient(180deg, #843ff0, #7748ed)",
-                  width: "100%",
-                  borderRadius: 1,
-                  fontWeight: "bold",
-                }}
-              >
-                <AddFriendIcon className="me-2 pb-1" />
-                View Profile
-              </Box>
-            </MenuItem>
-            <MenuItem onClick={handleDeleteFriend}>
-              <Box
-                className="p-2 text-white cursor-pointer"
-                onClick={() => {
-                  if (width < 576) {
-                    handleShow();
-                  } else {
-                  }
-                }}
-                sx={{
-                  background: "linear-gradient(180deg, #843ff0, #7748ed)",
-                  width: "100%",
-                  borderRadius: 1,
-                  fontWeight: "bold",
-                }}
-              >
-                <DeleteFriendIcon className="me-2 pb-1" />
-                Delete Friend
-              </Box>
-            </MenuItem>
-          </Menu>
+          {!currContacter?.isModMessage && (
+            <Menu
+              id="basic-menu"
+              anchorEl={anchorEl}
+              open={openOption}
+              onClose={handleClose}
+              MenuListProps={{
+                "aria-labelledby": "basic-button",
+              }}
+              disableScrollLock={true}
+              sx={{
+                ".MuiMenu-paper": { backgroundColor: "#291B3C !important" },
+              }}
+            >
+              <MenuItem onClick={handleClose}>
+                <Box
+                  className="p-2 text-white"
+                  onClick={() => {
+                    dispatch(toggleProfileDialog(true));
+                    dispatch(
+                      getUserByUsername({
+                        username: contacter.userName,
+                      })
+                    );
+                  }}
+                  sx={{
+                    background: "linear-gradient(180deg, #843ff0, #7748ed)",
+                    width: "100%",
+                    borderRadius: 1,
+                    fontWeight: "bold",
+                  }}
+                >
+                  <AddFriendIcon className="me-2 pb-1" />
+                  View Profile
+                </Box>
+              </MenuItem>
+              <MenuItem onClick={handleDeleteFriend}>
+                <Box
+                  className="p-2 text-white cursor-pointer"
+                  onClick={() => {
+                    if (width < 576) {
+                      handleShow();
+                    } else {
+                    }
+                  }}
+                  sx={{
+                    background: "linear-gradient(180deg, #843ff0, #7748ed)",
+                    width: "100%",
+                    borderRadius: 1,
+                    fontWeight: "bold",
+                  }}
+                >
+                  <DeleteFriendIcon className="me-2 pb-1" />
+                  Delete Friend
+                </Box>
+              </MenuItem>
+            </Menu>
+          )}
           <Box
             sx={{
               background: "#2e233d",

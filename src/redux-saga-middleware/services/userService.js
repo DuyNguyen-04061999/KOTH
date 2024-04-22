@@ -84,7 +84,7 @@ class UserService {
       "/api/authenticate/update-profile",
       {
         ...dataRequest,
-        token: localStorage.getItem("token")
+        token: localStorage.getItem("token"),
       },
       {
         headers: {
@@ -140,8 +140,8 @@ class UserService {
           "x-access-refactor-token": localStorage.getItem("token"),
           Authorization: `Bearer ${localStorage.getItem("token")}`,
           authorization: `Bearer ${localStorage.getItem("token")}`,
-        }
-      },
+        },
+      }
     );
     return res;
   }
@@ -153,8 +153,8 @@ class UserService {
       {
         headers: {
           "Content-Type": "application/json",
-        }
-      },
+        },
+      }
     );
     return res;
   }
@@ -166,20 +166,97 @@ class UserService {
       {
         headers: {
           "Content-Type": "application/json",
-          "x-access-refactor-token": dataRequest || localStorage.getItem("token"),
-          Authorization: `Bearer ${dataRequest || localStorage.getItem("token")}`,
-          authorization: `Bearer ${dataRequest || localStorage.getItem("token")}`,
-        }
-      },
+          "x-access-refactor-token":
+            dataRequest || localStorage.getItem("token"),
+          Authorization: `Bearer ${
+            dataRequest || localStorage.getItem("token")
+          }`,
+          authorization: `Bearer ${
+            dataRequest || localStorage.getItem("token")
+          }`,
+        },
+      }
     );
     return res;
   }
 
   async getCityAndStateProfile(dataRequest) {
-    const res = await PROMOTION_API.get("/api/get-cities-and-states/us")
-    return res
+    const res = await PROMOTION_API.get("/api/get-cities-and-states/us");
+    return res;
   }
 
+  async getPrizeInfoService(dataRequest) {
+    const res = await PROMOTION_API.post(
+      "/api/prize/claim-update-info-prize",
+      dataRequest,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "x-access-refactor-token":
+            dataRequest || localStorage.getItem("token"),
+          Authorization: `Bearer ${
+            dataRequest || localStorage.getItem("token")
+          }`,
+          authorization: `Bearer ${
+            dataRequest || localStorage.getItem("token")
+          }`,
+        },
+      }
+    );
+    return res;
+  }
+
+  async getPrizeOptionalService(dataRequest) {
+    const res = await PROMOTION_API.post(
+      "/api/prize/claim-update-optional-info-prize",
+      dataRequest,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "x-access-refactor-token":
+            dataRequest || localStorage.getItem("token"),
+          Authorization: `Bearer ${
+            dataRequest || localStorage.getItem("token")
+          }`,
+          authorization: `Bearer ${
+            dataRequest || localStorage.getItem("token")
+          }`,
+        },
+      }
+    );
+    return res;
+  }
+
+  async banUser(dataRequest) {
+    const res = await PROMOTION_API.post(
+      "/api/authenticate/ban-user",
+      dataRequest,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "x-access-refactor-token": localStorage.getItem("token"),
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+    return res;
+  }
+  async unbanUser(dataRequest) {
+    const res = await PROMOTION_API.post(
+      "/api/authenticate/unban-user",
+      dataRequest,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "x-access-refactor-token": localStorage.getItem("token"),
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+    return res;
+  }
 }
 
 export default UserService;
