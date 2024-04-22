@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import React from "react";
-import { images } from "../../../utils/images";
+import { images, images2 } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 export default function WinnerNotification({ winnerName, content, avatar }) {
@@ -11,7 +11,7 @@ export default function WinnerNotification({ winnerName, content, avatar }) {
       sx={{
         width: "100%",
         boxSizing: "border-box",
-        maxWidth: width < 576 ? width - 100 : 190,
+        maxWidth: width < 576 ? width - 100 : 250,
         padding: "8px",
         border: "2px solid #443565",
         borderRadius: "4px",
@@ -20,7 +20,6 @@ export default function WinnerNotification({ winnerName, content, avatar }) {
       <Box
         sx={{
           display: "flex",
-          justifyContent: "space-between",
           alignItems: "center",
         }}
       >
@@ -38,7 +37,7 @@ export default function WinnerNotification({ winnerName, content, avatar }) {
               : images.imageTutorial
           }
         ></Box>
-        <Box>
+        <Box sx={{ marginLeft: "5px" }}>
           <p style={{ color: "#fff", fontWeight: "700", fontSize: "12px" }}>
             CONGRATULATIONS!
           </p>
@@ -51,12 +50,39 @@ export default function WinnerNotification({ winnerName, content, avatar }) {
         sx={{
           width: "100%",
           padding: "4px",
-          backgroundColor: "#352658",
           marginTop: "8px",
           borderRadius: "4px",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "flex-end",
         }}
       >
-        <p style={{ color: "#fff", fontSize: "12px" }}>{content || ""}</p>
+        <Box
+          sx={{ width: "50px", height: "50px" }}
+          component={"img"}
+          src={images.notiIcon}
+        ></Box>
+        <Box>
+          {" "}
+          <p style={{ color: "#fff", fontSize: "16px", textAlign: "center" }}>
+            Won
+          </p>
+          <p
+            style={{
+              color: "#FFE524",
+              fontSize: "12px",
+              wordBreak: "break-word",
+              textAlign: "center",
+            }}
+          >
+            {content || ""}
+          </p>
+        </Box>{" "}
+        <Box
+          sx={{ width: "50px", height: "50px", transform: "scaleX(-1)" }}
+          component={"img"}
+          src={images.notiIcon}
+        ></Box>
       </Box>
     </Box>
   );
