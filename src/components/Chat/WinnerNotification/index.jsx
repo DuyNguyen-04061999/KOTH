@@ -75,7 +75,7 @@ export default function WinnerNotification({ winnerName, content, avatar }) {
               textAlign: "center",
             }}
           >
-            {content || ""}
+            {content ? content?.replace("Won ", "") : ""}
           </p>
         </Box>{" "}
         <Box

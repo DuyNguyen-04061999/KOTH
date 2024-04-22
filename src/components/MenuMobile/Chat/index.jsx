@@ -99,7 +99,7 @@ export default function DialogChat(props) {
       if (token === null || token === "") {
         dispatch(toggleLoginDialog());
       } else {
-        if (tabChat === false) {
+        if (tabChat === true) {
           if (chat.trim() !== "") {
             socket?.emit("chat", { type: "World", toId: 0, content: chat });
             setChat("");
