@@ -473,6 +473,7 @@ export default function ChatWorldList() {
                     <WinnerNotification
                       winnerName={e?.toNickName}
                       content={e?.messageContent}
+                      avatar={e?.messageToAvatar}
                     />
                   ) : (
                     <Box
@@ -709,7 +710,8 @@ export default function ChatWorldList() {
                 dispatch(
                   updateContacterUsername(
                     currContacter?.messageFromName,
-                    currContacter?.messageFromId
+                    currContacter?.messageFromId,
+                    currContacter?.isModMessage
                   )
                 );
                 dispatch(updateFriendNickName(currContacter?.messageFromName));
@@ -757,9 +759,7 @@ export default function ChatWorldList() {
             (currContacter?.isActiveSender ? (
               <MenuItem
                 onClick={() => {
-                  dispatch(
-                    openReasonDialogFunction(currContacter?.fromNickName)
-                  );
+                  dispatch(openReasonDialogFunction(currContacter));
                   handleClose();
                 }}
                 sx={{
@@ -798,7 +798,7 @@ export default function ChatWorldList() {
                 onClick={() => {
                   dispatch(
                     unBanUserReady({
-                      usernameUnBanned: currentGoingToBanUser,
+                      usernameUnBanned: currContacter?.messageFromName,
                     })
                   );
                   handleClose();
