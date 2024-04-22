@@ -193,149 +193,165 @@ export default function ChatWorldList() {
             className="d-flex"
           >
             {e?.messageFromId === user?.id && tokenUser ? (
-              <>
-                {e?.messageGameId > 0 && e?.messageRoomName ? (
-                  <Box
-                    className="d-flex justify-content-between"
-                    sx={{
-                      width: "100%",
-                    }}
-                  >
+              e?.isWinnerMessage ? (
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "flex-end",
+                    width: "100%",
+                  }}
+                >
+                  <WinnerNotification
+                    winnerName={e?.toNickName}
+                    content={e?.messageContent}
+                    avatar={e?.messageToAvatar}
+                  />
+                </Box>
+              ) : (
+                <>
+                  {e?.messageGameId > 0 && e?.messageRoomName ? (
                     <Box
+                      className="d-flex justify-content-between"
                       sx={{
-                        width: "20%",
+                        width: "100%",
                       }}
-                    ></Box>
-                    <Box
-                      sx={{
-                        width: "fit-content",
-                        maxWidth: "80%",
-                        background: "#4d3565",
-                        color: "#7878a7",
-                        fontSize: "14px",
-                        borderRadius: "5px",
-                      }}
-                      className="p-2"
                     >
-                      {/* <span style={{fontWeight:"bold", color:"#9b9acf"}}>You're invited to play:</span> */}
                       <Box
-                        className="mt-2 p-2 d-flex"
                         sx={{
-                          backgroundColor: "#3e2a52",
+                          width: "20%",
+                        }}
+                      ></Box>
+                      <Box
+                        sx={{
+                          width: "fit-content",
+                          maxWidth: "80%",
+                          background: "#4d3565",
+                          color: "#7878a7",
+                          fontSize: "14px",
                           borderRadius: "5px",
                         }}
+                        className="p-2"
                       >
+                        {/* <span style={{fontWeight:"bold", color:"#9b9acf"}}>You're invited to play:</span> */}
                         <Box
+                          className="mt-2 p-2 d-flex"
                           sx={{
-                            width: "40%",
-                            height: "55px",
+                            backgroundColor: "#3e2a52",
+                            borderRadius: "5px",
                           }}
                         >
-                          <img
-                            src={
-                              e &&
-                              e?.messageGameAvatar &&
-                              e?.messageGameAvatar !== "normal"
-                                ? process.env.REACT_APP_SOCKET_SERVER +
-                                  "/" +
-                                  e?.messageGameAvatar
-                                : images.Aa
-                            }
-                            alt="..."
-                            width={"100%"}
-                            height={"75px"}
-                            style={{
-                              objectFit: "cover",
-                            }}
-                          />
-                        </Box>
-                        <Box
-                          className="ms-2 d-flex flex-column flex-end"
-                          sx={{ width: "60%" }}
-                        >
-                          <span
-                            style={{
-                              color: "white",
-                              fontWeight: "500 !important",
-                            }}
-                          >
-                            {e?.messageGameName?.slice(0, 10) + `...`}
-                          </span>
-                          <span className="text-white font-weight-bold">
-                            Price: {e?.messageBetPrice}
-                          </span>
                           <Box
-                            onClick={() =>
-                              handleOnClickInviteGameMess(
-                                e.messageGameId,
-                                e.messageRoomId
-                              )
-                            }
-                            className="p-1 mt-1 text-center text-white cursor-pointer"
                             sx={{
-                              width: "100%",
-                              background:
-                                "linear-gradient(0deg, rgba(138,57,240,1) 0%, rgba(116,73,237,1) 100%)",
-                              fontWeight: "bold",
-                              borderRadius: "4px",
+                              width: "40%",
+                              height: "55px",
                             }}
                           >
-                            PLAY NOW
+                            <img
+                              src={
+                                e &&
+                                e?.messageGameAvatar &&
+                                e?.messageGameAvatar !== "normal"
+                                  ? process.env.REACT_APP_SOCKET_SERVER +
+                                    "/" +
+                                    e?.messageGameAvatar
+                                  : images.Aa
+                              }
+                              alt="..."
+                              width={"100%"}
+                              height={"75px"}
+                              style={{
+                                objectFit: "cover",
+                              }}
+                            />
+                          </Box>
+                          <Box
+                            className="ms-2 d-flex flex-column flex-end"
+                            sx={{ width: "60%" }}
+                          >
+                            <span
+                              style={{
+                                color: "white",
+                                fontWeight: "500 !important",
+                              }}
+                            >
+                              {e?.messageGameName?.slice(0, 10) + `...`}
+                            </span>
+                            <span className="text-white font-weight-bold">
+                              Price: {e?.messageBetPrice}
+                            </span>
+                            <Box
+                              onClick={() =>
+                                handleOnClickInviteGameMess(
+                                  e.messageGameId,
+                                  e.messageRoomId
+                                )
+                              }
+                              className="p-1 mt-1 text-center text-white cursor-pointer"
+                              sx={{
+                                width: "100%",
+                                background:
+                                  "linear-gradient(0deg, rgba(138,57,240,1) 0%, rgba(116,73,237,1) 100%)",
+                                fontWeight: "bold",
+                                borderRadius: "4px",
+                              }}
+                            >
+                              PLAY NOW
+                            </Box>
                           </Box>
                         </Box>
                       </Box>
                     </Box>
-                  </Box>
-                ) : (
-                  <Box
-                    className="d-flex justify-content-between"
-                    sx={{
-                      width: "100%",
-                    }}
-                  >
+                  ) : (
                     <Box
+                      className="d-flex justify-content-between"
                       sx={{
-                        width: "20%",
-                      }}
-                    ></Box>
-                    <Box
-                      sx={{
-                        width: "fit-content",
-                        maxWidth: "80%",
+                        width: "100%",
                       }}
                     >
-                      <Box className="d-flex justify-content-end">
-                        <span
-                          style={{
+                      <Box
+                        sx={{
+                          width: "20%",
+                        }}
+                      ></Box>
+                      <Box
+                        sx={{
+                          width: "fit-content",
+                          maxWidth: "80%",
+                        }}
+                      >
+                        <Box className="d-flex justify-content-end">
+                          <span
+                            style={{
+                              color: "white",
+                              fontSize: "10px",
+                              fontWeight: "500 !important",
+                              letterSpacing: "0.5px",
+                            }}
+                          >
+                            {e?.updatedAt && moment(e?.updatedAt).format("LT")}
+                          </span>
+                        </Box>
+                        <Box
+                          className="p-1 mt-2 ps-2 pe-2"
+                          sx={{
+                            background: "#443565",
                             color: "white",
-                            fontSize: "10px",
+                            fontSize: "14px",
+                            width: "100%",
+                            wordWrap: "break-word",
+                            borderRadius: "5px",
                             fontWeight: "500 !important",
+
                             letterSpacing: "0.5px",
                           }}
                         >
-                          {e?.updatedAt && moment(e?.updatedAt).format("LT")}
-                        </span>
-                      </Box>
-                      <Box
-                        className="p-1 mt-2 ps-2 pe-2"
-                        sx={{
-                          background: "#443565",
-                          color: "white",
-                          fontSize: "14px",
-                          width: "100%",
-                          wordWrap: "break-word",
-                          borderRadius: "5px",
-                          fontWeight: "500 !important",
-
-                          letterSpacing: "0.5px",
-                        }}
-                      >
-                        {e?.messageContent}
+                          {e?.messageContent}
+                        </Box>
                       </Box>
                     </Box>
-                  </Box>
-                )}
-              </>
+                  )}
+                </>
+              )
             ) : (
               <Box className="d-flex justify-content-between">
                 <Box className="pt-2">

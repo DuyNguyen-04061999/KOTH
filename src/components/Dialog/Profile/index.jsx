@@ -399,7 +399,7 @@ export default function DialogProfile(props) {
               <Box component={"form"} className="mt-2">
                 {tokenUser &&
                   userNameProfile !== user?.userName &&
-                  !user?.userRole === "Moderator" && (
+                  user?.userRole !== "Moderator" && (
                     <Box>
                       {listSendingRequest &&
                       listSendingRequest
@@ -800,7 +800,7 @@ export default function DialogProfile(props) {
               <Box component={"form"} className="mt-2">
                 {tokenUser &&
                   userNameProfile !== user?.userName &&
-                  !user?.userRole === "Moderator" &&
+                  user?.userRole !== "Moderator" &&
                   (checkExistInFriendList() === true ? (
                     <MenuItem
                       sx={{
