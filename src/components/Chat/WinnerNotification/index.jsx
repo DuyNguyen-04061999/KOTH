@@ -79,7 +79,7 @@ export default function WinnerNotification({ winnerName, content, avatar }) {
           </p>
         </Box>{" "}
         <Box
-          sx={{ width: "50px", height: "50px" }}
+          sx={{ width: "50px", height: "50px", transform: "scaleX(-1)" }}
           component={"img"}
           src={images.notiIcon}
         ></Box>
