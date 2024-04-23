@@ -104,9 +104,17 @@ export default function JoinTournament() {
   } = useSelector((state) => state.promotionReducer);
   const { orientation } = useSelector((state) => state.gameReducer);
   const { scoreGame } = useSelector((state) => state.appReducer);
-  const { address1, state, zipCode, city, firstName, lastName, email, birthDay, gender } = useSelector(
-    (state) => state.profileReducer
-  );
+  const {
+    address1,
+    state,
+    zipCode,
+    city,
+    firstName,
+    lastName,
+    email,
+    birthDay,
+    gender,
+  } = useSelector((state) => state.profileReducer);
   const [readMore, setReadMore] = useState(false);
   const [rewardPopup, setRewardPopup] = useState(false);
   const navigate = useNavigate();
@@ -134,30 +142,42 @@ export default function JoinTournament() {
   }, [token, dispatch, id]);
 
   const handlePlayTour = () => {
-    if (scoreGame === 0) {
-      dispatch(
-        startGameInPromotion({
-          tournamentId: id,
-        })
-      );
-      localStorage.setItem("firstPlayGame", "check")
-      return;
-    }
-    if (detailTournament?.extra === 0 && countTicket === 0) {
-      dispatch(toggleExtra());
-      return;
-    } else {
-      if(firstName !== "" || lastName !== "" || email !== "" || birthDay !== "" || gender !== "") {
+    if (token) {
+      if (scoreGame === 0) {
         dispatch(
           startGameInPromotion({
             tournamentId: id,
           })
         );
-      } else {
-        dispatch(openPopupCompleteProfile({
-          type: "step1"
-        }))
+        localStorage.setItem("firstPlayGame", "check");
+        return;
       }
+      if (detailTournament?.extra === 0 && countTicket === 0) {
+        dispatch(toggleExtra());
+        return;
+      } else {
+        if (
+          firstName !== "" ||
+          lastName !== "" ||
+          email !== "" ||
+          birthDay !== "" ||
+          gender !== ""
+        ) {
+          dispatch(
+            startGameInPromotion({
+              tournamentId: id,
+            })
+          );
+        } else {
+          dispatch(
+            openPopupCompleteProfile({
+              type: "step1",
+            })
+          );
+        }
+      }
+    } else {
+      dispatch(toggleLoginDialog());
     }
   };
 

@@ -28,6 +28,18 @@ export default function ForgetPassword() {
     );
   }, [optionEmail, dispatch]);
 
+  const checkIfNumber = (event) => {
+    /**
+     * Allowing: Integers | Backspace | Tab | Delete | Left & Right arrow keys
+     **/
+
+    const regex = new RegExp(
+      /(^\d*$)|(Backspace|Tab|Delete|ArrowLeft|ArrowRight|\(|\)|-)/
+    );
+
+    return !event.key.match(regex) && event.preventDefault();
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     // if (validateEmail(username)) {
@@ -144,6 +156,7 @@ export default function ForgetPassword() {
                 border: "none",
                 color: "white",
               }}
+              onKeyDown={checkIfNumber}
               onChange={(e) => {
                 setUsername(e.target.value);
               }}

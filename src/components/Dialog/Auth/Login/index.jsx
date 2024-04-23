@@ -21,11 +21,11 @@ import AnimButton from "../../../AnimButton";
 
 const Login = () => {
   const dispatch = useDispatch();
-  const [username, setUsername] = useState(
+  const [phone, setPhone] = useState(
     localStorage?.getItem("account") || ""
   );
   const [password, setPassword] = useState(localStorage?.getItem("pass") || "");
-  const [usernameError, setUsernameError] = useState("");
+  const [phoneError, setPhoneError] = useState("");
   const [disabledBtn, setDisabledBtn] = useState(false);
   const [displayPassword, setDisplayPassword] = useState(false);
   const { isLogin, isLoginFail, isLoginSuccess } = useSelector(
@@ -34,8 +34,8 @@ const Login = () => {
   const { currentTab } = useSelector((state) => state.authReducer);
   const { t } = useTranslation("auth");
 
-  const handleChangeUsername = (e) => {
-    setUsername(e.target.value);
+  const handleChangePhone = (e) => {
+    setPhone(e.target.value);
   };
 
   const handleChangePassword = (e) => {
@@ -51,11 +51,24 @@ const Login = () => {
     setDisplayPassword(!displayPassword);
   };
 
+  const checkIfNumber = (event) => {
+    /**
+     * Allowing: Integers | Backspace | Tab | Delete | Left & Right arrow keys
+     **/
+
+    const regex = new RegExp(
+      /(^\d*$)|(Backspace|Tab|Delete|ArrowLeft|ArrowRight|\(|\)|-)/
+    );
+
+    return !event.key.match(regex) && event.preventDefault();
+  };
+
+
   const sendLogin = (e) => {
     setHandsUp(false);
     setCheck(false);
     e.preventDefault();
-    if (!username || !password) {
+    if (!phone || !password) {
       dispatch(
         showToastNotification({
           type: "error",
@@ -63,10 +76,10 @@ const Login = () => {
         })
       );
     } else {
-       if (validatePhoneNumber(username)) {
+       if (validatePhoneNumber(phone)) {
         dispatch(
           loginReady({
-            phone: username,
+            phone: phone,
             password: password,
           })
         );
@@ -76,24 +89,23 @@ const Login = () => {
 
   useEffect(() => {
     if (
-      !validateEmail(username) &&
-      !validatePhoneNumber(username) &&
-      username !== "" &&
+      !validatePhoneNumber(phone) &&
+      phone !== "" &&
       password !== ""
     ) {
-      setUsernameError("Please enter a valid phone number!");
+      setPhoneError("Please enter a valid phone number!");
     } else {
-      setUsernameError("");
+      setPhoneError("");
     }
-  }, [username, password]);
+  }, [phone, password]);
 
   useEffect(() => {
-    if (usernameError || username === "" || password === "") {
+    if (phoneError || phone === "" || password === "") {
       setDisabledBtn(true);
     } else {
       setDisabledBtn(false);
     }
-  }, [usernameError, username, password]);
+  }, [phoneError, phone, password]);
 
   //---------------------------- Rive Project ----------------------------
 
@@ -122,8 +134,8 @@ const Login = () => {
       return;
     }
     let numberOfChar = 0;
-    if (username && lookState) {
-      numberOfChar = parseFloat(username.split("").length);
+    if (phone && lookState) {
+      numberOfChar = parseFloat(phone.split("").length);
       lookState.value = numberOfChar;
     }
   };
@@ -363,15 +375,16 @@ const Login = () => {
             </Typography>
             <Input
               type="text"
-              defaultValue={username || localStorage.getItem("account")}
+              defaultValue={phone || localStorage.getItem("account")}
               placeholder={ t("Phone number")}
               onFocus={() => {
                 setHandsUp(false);
                 setCheck(true);
               }}
+              onKeyDown={checkIfNumber}
               onChange={(e) => {
                 setLook();
-                handleChangeUsername(e);
+                handleChangePhone(e);
               }}
               onBlur={() => {
                 setCheck(false);
@@ -399,7 +412,7 @@ const Login = () => {
           <Typography
             sx={{ textAlign: "start", color: "#F05153", fontSize: "13px" }}
           >
-            {username && usernameError ? usernameError : ""}
+            {phone && phoneError ? phoneError : ""}
           </Typography>
         </FormControl>
         <FormControl
