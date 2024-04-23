@@ -23,7 +23,7 @@ export default function CheckProfile(props) {
   const dispatch = useDispatch();
   const { id } = props;
   const handleClose = () => {
-    setIsButtonDisabled(true);
+    // setIsButtonDisabled(true);
     dispatch(toggleCheckProfileDialog());
     if (detailTournament?.extra === 0 && countTicket === 0) {
       dispatch(toggleExtra());
@@ -38,6 +38,7 @@ export default function CheckProfile(props) {
     setTimeout(() => {
       // Re-enable the button after some time
       setIsButtonDisabled(false);
+      console.log(isButtonDisabled);
     }, 1000); // Adjust the time as needed
   };
   const handleComplete = () => {

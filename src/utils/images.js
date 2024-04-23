@@ -74,6 +74,7 @@ import depositPassive from "../assets/images/depositPassive.png";
 import endAtTour from "../assets/images/endAtTour.png";
 import sortIcon from "../assets/images/sortIcon.png";
 import expandIcon from "../assets/images/expandIcon.png";
+import bannedavatar from "../assets/images/bannedavatar.png";
 import eyeIcon from "../assets/images/eyeIcon.png";
 import gameHotTournament from "../assets/images/gameHotTournament.png";
 import hatWinner from "../assets/images/hatWinner.png";
@@ -340,6 +341,10 @@ import check2 from "../assets/images/check2.png";
 import news3 from "../assets/images/news3.png";
 import emptyNews from "../assets/images/emptyNews.png"
 import pepeTicket from "../assets/images/PepeTickets.gif"
+import notiIcon from "../assets/images/notiIcon.gif";
+import free_sub_MB from "../assets/images/free_sub_MB.png";
+import free_sub_DK from "../assets/images/free_sub_DK.png";
+import emptyNews from "../assets/images/emptyNews.png";
 
 export const imageHome = {
   top1Icon: top1Icon,
@@ -415,6 +420,9 @@ export const navbar = {
 export const images = {
   pepeTicket:pepeTicket,
   emptyNews:emptyNews,
+  emptyNews: emptyNews,
+  free_sub_DK: free_sub_DK,
+  free_sub_MB: free_sub_MB,
   bannerSignup: bannerSignup,
   bn1: DummyBanner1,
   sortIcon: sortIcon,
@@ -592,6 +600,8 @@ export const images = {
   event1: event1,
   event2: event2,
   news3: news3,
+  bannedavatar: bannedavatar,
+  notiIcon: notiIcon,
 };
 
 export const navigationImages = {

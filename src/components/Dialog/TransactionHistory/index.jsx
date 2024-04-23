@@ -33,8 +33,8 @@ export default function TransactionHistory() {
   useEffect(() => {
     dispatch(
       getTransactionReady({
-        offset: (currentPage - 1) * 10,
-        count: 10,
+        offset: (currentPage - 1) * 8,
+        count: 8,
       })
     );
   }, [currentPage, dispatch]);
@@ -77,7 +77,7 @@ export default function TransactionHistory() {
               alignItems: "center",
             }}
           >
-            {params?.row?.transactionPackage?.packagePrice}
+            {"$" + params?.row?.transactionPackage?.packagePrice}
           </Box>
         );
       },
@@ -343,6 +343,7 @@ export default function TransactionHistory() {
           padding: "20px",
           boxSizing: "border-box",
           height: device !== "Desktop" ? "100%" : "800px",
+          overflowY: "auto",
         }}
       >
         {device === "Desktop" ? (
@@ -381,6 +382,7 @@ export default function TransactionHistory() {
               width: "100%",
               display: "flex",
               alignItems: "center",
+              zIndex: "1305",
             }}
           >
             <Box
@@ -402,9 +404,10 @@ export default function TransactionHistory() {
         )}{" "}
         <Box
           sx={{
-            height: device === "Tablet" ? "auto" : "auto",
+            height: transactionList?.length > 0 ? "auto" : "70vh",
             width: "100%",
             marginTop: "25px",
+            minHeight: "50vh !important",
           }}
         >
           <DataGrid
@@ -464,7 +467,7 @@ export default function TransactionHistory() {
             columns={device === "Mobile" ? mobileColumns : columns}
             initialState={{
               pagination: {
-                paginationModel: { pageSize: 10, page: currentPage },
+                paginationModel: { pageSize: 8, page: currentPage },
               },
             }}
             slots={{

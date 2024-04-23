@@ -243,7 +243,11 @@ const ChatDrawer = () => {
                   color: "#fff",
                 }}
                 onClick={() => {
-                  if (tokenUser === null || tokenUser === "" || tokenUser === undefined) {
+                  if (
+                    tokenUser === null ||
+                    tokenUser === "" ||
+                    tokenUser === undefined
+                  ) {
                     dispatch(toggleLoginDialog());
                   } else {
                     dispatch(clickTabChat(false));

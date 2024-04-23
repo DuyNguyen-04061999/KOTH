@@ -14,6 +14,7 @@ import { toggleLoginDialog } from "../../../redux-saga-middleware/reducers/authR
 import { popup } from "../../../utils/images";
 import ChatFriendList from "../../Chat/ChatFriendList";
 import ChatWorldList from "../../Chat/ChatWorldList";
+import { clickTabChat } from "../../../redux-saga-middleware/reducers/chatReducer";
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
@@ -46,8 +47,7 @@ export default function DialogChat(props) {
   const [chat, setChat] = useState("");
   const { tokenUser: token } = useSelector((state) => state.userReducer);
   const { startGameCheck } = useSelector((state) => state.appReducer);
-  const [renderTab, setRenderTab] = useState(false);
-  const [colorTab, setColorTab] = useState(false);
+  const { tabChat } = useSelector((state) => state.chatReducer);
   const [socket, setSocket] = useState(null);
   const { t } = useTranslation("global");
   useEffect(() => {
@@ -58,19 +58,16 @@ export default function DialogChat(props) {
     if (!token) {
       dispatch(toggleLoginDialog());
     } else {
-      setRenderTab(true);
-      setColorTab(true);
+      dispatch(clickTabChat(false));
     }
   };
   useEffect(() => {
     if (token === null || token === "") {
-      setRenderTab(false);
-      setColorTab(false);
+      dispatch(clickTabChat(true));
     }
-  }, [token]);
+  }, [token, dispatch]);
   const clickRenderTab = () => {
-    setRenderTab(false);
-    setColorTab(false);
+    dispatch(clickTabChat(true));
   };
   const handleChangeChat = (e) => {
     setChat(e.target.value);
@@ -80,7 +77,7 @@ export default function DialogChat(props) {
       if (token === null || token === "") {
         dispatch(toggleLoginDialog());
       } else {
-        if (renderTab === false) {
+        if (tabChat === true) {
           if (e.key === "Enter" && chat.trim() !== "") {
             socket?.emit("chat", { type: "World", toId: 0, content: chat });
             setChat("");
@@ -102,7 +99,7 @@ export default function DialogChat(props) {
       if (token === null || token === "") {
         dispatch(toggleLoginDialog());
       } else {
-        if (renderTab === false) {
+        if (tabChat === true) {
           if (chat.trim() !== "") {
             socket?.emit("chat", { type: "World", toId: 0, content: chat });
             setChat("");
@@ -170,13 +167,13 @@ export default function DialogChat(props) {
                   className="global d-flex align-items-center justify-content-center"
                   onClick={clickRenderTab}
                   style={{
-                    backgroundColor: colorTab === false ? "#61388e" : "#261a35",
+                    backgroundColor: tabChat === true ? "#61388e" : "#261a35",
                     width: "75px",
                     height: "32px",
                     borderRadius: "5px 0px 0px 5px",
                   }}
                 >
-                  {renderTab === false ? (
+                  {tabChat === true ? (
                     <img
                       src={imageChat.globalicon2}
                       alt="..."
@@ -193,7 +190,7 @@ export default function DialogChat(props) {
                   )}
                   <span
                     style={{
-                      color: renderTab === false ? "White" : "#665982",
+                      color: tabChat === true ? "White" : "#665982",
                       fontSize: "10px",
                       marginLeft: "5px",
                     }}
@@ -205,13 +202,13 @@ export default function DialogChat(props) {
                   className="private d-flex align-items-center justify-content-center me-2"
                   onClick={clickRenderPerson}
                   style={{
-                    backgroundColor: colorTab === true ? "#61388e" : "#261a35",
+                    backgroundColor: tabChat === false ? "#61388e" : "#261a35",
                     width: "75px",
                     height: "32px",
                     borderRadius: "0px 5px 5px 0px",
                   }}
                 >
-                  {renderTab === true ? (
+                  {tabChat === false ? (
                     <img
                       src={imageChat.privateicon2}
                       alt="..."
@@ -228,7 +225,7 @@ export default function DialogChat(props) {
                   )}
                   <span
                     style={{
-                      color: renderTab === true ? "white" : "#665982",
+                      color: tabChat === false ? "white" : "#665982",
                       fontSize: "10px",
                       marginLeft: "5px",
                     }}
@@ -240,9 +237,9 @@ export default function DialogChat(props) {
             </div>
           </Box>
           <Box component="div" hidden={!showChat}>
-            {renderTab === true ? <ChatFriendList /> : <ChatWorldList />}
+            {tabChat === true ? <ChatWorldList /> : <ChatFriendList />}
           </Box>
-          {renderTab === false ? (
+          {tabChat === true ? (
             <Box
               position={"fixed"}
               bottom={0}

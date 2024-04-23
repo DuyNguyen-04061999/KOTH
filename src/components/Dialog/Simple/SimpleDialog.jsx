@@ -210,6 +210,7 @@ export default function SimpleDialog(props) {
                         fontWeight: "800",
                         marginTop: "20px",
                         marginLeft: "0px !important",
+                        textAlign:"center"
                       }}
                     >
                       PLAY4PROMO
