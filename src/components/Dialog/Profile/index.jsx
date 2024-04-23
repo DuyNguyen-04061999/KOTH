@@ -336,7 +336,7 @@ export default function DialogProfile(props) {
 
                 {userNameProfile === user?.userName && tokenUser && (
                   <Box>
-                    {uPack !== null && uPack.remain !== "Expired" ? (
+                    {uPack !== null && uPack?.remain !== "Expired" ? (
                       <Box
                         display={"flex"}
                         justifyContent={"center"}
@@ -766,7 +766,7 @@ export default function DialogProfile(props) {
                                 fontWeight: "500",
                               }}
                             >
-                              {uPack.remain}
+                              {uPack?.remain}
                             </Typography>
                           )}
                           {uPack?.isRenewPackage === true ? (
