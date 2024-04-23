@@ -6,11 +6,16 @@ import { useNavigate } from "react-router";
 import { closeDoubleDayDialog } from "../../../redux-saga-middleware/reducers/appReducer";
 import { images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
+import {
+  clickTab,
+  toggleLoginDialog,
+} from "../../../redux-saga-middleware/reducers/authReducer";
 
 const DoubleDayDialog = () => {
   const { width } = useWindowDimensions();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { tokenUser } = useSelector((state) => state.userReducer);
   const { showDoubleDayDialog, randomRender } = useSelector(
     (state) => state.appReducer
   );
@@ -41,10 +46,17 @@ const DoubleDayDialog = () => {
                 // src={images.stackingMB}
                 src={images.free_sub_MB}
                 onClick={() => {
-                  if (!isFetchHot && !noDataHot) {
-                    handleClose();
-                    navigate("/promotion-detail/" + hotTournament[0].id);
+                  // if (!isFetchHot && !noDataHot) {
+                  //   handleClose();
+                  //   navigate("/promotion-detail/" + hotTournament[0].id);
+                  // }
+                  if (tokenUser) {
+                    navigate("/home");
+                  } else {
+                    dispatch(clickTab("signup"));
+                    dispatch(toggleLoginDialog());
                   }
+                  handleClose();
                 }}
               ></Box>
               <Box
@@ -84,10 +96,17 @@ const DoubleDayDialog = () => {
                 // src={images.stackingDK}
                 src={images.free_sub_DK}
                 onClick={() => {
-                  if (!isFetchHot && !noDataHot) {
-                    handleClose();
-                    navigate("/promotion-detail/" + hotTournament[0].id);
+                  // if (!isFetchHot && !noDataHot) {
+                  //   handleClose();
+                  //   navigate("/promotion-detail/" + hotTournament[0].id);
+                  // }
+                  if (tokenUser) {
+                    navigate("/home");
+                  } else {
+                    dispatch(clickTab("signup"));
+                    dispatch(toggleLoginDialog());
                   }
+                  handleClose();
                 }}
               ></Box>
               <Box
