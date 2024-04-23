@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import React from "react";
-import { images, images2 } from "../../../utils/images";
+import { images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 export default function WinnerNotification({ winnerName, content, avatar }) {
@@ -9,9 +9,8 @@ export default function WinnerNotification({ winnerName, content, avatar }) {
     <Box
       className="mt-2"
       sx={{
-        width: "100%",
         boxSizing: "border-box",
-        maxWidth: width < 576 ? width - 100 : 250,
+        width: width < 576 ? width - 100 : "230px",
         padding: "8px",
         border: "2px solid #443565",
         borderRadius: "4px",
@@ -34,7 +33,7 @@ export default function WinnerNotification({ winnerName, content, avatar }) {
           src={
             avatar
               ? process.env.REACT_APP_SOCKET_SERVER + "/" + avatar
-              : images.imageTutorial
+              : images.undefinedAvatar
           }
         ></Box>
         <Box sx={{ marginLeft: "5px" }}>

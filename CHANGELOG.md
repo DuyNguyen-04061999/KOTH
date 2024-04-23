@@ -1,4 +1,57 @@
-## [1.13.0](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/compare/1.12.0...v1.13.0) (2024-04-11)
+## [1.14.0](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/compare/1.13.0...1.14.0) (2024-04-23)
+
+
+### Features
+
+* Add banned avatar ([7dd9f4d](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/7dd9f4d5b41cea2729e1415b38decc90c96f620b))
+* Add content and winner name in notification global chat ([790288a](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/790288a089026cc969151f3fd6628d9d57f5d3e1))
+* Add name and content in winner notification in globacl chat ([5a4b7ad](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/5a4b7ad738de70ddbe4a70d60b290b050f432583))
+* Add notification icon ([ea2af6b](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/ea2af6bf4a24c1908d923d03ce28545b8c23dd30))
+* Edit image slider new and image empty with device desktop, mobile ([f9b0307](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/f9b030760b4b7aab1dea41dc878bb99493f344b5))
+* Flip notification icon in winnerNoti ([72d8a2a](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/72d8a2a77dd288f9694377c8a86325cd8f88e9fd))
+* Implement all user have VIP ([eb2140a](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/eb2140a72435dea48395496bafbda5767f9d0d08))
+* Implement ban and activate ([84eb609](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/84eb609861040c8af14be2d7eeba415cec2d14d6))
+* Implement ban, activate and private chat in mod ([27ce241](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/27ce24152b39bc8a7d3fb7725b2dcd98a30d2e9f))
+* Implement ban,unban user in mobile ([8dd2c02](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/8dd2c0225027234c5075ba76cafb94f6ccb82176))
+* Implement free sub package popup between 22.4 and 22.6 ([d51efb5](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/d51efb5a104dc58cc570f35f54354c243ddf0b74))
+* Implement reason dialog in ban user ([4f343df](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/4f343dfcd2bf0a928815e30c68cb32ddfe35ea2b))
+* Winner notification in mod ([0dc94ca](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/0dc94ca1bef83d87a3ba05207790b9070cea1716))
+
+
+### Bug Fixes
+
+* Add friend and delete friend in normal user account ([9256696](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/92566960b7be6de74d5b65cec22ccdcde2c745f9))
+* Change edit package price and save ([8e3c57e](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/8e3c57edb740dd3ead12776d0d901d838a7a870c))
+* Change from nick name to message from anem ([5c21e00](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/5c21e00edc53931239b6b25c2dd3032fb1be31d1))
+* Change messagefromName to from NickName in private chat ([ff37fb4](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/ff37fb48bfe163bf2433077acbd80ca8ff4b9536))
+* Change messagefromName to fromNickname ([abba556](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/abba55688f543cda614726f2edf752db87e669b4))
+* Change news banner url in mobile ([4cc02b0](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/4cc02b03b33fd4771f5a68bfae21ee811c46ae0e))
+* Change news image url ([de9c6cd](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/de9c6cd2c2242cbad2e2895f87b59ca82f52f7c0))
+* Change news image url ([972ad89](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/972ad899c04efbc0f62d0cf3fb0d17ca4a7afdc4))
+* Change news image url ([36c4d3d](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/36c4d3d940b146d4e34723bce87cf01b5e2f98bc))
+* Check length text table list winner ([0266aa2](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/0266aa2d02fee948b899e667913bd49c03afbeb6))
+* Delete margin left ([139dc54](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/139dc54dff53d7e6346e158e3ac3cbf69005954c))
+* Edit image device desktop and mobile, edit text blog ([1da458b](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/1da458b95ae142001a8d1846e6317d7439710e73))
+* Edit image empty ([003019a](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/003019a45834a4675676062e0cfe50a60352288d))
+* Edit minheight text desc ([977d9dc](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/977d9dc4feb80c506e32bfc0fc95e197e5796669))
+* Edit on sale ([10fd44f](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/10fd44fdf12f7e2e8f4e09b07f311247a0d0371a))
+* Edit packege and add accet on sale ([205feed](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/205feedf647f98198ed3474f6cadd1218fcf6a05))
+* Fix avatar in winner notification ([b384430](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/b384430f462d6caa2dacb4f65cad0b7718e3750f))
+* Fix button cancel disable in popup check profile ([62954f2](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/62954f21caa3c19200dead263d33109867c1aeb3))
+* Fix chat private ([06eedaf](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/06eedaf8ec7aa109028b86f402ed5d146b10d078))
+* Fix chat privite no scroll ([34b3a47](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/34b3a477354d056023513a0a264dd6f007ef5a2b))
+* Fix popup transaction device mobie scroll ([757f01c](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/757f01c45a624ae2eb4ca4c36ac01e7780104636))
+* Fix text promotion in tab sign in ([0de8dd5](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/0de8dd50f2d3092df8ea1c53034400fa4038b1fa))
+* Fix UI winner noti ([4532da7](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/4532da7856864fcb57eb8a36d85fff09def38665))
+* Hide delete friend in mod account ([ba28989](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/ba28989a7ceb16017262f2562607cd7f30143a94))
+* Normal user cannot add friend with mod account ([7200c76](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/7200c767fca13708bf7a6574ed008f6cc68e21ec))
+* Only active user must be shown with add friend ([d5ac931](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/d5ac9312203e751ffee8999e4fd4d89815c35bb4))
+* Remove VIP in moderator account ([d6f7f4b](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/d6f7f4b76d13f30a38697bd65debb84804f50d33))
+* Remove Won in winner notification ([97c8dac](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/97c8dac002b3ed09c487bcb41e235a6b55c0b73d))
+* Update url of package image ([de45470](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/de45470a9dd42da280a30829bc2442492d0ae3c7))
+* Update url of package image ([68af213](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/commit/68af2131325fd89a896f10f7cfe5d0b81f0b1b07))
+
+## [1.13.0](http://192.168.1.128:3000/King-Of-The-Hill/KOTH_Client/compare/1.12.0...1.13.0) (2024-04-11)
 
 
 ### Features
