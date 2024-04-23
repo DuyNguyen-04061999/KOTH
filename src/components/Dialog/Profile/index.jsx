@@ -625,7 +625,15 @@ export default function DialogProfile(props) {
                             )}
                           </>
                         ) : (
-                          <></>
+                          <Typography
+                            sx={{
+                              fontSize: "14px",
+                              fontWeight: "500",
+                              textOverflow: "clip",
+                            }}
+                          >
+                            {email?.slice(0, 25)}
+                          </Typography>
                         )}
                       </Box>
                     </Box>
@@ -758,7 +766,7 @@ export default function DialogProfile(props) {
                           >
                             Remaining days
                           </Typography>
-                          {uPack?.remain === "undefined" ? (
+                          {uPack?.remain === "undefined" || uPack?.remain === null ? (
                             <Typography
                               sx={{
                                 fontSize: "14px",
@@ -774,7 +782,7 @@ export default function DialogProfile(props) {
                                 fontWeight: "500",
                               }}
                             >
-                              {uPack.remain}
+                              {uPack?.remain}
                             </Typography>
                           )}
                           {uPack?.isRenewPackage === true ? (
@@ -1084,7 +1092,15 @@ export default function DialogProfile(props) {
                                 )}
                               </>
                             ) : (
-                              <></>
+                              <Typography
+                                sx={{
+                                  fontSize: "14px",
+                                  fontWeight: "500",
+                                  textOverflow: "clip",
+                                }}
+                              >
+                                {email?.slice(0, 25)}
+                              </Typography>
                             )}
                           </Box>
                         </>
@@ -1265,7 +1281,14 @@ export default function DialogProfile(props) {
                                     )}
                                   </>
                                 ) : (
-                                  <></>
+                                  <Typography
+                                    sx={{
+                                      fontSize: "14px",
+                                      fontWeight: "500",
+                                    }}
+                                  >
+                                    {`${uPack?.remain?.slice(0, -1)}`}
+                                  </Typography>
                                 )}
                                 {uPack?.isRenewPackage === true ? (
                                   <Box onClick={handleOpenRenewalBadgePopup}>

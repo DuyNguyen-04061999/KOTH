@@ -329,6 +329,10 @@ import numberOne from "../assets/images/banners/bannerTour/christmasBanner/numbe
 import stIcon from "../assets/images/banners/bannerTour/christmasBanner/stIcon.png";
 import winnerFrame from "../assets/images/banners/bannerTour/christmasBanner/winnerFrame.png";
 
+import pepeGift from "../assets/images/PepeGift.gif"
+import pepeGaming from "../assets/images/PepeGaming.gif"
+import totalResult from "../assets/images/totalResult.png"
+
 import stackingDK from "../assets/images/banners/stackingDK.png";
 import stackingMB from "../assets/images/banners/stackingMB.png";
 
@@ -347,6 +351,7 @@ import free_sub_DK from "../assets/images/free_sub_DK.png";
 import emptyNews from "../assets/images/emptyNews.png";
 
 export const imageHome = {
+ 
   top1Icon: top1Icon,
   titleImage: titleImage,
   brandAvatar: brandAvatar,
@@ -418,6 +423,9 @@ export const navbar = {
 };
 
 export const images = {
+  totalResult:totalResult,
+  pepeGift:pepeGift,
+  pepeGaming:pepeGaming,
   pepeTicket:pepeTicket,
   emptyNews:emptyNews,
   emptyNews: emptyNews,

@@ -184,6 +184,49 @@ class UserService {
     const res = await PROMOTION_API.get("/api/get-cities-and-states/us");
     return res;
   }
+
+  async getPrizeInfoService(dataRequest) {
+    const res = await PROMOTION_API.post(
+      "/api/prize/claim-update-info-prize",
+      dataRequest,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "x-access-refactor-token":
+            dataRequest || localStorage.getItem("token"),
+          Authorization: `Bearer ${
+            dataRequest || localStorage.getItem("token")
+          }`,
+          authorization: `Bearer ${
+            dataRequest || localStorage.getItem("token")
+          }`,
+        },
+      }
+    );
+    return res;
+  }
+
+  async getPrizeOptionalService(dataRequest) {
+    const res = await PROMOTION_API.post(
+      "/api/prize/claim-update-optional-info-prize",
+      dataRequest,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "x-access-refactor-token":
+            dataRequest || localStorage.getItem("token"),
+          Authorization: `Bearer ${
+            dataRequest || localStorage.getItem("token")
+          }`,
+          authorization: `Bearer ${
+            dataRequest || localStorage.getItem("token")
+          }`,
+        },
+      }
+    );
+    return res;
+  }
+
   async banUser(dataRequest) {
     const res = await PROMOTION_API.post(
       "/api/authenticate/ban-user",

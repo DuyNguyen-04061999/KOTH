@@ -5,7 +5,7 @@ import i18n from "../../i18n/i18n";
 import { authNotification } from "../../utils/notification";
 import _socket from "../config/socket";
 import { showToastNotification } from "../reducers/alertReducer";
-import { openDialogGif } from "../reducers/appReducer";
+import { closePopupCompleteProfile, openDialogGif, openPopupCompleteExtra } from "../reducers/appReducer";
 import {
   clickTab,
   closeLoginDialog,
@@ -35,6 +35,11 @@ import {
   forgetPasswordSuccess,
   getCityAndStateProfileFail,
   getCityAndStateProfileSuccess,
+  getClaimPrizeInfoFail,
+  getClaimPrizeInfoSuccess,
+  getClaimPrizeOptionalFail,
+  getClaimPrizeOptionalSuccess,
+  getMyInfor,
   getMyInforFail,
   getMyInforSuccess,
   getUserByUsernameFail,
@@ -60,14 +65,21 @@ import {
   unBanUserFail,
   unBanUserSuccess,
   updateLoginFail,
+  updateProfileFirstPlayFail,
+  updateProfileFirstPlaySuccess,
   updateProfileUserFail,
   updateProfileUserSuccess,
   updateUserToken,
   updateVerifyOTPType,
 } from "../reducers/userReducer";
 import UserService from "../services/userService";
+import { store } from "../config/configRedux";
+import { toast } from "react-toastify";
 
 const userService = new UserService();
+
+
+
 var loginCount = 0;
 function* loginSaga(dataRequest) {
   const i18n = yield getContext("i18n");
@@ -249,6 +261,94 @@ function* updateProfileSaga(dataRequest) {
           error?.message || "Update profile failed! Something went wrong!",
       })
     );
+  }
+}
+
+
+
+let updateFirstPlay = 0
+function* updateProfileFirstPlay(dataRequest) {
+  const {stepProfile} = store.getState().appReducer
+  try{
+    updateFirstPlay += 1
+   if(updateFirstPlay === 1) {
+    const { payload } = dataRequest;
+    const res = yield call(userService.updateProfile, payload);
+    const { status, data } = res;
+    if(stepProfile === "step1") {
+      if (status === 200 || status === 201) {
+        // yield put(closeProfileDialog());
+        // yield put(exitEditProfile());
+        yield put(
+          showToastNotification({
+            type: "success",
+            message: i18n?.t("Update profile successfully!", { ns: "auth" }),
+          })
+        );
+        yield put(closePopupCompleteProfile())
+        yield put(openPopupCompleteExtra({
+          type:"doneStep1"
+        }))
+        yield delay(3000);
+        yield put(
+          updateProfileFirstPlaySuccess({
+            avatar: data?.data?.avatar,
+            nickName: data?.data?.nickName,
+            checkFullInfor: data?.data?.checkFullInfor,
+          })
+        );
+        console.log(data);
+      } else {
+        yield put(
+          showToastNotification({
+            type: "error",
+            message: i18n?.t("Update profile failed! Something went wrong!", {
+              ns: "auth",
+            }),
+          })
+        );
+        yield put(updateProfileFirstPlayFail());
+      }
+    } else if(stepProfile === "step2") {
+      if (status === 200 || status === 201) {
+        // yield put(closeProfileDialog());
+        // yield put(exitEditProfile());
+        yield put(
+          showToastNotification({
+            type: "success",
+            message: i18n?.t("Update profile successfully!", { ns: "auth" }),
+          })
+        );
+        yield put(closePopupCompleteProfile())
+        yield put(openPopupCompleteExtra({
+          type:"doneStep2"
+        }))
+        yield delay(3000);
+        yield put(
+          updateProfileFirstPlaySuccess({
+            avatar: data?.data?.avatar,
+            nickName: data?.data?.nickName,
+            checkFullInfor: data?.data?.checkFullInfor,
+          })
+        );
+        console.log(data);
+      } else {
+        yield put(
+          showToastNotification({
+            type: "error",
+            message: i18n?.t("Update profile failed! Something went wrong!", {
+              ns: "auth",
+            }),
+          })
+        );
+        yield put(updateProfileFirstPlayFail());
+      }
+    }
+   }
+   updateFirstPlay = 0
+  } catch(err) {
+    updateFirstPlay = 0
+    console.log(err);
   }
 }
 
@@ -735,6 +835,48 @@ function* unBanUserSaga(dataRequest) {
   }
 }
 
+let prizeInfo = 0;
+function* getClaimPrizeInfoSaga(dataRequest) {
+  try {
+    prizeInfo +=1
+    if(prizeInfo === 1) {
+      const {payload} = dataRequest
+      const res = yield call(userService.getPrizeInfoService, payload)
+      const {status, data} = res
+      if(status === 200 || status === 201) {
+        yield put(getClaimPrizeInfoSuccess(data))
+        toast.success(data?.message)
+      }
+    }
+    prizeInfo = 0
+  } catch (err) {
+    prizeInfo = 0
+    console.log(err);
+    yield put(getClaimPrizeInfoFail())
+    toast.error(err)
+  }
+}
+
+let prizeOptional = 0
+function* getClaimPrizeOptionalSaga(dataRequest) { 
+  try {
+    prizeOptional += 1
+    if(prizeOptional === 1) {
+      const {payload} = dataRequest;
+      const res = yield call(userService.getPrizeOptionalService, payload)
+      const {status, data} = res
+      if(status === 200 || status === 201) {
+        yield put(getClaimPrizeOptionalSuccess(data))
+        toast.success(data?.message)
+      }
+    }
+  } catch (err) {
+    console.log(err);
+    yield put(getClaimPrizeOptionalFail())
+    toast.error(err)
+  }
+}
+
 function* authSaga() {
   yield takeEvery("LOGIN_READY", loginSaga);
   yield takeEvery("REGISTER_READY", registerSaga);
@@ -751,6 +893,9 @@ function* authSaga() {
   yield takeEvery("GET_USER_BY_USERNAME", getUserByUsernameSaga);
   yield takeEvery("GET_MY_INFOR", getMyInforSaga);
   yield takeEvery("GET_CITY_AND_STATE_PROFILE", getCityAndStateProfilSaga);
+  yield takeEvery("UPDATE_PROFILE_FIRST_PLAY", updateProfileFirstPlay)
+  yield takeEvery("GET_CLAIM_PRIZE_INFO", getClaimPrizeInfoSaga)
+  yield takeEvery("GET_CLAIM_PRIZE_OPTIONAL",getClaimPrizeOptionalSaga)
 }
 
 export default authSaga;

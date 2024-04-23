@@ -27,7 +27,10 @@ import BuyTicket from "../../../components/Dialog/Tourament/buyTicket";
 import LikeDislikeGame from "../../../components/LikeDislikeGame";
 import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
 import ParagraphLoading from "../../../components/LoadingComponent/ParagraphLoading";
-import { updateFromRouter } from "../../../redux-saga-middleware/reducers/appReducer";
+import {
+  openPopupCompleteProfile,
+  updateFromRouter,
+} from "../../../redux-saga-middleware/reducers/appReducer";
 import {
   openSubscribeDialog,
   toggleLoginDialog,
@@ -100,6 +103,10 @@ export default function JoinTournament() {
     isGetDetailAuthPromotion,
   } = useSelector((state) => state.promotionReducer);
   const { orientation } = useSelector((state) => state.gameReducer);
+  const { scoreGame } = useSelector((state) => state.appReducer);
+  const { address1, state, zipCode, city, firstName, lastName, email, birthDay, gender } = useSelector(
+    (state) => state.profileReducer
+  );
   const [readMore, setReadMore] = useState(false);
   const [rewardPopup, setRewardPopup] = useState(false);
   const navigate = useNavigate();
@@ -125,20 +132,32 @@ export default function JoinTournament() {
       dispatch(getRefactorDetailPromotion(id));
     }
   }, [token, dispatch, id]);
+
   const handlePlayTour = () => {
-    if (isFullInfo === false) {
-      dispatch(toggleCheckProfileDialog());
+    if (scoreGame === 0) {
+      dispatch(
+        startGameInPromotion({
+          tournamentId: id,
+        })
+      );
+      localStorage.setItem("firstPlayGame", "check")
       return;
     }
     if (detailTournament?.extra === 0 && countTicket === 0) {
       dispatch(toggleExtra());
       return;
     } else {
-      dispatch(
-        startGameInPromotion({
-          tournamentId: id,
-        })
-      );
+      if(firstName !== "" || lastName !== "" || email !== "" || birthDay !== "" || gender !== "") {
+        dispatch(
+          startGameInPromotion({
+            tournamentId: id,
+          })
+        );
+      } else {
+        dispatch(openPopupCompleteProfile({
+          type: "step1"
+        }))
+      }
     }
   };
 
@@ -488,44 +507,27 @@ export default function JoinTournament() {
                       }}
                       className="btn-conteiner"
                     >
-                      {!listJoinedTour?.includes(id) ? (
-                        <Box sx={{ width: "150px" }}>
-                          <AnimButton
-                            onClick={handleJoinTour}
-                            text="Join"
-                            type="highlight"
-                          />
-                        </Box>
-                      ) : (
-                        <Box
-                          sx={{ display: "flex", justifyContent: "flex-end" }}
-                          className="btn-conteiner"
-                        >
-                          <Box sx={{ width: "150px", marginRight: "12px" }}>
-                            {" "}
-                            {isStartGameInPromotion ? (
-                              <AnimButton
-                                onClick={handlePlayTour}
-                                type="loading"
-                                text={t("Play")}
-                              />
-                            ) : (
-                              <AnimButton
-                                onClick={handlePlayTour}
-                                type="highlight"
-                                text={t("Play")}
-                              />
-                            )}
-                          </Box>
-                          <Box sx={{ width: "150px" }}>
+                      <Box
+                        sx={{ display: "flex", justifyContent: "flex-end" }}
+                        className="btn-conteiner"
+                      >
+                        <Box sx={{ width: "150px", marginRight: "12px" }}>
+                          {" "}
+                          {isStartGameInPromotion ? (
                             <AnimButton
-                              onClick={handleClickOpen}
-                              text={t("Buy Extra")}
-                              type="primary"
+                              onClick={handlePlayTour}
+                              type="loading"
+                              text={t("Play")}
                             />
-                          </Box>
+                          ) : (
+                            <AnimButton
+                              onClick={handlePlayTour}
+                              type="highlight"
+                              text={t("Play")}
+                            />
+                          )}
                         </Box>
-                      )}
+                      </Box>
                     </Box>
                     <Box
                       onClick={() => {
@@ -3045,41 +3047,24 @@ export default function JoinTournament() {
                           marginTop: "15px",
                         }}
                       >
-                        {!listJoinedTour?.includes(id) ? (
-                          detailTournament?.tournamentStatus === 2 ? (
-                            ""
-                          ) : (
-                            <AnimButton
-                              onClick={handleJoinTour}
-                              text="Join"
-                              type="highlight"
-                            />
+                        <Box
+                          sx={{
+                            display:
+                              detailTournament?.tournamentStatus === 2
+                                ? "none"
+                                : "flex",
+                            justifyContent: "space-between",
+                          }}
+                        >
+                          {" "}
+                          (
+                          <AnimButton
+                            onClick={handlePlayTour}
+                            type="highlight"
+                            text="Play"
+                          />
                           )
-                        ) : (
-                          <Box
-                            sx={{
-                              display:
-                                detailTournament?.tournamentStatus === 2
-                                  ? "none"
-                                  : "flex",
-                              justifyContent: "space-between",
-                            }}
-                          >
-                            {" "}
-                            (
-                            <AnimButton
-                              onClick={handlePlayTour}
-                              type="highlight"
-                              text="Play"
-                            />
-                            )
-                            <AnimButton
-                              onClick={handleClickOpen}
-                              text="Buy Extra"
-                              type="primary"
-                            />
-                          </Box>
-                        )}
+                        </Box>
                       </Box>
                       {detailTournament?.tournamentStatus === 2 ? (
                         ""
