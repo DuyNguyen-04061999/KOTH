@@ -18,7 +18,7 @@ export default function DialogBanUser() {
   const handleOnClickBanUser = () => {
     dispatch(
       banUserReady({
-        usernameBanned: currentGoingToBanUser,
+        usernameBanned: currentGoingToBanUser?.messageFromName,
         banReason: reason,
       })
     );
@@ -86,7 +86,7 @@ export default function DialogBanUser() {
         >
           You are going to ban{" "}
           <span style={{ color: "#7C81F2" }}>
-            {sliceString(currentGoingToBanUser, 10)}
+            {sliceString(currentGoingToBanUser?.fromNickName, 10)}
           </span>
         </Typography>
         <Typography

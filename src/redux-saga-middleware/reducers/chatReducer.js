@@ -30,12 +30,13 @@ export const showBadgeChat = (data) => {
   };
 };
 
-export const updateContacterUsername = (userName, id) => {
+export const updateContacterUsername = (userName, id, isMod) => {
   return {
     type: "UPDATE_CONTACTER_USERNAME",
     payload: {
       userName: userName,
       id: id,
+      isMod: isMod,
     },
   };
 };

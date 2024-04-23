@@ -380,7 +380,7 @@ export default function DialogProfile(props) {
                         </Typography>
                       </Box>
                     ) : (
-                      ""
+                     <></>
                     )}
                   </Box>
                 )}
@@ -397,63 +397,65 @@ export default function DialogProfile(props) {
           {device === "Mobile" ? (
             <Box>
               <Box component={"form"} className="mt-2">
-                {tokenUser && userNameProfile !== user?.userName && (
-                  <Box>
-                    {listSendingRequest &&
-                    listSendingRequest
-                      ?.map((item) => {
-                        return item?.userName;
-                      })
-                      .includes(userNameProfile) ? (
-                      <Box
-                        onClick={handleCancelFriend}
-                        className="p-1 text-white d-flex justify-content-center pt-2 pb-2"
-                        sx={{
-                          background:
-                            "linear-gradient(180deg, #843ff0, #7748ed)",
-                          width: "100%",
-                          borderRadius: "4px",
-                        }}
-                      >
-                        <PersonRemoveAlt1 className="me-2 pb-1" />
-                        Cancel Friend
-                      </Box>
-                    ) : (
-                      <>
-                        {!currContacter?.isModMessage &&
-                          (checkExistInFriendList() ? (
-                            <Box
-                              onClick={handleDeleteFriend}
-                              className="p-1 text-white d-flex justify-content-center pt-2 pb-2"
-                              sx={{
-                                background:
-                                  "linear-gradient(180deg, #843ff0, #7748ed)",
-                                width: "100%",
-                                borderRadius: "4px",
-                              }}
-                            >
-                              <PersonRemoveAlt1 className="me-2 pb-1" />
-                              Delete Friend
-                            </Box>
-                          ) : (
-                            <Box
-                              onClick={handleAddFriend}
-                              className="p-1 text-white d-flex justify-content-center pt-2 pb-2"
-                              sx={{
-                                background:
-                                  "linear-gradient(180deg, #843ff0, #7748ed)",
-                                width: "100%",
-                                borderRadius: "4px",
-                              }}
-                            >
-                              <PersonAddAlt1 className="me-2 pb-1" />
-                              Add Friend
-                            </Box>
-                          ))}
-                      </>
-                    )}
-                  </Box>
-                )}
+                {tokenUser &&
+                  userNameProfile !== user?.userName &&
+                  user?.userRole !== "Moderator" && (
+                    <Box>
+                      {listSendingRequest &&
+                      listSendingRequest
+                        ?.map((item) => {
+                          return item?.userName;
+                        })
+                        .includes(userNameProfile) ? (
+                        <Box
+                          onClick={handleCancelFriend}
+                          className="p-1 text-white d-flex justify-content-center pt-2 pb-2"
+                          sx={{
+                            background:
+                              "linear-gradient(180deg, #843ff0, #7748ed)",
+                            width: "100%",
+                            borderRadius: "4px",
+                          }}
+                        >
+                          <PersonRemoveAlt1 className="me-2 pb-1" />
+                          Cancel Friend
+                        </Box>
+                      ) : (
+                        <>
+                          {!currContacter?.isModMessage &&
+                            (checkExistInFriendList() ? (
+                              <Box
+                                onClick={handleDeleteFriend}
+                                className="p-1 text-white d-flex justify-content-center pt-2 pb-2"
+                                sx={{
+                                  background:
+                                    "linear-gradient(180deg, #843ff0, #7748ed)",
+                                  width: "100%",
+                                  borderRadius: "4px",
+                                }}
+                              >
+                                <PersonRemoveAlt1 className="me-2 pb-1" />
+                                Delete Friend
+                              </Box>
+                            ) : (
+                              <Box
+                                onClick={handleAddFriend}
+                                className="p-1 text-white d-flex justify-content-center pt-2 pb-2"
+                                sx={{
+                                  background:
+                                    "linear-gradient(180deg, #843ff0, #7748ed)",
+                                  width: "100%",
+                                  borderRadius: "4px",
+                                }}
+                              >
+                                <PersonAddAlt1 className="me-2 pb-1" />
+                                Add Friend
+                              </Box>
+                            ))}
+                        </>
+                      )}
+                    </Box>
+                  )}
 
                 <hr
                   style={{
@@ -596,16 +598,32 @@ export default function DialogProfile(props) {
                         >
                           Email address
                         </Typography>
-                        {device === "Mobile" ? (
-                          <Typography
-                            sx={{
-                              fontSize: "14px",
-                              fontWeight: "500",
-                              textOverflow: "clip",
-                            }}
-                          >
-                            {email}
-                          </Typography>
+                        {email !== null ||
+                        email !== undefined ||
+                        email !== "" ? (
+                          <>
+                            {device === "Mobile" ? (
+                              <Typography
+                                sx={{
+                                  fontSize: "14px",
+                                  fontWeight: "500",
+                                  textOverflow: "clip",
+                                }}
+                              >
+                                {email}
+                              </Typography>
+                            ) : (
+                              <Typography
+                                sx={{
+                                  fontSize: "14px",
+                                  fontWeight: "500",
+                                  textOverflow: "clip",
+                                }}
+                              >
+                                {email?.slice(0, 25)}
+                              </Typography>
+                            )}
+                          </>
                         ) : (
                           <Typography
                             sx={{
@@ -798,6 +816,7 @@ export default function DialogProfile(props) {
               <Box component={"form"} className="mt-2">
                 {tokenUser &&
                   userNameProfile !== user?.userName &&
+                  user?.userRole !== "Moderator" &&
                   (checkExistInFriendList() === true ? (
                     <MenuItem
                       sx={{
@@ -1046,16 +1065,32 @@ export default function DialogProfile(props) {
                             >
                               Email address
                             </Typography>
-                            {device === "Mobile" ? (
-                              <Typography
-                                sx={{
-                                  fontSize: "14px",
-                                  fontWeight: "500",
-                                  textOverflow: "clip",
-                                }}
-                              >
-                                {email}
-                              </Typography>
+                            {email !== null ||
+                            email !== undefined ||
+                            email !== "" ? (
+                              <>
+                                {device === "Mobile" ? (
+                                  <Typography
+                                    sx={{
+                                      fontSize: "14px",
+                                      fontWeight: "500",
+                                      textOverflow: "clip",
+                                    }}
+                                  >
+                                    {email}
+                                  </Typography>
+                                ) : (
+                                  <Typography
+                                    sx={{
+                                      fontSize: "14px",
+                                      fontWeight: "500",
+                                      textOverflow: "clip",
+                                    }}
+                                  >
+                                    {email?.slice(0, 25)}
+                                  </Typography>
+                                )}
+                              </>
                             ) : (
                               <Typography
                                 sx={{
@@ -1223,15 +1258,28 @@ export default function DialogProfile(props) {
                                 >
                                   Remaining days
                                 </Typography>
-                                {!uPack?.remain || !uPack ? (
-                                  <Typography
-                                    sx={{
-                                      fontSize: "14px",
-                                      fontWeight: "500",
-                                    }}
-                                  >
-                                    You are not a VIP
-                                  </Typography>
+                                {uPack !== null ? (
+                                  <>
+                                    {!uPack?.remain || !uPack ? (
+                                      <Typography
+                                        sx={{
+                                          fontSize: "14px",
+                                          fontWeight: "500",
+                                        }}
+                                      >
+                                        You are not a VIP
+                                      </Typography>
+                                    ) : (
+                                      <Typography
+                                        sx={{
+                                          fontSize: "14px",
+                                          fontWeight: "500",
+                                        }}
+                                      >
+                                        {`${uPack?.remain?.slice(0, -1)}`}
+                                      </Typography>
+                                    )}
+                                  </>
                                 ) : (
                                   <Typography
                                     sx={{
