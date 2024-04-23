@@ -36,6 +36,7 @@ import {
   updateBonuses,
   updateCurrentLevel,
 } from "../../../../redux-saga-middleware/reducers/referralReducer";
+import { getUserGuest } from "../../../../redux-saga-middleware/reducers/appReducer";
 
 const BgWithTooltip = withStyles({
   tooltip: {
@@ -86,6 +87,7 @@ export default function Dialoglg() {
     dispatch(getListTier([]));
     dispatch(updateCurrentLevel({}));
     dispatch(updateBonuses({}));
+    dispatch(getUserGuest())
   };
   const { width, height } = useWindowDimensions();
 
@@ -352,7 +354,9 @@ export default function Dialoglg() {
                             overflow: "hidden",
                           }}
                         >
-                         Guest_01
+                          {user?.userNickName?.length > 10
+                          ? user?.userNickName.slice(0, 10) + "..."
+                          : user?.userNickName}
                         </Typography>
                         {uPack && uPack.remain !== "Expired" ? (
                           <Box
@@ -449,7 +453,9 @@ export default function Dialoglg() {
                           sx={{ fontWeight: "700", fontSize: "18px" }}
                           className="text-white ps-2 pe-2"
                         >
-                          Guest_01
+                           {user?.userNickName?.length > 10
+                          ? user?.userNickName.slice(0, 10) + "..."
+                          : user?.userNickName}
                         </Typography>
                       </Box>
                       {uPack && uPack?.remain !== "Expired" ? (

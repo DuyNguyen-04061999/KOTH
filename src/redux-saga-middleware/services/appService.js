@@ -40,7 +40,6 @@ class AppService {
   }
 
   async getDisplayName(dataRequest) {
-    console.log(dataRequest);
     const res = await PROMOTION_API.post(
       `/api/authenticate/generate-display-name`, 
       {

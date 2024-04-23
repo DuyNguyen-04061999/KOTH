@@ -9,7 +9,7 @@ import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { showToastNotification } from "../../../../redux-saga-middleware/reducers/alertReducer";
 import { clickTab } from "../../../../redux-saga-middleware/reducers/authReducer";
-import { registerReady } from "../../../../redux-saga-middleware/reducers/userReducer";
+import { getUpgradeGuest, registerReady } from "../../../../redux-saga-middleware/reducers/userReducer";
 import { images, sign } from "../../../../utils/images";
 import { systemNotification } from "../../../../utils/notification";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
@@ -59,6 +59,8 @@ export default function Signup(props) {
   const { listSetting } = useSelector((state) => state.settingReducer);
   const { isRegister } = useSelector((state) => state.userReducer);
   const { listDisplayName } = useSelector((state) => state.appReducer);
+  const {isCheckGuest} = useSelector((state) => state.tournamentReducer)
+  console.log(isCheckGuest);
   const handleSetPassword = () => {
     setDisplayPassword(!displayPassword);
   };
@@ -81,7 +83,11 @@ export default function Signup(props) {
         })
       );
     } else {
-      sendRegister();
+      if(isCheckGuest === true) {
+        handleRegisterGuestUpgrade()
+      } else {
+        sendRegister();
+      }
     }
   };
 
@@ -252,6 +258,15 @@ export default function Signup(props) {
     passOneNumber,
     passOneLetter,
   ]);
+
+  const handleRegisterGuestUpgrade = () => {
+    dispatch(
+      getUpgradeGuest({
+        phone: phone,
+        password: password,
+      })
+    )
+  }
 
   const sendRegister = () => {
     if (!disabledBtn) {

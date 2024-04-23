@@ -144,6 +144,7 @@ function* getUserGuestSaga(dataRequest) {
     yield put(getUserGuestFail())
   }
 }
+
 function* getScoreGameSaga(dataRequest) {
   try {
     const {payload} = dataRequest;

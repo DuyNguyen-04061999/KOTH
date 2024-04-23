@@ -97,7 +97,6 @@ function App() {
   const { startGameCheck } = store.getState().appReducer;
   const { tokenUser, user } = store.getState().userReducer;
   const { currentTab } = store.getState().authReducer;
-
   const { orientation } = store.getState().gameReducer;
   const [socket, setSocket] = useState(null);
 
@@ -275,8 +274,11 @@ function App() {
   }, [socket]);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!tokenUser || !token) {
+    // const tokenGuest = ""
+    // if (tokenGuest === null || tokenGuest === "" || tokenGuest === undefined) {
+    //   store.dispatch(getUserGuest())
+    // }
+    if(!tokenUser) {
       store.dispatch(getUserGuest())
     }
   }, [tokenUser]);
@@ -368,8 +370,11 @@ function App() {
   useEffect(() => {
     const onPageLoad = () => {
       const token = localStorage.getItem("token");
+      const tokenGuest = localStorage.getItem("token_guest")
       if ((token || tokenUser) && currentTab !== "otpVerifyAccount") {
         store.dispatch(getUserInfoReady(token || tokenUser));
+      } else {
+        store.dispatch(getUserInfoReady(tokenGuest))
       }
     };
 

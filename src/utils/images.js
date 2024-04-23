@@ -346,6 +346,7 @@ import news3 from "../assets/images/news3.png";
 import free_sub_MB from "../assets/images/free_sub_MB.png";
 import free_sub_DK from "../assets/images/free_sub_DK.png";
 import emptyNews from "../assets/images/emptyNews.png";
+import crossbar from "../assets/images/crossbarResult.png"
 
 export const imageHome = {
  
@@ -420,6 +421,7 @@ export const navbar = {
 };
 
 export const images = {
+  crossbar:crossbar,
   totalResult:totalResult,
   pepeGift:pepeGift,
   pepeGaming:pepeGaming,

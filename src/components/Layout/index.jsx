@@ -93,6 +93,7 @@ import TransactionHistory from "../Dialog/TransactionHistory";
 import DialogBanUser from "../Dialog/DialogBanUser";
 import CompleteExtra from "../Dialog/PopupNewUser/CompleteExtra";
 import CompleteProfile from "../Dialog/PopupNewUser/CompleteProfile";
+import DialogCheckExtraGuest from "../Dialog/DialogCheckExtraGuest";
 
 const Main = muiStyled("main", {
   shouldForwardProp: (prop) => prop !== "open",
@@ -511,6 +512,7 @@ export default function Layout(props) {
       <RenewalNotiPopup />
       <CompleteExtra />
       <CompleteProfile />
+      <DialogCheckExtraGuest />
       {params && params?.get("game") && params?.get("game") === "revive" && (
         <PackagePaypalDialog />
       )}

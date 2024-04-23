@@ -42,6 +42,8 @@ import {
   getMyInfor,
   getMyInforFail,
   getMyInforSuccess,
+  getUpgradeGuestFail,
+  getUpgradeGuestSuccess,
   getUserByUsernameFail,
   getUserByUsernameSuccess,
   getUserInfoFail,
@@ -75,6 +77,7 @@ import {
 import UserService from "../services/userService";
 import { store } from "../config/configRedux";
 import { toast } from "react-toastify";
+import { getTokenGuest } from "../../utils/getTokenGuest";
 
 const userService = new UserService();
 
@@ -90,6 +93,7 @@ function* loginSaga(dataRequest) {
       const res = yield call(userService.login, payload);
       const { status, data } = res;
       if (status === 200 || status === 201) {
+        localStorage.removeItem("token_guest")
         yield delay(500);
         yield put(loginSuccess(data?.data));
         _socket.emit("loginSocial", {
@@ -412,6 +416,7 @@ function* userInfoSaga(dataRequest) {
   try {
     userInfoCount += 1;
     if (userInfoCount === 1) {
+      const tokenGuest = getTokenGuest()
       const { payload } = dataRequest;
       const res = yield call(userService.userInfo, payload);
       const { status, data } = res;
@@ -422,6 +427,7 @@ function* userInfoSaga(dataRequest) {
         });
         yield put(getUserInfoSuccess(data?.data));
         yield put(saveNickNameWhenLogin(data?.data?.nickName));
+       if(!tokenGuest) {
         if (
           // data?.data?.user?.userVerifiedEmail === 0 &&
           // data?.data?.user?.userVerifiedPhone === 0
@@ -430,6 +436,7 @@ function* userInfoSaga(dataRequest) {
           yield put(updateVerifyOTPType("reVerify"));
           yield put(openVerifyDialog());
         }
+       }
         yield put(closeLoginDialog());
       } else {
         yield put(getUserInfoFail());
@@ -877,6 +884,27 @@ function* getClaimPrizeOptionalSaga(dataRequest) {
   }
 }
 
+let upgrade = 0
+function* getUpgradeGuestSaga(dataRequest) {
+  try {
+    upgrade +=1
+    if(upgrade ===1) {
+      const {payload} = dataRequest
+      const res = yield call(userService.upgradeGuestService, payload)
+      const {status, data} = res
+      if(status === 200 || status === 201) {
+        console.log(data);
+        yield put(getUpgradeGuestSuccess(data))
+        toast.success(data?.message)
+      }
+    }
+  } catch(err) {
+    console.log(err);
+    yield put(getUpgradeGuestFail())
+    toast.error("err")
+  }
+}
+
 function* authSaga() {
   yield takeEvery("LOGIN_READY", loginSaga);
   yield takeEvery("REGISTER_READY", registerSaga);
@@ -896,6 +924,7 @@ function* authSaga() {
   yield takeEvery("UPDATE_PROFILE_FIRST_PLAY", updateProfileFirstPlay)
   yield takeEvery("GET_CLAIM_PRIZE_INFO", getClaimPrizeInfoSaga)
   yield takeEvery("GET_CLAIM_PRIZE_OPTIONAL",getClaimPrizeOptionalSaga)
+  yield takeEvery("GET_UPGRADE_GUEST",getUpgradeGuestSaga)
 }
 
 export default authSaga;

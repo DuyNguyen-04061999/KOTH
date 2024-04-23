@@ -487,6 +487,27 @@ export const getClaimPrizeOptionalFail = (data) => {
   }
 }
 
+export const getUpgradeGuest = (data) => {
+  return {
+    type: "GET_UPGRADE_GUEST",
+    payload: data
+  }
+}
+
+export const getUpgradeGuestSuccess = (data) => {
+  return {
+    type: "GET_UPGRADE_GUEST_SUCCESS",
+    payload: data
+  }
+}
+
+export const getUpgradeGuestFail = (data) => {
+  return {
+    type: "GET_UPGRADE_GUEST_FAIL",
+    payload: data
+  }
+}
+
 const userReducer = (
   state = {
     tokenUser: "",
@@ -539,6 +560,7 @@ const userReducer = (
     isClaimPrizeOptional:false, 
     isFetchingBanUser: false,
     isFetchingUnbanUser: false,
+    isUpgradeGuest:false
   },
   action
 ) => {
@@ -851,7 +873,15 @@ const userReducer = (
         currentGoingToBanUser: "",
       };
     }
-
+    case "GET_UPGRADE_GUEST" : {
+      return {...state, isUpgradeGuest: true}
+    }
+    case "GET_UPGRADE_GUEST_SUCCESS" : {
+      return {...state, isUpgradeGuest: false}
+    }
+    case "GET_UPGRADE_GUEST_FAIL" : {
+      return {...state, isUpgradeGuest: false}
+    }
     default:
       return state;
   }

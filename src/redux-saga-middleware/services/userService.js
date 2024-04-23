@@ -257,6 +257,19 @@ class UserService {
     );
     return res;
   }
+
+  async upgradeGuestService(dataRequest) {
+    const res = await PROMOTION_API.put(
+      `/api/guest/upgrade`,
+      dataRequest,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
+    return res
+  }
 }
 
 export default UserService;

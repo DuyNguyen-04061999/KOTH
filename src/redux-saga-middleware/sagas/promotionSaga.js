@@ -6,6 +6,7 @@ import { getRefactorDetailAuthPromotion, getRefactorDetailAuthPromotionFail, get
 import { refreshTokenAction } from "../reducers/refreshReducer";
 import { updateListPromotionJoined } from "../reducers/userReducer";
 import promotionService from "../services/promotionService";
+import { getTokenGuest } from "../../utils/getTokenGuest";
 const PromotionService = new promotionService();
 
 let proDetailCount = 0
@@ -110,12 +111,15 @@ function* startGameInPromotionSaga(dataRequest) {
   try {
     startGameCount += 1
     if (startGameCount === 1) {
+      const tokenGuest = getTokenGuest()
       const { payload } = dataRequest;
       const res = yield call(PromotionService.startGameInPromotion, payload);
       const { data, status } = res
       if (status === 200 || status === 201) {
         yield put(startGameInPromotionSuccess(data));
-        yield put(refreshTokenAction());
+        if(!tokenGuest) {
+          yield put(refreshTokenAction());
+        }
       } else {
         yield put(startGameInPromotionFail());
       }
