@@ -376,11 +376,11 @@ export default function DialogProfile(props) {
                             fontWeight: "300",
                           }}
                         >
-                          Remaining days: {`${uPack?.remain.slice(0, -1)}`}
+                          Remaining days: {`${uPack?.remain?.slice(0, -1)}`}
                         </Typography>
                       </Box>
                     ) : (
-                      ""
+                     <></>
                     )}
                   </Box>
                 )}
@@ -598,16 +598,32 @@ export default function DialogProfile(props) {
                         >
                           Email address
                         </Typography>
-                        {device === "Mobile" ? (
-                          <Typography
-                            sx={{
-                              fontSize: "14px",
-                              fontWeight: "500",
-                              textOverflow: "clip",
-                            }}
-                          >
-                            {email}
-                          </Typography>
+                        {email !== null ||
+                        email !== undefined ||
+                        email !== "" ? (
+                          <>
+                            {device === "Mobile" ? (
+                              <Typography
+                                sx={{
+                                  fontSize: "14px",
+                                  fontWeight: "500",
+                                  textOverflow: "clip",
+                                }}
+                              >
+                                {email}
+                              </Typography>
+                            ) : (
+                              <Typography
+                                sx={{
+                                  fontSize: "14px",
+                                  fontWeight: "500",
+                                  textOverflow: "clip",
+                                }}
+                              >
+                                {email?.slice(0, 25)}
+                              </Typography>
+                            )}
+                          </>
                         ) : (
                           <Typography
                             sx={{
@@ -616,7 +632,7 @@ export default function DialogProfile(props) {
                               textOverflow: "clip",
                             }}
                           >
-                            {email.slice(0, 25)}
+                            {email?.slice(0, 25)}
                           </Typography>
                         )}
                       </Box>
@@ -750,7 +766,7 @@ export default function DialogProfile(props) {
                           >
                             Remaining days
                           </Typography>
-                          {uPack?.remain === "undefined" ? (
+                          {uPack?.remain === "undefined" || uPack?.remain === null ? (
                             <Typography
                               sx={{
                                 fontSize: "14px",
@@ -766,7 +782,7 @@ export default function DialogProfile(props) {
                                 fontWeight: "500",
                               }}
                             >
-                              {uPack.remain}
+                              {uPack?.remain}
                             </Typography>
                           )}
                           {uPack?.isRenewPackage === true ? (
@@ -1049,16 +1065,32 @@ export default function DialogProfile(props) {
                             >
                               Email address
                             </Typography>
-                            {device === "Mobile" ? (
-                              <Typography
-                                sx={{
-                                  fontSize: "14px",
-                                  fontWeight: "500",
-                                  textOverflow: "clip",
-                                }}
-                              >
-                                {email}
-                              </Typography>
+                            {email !== null ||
+                            email !== undefined ||
+                            email !== "" ? (
+                              <>
+                                {device === "Mobile" ? (
+                                  <Typography
+                                    sx={{
+                                      fontSize: "14px",
+                                      fontWeight: "500",
+                                      textOverflow: "clip",
+                                    }}
+                                  >
+                                    {email}
+                                  </Typography>
+                                ) : (
+                                  <Typography
+                                    sx={{
+                                      fontSize: "14px",
+                                      fontWeight: "500",
+                                      textOverflow: "clip",
+                                    }}
+                                  >
+                                    {email?.slice(0, 25)}
+                                  </Typography>
+                                )}
+                              </>
                             ) : (
                               <Typography
                                 sx={{
@@ -1067,7 +1099,7 @@ export default function DialogProfile(props) {
                                   textOverflow: "clip",
                                 }}
                               >
-                                {email.slice(0, 25)}
+                                {email?.slice(0, 25)}
                               </Typography>
                             )}
                           </Box>
@@ -1226,15 +1258,28 @@ export default function DialogProfile(props) {
                                 >
                                   Remaining days
                                 </Typography>
-                                {!uPack?.remain || !uPack ? (
-                                  <Typography
-                                    sx={{
-                                      fontSize: "14px",
-                                      fontWeight: "500",
-                                    }}
-                                  >
-                                    You are not a VIP
-                                  </Typography>
+                                {uPack !== null ? (
+                                  <>
+                                    {!uPack?.remain || !uPack ? (
+                                      <Typography
+                                        sx={{
+                                          fontSize: "14px",
+                                          fontWeight: "500",
+                                        }}
+                                      >
+                                        You are not a VIP
+                                      </Typography>
+                                    ) : (
+                                      <Typography
+                                        sx={{
+                                          fontSize: "14px",
+                                          fontWeight: "500",
+                                        }}
+                                      >
+                                        {`${uPack?.remain?.slice(0, -1)}`}
+                                      </Typography>
+                                    )}
+                                  </>
                                 ) : (
                                   <Typography
                                     sx={{
@@ -1242,7 +1287,7 @@ export default function DialogProfile(props) {
                                       fontWeight: "500",
                                     }}
                                   >
-                                    {`${uPack?.remain.slice(0, -1)}`}
+                                    {`${uPack?.remain?.slice(0, -1)}`}
                                   </Typography>
                                 )}
                                 {uPack?.isRenewPackage === true ? (

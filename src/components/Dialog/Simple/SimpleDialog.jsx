@@ -51,18 +51,18 @@ export default function SimpleDialog(props) {
             open={isLoginDialog}
             fullScreen={true}
             sx={{
-              backgroundColor: "#291e3b",
+              backgroundColor: "#181223",
               height: "100%",
               width: "100%",
               zIndex: "1320",
               ".MuiPaper-root": {
-                backgroundColor: "#291e3b",
+                backgroundColor: "#181223",
               },
             }}
           >
             <Box
               sx={{
-                backgroundColor: "#291e3b",
+                backgroundColor: "#181223",
                 // height: "100%",
                 width: "100%",
                 display: "flex",
@@ -118,7 +118,7 @@ export default function SimpleDialog(props) {
             }
             sx={{
               ".MuiPaper-root": {
-                backgroundColor: "#291e3b",
+                backgroundColor: "#181223",
                 height: "100%",
                 overflowX: "hidden",
                 display: "flex",
@@ -129,7 +129,7 @@ export default function SimpleDialog(props) {
           >
             <Box
               sx={{
-                backgroundColor: "#291e3b",
+                backgroundColor: "#181223",
                 height: "100%",
                 width: device === "Desktop" ? "50%" : "100%",
                 display: "flex",
@@ -171,11 +171,15 @@ export default function SimpleDialog(props) {
             {device === "Desktop" ? (
               <Box
                 sx={{
-                  backgroundColor: "#19133e",
+                  backgroundColor: "#181223",
                   color: "white",
                   height: "100%",
                   position: "relative",
                   width: "50%",
+                  backgroundImage: `url(${imageHome.signInBgBanner})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  backgroundRepeat: "no-repeat",
                 }}
               >
                 <Box
@@ -185,10 +189,6 @@ export default function SimpleDialog(props) {
                       device === "Mobile" && orientation === "landscape"
                         ? "auto"
                         : "100%",
-                    backgroundImage: `url(${imageHome.signInBgBanner})`,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                    backgroundRepeat: "no-repeat",
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",

@@ -382,6 +382,12 @@ export const closeReasonDialogFunction = (data) => {
   };
 };
 
+export const updateProfileFirstPlay = (data) => {
+  return {
+    type: "UPDATE_PROFILE_FIRST_PLAY",
+    payload: data
+  }
+}
 export const banUserReady = (data) => {
   return {
     type: "BAN_USER_READY",
@@ -424,6 +430,62 @@ export const updateCurrentBannedUser = (data) => {
     payload: data,
   };
 };
+
+export const updateProfileFirstPlaySuccess = (data) => {
+  return {
+    type: "UPDATE_PROFILE_FIRST_PLAY_SUCCESS",
+    payload: data,
+  };
+};
+
+export const updateProfileFirstPlayFail = (data) => {
+  return {
+    type: "UPDATE_PROFILE_FIRST_PLAY_FAIL",
+    payload: data,
+  };
+};
+
+export const getClaimPrizeInfo = (data) => {
+  return {
+    type: "GET_CLAIM_PRIZE_INFO",
+    payload: data
+  }
+}
+
+export const getClaimPrizeInfoSuccess = (data) => {
+  return {
+    type: "GET_CLAIM_PRIZE_INFO_SUCCESS",
+    payload: data
+  }
+}
+
+export const getClaimPrizeInfoFail = (data) => {
+  return {
+    type: "GET_CLAIM_PRIZE_INFO_FAIL",
+    payload: data
+  }
+}
+
+export const getClaimPrizeOptional = (data) => {
+  return {
+    type: "GET_CLAIM_PRIZE_OPTIONAL",
+    payload: data
+  }
+}
+
+export const getClaimPrizeOptionalSuccess = (data) => {
+  return {
+    type: "GET_CLAIM_PRIZE_OPTIONAL_SUCCESS",
+    payload: data
+  }
+}
+
+export const getClaimPrizeOptionalFail = (data) => {
+  return {
+    type: "GET_CLAIM_PRIZE_OPTIONAL_FAIL",
+    payload: data
+  }
+}
 
 const userReducer = (
   state = {
@@ -472,6 +534,9 @@ const userReducer = (
     totalTransaction: 0,
     openReasonDialog: false,
     currentGoingToBanUser: "",
+    isUpdateProfileFirstPlay: false,
+    isClaimPrizeInfo:false,
+    isClaimPrizeOptional:false, 
     isFetchingBanUser: false,
     isFetchingUnbanUser: false,
   },
@@ -719,6 +784,37 @@ const userReducer = (
     }
     case "UPDATE_TRANSACTION_DIALOG": {
       return { ...state, openTransactionDialog: payload };
+    }
+    case "UPDATE_PROFILE_FIRST_PLAY": {
+      return { ...state, isUpdateProfileFirstPlay: true };
+    }
+    case "UPDATE_PROFILE_FIRST_PLAY_SUCCESS": {
+      return {
+        ...state,
+        isUpdateProfileFirstPlay: false,
+        user: { ...state.user, userNickName: payload?.nickName },
+      };
+    }
+    case "UPDATE_PROFILE_FIRST_PLAY_FAIL": {
+      return { ...state, isUpdateProfileFirstPlay: false };
+    }
+    case "GET_CLAIM_PRIZE_INFO" : {
+      return {...state, isClaimPrizeInfo: true}
+    }
+    case "GET_CLAIM_PRIZE_INFO_SUCCESS" : {
+      return {...state, isClaimPrizeInfo: false}
+    }
+    case "GET_CLAIM_PRIZE_INFO_FAIL" : {
+      return {...state, isClaimPrizeInfo: false}
+    }
+    case "GET_CLAIM_PRIZE_OPTIONAL" : {
+      return {...state,isClaimPrizeOptional: true}
+    }
+    case "GET_CLAIM_PRIZE_OPTIONAL_SUCCESS" : {
+      return {...state,isClaimPrizeOptional: false}
+    }
+    case "GET_CLAIM_PRIZE_OPTIONAL_FAIL" : {
+      return {...state,isClaimPrizeOptional: false}
     }
     case "BAN_USER_READY": {
       return { ...state, isFetchingBanUser: true };

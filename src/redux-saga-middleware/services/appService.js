@@ -55,6 +55,22 @@ class AppService {
     );
     return res;
   }
+
+  async getScoreGame(dataRequest) {
+    const res = await PROMOTION_API.get(
+      `/api/games/score`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: localStorage.getItem("token"),
+          authorization: localStorage.getItem("token"),
+          "x-access-refactor-token": localStorage.getItem("token"),
+        },
+      }
+    )
+    return res;
+  }
+  
 }
 
 export default AppService;
