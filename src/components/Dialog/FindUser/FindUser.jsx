@@ -158,12 +158,12 @@ export default function FindUser(props) {
                       if (
                         !friendList
                           ?.map((item) => {
-                            return item.id;
+                            return item?.id;
                           })
                           .includes(people?.id) &&
                         !listSendingRequest
                           ?.map((item) => {
-                            return item.id;
+                            return item?.id;
                           })
                           .includes(people?.id)
                       ) {
@@ -173,7 +173,7 @@ export default function FindUser(props) {
                       } else if (
                         listSendingRequest
                           ?.map((item) => {
-                            return item.id;
+                            return item?.id;
                           })
                           .includes(people?.id)
                       ) {
@@ -181,7 +181,7 @@ export default function FindUser(props) {
                       } else if (
                         friendList
                           ?.map((item) => {
-                            return item.id;
+                            return item?.id;
                           })
                           .includes(people?.id)
                       ) {
@@ -206,14 +206,14 @@ export default function FindUser(props) {
                     {friendList &&
                     friendList
                       ?.map((item) => {
-                        return item.id;
+                        return item?.id;
                       })
                       .includes(people?.id)
                       ? "View profile"
                       : listSendingRequest &&
                         listSendingRequest
                           ?.map((item) => {
-                            return item.id;
+                            return item?.id;
                           })
                           .includes(people?.id)
                       ? "Cancel request"
