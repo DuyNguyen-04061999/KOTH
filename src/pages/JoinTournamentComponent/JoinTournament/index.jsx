@@ -42,6 +42,7 @@ import {
   finishVideo,
   getRefactorDetailAuthPromotion,
   getRefactorDetailPromotion,
+  joinPromotion,
   saveCurrentPromotionShare,
   startGameInPromotion,
   startGameInPromotionFail,
@@ -141,14 +142,18 @@ export default function JoinTournament() {
     }
   }, [token, dispatch, id]);
 
+  const handleJoinTour = (sub) => {
+      dispatch(
+        joinPromotion({
+          tournamentId: detailTournament?.id,
+          sub: sub ? sub : null,
+        })
+      );
+  };
   const handlePlayTour = () => {
     if (token) {
       if (scoreGame === 0) {
-        dispatch(
-          startGameInPromotion({
-            tournamentId: id,
-          })
-        );
+        handleJoinTour(true)
         localStorage.setItem("firstPlayGame", "check");
         return;
       }
@@ -157,23 +162,15 @@ export default function JoinTournament() {
         return;
       } else {
         if (
-          firstName !== "" ||
-          lastName !== "" ||
-          email !== "" ||
-          birthDay !== "" ||
-          gender !== ""
+          firstName === null || lastName === null || email === null || gender === "" || birthDay === ""
         ) {
-          dispatch(
-            startGameInPromotion({
-              tournamentId: id,
-            })
-          );
-        } else {
           dispatch(
             openPopupCompleteProfile({
               type: "step1",
             })
           );
+        } else {
+          handleJoinTour(true)
         }
       }
     } else {
@@ -181,22 +178,22 @@ export default function JoinTournament() {
     }
   };
 
-  const handleJoinTour = () => {
-    if (token) {
-      if (
-        (detailTournament?.tournamentVip !== 0 && uPack === null) ||
-        (detailTournament?.tournamentVip !== 0 &&
-          uPack &&
-          uPack?.remain === "Expired")
-      ) {
-        dispatch(toggleTournamentShow());
-      } else {
-        dispatch(openSubscribeDialog());
-      }
-    } else {
-      dispatch(toggleLoginDialog());
-    }
-  };
+  // const handleJoinTour = () => {
+  //   if (token) {
+  //     if (
+  //       (detailTournament?.tournamentVip !== 0 && uPack === null) ||
+  //       (detailTournament?.tournamentVip !== 0 &&
+  //         uPack &&
+  //         uPack?.remain === "Expired")
+  //     ) {
+  //       dispatch(toggleTournamentShow());
+  //     } else {
+  //       dispatch(openSubscribeDialog());
+  //     }
+  //   } else {
+  //     dispatch(toggleLoginDialog());
+  //   }
+  // };
 
   useEffect(() => {
     dispatch(saveBoughtTournament(detailTournament?.bought));

@@ -151,7 +151,7 @@ const DialogGift = ({
                   5 PROMOTION EXTRAS
                 </Typography>
               </Box>
-              <Box
+              {/* <Box
                 sx={{
                   fontSize: width < 576 ? "16px" : "16px",
                   fontWeight: "700",
@@ -174,7 +174,7 @@ const DialogGift = ({
               >
                 PROMOTION EXTRAS
               </Typography>
-              </Box>
+              </Box> */}
             </Box>
           </Box>
           <DialogActions

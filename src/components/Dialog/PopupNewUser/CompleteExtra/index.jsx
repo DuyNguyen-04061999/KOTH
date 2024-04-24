@@ -8,7 +8,7 @@ import { imageHome, images } from "../../../../utils/images";
 import AnimButton from "../../../AnimButton";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
 import { Close } from "@mui/icons-material";
-import { closePopupCompleteExtra, getTypeDoneStep1, getTypeDoneStep2, getTypeFirstPlay, getTypeSecondPlay, openPopupCompleteProfile } from "../../../../redux-saga-middleware/reducers/appReducer";
+import { closePopupCompleteExtra, getScoreGame, getTypeDoneStep1, getTypeDoneStep2, getTypeFirstPlay, getTypeSecondPlay, openPopupCompleteProfile } from "../../../../redux-saga-middleware/reducers/appReducer";
 import { getClaimPrizeInfo, getClaimPrizeOptional } from "../../../../redux-saga-middleware/reducers/userReducer";
 
 const CompleteExtra = ({
@@ -24,6 +24,7 @@ const CompleteExtra = ({
 
   const handleClose = () => {
     dispatch(closePopupCompleteExtra())
+    dispatch(getScoreGame())
   };
 
   const handleConfirm = () => {};
