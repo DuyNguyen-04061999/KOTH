@@ -106,10 +106,6 @@ export default function JoinTournament() {
   const { orientation } = useSelector((state) => state.gameReducer);
   const { scoreGame } = useSelector((state) => state.appReducer);
   const {
-    address1,
-    state,
-    zipCode,
-    city,
     firstName,
     lastName,
     email,
@@ -143,17 +139,17 @@ export default function JoinTournament() {
   }, [token, dispatch, id]);
 
   const handleJoinTour = (sub) => {
-      dispatch(
-        joinPromotion({
-          tournamentId: detailTournament?.id,
-          sub: sub ? sub : null,
-        })
-      );
+    dispatch(
+      joinPromotion({
+        tournamentId: detailTournament?.id,
+        sub: sub ? sub : null,
+      })
+    );
   };
   const handlePlayTour = () => {
     if (token) {
       if (scoreGame === 0) {
-        handleJoinTour(true)
+        handleJoinTour(true);
         localStorage.setItem("firstPlayGame", "check");
         return;
       }
@@ -162,15 +158,25 @@ export default function JoinTournament() {
         return;
       } else {
         if (
-          firstName === null || lastName === null || email === null || gender === "" || birthDay === ""
+          firstName === null ||
+          lastName === null ||
+          email === null ||
+          gender === "" ||
+          birthDay === "" ||
+          firstName === "" ||
+          lastName === "" || 
+          email === "" 
         ) {
           dispatch(
             openPopupCompleteProfile({
               type: "step1",
             })
           );
+          console.log(456);
+          console.log(firstName, lastName, email, birthDay, gender);
         } else {
-          handleJoinTour(true)
+          handleJoinTour(true);
+          console.log(123);
         }
       }
     } else {

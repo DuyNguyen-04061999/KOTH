@@ -142,14 +142,12 @@ const CompleteProfile = ({
     );
     dispatch(closePopupCompleteProfile());
   };
-
   const handleSkipStep2 = () => {
     dispatch(
       openPopupCompleteExtra({
         type: "doneStep1",
       })
     );
-
     dispatch(closePopupCompleteProfile());
   };
 
