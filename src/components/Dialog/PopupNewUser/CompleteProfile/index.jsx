@@ -307,8 +307,8 @@ const CompleteProfile = ({
                         fill="#7C81F2"
                         stroke="#7C81F2"
                         strokeWidth="1.63596"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                       />
                       <path
                         d="M1 19V17C1 15.9391 1.42143 14.9217 2.17157 14.1716C2.92172 13.4214 3.93913 13 5 13H9C10.0609 13 11.0783 13.4214 11.8284 14.1716C12.5786 14.9217 13 15.9391 13 17V19"
@@ -318,8 +318,8 @@ const CompleteProfile = ({
                         d="M1 19V17C1 15.9391 1.42143 14.9217 2.17157 14.1716C2.92172 13.4214 3.93913 13 5 13H9C10.0609 13 11.0783 13.4214 11.8284 14.1716C12.5786 14.9217 13 15.9391 13 17V19H1Z"
                         stroke="#7C81F2"
                         strokeWidth="1.63596"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                       />
                     </svg>
                   </Box>
@@ -384,8 +384,8 @@ const CompleteProfile = ({
                         fill="#7C81F2"
                         stroke="#7C81F2"
                         strokeWidth="1.63596"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                       />
                       <path
                         d="M1 19V17C1 15.9391 1.42143 14.9217 2.17157 14.1716C2.92172 13.4214 3.93913 13 5 13H9C10.0609 13 11.0783 13.4214 11.8284 14.1716C12.5786 14.9217 13 15.9391 13 17V19"
@@ -395,8 +395,8 @@ const CompleteProfile = ({
                         d="M1 19V17C1 15.9391 1.42143 14.9217 2.17157 14.1716C2.92172 13.4214 3.93913 13 5 13H9C10.0609 13 11.0783 13.4214 11.8284 14.1716C12.5786 14.9217 13 15.9391 13 17V19H1Z"
                         stroke="#7C81F2"
                         strokeWidth="1.63596"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                       />
                     </svg>
                   </Box>
@@ -536,13 +536,13 @@ const CompleteProfile = ({
                         <path
                           d="M11 21C16.5228 21 21 16.5228 21 11C21 5.47715 16.5228 1 11 1C5.47715 1 1 5.47715 1 11C1 16.5228 5.47715 21 11 21Z"
                           stroke="#7C81F2"
-                          stroke-width="1.5"
+                          strokeWidth="1.5"
                         />
                         <path
                           d="M11 16V10"
                           stroke="#7C81F2"
-                          stroke-width="1.5"
-                          stroke-linecap="round"
+                          strokeWidth="1.5"
+                          strokeLinecap="round"
                         />
                         <path
                           d="M11 6C11.5523 6 12 6.44771 12 7C12 7.55228 11.5523 8 11 8C10.4477 8 10 7.55228 10 7C10 6.44771 10.4477 6 11 6Z"
