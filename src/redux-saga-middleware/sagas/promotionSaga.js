@@ -7,6 +7,7 @@ import { refreshTokenAction } from "../reducers/refreshReducer";
 import { updateListPromotionJoined } from "../reducers/userReducer";
 import promotionService from "../services/promotionService";
 import { getTokenGuest } from "../../utils/getTokenGuest";
+import { toggleStartGame } from "../reducers/appReducer";
 const PromotionService = new promotionService();
 
 let proDetailCount = 0
@@ -117,6 +118,7 @@ function* startGameInPromotionSaga(dataRequest) {
       const { data, status } = res
       if (status === 200 || status === 201) {
         yield put(startGameInPromotionSuccess(data));
+        yield put(toggleStartGame(true));
         if(!tokenGuest) {
           yield put(refreshTokenAction());
         }
