@@ -3,24 +3,33 @@ import Dialog from "@mui/material/Dialog";
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
-import { openPopupCompleteExtra, toggleStartGame } from "../../../redux-saga-middleware/reducers/appReducer";
+import {
+  openPopupCompleteExtra,
+  toggleStartGame,
+} from "../../../redux-saga-middleware/reducers/appReducer";
 import {
   finishGame,
   finishVideo,
   getRefactorDetailAuthPromotion,
 } from "../../../redux-saga-middleware/reducers/promotionReducer";
-import { toggleCloseResultEndGame } from "../../../redux-saga-middleware/reducers/tournamentReducer";
+import { CheckGuestUpgrade, toggleCloseResultEndGame } from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import { getUserInfoReady } from "../../../redux-saga-middleware/reducers/userReducer";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import { Close } from "@mui/icons-material";
 import AnimButton from "../../AnimButton";
 import { images } from "../../../utils/images";
+import {
+  clickTab,
+  toggleLoginDialog,
+} from "../../../redux-saga-middleware/reducers/authReducer";
+import { getTokenGuest } from "../../../utils/getTokenGuest";
 
 export default function ResultEndGame() {
   const { endGameScore, isResultEndGame } = useSelector(
     (state) => state.tournamentReducer
   );
   const { width } = useWindowDimensions();
+  const tokenGuest = getTokenGuest();
   const {
     tokenUser,
     // countTicket
@@ -48,14 +57,23 @@ export default function ResultEndGame() {
     }
   };
 
-  const check = localStorage.getItem("firstPlayGame")
+  const check = localStorage.getItem("firstPlayGame");
+
+  const handleToSignUp = () => {
+    dispatch(CheckGuestUpgrade(true))
+    dispatch(toggleLoginDialog());
+    dispatch(clickTab("signup"));
+    dispatch(toggleCloseResultEndGame());
+  };
 
   const handleConfirm = () => {
-    if(check === "check") {
-      dispatch(openPopupCompleteExtra({
-        type:"firstPlay"
-      }))
-      localStorage.removeItem("firstPlayGame")
+    if (check === "check") {
+      dispatch(
+        openPopupCompleteExtra({
+          type: "firstPlay",
+        })
+      );
+      localStorage.removeItem("firstPlayGame");
       localStorage.removeItem("buyPackage");
       localStorage.removeItem("newNumberTicket");
       dispatch(toggleCloseResultEndGame());
@@ -88,7 +106,7 @@ export default function ResultEndGame() {
         dispatch(getUserInfoReady());
       }
     }
-  }
+  };
 
   return (
     <div>
@@ -143,24 +161,42 @@ export default function ResultEndGame() {
             }}
           >
             <Box sx={{ marginTop: "12px", marginBottom: "12px" }}>
-              <Typography
-                sx={{
-                  fontSize: width < 576 ? "24px" : "24px",
-                  fontWeight: 800,
-                  color: "white",
-                  fontStyle: "normal",
-                  textTransform: "capitalize",
-                  lineHeight: "130%",
-                }}
-              >
-                TOTAL SCORE
-              </Typography>
+              {tokenGuest ? (
+                <>
+                  {" "}
+                  <Typography
+                    sx={{
+                      fontSize: width < 576 ? "24px" : "24px",
+                      fontWeight: 800,
+                      color: "white",
+                      fontStyle: "normal",
+                      textTransform: "capitalize",
+                      lineHeight: "130%",
+                    }}
+                  >
+                    SAVE PROGRESS
+                  </Typography>
+                </>
+              ) : (
+                <Typography
+                  sx={{
+                    fontSize: width < 576 ? "24px" : "24px",
+                    fontWeight: 800,
+                    color: "white",
+                    fontStyle: "normal",
+                    textTransform: "capitalize",
+                    lineHeight: "130%",
+                  }}
+                >
+                  TOTAL SCORE
+                </Typography>
+              )}
             </Box>
             <Box
               sx={{
                 position: "relative",
-                marginTop:"20px",
-                marginBottom:"20px"
+                marginTop: "20px",
+                marginBottom: "20px",
               }}
             >
               <Box
@@ -171,9 +207,9 @@ export default function ResultEndGame() {
                   backgroundRepeat: "no-repeat",
                   backgroundPosition: "center",
                   backgroundSize: "contain",
-                  display:"flex",
-                  justifyContent:"center",
-                  alignItems:"center"
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
               >
                 <Typography
@@ -189,6 +225,28 @@ export default function ResultEndGame() {
               </Box>
             </Box>
           </Box>
+          {tokenGuest ? (
+            <>
+              <Box>
+                <Box component={"img"} alt="..." src={images.crossbar} sx={{width:"100%"}}></Box>
+                <Typography
+                  sx={{
+                    fontSize: width < 576 ? "14px" : "14px",
+                    fontWeight: 500,
+                    color: "white",
+                    fontStyle: "normal",
+                    textTransform: "capitalize",
+                    lineHeight: "130%",
+                  }}
+                >
+                  Sign Up to save progress and get coins.
+                </Typography>
+                <Box component={"img"} alt="..." src={images.crossbar} sx={{width:"100%"}}></Box>
+              </Box>
+            </>
+          ) : (
+            <></>
+          )}
           <DialogActions
             sx={{
               justifyContent: "center",
@@ -196,25 +254,60 @@ export default function ResultEndGame() {
               flexDirection: "column",
             }}
           >
-            <AnimButton
-              onClick={() => handleConfirm()}
-              type="primary"
-              text="Continue"
-            ></AnimButton>
+            {tokenGuest ? (
+              <>
+                <AnimButton
+                  onClick={() => handleToSignUp()}
+                  type="primary"
+                  text="Sign Up"
+                ></AnimButton>
+              </>
+            ) : (
+              <>
+                <AnimButton
+                  onClick={() => handleConfirm()}
+                  type="primary"
+                  text="Continue"
+                ></AnimButton>
+              </>
+            )}
             <Box className="mt-2">
-            <Typography
-              sx={{
-                textAlign: "center",
-                fontSize: "18px",
-                fontStyle: "normal",
-                fontWeight: "500",
-                lineHeight: "normal",
-                color: "#7848ED",
-              }}
-            >
-              View your game history
-            </Typography>
-          </Box>
+              {tokenGuest ? (
+                <>
+                  <Typography
+                    onClick={() => {
+                      dispatch(toggleCloseResultEndGame());
+                      dispatch(CheckGuestUpgrade(true))
+                    }}
+                    sx={{
+                      textAlign: "center",
+                      fontSize: "18px",
+                      fontStyle: "normal",
+                      fontWeight: "500",
+                      lineHeight: "normal",
+                      color: "#7848ED",
+                    }}
+                  >
+                    Continue with Guest Mode
+                  </Typography>
+                </>
+              ) : (
+                <>
+                  <Typography
+                    sx={{
+                      textAlign: "center",
+                      fontSize: "18px",
+                      fontStyle: "normal",
+                      fontWeight: "500",
+                      lineHeight: "normal",
+                      color: "#7848ED",
+                    }}
+                  >
+                    View your game history
+                  </Typography>
+                </>
+              )}
+            </Box>
           </DialogActions>
         </Box>
       </Dialog>

@@ -6,6 +6,8 @@ import { getRefactorDetailAuthPromotion, getRefactorDetailAuthPromotionFail, get
 import { refreshTokenAction } from "../reducers/refreshReducer";
 import { updateListPromotionJoined } from "../reducers/userReducer";
 import promotionService from "../services/promotionService";
+import { getTokenGuest } from "../../utils/getTokenGuest";
+import { toggleStartGame } from "../reducers/appReducer";
 import { useParams } from "react-router-dom";
 const PromotionService = new promotionService();
 
@@ -115,12 +117,16 @@ function* startGameInPromotionSaga(dataRequest) {
   try {
     startGameCount += 1
     if (startGameCount === 1) {
+      const tokenGuest = getTokenGuest()
       const { payload } = dataRequest;
       const res = yield call(PromotionService.startGameInPromotion, payload);
       const { data, status } = res
       if (status === 200 || status === 201) {
         yield put(startGameInPromotionSuccess(data));
-        yield put(refreshTokenAction());
+        yield put(toggleStartGame(true));
+        if(!tokenGuest) {
+          yield put(refreshTokenAction());
+        }
       } else {
         yield put(startGameInPromotionFail());
       }
