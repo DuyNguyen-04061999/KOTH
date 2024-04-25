@@ -356,6 +356,13 @@ export const getListPromotionNewFail = (data) => {
   };
 };
 
+export const CheckGuestUpgrade = (data) => {
+  return {
+    type: "CHECK_GUEST_UPGRADE",
+    payload: data
+  }
+}
+
 const tournamentReducer = (
   state = {
     isCreateTournamentSuccess: true,
@@ -407,6 +414,7 @@ const tournamentReducer = (
     noDataHotWeek: false,
     noDataBrand: false,
     isgetListPromotionNew: false,
+    isCheckGuest: false
     //--------------------------------------
   },
   action
@@ -696,6 +704,9 @@ const tournamentReducer = (
       return { ...state, isgetListPromotionNew: false };
     case "GET_LIST_PROMOTION_NEW_FAIL":
       return { ...state, isgetListPromotionNew: false };
+    case "CHECK_GUEST_UPGRADE" : {
+      return {...state, isCheckGuest: true}
+    }
     default:
       return { ...state };
   }

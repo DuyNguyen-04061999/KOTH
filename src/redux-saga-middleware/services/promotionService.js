@@ -1,3 +1,4 @@
+import { getTokenGuest } from "../../utils/getTokenGuest";
 import { PROMOTION_API } from "../axios/promotionApi";
 
 class promotionService {
@@ -9,7 +10,7 @@ class promotionService {
 
   async callDetailPromotionToken(dataRequest) {
     const headers = {
-      "x-access-refactor-token": dataRequest?.token || localStorage.getItem("token"),
+      "x-access-refactor-token": dataRequest?.token || localStorage.getItem("token") || getTokenGuest(),
     };
     const res = await PROMOTION_API.get("/api/promotions/auth/detail/" + dataRequest?.id,
       {
@@ -22,7 +23,7 @@ class promotionService {
 
   async joinPromotion(dataRequest) {
     const headers = {
-      "x-access-refactor-token": localStorage.getItem("token"),
+      "x-access-refactor-token": localStorage.getItem("token") ||  getTokenGuest(),
       "Content-Type": "application/json",
     };
     const res = await PROMOTION_API.post("/api/promotions/join-promotion", dataRequest,
@@ -36,7 +37,7 @@ class promotionService {
 
   async startGameInPromotion(dataRequest) {
     const headers = {
-      "x-access-refactor-token": localStorage.getItem("token"),
+      "x-access-refactor-token": (localStorage.getItem("token") ||  getTokenGuest()),
       "Content-Type": "application/json",
     };
     const res = await PROMOTION_API.post("/api/promotions/start-game-promotion", dataRequest,

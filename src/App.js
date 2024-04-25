@@ -34,6 +34,7 @@ import {
 import {
   getListBet,
   getListWinner,
+  getUserGuest,
 } from "./redux-saga-middleware/reducers/appReducer";
 import {
   getNavTablet,
@@ -66,6 +67,7 @@ import useWindowDimensions from "./utils/useWindowDimensions";
 import Referal from "./pages/Referal";
 import { News } from "./pages/News/Component";
 import NewsDetail from "./pages/News/NewsDetail";
+import { getTokenGuest } from "./utils/getTokenGuest";
 
 const LazyNewHomePage = lazy(() => import("./pages/NewHomePageComponent"));
 const LazyPackage = lazy(() => import("./pages/PackagePage"));
@@ -96,8 +98,8 @@ function App() {
   const { startGameCheck } = store.getState().appReducer;
   const { tokenUser, user } = store.getState().userReducer;
   const { currentTab } = store.getState().authReducer;
-
   const { orientation } = store.getState().gameReducer;
+  const  tokenGuest  = getTokenGuest()
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
@@ -274,10 +276,14 @@ function App() {
   }, [socket]);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!tokenUser || !token) {
+    // const tokenGuest = ""
+    // if (tokenGuest === null || tokenGuest === "" || tokenGuest === undefined) {
+    //   store.dispatch(getUserGuest())
+    // }
+    if( tokenGuest === "") {
+      store.dispatch(getUserGuest())
     }
-  }, [tokenUser]);
+  }, [tokenGuest]);
 
   useEffect(() => {
     const onPageLoad = () => {
@@ -366,8 +372,11 @@ function App() {
   useEffect(() => {
     const onPageLoad = () => {
       const token = localStorage.getItem("token");
+      const tokenGuest = localStorage.getItem("token_guest")
       if ((token || tokenUser) && currentTab !== "otpVerifyAccount") {
         store.dispatch(getUserInfoReady(token || tokenUser));
+      } else {
+        store.dispatch(getUserInfoReady(tokenGuest))
       }
     };
 

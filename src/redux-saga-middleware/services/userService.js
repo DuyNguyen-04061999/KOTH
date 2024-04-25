@@ -257,6 +257,22 @@ class UserService {
     );
     return res;
   }
+
+  async upgradeGuestService(dataRequest) {
+    const res = await PROMOTION_API.put(
+      `/api/guest/upgrade`,
+      dataRequest,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "x-access-refactor-token": localStorage.getItem("token_guest"),
+          Authorization: `Bearer ${localStorage.getItem("token_guest")}`,
+          authorization: `Bearer ${localStorage.getItem("token_guest")}`,
+        },
+      }
+    )
+    return res
+  }
 }
 
 export default UserService;

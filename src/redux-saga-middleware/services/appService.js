@@ -40,7 +40,6 @@ class AppService {
   }
 
   async getDisplayName(dataRequest) {
-    console.log(dataRequest);
     const res = await PROMOTION_API.post(
       `/api/authenticate/generate-display-name`, 
       {
@@ -56,6 +55,10 @@ class AppService {
     return res;
   }
 
+  async getUserGuest(dataRequest) {
+    const res = await PROMOTION_API.post(`/api/guest`)
+    return res 
+  }
   async getScoreGame(dataRequest) {
     const res = await PROMOTION_API.get(
       `/api/games/score`,
