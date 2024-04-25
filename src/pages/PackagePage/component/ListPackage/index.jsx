@@ -313,6 +313,8 @@ export default function ListPackage(props) {
               sx={{
                 transform: "translate(0px,-34px)",
                 minHeight: packageCategory === "sub" ? "25%" : "20%",
+                overflow:"auto",
+                maxHeight: packageCategory === "sub" ? "25%" : "20%",
               }}
             >
               <Box
