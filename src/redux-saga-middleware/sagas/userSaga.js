@@ -5,7 +5,7 @@ import i18n from "../../i18n/i18n";
 import { authNotification } from "../../utils/notification";
 import _socket from "../config/socket";
 import { showToastNotification } from "../reducers/alertReducer";
-import { closePopupCompleteProfile, openDialogGif, openPopupCompleteExtra } from "../reducers/appReducer";
+import { closePopupCompleteProfile, openDialogGif, openPopupCompleteExtra, openPopupCompleteProfile } from "../reducers/appReducer";
 import {
   clickTab,
   closeLoginDialog,
@@ -277,17 +277,14 @@ function* updateProfileFirstPlay(dataRequest) {
     const { status, data } = res;
     if(stepProfile === "step1") {
       if (status === 200 || status === 201) {
-        // yield put(closeProfileDialog());
-        // yield put(exitEditProfile());
         yield put(
           showToastNotification({
             type: "success",
             message: i18n?.t("Update profile successfully!", { ns: "auth" }),
           })
         );
-        yield put(closePopupCompleteProfile())
-        yield put(openPopupCompleteExtra({
-          type:"doneStep1"
+        yield put(openPopupCompleteProfile({
+          type:"step2"
         }))
         yield delay(3000);
         yield put(
@@ -297,7 +294,6 @@ function* updateProfileFirstPlay(dataRequest) {
             checkFullInfor: data?.data?.checkFullInfor,
           })
         );
-        console.log(data);
       } else {
         yield put(
           showToastNotification({
@@ -311,8 +307,6 @@ function* updateProfileFirstPlay(dataRequest) {
       }
     } else if(stepProfile === "step2") {
       if (status === 200 || status === 201) {
-        // yield put(closeProfileDialog());
-        // yield put(exitEditProfile());
         yield put(
           showToastNotification({
             type: "success",
@@ -331,7 +325,6 @@ function* updateProfileFirstPlay(dataRequest) {
             checkFullInfor: data?.data?.checkFullInfor,
           })
         );
-        console.log(data);
       } else {
         yield put(
           showToastNotification({

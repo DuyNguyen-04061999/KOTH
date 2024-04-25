@@ -802,7 +802,7 @@ const userReducer = (
       return {...state, isClaimPrizeInfo: true}
     }
     case "GET_CLAIM_PRIZE_INFO_SUCCESS" : {
-      return {...state, isClaimPrizeInfo: false}
+      return {...state, isClaimPrizeInfo: false, countTicket: state.countTicket + 5 }
     }
     case "GET_CLAIM_PRIZE_INFO_FAIL" : {
       return {...state, isClaimPrizeInfo: false}
@@ -811,7 +811,7 @@ const userReducer = (
       return {...state,isClaimPrizeOptional: true}
     }
     case "GET_CLAIM_PRIZE_OPTIONAL_SUCCESS" : {
-      return {...state,isClaimPrizeOptional: false}
+      return {...state,isClaimPrizeOptional: false , countTicket: state.countTicket + 5}
     }
     case "GET_CLAIM_PRIZE_OPTIONAL_FAIL" : {
       return {...state,isClaimPrizeOptional: false}
