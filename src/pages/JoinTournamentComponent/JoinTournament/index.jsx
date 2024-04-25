@@ -28,6 +28,7 @@ import LikeDislikeGame from "../../../components/LikeDislikeGame";
 import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
 import ParagraphLoading from "../../../components/LoadingComponent/ParagraphLoading";
 import {
+  openPopupCompleteExtra,
   openPopupCompleteProfile,
   updateFromRouter,
 } from "../../../redux-saga-middleware/reducers/appReducer";
@@ -97,7 +98,6 @@ export default function JoinTournament() {
   const dispatch = useDispatch();
   const { device } = useSelector((state) => state.deviceReducer);
   const { detailTournament } = useSelector((state) => state.playgameReducer);
-
   const {
     isStartGameInPromotion,
     startGamePromotion,
@@ -107,9 +107,13 @@ export default function JoinTournament() {
   } = useSelector((state) => state.promotionReducer);
   const { orientation } = useSelector((state) => state.gameReducer);
   const { scoreGame } = useSelector((state) => state.appReducer);
-  const { address1, state, zipCode, city, firstName, lastName, email, birthDay, gender } = useSelector(
-    (state) => state.profileReducer
-  );
+  const {
+    firstName,
+    lastName,
+    email,
+    birthDay,
+    gender,
+  } = useSelector((state) => state.profileReducer);
   const [readMore, setReadMore] = useState(false);
   const [rewardPopup, setRewardPopup] = useState(false);
   const navigate = useNavigate();
@@ -135,6 +139,7 @@ export default function JoinTournament() {
       dispatch(getRefactorDetailPromotion(id));
     }
   }, [token, dispatch, id]);
+
   const handleJoinTour = (sub) => {
     if(detailTournament?.checkInTournament === false) {
       dispatch(
@@ -146,46 +151,50 @@ export default function JoinTournament() {
     }
   }
 
+
   const handlePlayTour = () => {
-    if(token) {
-      handleJoinTour(true)
+    if (token) {
       if (scoreGame === 0) {
-        dispatch(
-          startGameInPromotion({
-            tournamentId: id,
-          })
-        );
-        localStorage.setItem("firstPlayGame", "check")
+        handleJoinTour(true);
+        localStorage.setItem("firstPlayGame", "check");
         return;
       }
       if (detailTournament?.extra === 0 && countTicket === 0) {
         dispatch(toggleExtra());
         return;
       } else {
-        if(firstName !== "" || lastName !== "" || email !== "" || birthDay !== "" || gender !== "") {
+        if (
+          firstName === null ||
+          lastName === null ||
+          email === null ||
+          gender === "" ||
+          birthDay === "" ||
+          firstName === "" ||
+          lastName === "" || 
+          email === "" 
+        ) {
           dispatch(
-            startGameInPromotion({
-              tournamentId: id,
+            openPopupCompleteExtra({
+              type: "secondPlay"
             })
           );
         } else {
-          dispatch(openPopupCompleteProfile({
-            type: "step1"
+          if(!listJoinedTour?.includes(id)) {
+            handleJoinTour(true);
+          } else {
+           dispatch(startGameInPromotion({
+            tournamentId: id
           }))
+          }
         }
       }
     } else {
-     if(detailTournament?.extra === 0 && countTicket === 0) {
-      dispatch(openDialogCheckExtraGuest())
-      return
-     } else {
-      handleJoinTour(true)
-      dispatch(
-        startGameInPromotion({
-          tournamentId: id,
-        })
-      );
-     }
+      if(detailTournament?.extra === 0 && countTicket === 0) {
+        dispatch(openDialogCheckExtraGuest())
+        return
+       } else {
+        handleJoinTour(true)
+       }
     }
   };
 

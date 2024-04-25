@@ -964,7 +964,7 @@ export default function Dialoglg() {
                     style={{
                       borderRadius: 50,
                       border:
-                        uPack && uPack.remain !== "Expired"
+                        uPack && uPack?.remain !== "Expired"
                           ? "2px solid #FD9E0F"
                           : "",
                       objectFit: "cover",
@@ -1096,7 +1096,7 @@ export default function Dialoglg() {
                         <img
                           style={{
                             border:
-                              uPack && uPack.remain !== "Expired"
+                              uPack && uPack?.remain !== "Expired"
                                 ? "4px solid #FD9E0F"
                                 : "",
                             borderRadius: 50,

@@ -193,149 +193,165 @@ export default function ChatWorldList() {
             className="d-flex"
           >
             {e?.messageFromId === user?.id && tokenUser ? (
-              <>
-                {e?.messageGameId > 0 && e?.messageRoomName ? (
-                  <Box
-                    className="d-flex justify-content-between"
-                    sx={{
-                      width: "100%",
-                    }}
-                  >
+              e?.isWinnerMessage ? (
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "flex-end",
+                    width: "100%",
+                  }}
+                >
+                  <WinnerNotification
+                    winnerName={e?.toNickName}
+                    content={e?.messageContent}
+                    avatar={e?.messageToAvatar}
+                  />
+                </Box>
+              ) : (
+                <>
+                  {e?.messageGameId > 0 && e?.messageRoomName ? (
                     <Box
+                      className="d-flex justify-content-between"
                       sx={{
-                        width: "20%",
+                        width: "100%",
                       }}
-                    ></Box>
-                    <Box
-                      sx={{
-                        width: "fit-content",
-                        maxWidth: "80%",
-                        background: "#4d3565",
-                        color: "#7878a7",
-                        fontSize: "14px",
-                        borderRadius: "5px",
-                      }}
-                      className="p-2"
                     >
-                      {/* <span style={{fontWeight:"bold", color:"#9b9acf"}}>You're invited to play:</span> */}
                       <Box
-                        className="mt-2 p-2 d-flex"
                         sx={{
-                          backgroundColor: "#3e2a52",
+                          width: "20%",
+                        }}
+                      ></Box>
+                      <Box
+                        sx={{
+                          width: "fit-content",
+                          maxWidth: "80%",
+                          background: "#4d3565",
+                          color: "#7878a7",
+                          fontSize: "14px",
                           borderRadius: "5px",
                         }}
+                        className="p-2"
                       >
+                        {/* <span style={{fontWeight:"bold", color:"#9b9acf"}}>You're invited to play:</span> */}
                         <Box
+                          className="mt-2 p-2 d-flex"
                           sx={{
-                            width: "40%",
-                            height: "55px",
+                            backgroundColor: "#3e2a52",
+                            borderRadius: "5px",
                           }}
                         >
-                          <img
-                            src={
-                              e &&
-                              e?.messageGameAvatar &&
-                              e?.messageGameAvatar !== "normal"
-                                ? process.env.REACT_APP_SOCKET_SERVER +
-                                  "/" +
-                                  e?.messageGameAvatar
-                                : images.Aa
-                            }
-                            alt="..."
-                            width={"100%"}
-                            height={"75px"}
-                            style={{
-                              objectFit: "cover",
-                            }}
-                          />
-                        </Box>
-                        <Box
-                          className="ms-2 d-flex flex-column flex-end"
-                          sx={{ width: "60%" }}
-                        >
-                          <span
-                            style={{
-                              color: "white",
-                              fontWeight: "500 !important",
-                            }}
-                          >
-                            {e?.messageGameName?.slice(0, 10) + `...`}
-                          </span>
-                          <span className="text-white font-weight-bold">
-                            Price: {e?.messageBetPrice}
-                          </span>
                           <Box
-                            onClick={() =>
-                              handleOnClickInviteGameMess(
-                                e.messageGameId,
-                                e.messageRoomId
-                              )
-                            }
-                            className="p-1 mt-1 text-center text-white cursor-pointer"
                             sx={{
-                              width: "100%",
-                              background:
-                                "linear-gradient(0deg, rgba(138,57,240,1) 0%, rgba(116,73,237,1) 100%)",
-                              fontWeight: "bold",
-                              borderRadius: "4px",
+                              width: "40%",
+                              height: "55px",
                             }}
                           >
-                            PLAY NOW
+                            <img
+                              src={
+                                e &&
+                                e?.messageGameAvatar &&
+                                e?.messageGameAvatar !== "normal"
+                                  ? process.env.REACT_APP_SOCKET_SERVER +
+                                    "/" +
+                                    e?.messageGameAvatar
+                                  : images.Aa
+                              }
+                              alt="..."
+                              width={"100%"}
+                              height={"75px"}
+                              style={{
+                                objectFit: "cover",
+                              }}
+                            />
+                          </Box>
+                          <Box
+                            className="ms-2 d-flex flex-column flex-end"
+                            sx={{ width: "60%" }}
+                          >
+                            <span
+                              style={{
+                                color: "white",
+                                fontWeight: "500 !important",
+                              }}
+                            >
+                              {e?.messageGameName?.slice(0, 10) + `...`}
+                            </span>
+                            <span className="text-white font-weight-bold">
+                              Price: {e?.messageBetPrice}
+                            </span>
+                            <Box
+                              onClick={() =>
+                                handleOnClickInviteGameMess(
+                                  e.messageGameId,
+                                  e.messageRoomId
+                                )
+                              }
+                              className="p-1 mt-1 text-center text-white cursor-pointer"
+                              sx={{
+                                width: "100%",
+                                background:
+                                  "linear-gradient(0deg, rgba(138,57,240,1) 0%, rgba(116,73,237,1) 100%)",
+                                fontWeight: "bold",
+                                borderRadius: "4px",
+                              }}
+                            >
+                              PLAY NOW
+                            </Box>
                           </Box>
                         </Box>
                       </Box>
                     </Box>
-                  </Box>
-                ) : (
-                  <Box
-                    className="d-flex justify-content-between"
-                    sx={{
-                      width: "100%",
-                    }}
-                  >
+                  ) : (
                     <Box
+                      className="d-flex justify-content-between"
                       sx={{
-                        width: "20%",
-                      }}
-                    ></Box>
-                    <Box
-                      sx={{
-                        width: "fit-content",
-                        maxWidth: "80%",
+                        width: "100%",
                       }}
                     >
-                      <Box className="d-flex justify-content-end">
-                        <span
-                          style={{
+                      <Box
+                        sx={{
+                          width: "20%",
+                        }}
+                      ></Box>
+                      <Box
+                        sx={{
+                          width: "fit-content",
+                          maxWidth: "80%",
+                        }}
+                      >
+                        <Box className="d-flex justify-content-end">
+                          <span
+                            style={{
+                              color: "white",
+                              fontSize: "10px",
+                              fontWeight: "500 !important",
+                              letterSpacing: "0.5px",
+                            }}
+                          >
+                            {e?.updatedAt && moment(e?.updatedAt).format("LT")}
+                          </span>
+                        </Box>
+                        <Box
+                          className="p-1 mt-2 ps-2 pe-2"
+                          sx={{
+                            background: "#443565",
                             color: "white",
-                            fontSize: "10px",
+                            fontSize: "14px",
+                            width: "100%",
+                            wordWrap: "break-word",
+                            borderRadius: "5px",
                             fontWeight: "500 !important",
+
                             letterSpacing: "0.5px",
                           }}
                         >
-                          {e?.updatedAt && moment(e?.updatedAt).format("LT")}
-                        </span>
-                      </Box>
-                      <Box
-                        className="p-1 mt-2 ps-2 pe-2"
-                        sx={{
-                          background: "#443565",
-                          color: "white",
-                          fontSize: "14px",
-                          width: "100%",
-                          wordWrap: "break-word",
-                          borderRadius: "5px",
-                          fontWeight: "500 !important",
-
-                          letterSpacing: "0.5px",
-                        }}
-                      >
-                        {e?.messageContent}
+                          {e?.messageContent}
+                        </Box>
                       </Box>
                     </Box>
-                  </Box>
-                )}
-              </>
+                  )}
+                </>
+              )
             ) : (
               <Box className="d-flex justify-content-between">
                 <Box className="pt-2">
@@ -473,6 +489,7 @@ export default function ChatWorldList() {
                     <WinnerNotification
                       winnerName={e?.toNickName}
                       content={e?.messageContent}
+                      avatar={e?.messageToAvatar}
                     />
                   ) : (
                     <Box
@@ -702,64 +719,66 @@ export default function ChatWorldList() {
               <span>View Profile</span>
             </Box>
           </MenuItem>
-          {(user?.userRole === "Moderator" || currContacter?.isModMessage) && (
-            <MenuItem
-              onClick={() => {
-                dispatch(clickTabChat(false));
-                dispatch(
-                  updateContacterUsername(
-                    currContacter?.messageFromName,
-                    currContacter?.messageFromId
-                  )
-                );
-                dispatch(updateFriendNickName(currContacter?.messageFromName));
-                if (width < 576) {
-                  dispatch(updateFriendChat(true));
-                } else {
-                  dispatch(updateFriendChat(true));
-                }
-              }}
-              sx={{
-                padding: "5px",
-              }}
-            >
-              <Box
-                className="p-2 text-white"
+          {(user?.userRole === "Moderator" || currContacter?.isModMessage) &&
+            tokenUser && (
+              <MenuItem
+                onClick={() => {
+                  dispatch(clickTabChat(false));
+                  dispatch(
+                    updateContacterUsername(
+                      currContacter?.messageFromName,
+                      currContacter?.messageFromId,
+                      currContacter?.isModMessage
+                    )
+                  );
+                  dispatch(
+                    updateFriendNickName(currContacter?.messageFromName)
+                  );
+                  if (width < 576) {
+                    dispatch(updateFriendChat(true));
+                  } else {
+                    dispatch(updateFriendChat(true));
+                  }
+                }}
                 sx={{
-                  background: "linear-gradient(180deg, #843ff0, #7748ed)",
-                  width: "100%",
-                  fontWeight: "bold",
-                  borderRadius: "4px",
-                  display: "flex",
-                  alignItems: "center",
+                  padding: "5px",
                 }}
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="18"
-                  height="18"
-                  style={{ marginRight: "8px" }}
-                  viewBox="0 0 16 16"
-                  fill="none"
+                <Box
+                  className="p-2 text-white"
+                  sx={{
+                    background: "linear-gradient(180deg, #843ff0, #7748ed)",
+                    width: "100%",
+                    fontWeight: "bold",
+                    borderRadius: "4px",
+                    display: "flex",
+                    alignItems: "center",
+                  }}
                 >
-                  <path
-                    fillRule="evenodd"
-                    clipRule="evenodd"
-                    d="M9.0886 13.6506L8.72727 14.2613C8.40527 14.8053 7.6006 14.8053 7.27794 14.2613L6.9166 13.6506C6.6366 13.1773 6.4966 12.9399 6.27127 12.8093C6.04594 12.6779 5.7626 12.6733 5.19594 12.6633C4.3586 12.6493 3.83394 12.5979 3.39394 12.4153C2.98952 12.2478 2.62205 12.0022 2.31252 11.6927C2.00299 11.3832 1.75745 11.0157 1.58994 10.6113C1.33594 9.99927 1.33594 9.2226 1.33594 7.66927V7.0026C1.33594 4.8206 1.33594 3.72927 1.82727 2.92794C2.10197 2.4794 2.4789 2.10224 2.92727 1.82727C3.72927 1.33594 4.82127 1.33594 7.0026 1.33594H9.0026C11.1846 1.33594 12.2759 1.33594 13.0779 1.82727C13.5262 2.10205 13.9032 2.47898 14.1779 2.92727C14.6693 3.72927 14.6693 4.82127 14.6693 7.0026V7.66927C14.6693 9.2226 14.6693 9.99927 14.4159 10.6113C14.2483 11.0158 14.0027 11.3833 13.6931 11.6928C13.3834 12.0023 13.0158 12.2478 12.6113 12.4153C12.1713 12.5979 11.6466 12.6486 10.8093 12.6633C10.2426 12.6733 9.95927 12.6779 9.73394 12.8093C9.5086 12.9399 9.3686 13.1766 9.0886 13.6506ZM5.33594 7.83594C5.20333 7.83594 5.07615 7.88862 4.98238 7.98238C4.88862 8.07615 4.83594 8.20333 4.83594 8.33594C4.83594 8.46855 4.88862 8.59572 4.98238 8.68949C5.07615 8.78326 5.20333 8.83594 5.33594 8.83594H9.0026C9.13521 8.83594 9.26239 8.78326 9.35616 8.68949C9.44993 8.59572 9.5026 8.46855 9.5026 8.33594C9.5026 8.20333 9.44993 8.07615 9.35616 7.98238C9.26239 7.88862 9.13521 7.83594 9.0026 7.83594H5.33594ZM4.83594 6.0026C4.83594 5.87 4.88862 5.74282 4.98238 5.64905C5.07615 5.55528 5.20333 5.5026 5.33594 5.5026H10.6693C10.8019 5.5026 10.9291 5.55528 11.0228 5.64905C11.1166 5.74282 11.1693 5.87 11.1693 6.0026C11.1693 6.13521 11.1166 6.26239 11.0228 6.35616C10.9291 6.44993 10.8019 6.5026 10.6693 6.5026H5.33594C5.20333 6.5026 5.07615 6.44993 4.98238 6.35616C4.88862 6.26239 4.83594 6.13521 4.83594 6.0026Z"
-                    fill="white"
-                  />
-                </svg>
-                <span>Private chat</span>
-              </Box>
-            </MenuItem>
-          )}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    style={{ marginRight: "8px" }}
+                    viewBox="0 0 16 16"
+                    fill="none"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      clipRule="evenodd"
+                      d="M9.0886 13.6506L8.72727 14.2613C8.40527 14.8053 7.6006 14.8053 7.27794 14.2613L6.9166 13.6506C6.6366 13.1773 6.4966 12.9399 6.27127 12.8093C6.04594 12.6779 5.7626 12.6733 5.19594 12.6633C4.3586 12.6493 3.83394 12.5979 3.39394 12.4153C2.98952 12.2478 2.62205 12.0022 2.31252 11.6927C2.00299 11.3832 1.75745 11.0157 1.58994 10.6113C1.33594 9.99927 1.33594 9.2226 1.33594 7.66927V7.0026C1.33594 4.8206 1.33594 3.72927 1.82727 2.92794C2.10197 2.4794 2.4789 2.10224 2.92727 1.82727C3.72927 1.33594 4.82127 1.33594 7.0026 1.33594H9.0026C11.1846 1.33594 12.2759 1.33594 13.0779 1.82727C13.5262 2.10205 13.9032 2.47898 14.1779 2.92727C14.6693 3.72927 14.6693 4.82127 14.6693 7.0026V7.66927C14.6693 9.2226 14.6693 9.99927 14.4159 10.6113C14.2483 11.0158 14.0027 11.3833 13.6931 11.6928C13.3834 12.0023 13.0158 12.2478 12.6113 12.4153C12.1713 12.5979 11.6466 12.6486 10.8093 12.6633C10.2426 12.6733 9.95927 12.6779 9.73394 12.8093C9.5086 12.9399 9.3686 13.1766 9.0886 13.6506ZM5.33594 7.83594C5.20333 7.83594 5.07615 7.88862 4.98238 7.98238C4.88862 8.07615 4.83594 8.20333 4.83594 8.33594C4.83594 8.46855 4.88862 8.59572 4.98238 8.68949C5.07615 8.78326 5.20333 8.83594 5.33594 8.83594H9.0026C9.13521 8.83594 9.26239 8.78326 9.35616 8.68949C9.44993 8.59572 9.5026 8.46855 9.5026 8.33594C9.5026 8.20333 9.44993 8.07615 9.35616 7.98238C9.26239 7.88862 9.13521 7.83594 9.0026 7.83594H5.33594ZM4.83594 6.0026C4.83594 5.87 4.88862 5.74282 4.98238 5.64905C5.07615 5.55528 5.20333 5.5026 5.33594 5.5026H10.6693C10.8019 5.5026 10.9291 5.55528 11.0228 5.64905C11.1166 5.74282 11.1693 5.87 11.1693 6.0026C11.1693 6.13521 11.1166 6.26239 11.0228 6.35616C10.9291 6.44993 10.8019 6.5026 10.6693 6.5026H5.33594C5.20333 6.5026 5.07615 6.44993 4.98238 6.35616C4.88862 6.26239 4.83594 6.13521 4.83594 6.0026Z"
+                      fill="white"
+                    />
+                  </svg>
+                  <span>Private chat</span>
+                </Box>
+              </MenuItem>
+            )}
           {user?.userRole === "Moderator" &&
             (currContacter?.isActiveSender ? (
               <MenuItem
                 onClick={() => {
-                  dispatch(
-                    openReasonDialogFunction(currContacter?.fromNickName)
-                  );
+                  dispatch(openReasonDialogFunction(currContacter));
                   handleClose();
                 }}
                 sx={{
@@ -798,7 +817,7 @@ export default function ChatWorldList() {
                 onClick={() => {
                   dispatch(
                     unBanUserReady({
-                      usernameUnBanned: currentGoingToBanUser,
+                      usernameUnBanned: currContacter?.messageFromName,
                     })
                   );
                   handleClose();

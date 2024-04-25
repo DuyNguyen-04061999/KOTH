@@ -28,12 +28,21 @@ import DetailVoucher from "../DetailVoucher";
 import GameInTournament from "../GameInTournament";
 import LeaderBoard from "../LeaderBoard/index";
 import "./index.scss";
+import { openPopupCompleteExtra } from "../../../redux-saga-middleware/reducers/appReducer";
 
 export default function JoinTournamentMobile({ handleOnClickStartGame }) {
   const { detailTournament } = useSelector((state) => state.playgameReducer);
   const { isGetDetailPromotion, isGetDetailAuthPromotion } = useSelector(
     (state) => state.promotionReducer
   );
+  const { scoreGame } = useSelector((state) => state.appReducer);
+  const {
+    firstName,
+    lastName,
+    email,
+    birthDay,
+    gender,
+  } = useSelector((state) => state.profileReducer);
   const [currentResult, setCurrentResult] = useState(false);
   const [rewardPopup, setRewardPopup] = useState(false);
   const [openVoucher, setOpenVoucher] = useState(false);
@@ -67,35 +76,75 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
     }
   }, [token, dispatch, id]);
 
-  const handlePlayTour = () => {
-    if (detailTournament?.extra === 0 && countTicket === 0) {
-      dispatch(toggleExtra());
-      return;
-    } else {
-      dispatch(
-        startGameInPromotion({
-          tournamentId: id,
-        })
-      );
-    }
+  const handleJoinTour = (sub) => {
+    dispatch(
+      joinPromotion({
+        tournamentId: detailTournament?.id,
+        sub: sub ? sub : null,
+      })
+    );
   };
 
-  const handleJoinTour = () => {
+  const handlePlayTour = () => {
     if (token) {
-      if (
-        (detailTournament?.tournamentVip !== 0 && uPack === null) ||
-        (detailTournament?.tournamentVip !== 0 &&
-          uPack &&
-          uPack?.remain === "Expired")
-      ) {
-        dispatch(toggleTournamentShow());
+      if (scoreGame === 0) {
+        handleJoinTour(true);
+        localStorage.setItem("firstPlayGame", "check");
+        return;
+      }
+      if (detailTournament?.extra === 0 && countTicket === 0) {
+        dispatch(toggleExtra());
+        return;
       } else {
-        dispatch(openSubscribeDialog());
+        if (
+          firstName === null ||
+          lastName === null ||
+          email === null ||
+          gender === "" ||
+          birthDay === "" ||
+          firstName === "" ||
+          lastName === "" || 
+          email === "" 
+        ) {
+          dispatch(
+            // openPopupCompleteProfile({
+            //   type: "step1",
+            // })
+            openPopupCompleteExtra({
+              type: "secondPlay"
+            })
+          );
+        } else {
+          if(!listJoinedTour?.includes(id)) {
+            handleJoinTour(true);
+          } else {
+           dispatch(startGameInPromotion({
+            tournamentId: id
+          }))
+          }
+        }
       }
     } else {
       dispatch(toggleLoginDialog());
     }
   };
+
+  // const handleJoinTour = () => {
+  //   if (token) {
+  //     if (
+  //       (detailTournament?.tournamentVip !== 0 && uPack === null) ||
+  //       (detailTournament?.tournamentVip !== 0 &&
+  //         uPack &&
+  //         uPack?.remain === "Expired")
+  //     ) {
+  //       dispatch(toggleTournamentShow());
+  //     } else {
+  //       dispatch(openSubscribeDialog());
+  //     }
+  //   } else {
+  //     dispatch(toggleLoginDialog());
+  //   }
+  // };
 
   const handleClickOpen = () => {};
   const navigate = useNavigate();

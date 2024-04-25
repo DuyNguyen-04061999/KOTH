@@ -8,7 +8,7 @@ import { imageHome, images } from "../../../../utils/images";
 import AnimButton from "../../../AnimButton";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
 import { Close } from "@mui/icons-material";
-import { closePopupCompleteExtra, getTypeDoneStep1, getTypeDoneStep2, getTypeFirstPlay, getTypeSecondPlay, openPopupCompleteProfile } from "../../../../redux-saga-middleware/reducers/appReducer";
+import { closePopupCompleteExtra, getScoreGame, getTypeDoneStep1, getTypeDoneStep2, getTypeFirstPlay, getTypeSecondPlay, openPopupCompleteProfile } from "../../../../redux-saga-middleware/reducers/appReducer";
 import { getClaimPrizeInfo, getClaimPrizeOptional } from "../../../../redux-saga-middleware/reducers/userReducer";
 
 const CompleteExtra = ({
@@ -24,6 +24,7 @@ const CompleteExtra = ({
 
   const handleClose = () => {
     dispatch(closePopupCompleteExtra())
+    dispatch(getScoreGame())
   };
 
   const handleConfirm = () => {};
@@ -35,7 +36,6 @@ const CompleteExtra = ({
   }
   const handleDoneStep1 = () => {
     dispatch(getClaimPrizeInfo())
-    dispatch(openPopupCompleteProfile({type : "step2"}))
     dispatch(closePopupCompleteExtra())
   }
   const handleDoneStep2 = () => {
@@ -44,7 +44,7 @@ const CompleteExtra = ({
   }
   const handleSecondPlay = () => {
     dispatch(openPopupCompleteProfile({
-      type:"step2"
+      type:"step1"
     }))
     // dispatch(getTypeSecondPlay({
     //   type: "secondPlay"
@@ -232,7 +232,7 @@ const CompleteExtra = ({
                 >
                   You gained{" "}
                   <Typography sx={{ color: "#7648ED" }} variant="outlined">
-                    10 PROMOTION EXTRAS
+                    5 PROMOTION EXTRAS
                   </Typography>{" "}
                   Promotion extras will be sent to you automatically.
                 </Typography>
@@ -250,7 +250,7 @@ const CompleteExtra = ({
                 >
                   You gained{" "}
                   <Typography sx={{ color: "#7648ED" }} variant="outlined">
-                    5 PROMOTION EXTRAS
+                    10 PROMOTION EXTRAS
                   </Typography>{" "}
                   Promotion extras will be sent to you automatically.
                 </Typography>

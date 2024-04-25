@@ -309,7 +309,14 @@ export default function ListPackage(props) {
             </Box>
 
             {/* salse */}
-            <Box sx={{ transform: "translate(0px,-34px)", minHeight: packageCategory === "sub" ? "25%" : "20%" }}>
+            <Box
+              sx={{
+                transform: "translate(0px,-34px)",
+                minHeight: packageCategory === "sub" ? "25%" : "20%",
+                overflow:"auto",
+                maxHeight: packageCategory === "sub" ? "25%" : "20%",
+              }}
+            >
               <Box
                 sx={{
                   marginBottom: "0px",
@@ -474,6 +481,7 @@ export default function ListPackage(props) {
                         marginBottom: "5px",
                         marginTop:
                           packageCategory === Type.Subscription ? "0px" : "5px",
+                        overflow: "auto",
                       }}
                     >
                       <svg
@@ -656,9 +664,35 @@ export default function ListPackage(props) {
               alt="..."
               sx={{ width: "70%", height: "100%" }}
             ></Box>
-            <Box sx={{position:"absolute",top:9, right:"36px", transform:"rotateZ(49deg)", zIndex:3}}>
-              <Typography sx={{marginBottom:"0px !important" , fontSize:"10px", fontWeight:"700", color:"#fff"}}>ON</Typography>
-              <Typography sx={{marginBottom:"0px !important" , fontSize:"10px", fontWeight:"700" , color:"#fff"}}>SALE</Typography>
+            <Box
+              sx={{
+                position: "absolute",
+                top: 9,
+                right: "36px",
+                transform: "rotateZ(49deg)",
+                zIndex: 3,
+              }}
+            >
+              <Typography
+                sx={{
+                  marginBottom: "0px !important",
+                  fontSize: "10px",
+                  fontWeight: "700",
+                  color: "#fff",
+                }}
+              >
+                ON
+              </Typography>
+              <Typography
+                sx={{
+                  marginBottom: "0px !important",
+                  fontSize: "10px",
+                  fontWeight: "700",
+                  color: "#fff",
+                }}
+              >
+                SALE
+              </Typography>
             </Box>
           </>
         ) : (

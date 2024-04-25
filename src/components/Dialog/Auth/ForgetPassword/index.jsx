@@ -28,6 +28,18 @@ export default function ForgetPassword() {
     );
   }, [optionEmail, dispatch]);
 
+  const checkIfNumber = (event) => {
+    /**
+     * Allowing: Integers | Backspace | Tab | Delete | Left & Right arrow keys
+     **/
+
+    const regex = new RegExp(
+      /(^\d*$)|(Backspace|Tab|Delete|ArrowLeft|ArrowRight|\(|\)|-)/
+    );
+
+    return !event.key.match(regex) && event.preventDefault();
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     // if (validateEmail(username)) {
@@ -58,7 +70,7 @@ export default function ForgetPassword() {
       sx={{
         display: "flex",
         flexDirection: "column",
-        background: "#271C39",
+        // background: "#271C39",
         height: "100%",
         alignItems: "center",
         justifyContent: "center",
@@ -113,7 +125,7 @@ export default function ForgetPassword() {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              backgroundColor: "#181223",
+              backgroundColor: "#271C39",
               padding: "10px 12px",
               borderRadius: "5px 0px 0px 5px",
             }}
@@ -127,7 +139,7 @@ export default function ForgetPassword() {
           <FormControl
             sx={{
               width: "100%",
-              backgroundColor: "#181223",
+              backgroundColor: "#271C39",
               outline: "none",
               border: "none",
               color: "white",
@@ -139,11 +151,12 @@ export default function ForgetPassword() {
           >
             <input
               style={{
-                backgroundColor: "#181223",
+                backgroundColor: "#271C39",
                 outline: "none",
                 border: "none",
                 color: "white",
               }}
+              onKeyDown={checkIfNumber}
               onChange={(e) => {
                 setUsername(e.target.value);
               }}

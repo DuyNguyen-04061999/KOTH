@@ -2,12 +2,13 @@ import { call, put, takeEvery } from "redux-saga/effects";
 import { showToastNotification } from "../reducers/alertReducer";
 import { getListNotification } from "../reducers/notificationReducer";
 import { updateDetailTour } from "../reducers/playgameReducer";
-import { getRefactorDetailAuthPromotion, getRefactorDetailAuthPromotionFail, getRefactorDetailAuthPromotionSuccess, getRefactorDetailPromotionFail, getRefactorDetailPromotionSuccess, joinPromotionFail, joinPromotionSuccess, startGameInPromotionFail, startGameInPromotionSuccess } from "../reducers/promotionReducer";
+import { getRefactorDetailAuthPromotion, getRefactorDetailAuthPromotionFail, getRefactorDetailAuthPromotionSuccess, getRefactorDetailPromotionFail, getRefactorDetailPromotionSuccess, joinPromotionFail, joinPromotionSuccess, startGameInPromotion, startGameInPromotionFail, startGameInPromotionSuccess } from "../reducers/promotionReducer";
 import { refreshTokenAction } from "../reducers/refreshReducer";
 import { updateListPromotionJoined } from "../reducers/userReducer";
 import promotionService from "../services/promotionService";
 import { getTokenGuest } from "../../utils/getTokenGuest";
 import { toggleStartGame } from "../reducers/appReducer";
+import { useParams } from "react-router-dom";
 const PromotionService = new promotionService();
 
 let proDetailCount = 0
@@ -68,6 +69,7 @@ function* joinPromotionSaga(dataRequest) {
     joinCount += 1
     if (joinCount === 1) {
       const { payload } = dataRequest;
+      console.log(payload);
       const res = yield call(PromotionService.joinPromotion, payload);
       const { data, status } = res
       if (status === 200 || status === 201) {
@@ -78,6 +80,9 @@ function* joinPromotionSaga(dataRequest) {
           id: payload?.tournamentId,
           token: localStorage.getItem("token")
         }));
+        yield put(startGameInPromotion({
+          tournamentId: payload?.tournamentId
+        }))
         yield put(
           showToastNotification({
             type: "success",

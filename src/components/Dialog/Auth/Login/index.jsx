@@ -21,20 +21,21 @@ import AnimButton from "../../../AnimButton";
 
 const Login = () => {
   const dispatch = useDispatch();
-  const [username, setUsername] = useState(
+  const [phone, setPhone] = useState(
     localStorage?.getItem("account") || ""
   );
   const [password, setPassword] = useState(localStorage?.getItem("pass") || "");
-  const [usernameError, setUsernameError] = useState("");
+  const [phoneError, setPhoneError] = useState("");
   const [disabledBtn, setDisabledBtn] = useState(false);
   const [displayPassword, setDisplayPassword] = useState(false);
   const { isLogin, isLoginFail, isLoginSuccess } = useSelector(
     (state) => state.userReducer
   );
+  const { currentTab } = useSelector((state) => state.authReducer);
   const { t } = useTranslation("auth");
 
-  const handleChangeUsername = (e) => {
-    setUsername(e.target.value);
+  const handleChangePhone = (e) => {
+    setPhone(e.target.value);
   };
 
   const handleChangePassword = (e) => {
@@ -50,11 +51,23 @@ const Login = () => {
     setDisplayPassword(!displayPassword);
   };
 
+  const checkIfNumber = (event) => {
+    /**
+     * Allowing: Integers | Backspace | Tab | Delete | Left & Right arrow keys
+     **/
+    const regex = new RegExp(
+      /(^\d*$)|(Backspace|Tab|Delete|ArrowLeft|ArrowRight|\(|\)|-)/
+    );
+
+    return !event.key.match(regex) && event.preventDefault();
+  };
+
+
   const sendLogin = (e) => {
     setHandsUp(false);
     setCheck(false);
     e.preventDefault();
-    if (!username || !password) {
+    if (!phone || !password) {
       dispatch(
         showToastNotification({
           type: "error",
@@ -62,20 +75,11 @@ const Login = () => {
         })
       );
     } else {
-      if (validateEmail(username)) {
+       if (validatePhoneNumber(phone)) {
         dispatch(
           loginReady({
-            email: username,
+            phone: phone,
             password: password,
-            remember: remember,
-          })
-        );
-      } else if (validatePhoneNumber(username)) {
-        dispatch(
-          loginReady({
-            phone: username,
-            password: password,
-            remember: remember,
           })
         );
       }
@@ -84,23 +88,23 @@ const Login = () => {
 
   useEffect(() => {
     if (
-      !validateEmail(username) &&
-      !validatePhoneNumber(username) &&
-      username !== "" &&
+      !validatePhoneNumber(phone) &&
+      phone !== "" &&
       password !== ""
     ) {
-      setUsernameError("Please enter a valid email or phone number!");
+      setPhoneError("Please enter a valid phone number!");
     } else {
-      setUsernameError("");
+      setPhoneError("");
     }
-  }, [username, password]);
+  }, [phone, password]);
+
   useEffect(() => {
-    if (usernameError || username === "" || password === "") {
+    if (phoneError || phone === "" || password === "") {
       setDisabledBtn(true);
     } else {
       setDisabledBtn(false);
     }
-  }, [usernameError, username, password]);
+  }, [phoneError, phone, password]);
 
   //---------------------------- Rive Project ----------------------------
 
@@ -129,8 +133,8 @@ const Login = () => {
       return;
     }
     let numberOfChar = 0;
-    if (username && lookState) {
-      numberOfChar = parseFloat(username.split("").length);
+    if (phone && lookState) {
+      numberOfChar = parseFloat(phone.split("").length);
       lookState.value = numberOfChar;
     }
   };
@@ -234,13 +238,89 @@ const Login = () => {
     <Box
       sx={{
         width: "100%",
-        paddingTop: "90px",
         height: "100%",
+        display:"flex",
+        justifyContent:"center",
+        flexDirection:"column"
       }}
     >
       <Box sx={{ width: "100%", display: "flex", justifyContent: "center" }}>
         <Box sx={{ width: "320px", height: "240px" }}>
           <RiveComponent />
+        </Box>
+      </Box>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          paddingBottom: "40px",
+          paddingTop: "20px",
+        }}
+      >
+        <Box className="login" sx={{position:"relative"}}>
+          <Typography
+            sx={{
+              fontWeight: "700",
+              fontSize: "20px",
+              color: currentTab === "login" ? "#7848ED" : "#fff",
+            }}
+          >
+            Login
+          </Typography>
+          <Box
+          sx={{
+            position: "absolute",
+            width: "10px",
+            height: "10px",
+            background:
+              "linear-gradient(0deg, #181223 -1.51%, #7648ED 74.36%, #AA8EF2 202.93%)",
+            clipPath: "polygon(50% 0%, 0% 100%, 100% 100%)",
+            transition: " 0.5s ease-in-out",
+            translate: "0px",
+            bottom:"-13px",
+            left:"45%"
+          }}
+        ></Box>
+        <Box
+          className="underlined"
+          sx={{
+            position: "absolute",
+            width: "57px",
+            height: "5px",
+            background:
+              "linear-gradient(0deg, #181223 -1.51%, #7648ED 74.36%, #AA8EF2 202.93%)",
+            borderRadius: "6px",
+            transition: " 0.5s ease-in-out",
+            translate: "0px",
+            bottom:"-14px",
+            left:"2px"
+          }}
+        ></Box>
+        </Box>
+        <Box
+          sx={{
+            margin: "0px 10px",
+          }}
+        >
+          <Typography sx={{ fontSize: "20px", color: "#979797" }}>/</Typography>
+        </Box>
+        <Box className="sign-up">
+          <Typography
+            className="cursor-pointer"
+            onClick={() => {
+              dispatch(clickTab("signup"));
+              ReactGA.event("start_signup", {
+                category: "start_signup",
+                action: "click",
+                nonInteraction: true,
+                transport: "xhr",
+              });
+            }}
+            sx={{ fontWeight: "700", fontSize: "20px", color: "#979797" }}
+          >
+            Sign Up
+          </Typography>
         </Box>
       </Box>
       <Box
@@ -262,18 +342,48 @@ const Login = () => {
           <Box
             sx={{ flexDirection: "row", alignItems: "center", display: "flex" }}
           >
-            <img src={sign.up03} alt="..." width={17} height={"auto"} />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="none"
+              viewBox="0 0 24 24"
+              style={{
+                position: "absolute",
+                top: "10px",
+                left: device === "Desktop" ? "8px" : "6px",
+              }}
+            >
+              <g>
+                <path
+                  fill="#7C81F2"
+                  d="M14.979 23H7.99a2.236 2.236 0 01-2.233-2.234V4.234A2.236 2.236 0 017.99 2h6.988c1.233.001 2.232 1 2.233 2.234v16.532A2.236 2.236 0 0114.98 23zM11.485 3.909a.955.955 0 100 1.91.955.955 0 000-1.91zm1.432 16.227h-2.864a.477.477 0 100 .955h2.864a.477.477 0 100-.955z"
+                ></path>
+              </g>
+            </svg>
+            <Typography
+              sx={{
+                position: "absolute",
+                top: "12px",
+                left: device === "Mobile" ? "24px" : "30px",
+                color: "#979797",
+                fontWeight: "600",
+              }}
+            >
+              (+1){" "}
+            </Typography>
             <Input
               type="text"
-              defaultValue={username || localStorage.getItem("account")}
-              placeholder={t("Email") + "/" + t("Phone number")}
+              defaultValue={phone || localStorage.getItem("account")}
+              placeholder={ t("Phone number")}
               onFocus={() => {
                 setHandsUp(false);
                 setCheck(true);
               }}
+              onKeyDown={checkIfNumber}
               onChange={(e) => {
                 setLook();
-                handleChangeUsername(e);
+                handleChangePhone(e);
               }}
               onBlur={() => {
                 setCheck(false);
@@ -293,16 +403,15 @@ const Login = () => {
                 },
                 color: "white",
                 fontWeight: "500",
-                marginLeft: "16px",
+                padding: "0px 0px 0px 60px !important",
                 width: "100%",
-                backgroundColor: "transparent",
               }}
             />
           </Box>
           <Typography
             sx={{ textAlign: "start", color: "#F05153", fontSize: "13px" }}
           >
-            {username && usernameError ? usernameError : ""}
+            {phone && phoneError ? phoneError : ""}
           </Typography>
         </FormControl>
         <FormControl
@@ -421,7 +530,7 @@ const Login = () => {
           {isLogin ? (
             <AnimButton
               onClick={sendLogin}
-              text="SIGN IN"
+              text="LOGIN"
               type="loading"
               isHasIcon
               isSubmitBtn
@@ -429,7 +538,7 @@ const Login = () => {
           ) : disabledBtn ? (
             <AnimButton
               onClick={sendLogin}
-              text={t("Sign in")}
+              text={t("LOGIN")}
               type="disable"
               isHasIcon
               isSubmitBtn
@@ -437,38 +546,12 @@ const Login = () => {
           ) : (
             <AnimButton
               onClick={sendLogin}
-              text={t("Sign in")}
+              text={t("LOGIN")}
               type="primary"
               isHasIcon
               isSubmitBtn
             />
           )}
-        </Box>
-        <Box className="d-flex justify-content-center mt-4">
-          <Box className="d-flex" sx={{ alignItems: "center" }}>
-            <Typography
-              sx={{
-                color: "white",
-                fontWeight: "600",
-              }}
-            >
-              {t("New User?")}
-            </Typography>
-            <Typography
-              onClick={() => {
-                dispatch(clickTab("signup"));
-                ReactGA.event("start_signup", {
-                  category: "start_signup",
-                  action: "click",
-                  nonInteraction: true,
-                  transport: "xhr",
-                });
-              }}
-              sx={{ color: "#FF9F38", cursor: "pointer", fontWeight: "600" }}
-            >
-              {t("Create Account")}
-            </Typography>
-          </Box>
         </Box>
       </Box>
     </Box>

@@ -343,6 +343,9 @@ import event2 from "../assets/images/event2.png";
 import check1 from "../assets/images/check1.png";
 import check2 from "../assets/images/check2.png";
 import news3 from "../assets/images/news3.png";
+import emptyNews from "../assets/images/emptyNews.png"
+import pepeTicket from "../assets/images/PepeTickets.gif"
+import notiIcon from "../assets/images/notiIcon.gif";
 import free_sub_MB from "../assets/images/free_sub_MB.png";
 import free_sub_DK from "../assets/images/free_sub_DK.png";
 import emptyNews from "../assets/images/emptyNews.png";
@@ -425,6 +428,7 @@ export const images = {
   totalResult:totalResult,
   pepeGift:pepeGift,
   pepeGaming:pepeGaming,
+  pepeTicket:pepeTicket,
   emptyNews:emptyNews,
   emptyNews: emptyNews,
   free_sub_DK: free_sub_DK,
@@ -607,6 +611,7 @@ export const images = {
   event2: event2,
   news3: news3,
   bannedavatar: bannedavatar,
+  notiIcon: notiIcon,
 };
 
 export const navigationImages = {
