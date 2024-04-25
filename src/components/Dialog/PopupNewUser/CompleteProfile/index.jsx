@@ -30,6 +30,7 @@ import {
 } from "../../../../redux-saga-middleware/reducers/userReducer";
 import { styled, withStyles } from "@mui/styles";
 import {
+  closePopupCompleteExtra,
   closePopupCompleteProfile,
   openPopupCompleteExtra,
   openPopupCompleteProfile,
@@ -140,7 +141,6 @@ const CompleteProfile = ({
         zipcode: zCode,
       })
     );
-    dispatch(closePopupCompleteProfile());
   };
   const handleSkipStep2 = () => {
     dispatch(
@@ -149,10 +149,12 @@ const CompleteProfile = ({
       })
     );
     dispatch(closePopupCompleteProfile());
+
   };
 
   const handleClose = () => {
     dispatch(closePopupCompleteProfile());
+    dispatch(closePopupCompleteExtra())
   };
 
   const handleConfirm = () => {

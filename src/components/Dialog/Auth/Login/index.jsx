@@ -55,7 +55,6 @@ const Login = () => {
     /**
      * Allowing: Integers | Backspace | Tab | Delete | Left & Right arrow keys
      **/
-
     const regex = new RegExp(
       /(^\d*$)|(Backspace|Tab|Delete|ArrowLeft|ArrowRight|\(|\)|-)/
     );
@@ -531,7 +530,7 @@ const Login = () => {
           {isLogin ? (
             <AnimButton
               onClick={sendLogin}
-              text="SIGN IN"
+              text="LOGIN"
               type="loading"
               isHasIcon
               isSubmitBtn
@@ -539,7 +538,7 @@ const Login = () => {
           ) : disabledBtn ? (
             <AnimButton
               onClick={sendLogin}
-              text={t("Sign in")}
+              text={t("LOGIN")}
               type="disable"
               isHasIcon
               isSubmitBtn
@@ -547,7 +546,7 @@ const Login = () => {
           ) : (
             <AnimButton
               onClick={sendLogin}
-              text={t("Sign in")}
+              text={t("LOGIN")}
               type="primary"
               isHasIcon
               isSubmitBtn
