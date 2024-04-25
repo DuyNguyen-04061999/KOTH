@@ -277,6 +277,7 @@ export default function ResultEndGame() {
                   <Typography
                     onClick={() => {
                       dispatch(toggleCloseResultEndGame());
+                      dispatch(CheckGuestUpgrade(true))
                     }}
                     sx={{
                       textAlign: "center",
