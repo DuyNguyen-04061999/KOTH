@@ -280,10 +280,10 @@ function App() {
     // if (tokenGuest === null || tokenGuest === "" || tokenGuest === undefined) {
     //   store.dispatch(getUserGuest())
     // }
-    if( tokenGuest === "") {
+    if( tokenGuest === "" || !tokenUser) {
       store.dispatch(getUserGuest())
     }
-  }, [tokenGuest]);
+  }, [tokenGuest, tokenUser]);
 
   useEffect(() => {
     const onPageLoad = () => {
