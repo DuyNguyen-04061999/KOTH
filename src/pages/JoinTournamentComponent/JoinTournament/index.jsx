@@ -128,16 +128,16 @@ export default function JoinTournament() {
     dispatch(updateDetailTour(detailTournament));
   }, [detailTournament, dispatch]);
   useEffect(() => {
-    if (token || localStorage.getItem("token")) {
+    // if (token || localStorage.getItem("token")) {
       dispatch(
         getRefactorDetailAuthPromotion({
           id,
           token,
         })
       );
-    } else {
-      dispatch(getRefactorDetailPromotion(id));
-    }
+    // } else {
+    //   dispatch(getRefactorDetailPromotion(id));
+    // }
   }, [token, dispatch, id]);
 
   const handleJoinTour = (sub) => {

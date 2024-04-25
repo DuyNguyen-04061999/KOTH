@@ -265,6 +265,9 @@ class UserService {
       {
         headers: {
           "Content-Type": "application/json",
+          "x-access-refactor-token": localStorage.getItem("token_guest"),
+          Authorization: `Bearer ${localStorage.getItem("token_guest")}`,
+          authorization: `Bearer ${localStorage.getItem("token_guest")}`,
         },
       }
     )

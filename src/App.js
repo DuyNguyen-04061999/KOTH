@@ -67,6 +67,7 @@ import useWindowDimensions from "./utils/useWindowDimensions";
 import Referal from "./pages/Referal";
 import { News } from "./pages/News/Component";
 import NewsDetail from "./pages/News/NewsDetail";
+import { getTokenGuest } from "./utils/getTokenGuest";
 
 const LazyNewHomePage = lazy(() => import("./pages/NewHomePageComponent"));
 const LazyPackage = lazy(() => import("./pages/PackagePage"));
@@ -98,6 +99,7 @@ function App() {
   const { tokenUser, user } = store.getState().userReducer;
   const { currentTab } = store.getState().authReducer;
   const { orientation } = store.getState().gameReducer;
+  const  tokenGuest  = getTokenGuest()
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
@@ -278,10 +280,10 @@ function App() {
     // if (tokenGuest === null || tokenGuest === "" || tokenGuest === undefined) {
     //   store.dispatch(getUserGuest())
     // }
-    if(!tokenUser) {
+    if( tokenGuest === "") {
       store.dispatch(getUserGuest())
     }
-  }, [tokenUser]);
+  }, [tokenGuest]);
 
   useEffect(() => {
     const onPageLoad = () => {

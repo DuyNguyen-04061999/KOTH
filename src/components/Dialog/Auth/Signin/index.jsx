@@ -15,6 +15,7 @@ import { toggleProfileDialog } from "../../../../redux-saga-middleware/reducers/
 import {
   // getCityAndStateProfile,
   getMyInfor,
+  getUserInfoReady,
   logoutReady,
   removeTokenUser,
   updateTransactionDialog,
@@ -88,6 +89,7 @@ export default function Dialoglg() {
     dispatch(updateCurrentLevel({}));
     dispatch(updateBonuses({}));
     dispatch(getUserGuest())
+    dispatch(getUserInfoReady())
   };
   const { width, height } = useWindowDimensions();
 

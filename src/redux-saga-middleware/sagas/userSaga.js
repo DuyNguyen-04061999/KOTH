@@ -886,8 +886,10 @@ function* getUpgradeGuestSaga(dataRequest) {
       const res = yield call(userService.upgradeGuestService, payload)
       const {status, data} = res
       if(status === 200 || status === 201) {
-        console.log(data);
+        yield put(clickTab("otpVerifyAccount"));
         yield put(getUpgradeGuestSuccess(data))
+        yield put(saveCreateAccInfo(payload));
+
         toast.success(data?.message)
       }
     }
