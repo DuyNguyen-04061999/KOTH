@@ -35,11 +35,9 @@ const CompleteExtra = ({
     dispatch(closePopupCompleteExtra())
   }
   const handleDoneStep1 = () => {
-    dispatch(getClaimPrizeInfo())
     dispatch(closePopupCompleteExtra())
   }
   const handleDoneStep2 = () => {
-    dispatch(getClaimPrizeOptional())
     dispatch(closePopupCompleteExtra())
   }
   const handleSecondPlay = () => {

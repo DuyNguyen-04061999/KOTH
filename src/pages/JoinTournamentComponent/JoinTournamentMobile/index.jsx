@@ -28,7 +28,7 @@ import DetailVoucher from "../DetailVoucher";
 import GameInTournament from "../GameInTournament";
 import LeaderBoard from "../LeaderBoard/index";
 import "./index.scss";
-import { openPopupCompleteExtra } from "../../../redux-saga-middleware/reducers/appReducer";
+import { getScoreGame, openPopupCompleteExtra } from "../../../redux-saga-middleware/reducers/appReducer";
 
 export default function JoinTournamentMobile({ handleOnClickStartGame }) {
   const { detailTournament } = useSelector((state) => state.playgameReducer);
@@ -84,8 +84,9 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
       })
     );
   };
-
+  console.log(firstName, lastName, email, gender, birthDay);
   const handlePlayTour = () => {
+    dispatch(getScoreGame())
     if (token) {
       if (scoreGame === 0) {
         handleJoinTour(true);
