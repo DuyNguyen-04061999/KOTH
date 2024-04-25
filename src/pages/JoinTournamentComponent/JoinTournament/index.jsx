@@ -28,6 +28,7 @@ import LikeDislikeGame from "../../../components/LikeDislikeGame";
 import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
 import ParagraphLoading from "../../../components/LoadingComponent/ParagraphLoading";
 import {
+  openPopupCompleteExtra,
   openPopupCompleteProfile,
   updateFromRouter,
 } from "../../../redux-saga-middleware/reducers/appReducer";
@@ -95,7 +96,6 @@ export default function JoinTournament() {
   const dispatch = useDispatch();
   const { device } = useSelector((state) => state.deviceReducer);
   const { detailTournament } = useSelector((state) => state.playgameReducer);
-
   const {
     isStartGameInPromotion,
     startGamePromotion,
@@ -168,15 +168,21 @@ export default function JoinTournament() {
           email === "" 
         ) {
           dispatch(
-            openPopupCompleteProfile({
-              type: "step1",
+            // openPopupCompleteProfile({
+            //   type: "step1",
+            // })
+            openPopupCompleteExtra({
+              type: "secondPlay"
             })
           );
-          console.log(456);
-          console.log(firstName, lastName, email, birthDay, gender);
         } else {
-          handleJoinTour(true);
-          console.log(123);
+          if(!listJoinedTour?.includes(id)) {
+            handleJoinTour(true);
+          } else {
+           dispatch(startGameInPromotion({
+            tournamentId: id
+          }))
+          }
         }
       }
     } else {

@@ -36,7 +36,6 @@ const CompleteExtra = ({
   }
   const handleDoneStep1 = () => {
     dispatch(getClaimPrizeInfo())
-    dispatch(openPopupCompleteProfile({type : "step2"}))
     dispatch(closePopupCompleteExtra())
   }
   const handleDoneStep2 = () => {
@@ -45,7 +44,7 @@ const CompleteExtra = ({
   }
   const handleSecondPlay = () => {
     dispatch(openPopupCompleteProfile({
-      type:"step2"
+      type:"step1"
     }))
     // dispatch(getTypeSecondPlay({
     //   type: "secondPlay"
@@ -233,7 +232,7 @@ const CompleteExtra = ({
                 >
                   You gained{" "}
                   <Typography sx={{ color: "#7648ED" }} variant="outlined">
-                    10 PROMOTION EXTRAS
+                    5 PROMOTION EXTRAS
                   </Typography>{" "}
                   Promotion extras will be sent to you automatically.
                 </Typography>
@@ -251,7 +250,7 @@ const CompleteExtra = ({
                 >
                   You gained{" "}
                   <Typography sx={{ color: "#7648ED" }} variant="outlined">
-                    5 PROMOTION EXTRAS
+                    10 PROMOTION EXTRAS
                   </Typography>{" "}
                   Promotion extras will be sent to you automatically.
                 </Typography>

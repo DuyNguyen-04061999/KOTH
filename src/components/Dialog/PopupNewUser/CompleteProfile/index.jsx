@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { imageHome, images, sign } from "../../../../utils/images";
 import AnimButton from "../../../AnimButton";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
-import { Close } from "@mui/icons-material";
+import { Close, FlareSharp } from "@mui/icons-material";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -30,6 +30,7 @@ import {
 } from "../../../../redux-saga-middleware/reducers/userReducer";
 import { styled, withStyles } from "@mui/styles";
 import {
+  closePopupCompleteExtra,
   closePopupCompleteProfile,
   openPopupCompleteExtra,
   openPopupCompleteProfile,
@@ -88,6 +89,7 @@ const CompleteProfile = ({
   const [zCode, setZcode] = useState("");
   const [cityOption, setCityOption] = useState("");
   const [validEmail,setValidEmail] = useState(false)
+  const [disableButtonStep2,setDiascleButtonStep2] = useState(true)
   const handleChangeState = (event, newValue) => {
     if (newValue) {
       setStateOption(newValue?.name);
@@ -116,6 +118,14 @@ const CompleteProfile = ({
   }, [gender, value, email, firstName, lastName]);
 
   useEffect(() => {
+    if(addressLine1 === "" || zCode === "" || cityOption === "" || stateOption === "") {
+      setDiascleButtonStep2(true)
+    } else {
+      setDiascleButtonStep2(false)
+    }
+  },[addressLine1,zCode,cityOption,stateOption])
+
+  useEffect(() => {
     setValidEmail(validateEmail(email));
   }, [email]);
 
@@ -140,7 +150,6 @@ const CompleteProfile = ({
         zipcode: zCode,
       })
     );
-    dispatch(closePopupCompleteProfile());
   };
   const handleSkipStep2 = () => {
     dispatch(
@@ -149,10 +158,12 @@ const CompleteProfile = ({
       })
     );
     dispatch(closePopupCompleteProfile());
+
   };
 
   const handleClose = () => {
     dispatch(closePopupCompleteProfile());
+    dispatch(closePopupCompleteExtra())
   };
 
   const handleConfirm = () => {
@@ -1179,6 +1190,7 @@ const CompleteProfile = ({
                 onClick={() => handleConfirmStep2()}
                 type="primary"
                 text="Confirm"
+                disabledBtn={disableButtonStep2}
               />
             </DialogActions>
             <Box>
