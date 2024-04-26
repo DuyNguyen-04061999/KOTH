@@ -280,7 +280,7 @@ function App() {
     // if (tokenGuest === null || tokenGuest === "" || tokenGuest === undefined) {
     //   store.dispatch(getUserGuest())
     // }
-    if( tokenGuest === "" || !tokenUser) {
+    if(tokenGuest === "" || tokenGuest === null ) {
       store.dispatch(getUserGuest())
     }
   }, [tokenGuest, tokenUser]);
