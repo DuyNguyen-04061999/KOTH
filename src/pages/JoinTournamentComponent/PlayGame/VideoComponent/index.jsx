@@ -108,7 +108,7 @@ export default function VideoComponent(props) {
           <source
             src={
               detailTournament?.tournamentVideo
-                ? `https://storage.googleapis.com/web-system-files` +
+                ? process.env.REACT_APP_SOCKET_SERVER +
                   "/" +
                   detailTournament?.tournamentVideo
                 : video.LogoAnim
