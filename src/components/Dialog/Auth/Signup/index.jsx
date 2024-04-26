@@ -250,6 +250,7 @@ export default function Signup(props) {
         password: password,
       })
     )
+    localStorage.removeItem("firstPlayGame")
   }
 
   const sendRegister = () => {
