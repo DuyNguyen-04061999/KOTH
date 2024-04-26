@@ -508,6 +508,13 @@ export const getUpgradeGuestFail = (data) => {
   }
 }
 
+export const savePhoenUpgrade = (data) => {
+  return {
+    type: "SAVE_PHONE_UPGRADE",
+    payload: data
+  }
+}
+
 const userReducer = (
   state = {
     tokenUser: "",
@@ -560,7 +567,8 @@ const userReducer = (
     isClaimPrizeOptional:false, 
     isFetchingBanUser: false,
     isFetchingUnbanUser: false,
-    isUpgradeGuest:false
+    isUpgradeGuest:false,
+    phoneUpgrade:""
   },
   action
 ) => {
@@ -877,7 +885,14 @@ const userReducer = (
       return {...state, isUpgradeGuest: true}
     }
     case "GET_UPGRADE_GUEST_SUCCESS" : {
-      return {...state, isUpgradeGuest: false, typeVerifyOTP: "register",  registerPhone: payload?.phone,}
+      console.log(payload);
+      return {...state, 
+        isUpgradeGuest: false, 
+        typeVerifyOTP: "register",  
+        registerPhone: type?.phone , }
+    }
+    case "SAVE_PHONE_UPGRADE" : {
+      return {...state,  phoneUpgrade: type?.phone, }
     }
     case "GET_UPGRADE_GUEST_FAIL" : {
       return {...state, isUpgradeGuest: false}

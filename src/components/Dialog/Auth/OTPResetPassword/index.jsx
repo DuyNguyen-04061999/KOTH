@@ -98,7 +98,6 @@ export default function OTPResetPassword() {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        background: "#271C39",
         height: "100%",
         justifyContent: "center",
         padding: device === "Mobile" ? "0px 20px 0px 20px" : "0px 30px",

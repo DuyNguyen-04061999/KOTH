@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { showToastNotification } from "../../../../redux-saga-middleware/reducers/alertReducer";
 import { clickTab } from "../../../../redux-saga-middleware/reducers/authReducer";
-import { getUpgradeGuest, registerReady } from "../../../../redux-saga-middleware/reducers/userReducer";
+import { getUpgradeGuest, registerReady, savePhoenUpgrade } from "../../../../redux-saga-middleware/reducers/userReducer";
 import { images, sign } from "../../../../utils/images";
 import { systemNotification } from "../../../../utils/notification";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
