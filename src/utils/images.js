@@ -348,6 +348,7 @@ import pepeTicket from "../assets/images/PepeTickets.gif"
 import notiIcon from "../assets/images/notiIcon.gif";
 import free_sub_MB from "../assets/images/free_sub_MB.png";
 import free_sub_DK from "../assets/images/free_sub_DK.png";
+import crossbar from "../assets/images/crossbarResult.png"
 
 export const imageHome = {
  
@@ -422,6 +423,7 @@ export const navbar = {
 };
 
 export const images = {
+  crossbar:crossbar,
   totalResult:totalResult,
   pepeGift:pepeGift,
   pepeGaming:pepeGaming,

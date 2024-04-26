@@ -12,6 +12,7 @@ import { imageDesktop, images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import GameInTournament from "../GameInTournament";
 import VideoComponent from "./VideoComponent";
+import { getTokenGuest } from "../../../utils/getTokenGuest";
 
 export default function PlayGame(props) {
   const iframeRef = useRef(null);
@@ -126,7 +127,7 @@ export default function PlayGame(props) {
     // process.env.REACT_APP_PROMOTION_URL +
     // "/" +
     detailTournament?.tournamentInfors?.game?.gameHost
-  }?token=${tokenUser || localStorage.getItem("token")}&tournamentId=${
+  }?token=${tokenUser || localStorage.getItem("token") || getTokenGuest()}&tournamentId=${
     detailTournament?.id
   }&skinId=${detailTournament?.tournamentInfors?.skin?.id}&env=${
     process.env.REACT_APP_ENV
@@ -137,7 +138,7 @@ export default function PlayGame(props) {
   )}`;
   const linkCocosPro = `${
     detailTournament?.tournamentInfors?.game?.gameHost
-  }?token=${tokenUser || localStorage.getItem("token")}&tournamentId=${
+  }?token=${tokenUser || localStorage.getItem("token") || getTokenGuest()}&tournamentId=${
     detailTournament?.id
   }&skinId=${detailTournament?.tournamentInfors?.skin?.id}&env=${
     process.env.REACT_APP_ENV

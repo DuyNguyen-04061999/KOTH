@@ -34,6 +34,7 @@ import {
   updateFromRouter,
 } from "../../../redux-saga-middleware/reducers/appReducer";
 import {
+  openDialogCheckExtraGuest,
   openSubscribeDialog,
   toggleLoginDialog,
   toggleShareTour,
@@ -65,6 +66,7 @@ import GameInTournament from "../GameInTournament";
 import GamePreview from "../JoinTournamentMobile/GamePreview";
 import LeaderBoard from "../LeaderBoard";
 import PlayGame from "../PlayGame";
+import { getTokenGuest } from "../../../utils/getTokenGuest";
 
 ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS_ID);
 
@@ -127,28 +129,30 @@ export default function JoinTournament() {
     dispatch(updateDetailTour(detailTournament));
   }, [detailTournament, dispatch]);
   useEffect(() => {
-    if (token || localStorage.getItem("token")) {
+    // if (token || localStorage.getItem("token")) {
       dispatch(
         getRefactorDetailAuthPromotion({
           id,
           token,
         })
       );
-    } else {
-      dispatch(getRefactorDetailPromotion(id));
-    }
+    // } else {
+    //   dispatch(getRefactorDetailPromotion(id));
+    // }
   }, [token, dispatch, id]);
 
   const handleJoinTour = (sub) => {
-    dispatch(
-      joinPromotion({
-        tournamentId: detailTournament?.id,
-        sub: sub ? sub : null,
-      })
-    );
-  };
+    if(detailTournament?.checkInTournament === false) {
+      dispatch(
+        joinPromotion({
+          tournamentId: detailTournament?.id,
+          sub: sub ? sub : null,
+        })
+      );
+    }
+  }
 
-  
+
   const handlePlayTour = () => {
     dispatch(getScoreGame())
     if (token) {
@@ -172,9 +176,6 @@ export default function JoinTournament() {
           email === "" 
         ) {
           dispatch(
-            // openPopupCompleteProfile({
-            //   type: "step1",
-            // })
             openPopupCompleteExtra({
               type: "secondPlay"
             })
@@ -190,7 +191,12 @@ export default function JoinTournament() {
         }
       }
     } else {
-      dispatch(toggleLoginDialog());
+      if(detailTournament?.extra === 0 && countTicket === 0) {
+        dispatch(openDialogCheckExtraGuest())
+        return
+       } else {
+        handleJoinTour(true)
+       }
     }
   };
 
