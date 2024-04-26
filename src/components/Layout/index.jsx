@@ -334,8 +334,10 @@ export default function Layout(props) {
   }, [query, dispatch, isAlertDialog]);
 
   useEffect(() => {
-    dispatch(getScoreGame())
-  },[dispatch])
+    if(token) {
+      dispatch(getScoreGame())
+    }
+  },[token])
 
   useEffect(() => {
     if (isChangeLocation) {
