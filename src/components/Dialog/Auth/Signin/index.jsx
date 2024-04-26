@@ -89,7 +89,9 @@ export default function Dialoglg() {
     dispatch(updateCurrentLevel({}));
     dispatch(updateBonuses({}));
     dispatch(getUserGuest())
-    dispatch(getUserInfoReady())
+    setTimeout(() => {
+      dispatch(getUserInfoReady())
+    },[2000])
   };
   const { width, height } = useWindowDimensions();
 
@@ -555,6 +557,8 @@ export default function Dialoglg() {
                               // dispatch(toggleProfileDialog(true));
                               // dispatch(getMyInfor());
                               // dispatch(getCityAndStateProfile())
+                              dispatch(toggleLoginDialog())
+                              dispatch(clickTab("login"))
                             }}
                           >
                             <svg
@@ -717,7 +721,9 @@ export default function Dialoglg() {
                               alignItems: "center",
                             }}
                             onClick={() => {
-                              dispatch(updateTransactionDialog(true));
+                              // dispatch(updateTransactionDialog(true));
+                              dispatch(toggleLoginDialog())
+                              dispatch(clickTab("login"))
                             }}
                           >
                             {hover === 4 ? (

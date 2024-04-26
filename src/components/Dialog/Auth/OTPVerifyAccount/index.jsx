@@ -4,12 +4,14 @@ import OTPInput from "react-otp-input";
 import { useDispatch, useSelector } from "react-redux";
 import { closeLoginDialog } from "../../../../redux-saga-middleware/reducers/authReducer";
 import {
+  getUserInfoReady,
   logoutReady,
   resendOtpReady,
   sendOtpReady,
 } from "../../../../redux-saga-middleware/reducers/userReducer";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
 import AnimButton from "../../../AnimButton";
+import { getUserGuest } from "../../../../redux-saga-middleware/reducers/appReducer";
 
 export default function OTPVerifyAccount() {
   const { device } = useSelector((state) => state.deviceReducer);
@@ -231,6 +233,10 @@ export default function OTPVerifyAccount() {
             onClick={() => {
               dispatch(logoutReady());
               dispatch(closeLoginDialog());
+              dispatch(getUserGuest())
+              setTimeout(() => {
+                dispatch(getUserInfoReady())
+              },[2000])
             }}
           />
         </Box>

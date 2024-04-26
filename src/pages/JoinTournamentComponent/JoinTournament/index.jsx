@@ -142,20 +142,18 @@ export default function JoinTournament() {
   }, [token, dispatch, id]);
 
   const handleJoinTour = (sub) => {
-    if(detailTournament?.checkInTournament === false) {
       dispatch(
         joinPromotion({
           tournamentId: detailTournament?.id,
           sub: sub ? sub : null,
         })
       );
-    }
   }
 
 
   const handlePlayTour = () => {
-    dispatch(getScoreGame())
     if (token) {
+      dispatch(getScoreGame())
       if (scoreGame === 0) {
         handleJoinTour(true);
         localStorage.setItem("firstPlayGame", "check");
@@ -192,6 +190,7 @@ export default function JoinTournament() {
       }
     } else {
       if(detailTournament?.extra === 0 && countTicket === 0) {
+        
         dispatch(openDialogCheckExtraGuest())
         return
        } else {
