@@ -244,8 +244,6 @@ export default function DialogProfile(props) {
           gender: gender,
         })
       );
-      dispatch(getClaimPrizeInfo())
-      dispatch(getClaimPrizeOptional())
     }
   };
 
