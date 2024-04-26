@@ -25,6 +25,7 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import {
   getCityAndStateProfile,
+  getUserInfoReady,
   updateProfileFirstPlay,
   updateProfileUser,
 } from "../../../../redux-saga-middleware/reducers/userReducer";
@@ -36,6 +37,7 @@ import {
   openPopupCompleteProfile,
 } from "../../../../redux-saga-middleware/reducers/appReducer";
 import { validateEmail } from "../../../../utils/validationEmail";
+import dayjs from "dayjs";
 
 const CssTextField = styled(TextField)({
   "& .MuiOutlinedInput-root": {
@@ -76,20 +78,29 @@ const CompleteProfile = ({
   const { stepProfile, isOpenCompleteProfile } = useSelector(
     (state) => state.appReducer
   );
+  const {
+    firstName,
+    lastName,
+    email,
+    birthDay,
+    gender,
+  } = useSelector((state) => state.profileReducer);
   const { state } = useSelector((state) => state.profileReducer);
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState( dayjs(birthDay) || "");
   const [dateError, setDateError] = useState("");
-  const [gender, setGender] = useState("");
+  const [valueGender, setGender] = useState( gender || "");
   const [stateOption, setStateOption] = useState(state || "");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
+  const [valueFirstName, setFirstName] = useState( firstName || "");
+  const [valueLastName, setLastName] = useState( lastName || "");
+  const [valueEmail, setEmail] = useState( email || "");
   const [disableButton, setDisableButton] = useState(true);
   const [addressLine1, setAddressLine1] = useState("");
   const [zCode, setZcode] = useState("");
   const [cityOption, setCityOption] = useState("");
   const [validEmail,setValidEmail] = useState(false)
   const [disableButtonStep2,setDiascleButtonStep2] = useState(true)
+
+  
   const handleChangeState = (event, newValue) => {
     if (newValue) {
       setStateOption(newValue?.name);
@@ -102,20 +113,20 @@ const CompleteProfile = ({
 
   useEffect(() => {
     if (
-      gender === "" ||
+      valueGender === "" ||
       value === "" ||
-      firstName === "" ||
-      lastName === "" ||
-      email === "" ||
+      valueFirstName === "" ||
+      valueLastName === "" ||
+      valueEmail === "" ||
       value === null ||
       value === undefined ||
-      !validateEmail(email)
+      !validateEmail(valueEmail)
     ) {
       setDisableButton(true);
     } else {
       setDisableButton(false);
     }
-  }, [gender, value, email, firstName, lastName]);
+  }, [valueGender, value, valueEmail, valueFirstName, valueLastName]);
 
   useEffect(() => {
     if(addressLine1 === "" || zCode === "" || cityOption === "" || stateOption === "") {
@@ -126,8 +137,8 @@ const CompleteProfile = ({
   },[addressLine1,zCode,cityOption,stateOption])
 
   useEffect(() => {
-    setValidEmail(validateEmail(email));
-  }, [email]);
+    setValidEmail(validateEmail(valueEmail));
+  }, [valueEmail]);
 
   const handleChange = (event, newValue) => {
     setGender(Number(event.target.value));
@@ -163,19 +174,24 @@ const CompleteProfile = ({
 
   const handleClose = () => {
     dispatch(closePopupCompleteProfile());
-    dispatch(closePopupCompleteExtra())
+    dispatch(
+      openPopupCompleteExtra({
+        type: "doneStep1",
+      })
+    );
   };
 
   const handleConfirm = () => {
     dispatch(
       updateProfileFirstPlay({
-        firstName: firstName,
-        lastName: lastName,
+        firstName: valueFirstName,
+        lastName: valueLastName,
         birthday: value,
-        email: email,
-        gender: gender,
+        email: valueEmail,
+        gender: valueGender,
       })
     );
+    dispatch(getUserInfoReady())
   };
   const { width } = useWindowDimensions();
 
@@ -240,18 +256,22 @@ const CompleteProfile = ({
         }}
       >
         <Box>
+         {stepProfile === "step1" ? (
+          <></>
+         ) : (
           <Close
-            sx={{
-              position: "absolute",
-              top: "10px",
-              right: "10px",
-              color: "white",
-              fontSize: "30px",
-              zIndex: 1,
-              cursor: "pointer",
-            }}
-            onClick={handleClose}
-          />
+          sx={{
+            position: "absolute",
+            top: "10px",
+            right: "10px",
+            color: "white",
+            fontSize: "30px",
+            zIndex: 1,
+            cursor: "pointer",
+          }}
+          onClick={handleClose}
+        />
+         )}
         </Box>
         {stepProfile === "step1" ? (
           <Box
@@ -336,7 +356,7 @@ const CompleteProfile = ({
                     id="input-with-icon-adornment"
                     type="text"
                     onChange={(e) => setFirstName(e.target.value)}
-                    value={firstName}
+                    value={valueFirstName}
                     placeholder="Enter First Name"
                     sx={{
                       "&:before": {
@@ -413,7 +433,7 @@ const CompleteProfile = ({
                     id="input-with-icon-adornment"
                     type="text"
                     onChange={(e) => setLastName(e.target.value)}
-                    value={lastName}
+                    value={valueLastName}
                     placeholder="Enter Last Name"
                     sx={{
                       "&:before": {
@@ -478,7 +498,7 @@ const CompleteProfile = ({
                     name="email"
                     type="text"
                     onChange={(e) => setEmail(e.target.value)}
-                    value={email}
+                    value={valueEmail}
                     placeholder="Enter email"
                     sx={{
                       "&:before": {
@@ -661,7 +681,7 @@ const CompleteProfile = ({
                       }}
                     />
                   </LocalizationProvider>
-                  {/* {dateError ? (
+                  {dateError ? (
                              <Typography
                                sx={{
                                  fontSize: "10px",
@@ -673,7 +693,7 @@ const CompleteProfile = ({
                              </Typography>
                            ) : (
                              <></>
-                           )} */}
+                           )}
                 </FormControl>
                 <FormControl
                   variant="standard"
@@ -723,7 +743,7 @@ const CompleteProfile = ({
                     <Select
                       labelId="demo-simple-select-label"
                       id="demo-simple-select"
-                      value={gender}
+                      value={valueGender}
                       label="gender"
                       inputProps={{
                         MenuProps: {
