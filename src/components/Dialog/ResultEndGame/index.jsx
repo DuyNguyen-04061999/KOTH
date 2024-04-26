@@ -34,7 +34,7 @@ export default function ResultEndGame() {
     tokenUser,
     // countTicket
   } = useSelector((state) => state.userReducer);
-
+  const token = localStorage.getItem("token")
   const dispatch = useDispatch();
 
   const { id } = useParams();
@@ -67,44 +67,61 @@ export default function ResultEndGame() {
   };
 
   const handleConfirm = () => {
-    if (check === "check") {
-      dispatch(
-        openPopupCompleteExtra({
-          type: "firstPlay",
-        })
-      );
-      localStorage.removeItem("firstPlayGame");
-      localStorage.removeItem("buyPackage");
-      localStorage.removeItem("newNumberTicket");
-      dispatch(toggleCloseResultEndGame());
-      dispatch(toggleStartGame(false));
-      dispatch(finishGame());
-      dispatch(finishVideo());
-      if (tokenUser || localStorage.getItem("token")) {
+    if(tokenUser || localStorage.getItem("token")) {
+      if (check === "check") {
         dispatch(
-          getRefactorDetailAuthPromotion({
-            id,
-            token: tokenUser,
+          openPopupCompleteExtra({
+            type: "firstPlay",
           })
         );
-        dispatch(getUserInfoReady());
+        localStorage.removeItem("firstPlayGame");
+        localStorage.removeItem("buyPackage");
+        localStorage.removeItem("newNumberTicket");
+        dispatch(toggleCloseResultEndGame());
+        dispatch(toggleStartGame(false));
+        dispatch(finishGame());
+        dispatch(finishVideo());
+        // if (tokenUser || localStorage.getItem("token")) {
+          dispatch(
+            getRefactorDetailAuthPromotion({
+              id,
+              token: tokenUser,
+            })
+          );
+          dispatch(getUserInfoReady());
+        // }
+      } else {
+        localStorage.removeItem("buyPackage");
+        localStorage.removeItem("newNumberTicket");
+        dispatch(toggleCloseResultEndGame());
+        dispatch(toggleStartGame(false));
+        dispatch(finishGame());
+        dispatch(finishVideo());
+        // if (tokenUser || localStorage.getItem("token")) {
+          dispatch(
+            getRefactorDetailAuthPromotion({
+              id,
+              token: tokenUser,
+            })
+          );
+          dispatch(getUserInfoReady());
+        // }
       }
     } else {
-      localStorage.removeItem("buyPackage");
-      localStorage.removeItem("newNumberTicket");
-      dispatch(toggleCloseResultEndGame());
-      dispatch(toggleStartGame(false));
-      dispatch(finishGame());
-      dispatch(finishVideo());
-      if (tokenUser || localStorage.getItem("token")) {
-        dispatch(
-          getRefactorDetailAuthPromotion({
-            id,
-            token: tokenUser,
-          })
-        );
-        dispatch(getUserInfoReady());
-      }
+    dispatch(CheckGuestUpgrade(true))
+    dispatch(toggleCloseResultEndGame());
+    dispatch(
+      getRefactorDetailAuthPromotion({
+        id,
+        token: tokenUser,
+      })
+    );
+    dispatch(getUserInfoReady());
+    dispatch(toggleStartGame(false));
+    dispatch(finishGame());
+    dispatch(finishVideo());
+    localStorage.removeItem("buyPackage");
+        localStorage.removeItem("newNumberTicket");
     }
   };
 
@@ -161,24 +178,10 @@ export default function ResultEndGame() {
             }}
           >
             <Box sx={{ marginTop: "12px", marginBottom: "12px" }}>
-              {tokenGuest ? (
+              { token ? (
                 <>
                   {" "}
                   <Typography
-                    sx={{
-                      fontSize: width < 576 ? "24px" : "24px",
-                      fontWeight: 800,
-                      color: "white",
-                      fontStyle: "normal",
-                      textTransform: "capitalize",
-                      lineHeight: "130%",
-                    }}
-                  >
-                    SAVE PROGRESS
-                  </Typography>
-                </>
-              ) : (
-                <Typography
                   sx={{
                     fontSize: width < 576 ? "24px" : "24px",
                     fontWeight: 800,
@@ -190,6 +193,21 @@ export default function ResultEndGame() {
                 >
                   TOTAL SCORE
                 </Typography>
+                 
+                </>
+              ) : (
+                <Typography
+                    sx={{
+                      fontSize: width < 576 ? "24px" : "24px",
+                      fontWeight: 800,
+                      color: "white",
+                      fontStyle: "normal",
+                      textTransform: "capitalize",
+                      lineHeight: "130%",
+                    }}
+                  >
+                    SAVE PROGRESS
+                  </Typography>
               )}
             </Box>
             <Box
@@ -225,7 +243,11 @@ export default function ResultEndGame() {
               </Box>
             </Box>
           </Box>
-          {tokenGuest ? (
+          {token ? (
+            <>
+              
+            </>
+          ) : (
             <>
               <Box>
                 <Box component={"img"} alt="..." src={images.crossbar} sx={{width:"100%"}}></Box>
@@ -244,8 +266,6 @@ export default function ResultEndGame() {
                 <Box component={"img"} alt="..." src={images.crossbar} sx={{width:"100%"}}></Box>
               </Box>
             </>
-          ) : (
-            <></>
           )}
           <DialogActions
             sx={{
@@ -254,7 +274,16 @@ export default function ResultEndGame() {
               flexDirection: "column",
             }}
           >
-            {tokenGuest ? (
+            {token ? (
+              <>
+              <AnimButton
+                  onClick={() => handleConfirm()}
+                  type="primary"
+                  text="Continue"
+                ></AnimButton>
+                
+              </>
+            ) : (
               <>
                 <AnimButton
                   onClick={() => handleToSignUp()}
@@ -262,17 +291,25 @@ export default function ResultEndGame() {
                   text="Sign Up"
                 ></AnimButton>
               </>
-            ) : (
-              <>
-                <AnimButton
-                  onClick={() => handleConfirm()}
-                  type="primary"
-                  text="Continue"
-                ></AnimButton>
-              </>
             )}
             <Box className="mt-2">
-              {tokenGuest ? (
+              {token ? (
+                <>
+                <Typography
+                    sx={{
+                      textAlign: "center",
+                      fontSize: "18px",
+                      fontStyle: "normal",
+                      fontWeight: "500",
+                      lineHeight: "normal",
+                      color: "#7848ED",
+                    }}
+                  >
+                    View your game history
+                  </Typography>
+                  
+                </>
+              ) : (
                 <>
                   <Typography
                     onClick={() => {
@@ -289,21 +326,6 @@ export default function ResultEndGame() {
                     }}
                   >
                     Continue with Guest Mode
-                  </Typography>
-                </>
-              ) : (
-                <>
-                  <Typography
-                    sx={{
-                      textAlign: "center",
-                      fontSize: "18px",
-                      fontStyle: "normal",
-                      fontWeight: "500",
-                      lineHeight: "normal",
-                      color: "#7848ED",
-                    }}
-                  >
-                    View your game history
                   </Typography>
                 </>
               )}
