@@ -245,6 +245,7 @@ function* updateProfileSaga(dataRequest) {
             checkFullInfor: data?.data?.checkFullInfor,
           })
         );
+        yield put(getClaimPrizeOptional())
       } else {
         yield put(
           showToastNotification({
@@ -919,9 +920,8 @@ function* getUpgradeGuestSaga(dataRequest) {
       const {status, data} = res
       if(status === 200 || status === 201) {
         yield put(clickTab("otpVerifyAccount"));
-        yield put(getUpgradeGuestSuccess(data))
+        yield put(getUpgradeGuestSuccess(...payload, ...data?.data))
         yield put(saveCreateAccInfo(payload));
-
         toast.success(data?.message)
       }
     }

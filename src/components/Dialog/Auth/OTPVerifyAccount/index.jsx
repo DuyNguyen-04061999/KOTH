@@ -23,6 +23,7 @@ export default function OTPVerifyAccount() {
     typeVerifyOTP,
     resenOTPSuccess,
     isVerifyOTP,
+    phoneUpgrade
   } = useSelector((state) => state.userReducer);
 
   const { width } = useWindowDimensions();
@@ -49,17 +50,18 @@ export default function OTPVerifyAccount() {
           sendOtpReady({
             otp: otp,
             type: "register",
-            email: registerEmail,
-            phone: registerPhone,
+            // email: registerEmail,
+            phone: registerPhone || phoneUpgrade,
           })
         );
+        
         break;
       case "reVerify":
         dispatch(
           sendOtpReady({
             otp: otp,
             type: "register",
-            email: user?.userEmail,
+            // email: user?.userEmail,
             phone: user?.userPhone,
           })
         );
@@ -80,7 +82,7 @@ export default function OTPVerifyAccount() {
       case "register":
         dispatch(
           resendOtpReady({
-            email: registerEmail,
+            // email: registerEmail,
             phone: registerPhone,
             type: "register",
           })
@@ -89,7 +91,7 @@ export default function OTPVerifyAccount() {
       case "reVerify":
         dispatch(
           resendOtpReady({
-            email: user?.userEmail,
+            // email: user?.userEmail,
             phone: user?.userPhone,
             type: "register",
           })
