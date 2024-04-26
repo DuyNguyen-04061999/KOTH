@@ -178,7 +178,7 @@ export default function JoinedPromotion() {
                   }}
                 >
                   {/* {t(" Joined Prmotions")} */}
-                  Joined Promotions
+                 Played Promotions
                 </Typography>
                 <Box
                   sx={{
@@ -277,7 +277,7 @@ export default function JoinedPromotion() {
                   }}
                 >
                   {/* {t("Joined Prmotions")} */}
-                  Joined Promotions
+                  Played Promotions
                 </Typography>
                 <Box
                   sx={{

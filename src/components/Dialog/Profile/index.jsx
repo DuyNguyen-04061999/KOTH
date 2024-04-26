@@ -709,7 +709,10 @@ export default function DialogProfile(props) {
                       }}
                     />
                     <Box className="Renewal d-flex align-items-center mb-2">
-                      <Box
+                     
+                      {uPack !== null && uPack?.remain !== "Expired" ? (
+                        <>
+                           <Box
                         sx={{
                           padding: "10px",
                           borderRadius: "50%",
@@ -747,8 +750,7 @@ export default function DialogProfile(props) {
                           />
                         </svg>
                       </Box>
-                      {uPack !== null || uPack !== undefined ? (
-                        <Box
+                            <Box
                           sx={{
                             display: "flex",
                             flexDirection: "column",
@@ -802,7 +804,8 @@ export default function DialogProfile(props) {
                           ) : (
                             <></>
                           )}
-                        </Box>
+                            </Box>
+                        </>
                       ) : (
                         <></>
                       )}

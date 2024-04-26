@@ -35,8 +35,10 @@ import {
   forgetPasswordSuccess,
   getCityAndStateProfileFail,
   getCityAndStateProfileSuccess,
+  getClaimPrizeInfo,
   getClaimPrizeInfoFail,
   getClaimPrizeInfoSuccess,
+  getClaimPrizeOptional,
   getClaimPrizeOptionalFail,
   getClaimPrizeOptionalSuccess,
   getMyInfor,
@@ -290,6 +292,7 @@ function* updateProfileFirstPlay(dataRequest) {
         yield put(openPopupCompleteProfile({
           type:"step2"
         }))
+        yield put(getClaimPrizeInfo())
         yield delay(3000);
         yield put(
           updateProfileFirstPlaySuccess({
@@ -302,7 +305,7 @@ function* updateProfileFirstPlay(dataRequest) {
         yield put(
           showToastNotification({
             type: "error",
-            message: i18n?.t("Update profile failed! Something went wrong!", {
+            message: i18n?.t(data?.message, {
               ns: "auth",
             }),
           })
@@ -321,6 +324,7 @@ function* updateProfileFirstPlay(dataRequest) {
         yield put(openPopupCompleteExtra({
           type:"doneStep2"
         }))
+        yield put(getClaimPrizeOptional())
         yield delay(3000);
         yield put(
           updateProfileFirstPlaySuccess({
@@ -845,7 +849,12 @@ function* getClaimPrizeInfoSaga(dataRequest) {
       const {status, data} = res
       if(status === 200 || status === 201) {
         yield put(getClaimPrizeInfoSuccess(data))
-        toast.success(data?.message)
+        yield put(
+          showToastNotification({
+            type: "success",
+            message:data?.message || "Something went wrong!",
+          })
+        );
       }
     }
     prizeInfo = 0
@@ -853,7 +862,12 @@ function* getClaimPrizeInfoSaga(dataRequest) {
     prizeInfo = 0
     console.log(err);
     yield put(getClaimPrizeInfoFail())
-    toast.error(err)
+    yield put(
+      showToastNotification({
+        type: "error",
+        message:err || "Something went wrong!",
+      })
+    );
   }
 }
 
@@ -867,13 +881,23 @@ function* getClaimPrizeOptionalSaga(dataRequest) {
       const {status, data} = res
       if(status === 200 || status === 201) {
         yield put(getClaimPrizeOptionalSuccess(data))
-        toast.success(data?.message)
+        yield put(
+          showToastNotification({
+            type: "success",
+            message:data?.message || "Something went wrong!",
+          })
+        );
       }
     }
   } catch (err) {
     console.log(err);
     yield put(getClaimPrizeOptionalFail())
-    toast.error(err)
+    yield put(
+      showToastNotification({
+        type: "error",
+        message:err || "Something went wrong!",
+      })
+    );
   }
 }
 

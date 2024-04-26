@@ -28,6 +28,7 @@ import LikeDislikeGame from "../../../components/LikeDislikeGame";
 import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
 import ParagraphLoading from "../../../components/LoadingComponent/ParagraphLoading";
 import {
+  getScoreGame,
   openPopupCompleteExtra,
   openPopupCompleteProfile,
   updateFromRouter,
@@ -153,6 +154,7 @@ export default function JoinTournament() {
 
 
   const handlePlayTour = () => {
+    dispatch(getScoreGame())
     if (token) {
       if (scoreGame === 0) {
         handleJoinTour(true);

@@ -83,20 +83,20 @@ function* joinPromotionSaga(dataRequest) {
         yield put(startGameInPromotion({
           tournamentId: payload?.tournamentId
         }))
-        yield put(
-          showToastNotification({
-            type: "success",
-            message: "Join promotion successfully!",
-          })
-        );
+        // yield put(
+        //   showToastNotification({
+        //     type: "success",
+        //     message: "Join promotion successfully!",
+        //   })
+        // );
       } else {
         yield put(joinPromotionFail());
-        yield put(
-          showToastNotification({
-            type: "error",
-            message: "Join promotion failed! Something went wrong",
-          })
-        );
+        // yield put(
+        //   showToastNotification({
+        //     type: "error",
+        //     message: "Join promotion failed! Something went wrong",
+        //   })
+        // );
       }
     }
     joinCount = 0
