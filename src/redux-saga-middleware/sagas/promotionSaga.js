@@ -69,7 +69,6 @@ function* joinPromotionSaga(dataRequest) {
     joinCount += 1
     if (joinCount === 1) {
       const { payload } = dataRequest;
-      console.log(payload);
       const res = yield call(PromotionService.joinPromotion, payload);
       const { data, status } = res
       if (status === 200 || status === 201) {

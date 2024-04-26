@@ -25,6 +25,7 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import {
   getCityAndStateProfile,
+  getMyInfor,
   getUserInfoReady,
   updateProfileFirstPlay,
   updateProfileUser,
@@ -169,7 +170,7 @@ const CompleteProfile = ({
       })
     );
     dispatch(closePopupCompleteProfile());
-
+    dispatch(getMyInfor())
   };
 
   const handleClose = () => {
@@ -179,6 +180,7 @@ const CompleteProfile = ({
         type: "doneStep1",
       })
     );
+    dispatch(getMyInfor())
   };
 
   const handleConfirm = () => {

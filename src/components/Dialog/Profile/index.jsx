@@ -32,6 +32,8 @@ import { showToastNotification } from "../../../redux-saga-middleware/reducers/a
 import { exitEditProfile } from "../../../redux-saga-middleware/reducers/profileReducer";
 import {
   getCityAndStateProfile,
+  getClaimPrizeInfo,
+  getClaimPrizeOptional,
   updateProfileUser,
 } from "../../../redux-saga-middleware/reducers/userReducer";
 import { images } from "../../../utils/images";
@@ -242,6 +244,8 @@ export default function DialogProfile(props) {
           gender: gender,
         })
       );
+      dispatch(getClaimPrizeInfo())
+      dispatch(getClaimPrizeOptional())
     }
   };
 

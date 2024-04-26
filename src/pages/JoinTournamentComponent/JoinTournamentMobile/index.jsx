@@ -77,17 +77,17 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
   }, [token, dispatch, id]);
 
   const handleJoinTour = (sub) => {
-    dispatch(
-      joinPromotion({
-        tournamentId: detailTournament?.id,
-        sub: sub ? sub : null,
-      })
-    );
-  };
-  console.log(firstName, lastName, email, gender, birthDay);
+      dispatch(
+        joinPromotion({
+          tournamentId: detailTournament?.id,
+          sub: sub ? sub : null,
+        })
+      );
+  }
+
   const handlePlayTour = () => {
-    dispatch(getScoreGame())
     if (token) {
+      dispatch(getScoreGame())
       if (scoreGame === 0) {
         handleJoinTour(true);
         localStorage.setItem("firstPlayGame", "check");
@@ -108,9 +108,6 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
           email === "" 
         ) {
           dispatch(
-            // openPopupCompleteProfile({
-            //   type: "step1",
-            // })
             openPopupCompleteExtra({
               type: "secondPlay"
             })
@@ -126,7 +123,12 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
         }
       }
     } else {
-      dispatch(toggleLoginDialog());
+      if(detailTournament?.extra === 0 && countTicket === 0) {
+        dispatch(openDialogCheckExtraGuest())
+        return
+       } else {
+        handleJoinTour(true)
+       }
     }
   };
 

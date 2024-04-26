@@ -877,7 +877,7 @@ const userReducer = (
       return {...state, isUpgradeGuest: true}
     }
     case "GET_UPGRADE_GUEST_SUCCESS" : {
-      return {...state, isUpgradeGuest: false, typeVerifyOTP: "register",}
+      return {...state, isUpgradeGuest: false, typeVerifyOTP: "register",  registerPhone: payload?.phone,}
     }
     case "GET_UPGRADE_GUEST_FAIL" : {
       return {...state, isUpgradeGuest: false}

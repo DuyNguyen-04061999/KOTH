@@ -110,6 +110,7 @@ function* loginSaga(dataRequest) {
         } else {
           localStorage.removeItem("account");
           localStorage.removeItem("pass");
+          localStorage.removeItem("firstPlayGame")
         }
         yield put(
           showToastNotification({
@@ -349,7 +350,14 @@ function* updateProfileFirstPlay(dataRequest) {
    updateFirstPlay = 0
   } catch(err) {
     updateFirstPlay = 0
-    console.log(err);
+    yield put(
+      showToastNotification({
+        type: "error",
+        message: i18n?.t(err?.message, {
+          ns: "auth",
+        }),
+      })
+    );
   }
 }
 
