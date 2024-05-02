@@ -51,6 +51,7 @@ import {
   startGameInPromotionFail,
 } from "../../../redux-saga-middleware/reducers/promotionReducer";
 import {
+  CheckGuestUpgrade,
   saveBoughtTournament,
   saveIdTournament,
   toggleExtra,
@@ -195,6 +196,7 @@ export default function JoinTournament() {
         return
        } else {
         handleJoinTour(true)
+        dispatch(CheckGuestUpgrade(true))
        }
     }
   };
