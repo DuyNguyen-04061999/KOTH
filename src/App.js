@@ -68,6 +68,7 @@ import Referal from "./pages/Referal";
 import { News } from "./pages/News/Component";
 import NewsDetail from "./pages/News/NewsDetail";
 import { getTokenGuest } from "./utils/getTokenGuest";
+import { jwtDecode } from "jwt-decode";
 
 const LazyNewHomePage = lazy(() => import("./pages/NewHomePageComponent"));
 const LazyPackage = lazy(() => import("./pages/PackagePage"));
@@ -101,7 +102,9 @@ function App() {
   const { orientation } = store.getState().gameReducer;
   const  tokenGuest  = getTokenGuest()
   const [socket, setSocket] = useState(null);
-
+  const decoded = jwtDecode(tokenGuest)
+  const expiredTime = new Date(decoded?.iat*1000)
+  const currentTime = Date.now()/1000
   useEffect(() => {
     if (window.location.pathname === "/changelog") {
       setSocket(null);
@@ -284,6 +287,12 @@ function App() {
       store.dispatch(getUserGuest())
     }
   }, [tokenGuest, tokenUser]);
+
+  useEffect(() => {
+    if(expiredTime < currentTab) {
+      store.dispatch(getUserGuest())
+    }
+  },[expiredTime,currentTab])
 
   useEffect(() => {
     const onPageLoad = () => {
