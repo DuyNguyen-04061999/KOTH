@@ -312,10 +312,7 @@ export default function ResultEndGame() {
               ) : (
                 <>
                   <Typography
-                    onClick={() => {
-                      dispatch(toggleCloseResultEndGame());
-                      dispatch(CheckGuestUpgrade(true))
-                    }}
+                    onClick={handleConfirm}
                     sx={{
                       textAlign: "center",
                       fontSize: "18px",
@@ -323,6 +320,7 @@ export default function ResultEndGame() {
                       fontWeight: "500",
                       lineHeight: "normal",
                       color: "#7848ED",
+                      cursor: "pointer",
                     }}
                   >
                     Continue with Guest Mode
