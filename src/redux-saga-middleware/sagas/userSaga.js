@@ -5,7 +5,7 @@ import i18n from "../../i18n/i18n";
 import { authNotification } from "../../utils/notification";
 import _socket from "../config/socket";
 import { showToastNotification } from "../reducers/alertReducer";
-import { closePopupCompleteProfile, openDialogGif, openPopupCompleteExtra, openPopupCompleteProfile } from "../reducers/appReducer";
+import { closePopupCompleteProfile, getUserGuest, openDialogGif, openPopupCompleteExtra, openPopupCompleteProfile } from "../reducers/appReducer";
 import {
   clickTab,
   closeLoginDialog,
@@ -390,6 +390,7 @@ function* logoutSaga(dataRequest) {
             ),
           })
         );
+        yield put(getUserGuest())
       } else {
         yield put(logoutFail());
         yield put(
@@ -422,6 +423,7 @@ function* userInfoSaga(dataRequest) {
   try {
     userInfoCount += 1;
     if (userInfoCount === 1) {
+      const { tokenUser, user } = store.getState().userReducer
       const tokenGuest = getTokenGuest()
       const { payload } = dataRequest;
       const res = yield call(userService.userInfo, payload);
@@ -433,7 +435,7 @@ function* userInfoSaga(dataRequest) {
         });
         yield put(getUserInfoSuccess(data?.data));
         yield put(saveNickNameWhenLogin(data?.data?.nickName));
-       if(!tokenGuest) {
+       if(tokenUser) {
         if (
           // data?.data?.user?.userVerifiedEmail === 0 &&
           // data?.data?.user?.userVerifiedPhone === 0
@@ -920,7 +922,7 @@ function* getUpgradeGuestSaga(dataRequest) {
       const {status, data} = res
       if(status === 200 || status === 201) {
         yield put(clickTab("otpVerifyAccount"));
-        yield put(getUpgradeGuestSuccess(...payload, ...data?.data))
+        yield put(getUpgradeGuestSuccess(data?.data))
         yield put(saveCreateAccInfo(payload));
         toast.success(data?.message)
       }
