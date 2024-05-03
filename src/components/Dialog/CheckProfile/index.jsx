@@ -38,7 +38,6 @@ export default function CheckProfile(props) {
     setTimeout(() => {
       // Re-enable the button after some time
       setIsButtonDisabled(false);
-      console.log(isButtonDisabled);
     }, 1000); // Adjust the time as needed
   };
   const handleComplete = () => {

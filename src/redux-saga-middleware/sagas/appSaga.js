@@ -138,7 +138,7 @@ function* getUserGuestSaga(dataRequest) {
     const {status, data} = res
     if(status === 200 || status === 201) {
       yield put(getUserGuestSuccess(data))
-      yield put(getUserInfoReady(data?.data?.token))
+      // yield put(getUserInfoReady(data?.data?.token))
       localStorage.setItem("token_guest", data?.data?.token)
     }
   } catch (err) {
