@@ -64,17 +64,17 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (token || localStorage.getItem("token")) {
+    // if (token || localStorage.getItem("token")) {
       dispatch(
         getRefactorDetailAuthPromotion({
           id,
-          token,
+          token: token || localStorage.getItem("token_guest"),
         })
       );
-    } else {
-      dispatch(getRefactorDetailPromotion(id));
-    }
-  }, [token, dispatch, id]);
+    // } else {
+    //   dispatch(getRefactorDetailPromotion(id));
+    // }
+  }, [token, dispatch, id, localStorage.getItem("token_guest")]);
 
   const handleJoinTour = (sub) => {
       dispatch(
@@ -124,13 +124,17 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
       }
     } else {
       if(detailTournament?.extra === 0 && countTicket === 0) {
+        
         dispatch(openDialogCheckExtraGuest())
         return
        } else {
         handleJoinTour(true)
+        dispatch(CheckGuestUpgrade(true))
+        localStorage.setItem("checkUpgrade", 'upgrade')
        }
     }
   };
+
 
   // const handleJoinTour = () => {
   //   if (token) {

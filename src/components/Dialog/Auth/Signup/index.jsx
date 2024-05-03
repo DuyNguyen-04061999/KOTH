@@ -64,8 +64,9 @@ export default function Signup(props) {
         })
       );
     } else {
-      if(isCheckGuest === true) {
+      if(localStorage.getItem("checkUpgrade") === 'upgrade') {
         handleRegisterGuestUpgrade()
+        localStorage.removeItem("checkUpgrade")
       } else {
         sendRegister();
       }

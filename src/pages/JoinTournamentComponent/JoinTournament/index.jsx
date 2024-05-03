@@ -134,14 +134,14 @@ export default function JoinTournament() {
       dispatch(
         getRefactorDetailAuthPromotion({
           id,
-          token,
+          token: token || localStorage.getItem("token_guest"),
         })
       );
     // } else {
     //   dispatch(getRefactorDetailPromotion(id));
     // }
-  }, [token, dispatch, id]);
-
+  }, [token, dispatch, id, localStorage.getItem("token_guest")]);
+ 
   const handleJoinTour = (sub) => {
       dispatch(
         joinPromotion({
@@ -197,6 +197,7 @@ export default function JoinTournament() {
        } else {
         handleJoinTour(true)
         dispatch(CheckGuestUpgrade(true))
+        localStorage.setItem("checkUpgrade", 'upgrade')
        }
     }
   };

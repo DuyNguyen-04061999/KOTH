@@ -26,6 +26,7 @@ import { showToastNotification } from "../../redux-saga-middleware/reducers/aler
 import {
   changeRouter,
   getScoreGame,
+  getUserGuest,
   openDoubleDayDialog,
   randomRenderPopup,
   toggleStartGame,
@@ -59,7 +60,7 @@ import {
 } from "../../redux-saga-middleware/reducers/settingReducer";
 import { toggleAlertStripeProcess } from "../../redux-saga-middleware/reducers/stripeReducer";
 import { toggleCloseResultEndGame } from "../../redux-saga-middleware/reducers/tournamentReducer";
-import { getMyInfor, updateUserToken } from "../../redux-saga-middleware/reducers/userReducer";
+import { getMyInfor, getUserInfoReady, updateUserToken } from "../../redux-saga-middleware/reducers/userReducer";
 import { compareDate, compareDateInUSA } from "../../utils/config";
 import { imageDesktop, images } from "../../utils/images";
 import { systemNotification } from "../../utils/notification";
@@ -94,6 +95,7 @@ import DialogBanUser from "../Dialog/DialogBanUser";
 import CompleteExtra from "../Dialog/PopupNewUser/CompleteExtra";
 import CompleteProfile from "../Dialog/PopupNewUser/CompleteProfile";
 import DialogCheckExtraGuest from "../Dialog/DialogCheckExtraGuest";
+import { jwtDecode } from "jwt-decode";
 
 const Main = muiStyled("main", {
   shouldForwardProp: (prop) => prop !== "open",
@@ -161,7 +163,25 @@ export default function Layout(props) {
     setDebounceTab(true);
   };
 
-  const guest = localStorage.getItem("tokenGuest")
+  useEffect(() => {
+    if (!localStorage.getItem("token_guest") && !localStorage.getItem("token")) {
+      dispatch(getUserGuest());
+    } else if(!localStorage.getItem("token")){
+      dispatch(getUserInfoReady());
+      try {
+        const decoded = jwtDecode(localStorage.getItem("token_guest"));
+        const expiredTime = new Date(decoded?.iat * 1000);
+        const currentTime = Date.now() / 1000;
+        if (expiredTime < currentTime) {
+          dispatch(getUserGuest());
+        }
+      } catch(e){
+        dispatch(getUserGuest());
+      }
+
+    }
+    
+  }, [localStorage.getItem("token_guest")]);
 
   useEffect(() => {
     if(token) {

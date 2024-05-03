@@ -113,7 +113,7 @@ export default function ResultEndGame() {
     dispatch(
       getRefactorDetailAuthPromotion({
         id,
-        token: tokenUser,
+        token: tokenUser || localStorage.getItem("token_guest"),
       })
     );
     dispatch(getUserInfoReady());
