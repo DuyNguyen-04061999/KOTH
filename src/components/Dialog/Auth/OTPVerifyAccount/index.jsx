@@ -25,7 +25,7 @@ export default function OTPVerifyAccount() {
     isVerifyOTP,
     phoneUpgrade
   } = useSelector((state) => state.userReducer);
-
+  console.log(phoneUpgrade);
   const { width } = useWindowDimensions();
   const [otp, setOtp] = useState("");
   const dispatch = useDispatch();

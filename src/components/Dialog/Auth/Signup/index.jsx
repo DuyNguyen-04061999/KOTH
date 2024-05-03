@@ -251,6 +251,9 @@ export default function Signup(props) {
         password: password,
       })
     )
+    dispatch(savePhoenUpgrade({
+      type: phone
+    }))
     localStorage.removeItem("firstPlayGame")
   }
 

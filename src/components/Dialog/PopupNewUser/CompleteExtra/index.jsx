@@ -9,7 +9,7 @@ import AnimButton from "../../../AnimButton";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
 import { Close } from "@mui/icons-material";
 import { closePopupCompleteExtra, getScoreGame, getTypeDoneStep1, getTypeDoneStep2, getTypeFirstPlay, getTypeSecondPlay, openPopupCompleteProfile } from "../../../../redux-saga-middleware/reducers/appReducer";
-import { getClaimPrizeInfo, getClaimPrizeOptional } from "../../../../redux-saga-middleware/reducers/userReducer";
+import { getClaimFirstGamePlay, getClaimPrizeInfo, getClaimPrizeOptional } from "../../../../redux-saga-middleware/reducers/userReducer";
 
 const CompleteExtra = ({
   bonusName = "Value extra pack",
@@ -29,6 +29,7 @@ const CompleteExtra = ({
 
   const handleConfirm = () => {};
   const handleFirstPlay = () => {
+    dispatch(getClaimFirstGamePlay())
     dispatch(openPopupCompleteProfile({
       type:"step1"
     }))

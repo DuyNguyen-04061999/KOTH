@@ -515,6 +515,27 @@ export const savePhoenUpgrade = (data) => {
   }
 }
 
+export const getClaimFirstGamePlay = (data) => {
+  return {
+    type: "GET_CLAIM_FIRST_GAME_PLAY",
+    payload: data
+  }
+}
+
+export const getClaimFirstGamePlaySuccess = (data) => {
+  return {
+    type: "GET_CLAIM_FIRST_GAME_PLAY_SUCCESS",
+    payload: data
+  }
+}
+
+export const getClaimFirstGamePlayFail = (data) => {
+  return {
+    type: "GET_CLAIM_FIRST_GAME_PLAY_FAIL",
+    payload: data
+  }
+}
+
 const userReducer = (
   state = {
     tokenUser: "",
@@ -568,7 +589,8 @@ const userReducer = (
     isFetchingBanUser: false,
     isFetchingUnbanUser: false,
     isUpgradeGuest:false,
-    phoneUpgrade:""
+    phoneUpgrade:"",
+    isFirstClaimGamePlay: false
   },
   action
 ) => {
@@ -896,6 +918,15 @@ const userReducer = (
     }
     case "GET_UPGRADE_GUEST_FAIL" : {
       return {...state, isUpgradeGuest: false}
+    }
+    case "GET_CLAIM_FIRST_GAME_PLAY" : {
+      return {...state, isFirstClaimGamePlay: true}
+    }
+    case "GET_CLAIM_FIRST_GAME_PLAY_SUCCESS" : {
+      return {...state, isFirstClaimGamePlay: false}
+    }
+    case "GET_CLAIM_FIRST_GAME_PLAY_FAIL" : {
+      return {...state, isFirstClaimGamePlay: false}
     }
     default:
       return state;
