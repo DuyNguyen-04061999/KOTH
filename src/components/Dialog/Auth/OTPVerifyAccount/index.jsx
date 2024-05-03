@@ -235,7 +235,6 @@ export default function OTPVerifyAccount() {
             onClick={() => {
               dispatch(logoutReady());
               dispatch(closeLoginDialog());
-              dispatch(getUserGuest())
               setTimeout(() => {
                 dispatch(getUserInfoReady())
               },[2000])

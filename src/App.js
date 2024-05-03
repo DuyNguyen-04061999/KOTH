@@ -100,11 +100,9 @@ function App() {
   const { tokenUser, user } = store.getState().userReducer;
   const { currentTab } = store.getState().authReducer;
   const { orientation } = store.getState().gameReducer;
-  const  tokenGuest  = getTokenGuest()
+  const tokenGuest = getTokenGuest();
   const [socket, setSocket] = useState(null);
-  const decoded = jwtDecode(tokenGuest)
-  const expiredTime = new Date(decoded?.iat*1000)
-  const currentTime = Date.now()/1000
+
   useEffect(() => {
     if (window.location.pathname === "/changelog") {
       setSocket(null);
@@ -279,20 +277,25 @@ function App() {
   }, [socket]);
 
   useEffect(() => {
-    // const tokenGuest = ""
-    // if (tokenGuest === null || tokenGuest === "" || tokenGuest === undefined) {
-    //   store.dispatch(getUserGuest())
-    // }
-    if(tokenGuest === "" || tokenGuest === null ) {
-      store.dispatch(getUserGuest())
+    if (!tokenGuest) {
+      store.dispatch(getUserGuest());
+      console.log("a");
+    } else {
+      try {
+        const decoded = jwtDecode(tokenGuest);
+        const expiredTime = new Date(decoded?.iat * 1000);
+        const currentTime = Date.now() / 1000;
+        if (expiredTime < currentTime) {
+          store.dispatch(getUserGuest());
+      console.log("b");
+        }
+      } catch(e){
+        store.dispatch(getUserGuest());
+        console.log("c");
+      }
+
     }
   }, [tokenGuest, tokenUser]);
-
-  useEffect(() => {
-    if(expiredTime < currentTab) {
-      store.dispatch(getUserGuest())
-    }
-  },[expiredTime,currentTab])
 
   useEffect(() => {
     const onPageLoad = () => {
@@ -377,15 +380,13 @@ function App() {
       );
     }
   }, []);
-
   useEffect(() => {
     const onPageLoad = () => {
       const token = localStorage.getItem("token");
-      const tokenGuest = localStorage.getItem("token_guest")
       if ((token || tokenUser) && currentTab !== "otpVerifyAccount") {
         store.dispatch(getUserInfoReady(token || tokenUser));
       } else {
-        store.dispatch(getUserInfoReady(tokenGuest))
+        store.dispatch(getUserInfoReady(tokenGuest));
       }
     };
 
@@ -395,7 +396,7 @@ function App() {
       window.addEventListener("load", onPageLoad, false);
       return () => window.removeEventListener("load", onPageLoad);
     }
-  }, [currentTab, tokenUser]);
+  }, [currentTab, tokenUser, tokenGuest]);
 
   const [theme, setTheme] = useState(
     createTheme({
