@@ -101,6 +101,22 @@ const CompleteProfile = ({
   const [validEmail,setValidEmail] = useState(false)
   const [disableButtonStep2,setDiascleButtonStep2] = useState(true)
 
+
+    useEffect(() => {
+      if( firstName,
+        lastName,
+        email,
+        birthDay,
+        gender) {
+          if(birthDay){
+            setValue(dayjs(birthDay))
+          }
+          setGender(gender)
+          setEmail(email)
+          setFirstName(firstName)
+          setLastName(lastName)
+        }
+    }, [birthDay, gender, email,firstName,lastName])
   
   const handleChangeState = (event, newValue) => {
     if (newValue) {
@@ -583,7 +599,7 @@ const CompleteProfile = ({
                     </Box>
                   </BgWithTooltip>
                 </FormControl>{" "}
-                {!validEmail && email !== "" && (
+                {!validEmail && email !== null && (
             <Typography
               sx={{
                 textAlign: "start",
@@ -628,7 +644,7 @@ const CompleteProfile = ({
                   </Box>
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DatePicker
-                      value={value}
+                      value={value || dayjs()}
                       onChange={(value) => handleChangeDate(value)}
                       slots={{
                         openPickerIcon: returnIcon,
