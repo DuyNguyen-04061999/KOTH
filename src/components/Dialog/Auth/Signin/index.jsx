@@ -107,6 +107,7 @@ export default function Dialoglg() {
                 style={{
                   textTransform: "uppercase",
                   fontFamily: "Cyntho Next",
+                  whiteSpace:"nowrap"
                 }}
               >
                 {t("Sign In")}
@@ -357,9 +358,10 @@ export default function Dialoglg() {
                             overflow: "hidden",
                           }}
                         >
-                          {user?.userNickName?.length > 10
+                          {/* {user?.userNickName?.length > 10
                           ? user?.userNickName.slice(0, 10) + "..."
-                          : user?.userNickName}
+                          : user?.userNickName} */}
+                          Guest
                         </Typography>
                         {uPack && uPack.remain !== "Expired" ? (
                           <Box
