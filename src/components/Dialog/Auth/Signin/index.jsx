@@ -88,7 +88,6 @@ export default function Dialoglg() {
     dispatch(getListTier([]));
     dispatch(updateCurrentLevel({}));
     dispatch(updateBonuses({}));
-    dispatch(getUserGuest())
     setTimeout(() => {
       dispatch(getUserInfoReady())
     },[2000])
