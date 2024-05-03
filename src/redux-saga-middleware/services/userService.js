@@ -273,6 +273,28 @@ class UserService {
     )
     return res
   }
+
+  async getClaimFirstGamePlay(dataRequest) {
+    const res = await PROMOTION_API.post(
+      "/api/prize/claim-first-game-play",
+      dataRequest,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "x-access-refactor-token":
+            dataRequest || localStorage.getItem("token"),
+          Authorization: `Bearer ${
+            dataRequest || localStorage.getItem("token")
+          }`,
+          authorization: `Bearer ${
+            dataRequest || localStorage.getItem("token")
+          }`,
+        },
+      }
+    );
+    return res;
+  }
 }
+
 
 export default UserService;

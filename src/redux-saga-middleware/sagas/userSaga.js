@@ -35,6 +35,8 @@ import {
   forgetPasswordSuccess,
   getCityAndStateProfileFail,
   getCityAndStateProfileSuccess,
+  getClaimFirstGamePlayFail,
+  getClaimFirstGamePlaySuccess,
   getClaimPrizeInfo,
   getClaimPrizeInfoFail,
   getClaimPrizeInfoSuccess,
@@ -934,6 +936,31 @@ function* getUpgradeGuestSaga(dataRequest) {
   }
 }
 
+let claimFirstPlay = 0
+function* getClaimFirstGamePlaySaga(dataRequest) { 
+  try {
+    claimFirstPlay += 1
+    if(claimFirstPlay === 1) {
+      const {payload} = dataRequest
+      const res = yield call(userService.getClaimFirstGamePlay, payload)
+      const {status, data} = res
+      if(status === 200 || status === 201) {
+        yield put(getClaimFirstGamePlaySuccess(data))
+        yield put(
+          showToastNotification({
+            type: "success",
+            message:data?.message || "Something went wrong!",
+          })
+        );
+      }
+    }
+  } catch (err) {
+    console.log(err);
+    yield put(getClaimFirstGamePlayFail())
+  }
+
+}
+
 function* authSaga() {
   yield takeEvery("LOGIN_READY", loginSaga);
   yield takeEvery("REGISTER_READY", registerSaga);
@@ -954,6 +981,7 @@ function* authSaga() {
   yield takeEvery("GET_CLAIM_PRIZE_INFO", getClaimPrizeInfoSaga)
   yield takeEvery("GET_CLAIM_PRIZE_OPTIONAL",getClaimPrizeOptionalSaga)
   yield takeEvery("GET_UPGRADE_GUEST",getUpgradeGuestSaga)
+  yield takeEvery("GET_CLAIM_FIRST_GAME_PLAY", getClaimFirstGamePlaySaga)
 }
 
 export default authSaga;
