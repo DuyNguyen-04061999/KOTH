@@ -7,7 +7,7 @@ export const API = axios.create({
   baseURL: process.env.REACT_APP_END_POINT,
   headers: {
     "Content-Type": "multipart/form-data",
-    Authorization: "Bearer " + localStorage.getItem("token"),
+    Authorization: "Bearer " + (localStorage.getItem("token") || localStorage.getItem("token_guest")) ,
     "x-access-token": localStorage.getItem("token"),
     "x-time-zone": -new Date().getTimezoneOffset() / 60,
   },

@@ -276,26 +276,7 @@ function App() {
     };
   }, [socket]);
 
-  useEffect(() => {
-    if (!tokenGuest) {
-      store.dispatch(getUserGuest());
-      console.log("a");
-    } else {
-      try {
-        const decoded = jwtDecode(tokenGuest);
-        const expiredTime = new Date(decoded?.iat * 1000);
-        const currentTime = Date.now() / 1000;
-        if (expiredTime < currentTime) {
-          store.dispatch(getUserGuest());
-      console.log("b");
-        }
-      } catch(e){
-        store.dispatch(getUserGuest());
-        console.log("c");
-      }
-
-    }
-  }, [tokenGuest, tokenUser]);
+  
 
   useEffect(() => {
     const onPageLoad = () => {
@@ -385,9 +366,7 @@ function App() {
       const token = localStorage.getItem("token");
       if ((token || tokenUser) && currentTab !== "otpVerifyAccount") {
         store.dispatch(getUserInfoReady(token || tokenUser));
-      } else {
-        store.dispatch(getUserInfoReady(tokenGuest));
-      }
+      } 
     };
 
     if (document.readyState === "complete") {
@@ -396,7 +375,7 @@ function App() {
       window.addEventListener("load", onPageLoad, false);
       return () => window.removeEventListener("load", onPageLoad);
     }
-  }, [currentTab, tokenUser, tokenGuest]);
+  }, [currentTab, tokenUser]);
 
   const [theme, setTheme] = useState(
     createTheme({

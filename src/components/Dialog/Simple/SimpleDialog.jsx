@@ -47,7 +47,7 @@ export default function SimpleDialog(props) {
       {device === "Mobile" && width < 576 ? (
         <>
           <Dialog
-            onClose={handleClose}
+            // onClose={handleClose}
             open={isLoginDialog}
             fullScreen={true}
             sx={{

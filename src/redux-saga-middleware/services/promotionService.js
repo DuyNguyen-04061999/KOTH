@@ -9,12 +9,14 @@ class promotionService {
   }
 
   async callDetailPromotionToken(dataRequest) {
-    const headers = {
-      "x-access-refactor-token": dataRequest?.token || localStorage.getItem("token") || getTokenGuest(),
-    };
     const res = await PROMOTION_API.get("/api/promotions/auth/detail/" + dataRequest?.id,
       {
-        headers,
+        headers: {
+          "Content-Type": "application/json",
+          "x-access-refactor-token":( localStorage.getItem("token") || localStorage.getItem("token_guest")),
+          Authorization: `Bearer ${ localStorage.getItem("token") || localStorage.getItem("token_guest")}`,
+          authorization: `Bearer ${ localStorage.getItem("token") || localStorage.getItem("token_guest")}`,
+        },
       }
     );
    
@@ -37,7 +39,7 @@ class promotionService {
 
   async startGameInPromotion(dataRequest) {
     const headers = {
-      "x-access-refactor-token": (localStorage.getItem("token") ||  getTokenGuest()),
+      "x-access-refactor-token": (localStorage.getItem("token") || localStorage.getItem("token_guest")),
       "Content-Type": "application/json",
     };
     const res = await PROMOTION_API.post("/api/promotions/start-game-promotion", dataRequest,
