@@ -25,7 +25,6 @@ export default function OTPVerifyAccount() {
     isVerifyOTP,
     phoneUpgrade
   } = useSelector((state) => state.userReducer);
-  console.log(phoneUpgrade);
   const { width } = useWindowDimensions();
   const [otp, setOtp] = useState("");
   const dispatch = useDispatch();
@@ -42,7 +41,6 @@ export default function OTPVerifyAccount() {
 
     return () => clearInterval(timer);
   }, [timeLeft]);
-
   const handleVerifyOTP = () => {
     switch (typeVerifyOTP) {
       case "register":
@@ -50,8 +48,7 @@ export default function OTPVerifyAccount() {
           sendOtpReady({
             otp: otp,
             type: "register",
-            // email: registerEmail,
-            phone: registerPhone || phoneUpgrade,
+            phone: registerPhone ,
           })
         );
         
@@ -66,6 +63,16 @@ export default function OTPVerifyAccount() {
           })
         );
         break;
+        case "upgrade":
+          dispatch(
+            sendOtpReady({
+              otp: otp,
+              type: "upgrade",
+              phone:  phoneUpgrade,
+            })
+          );
+          
+          break;
       default:
         return false;
     }

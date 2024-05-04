@@ -43,7 +43,7 @@ export default function Signup(props) {
 
   const { refCodeRegister, currentTab } = useSelector((state) => state.authReducer);
   const { listSetting } = useSelector((state) => state.settingReducer);
-  const { isRegister } = useSelector((state) => state.userReducer);
+  const { isRegister,isUpgradeGuest } = useSelector((state) => state.userReducer);
   const { listDisplayName } = useSelector((state) => state.appReducer);
   const {isCheckGuest} = useSelector((state) => state.tournamentReducer)
  
@@ -66,7 +66,6 @@ export default function Signup(props) {
     } else {
       if(localStorage.getItem("checkUpgrade") === 'upgrade') {
         handleRegisterGuestUpgrade()
-        localStorage.removeItem("checkUpgrade")
       } else {
         sendRegister();
       }
@@ -243,17 +242,15 @@ export default function Signup(props) {
     passOneNumber,
     passOneLetter,
   ]);
-
   const handleRegisterGuestUpgrade = () => {
-    dispatch(
-      getUpgradeGuest({
-        phone: phone,
-        password: password,
-      })
-    )
-    dispatch(savePhoenUpgrade({
-      type: phone
-    }))
+    if(!isUpgradeGuest) {
+      dispatch(
+        getUpgradeGuest({
+          phone: phone,
+          password: password,
+        })
+      )
+    }
     localStorage.removeItem("firstPlayGame")
   }
 
