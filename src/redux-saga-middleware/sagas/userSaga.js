@@ -941,7 +941,12 @@ function* getUpgradeGuestSaga(dataRequest) {
         yield put(
           showToastNotification({
             type: "success",
-            message:data?.message || "Something went wrong!",
+            message: i18n?.t(
+              "Registration successful! Welcome to Play4promo.",
+              {
+                ns: "noti",
+              }
+            ),
           })
         );
         localStorage.removeItem("checkUpgrade")
