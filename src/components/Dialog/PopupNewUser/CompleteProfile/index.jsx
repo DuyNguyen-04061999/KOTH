@@ -87,13 +87,13 @@ const CompleteProfile = ({
     gender,
   } = useSelector((state) => state.profileReducer);
   const { state } = useSelector((state) => state.profileReducer);
-  const [value, setValue] = useState( dayjs(birthDay) || "");
+  const [value, setValue] = useState("");
   const [dateError, setDateError] = useState("");
-  const [valueGender, setGender] = useState( gender || "");
-  const [stateOption, setStateOption] = useState(state || "");
-  const [valueFirstName, setFirstName] = useState( firstName || "");
-  const [valueLastName, setLastName] = useState( lastName || "");
-  const [valueEmail, setEmail] = useState( email || "");
+  const [valueGender, setGender] = useState("");
+  const [stateOption, setStateOption] = useState("");
+  const [valueFirstName, setFirstName] = useState("");
+  const [valueLastName, setLastName] = useState("");
+  const [valueEmail, setEmail] = useState("");
   const [disableButton, setDisableButton] = useState(true);
   const [addressLine1, setAddressLine1] = useState("");
   const [zCode, setZcode] = useState("");
@@ -103,11 +103,6 @@ const CompleteProfile = ({
 
 
     useEffect(() => {
-      if( firstName,
-        lastName,
-        email,
-        birthDay,
-        gender) {
           if(birthDay){
             setValue(dayjs(birthDay))
           }
@@ -115,7 +110,7 @@ const CompleteProfile = ({
           setEmail(email)
           setFirstName(firstName)
           setLastName(lastName)
-        }
+        
     }, [birthDay, gender, email,firstName,lastName])
   
   const handleChangeState = (event, newValue) => {

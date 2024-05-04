@@ -245,7 +245,7 @@ const Login = () => {
         width: "100%",
         height: "100%",
         display:"flex",
-        justifyContent:"center",
+        justifyContent:"flex-start",
         flexDirection:"column"
       }}
     >
@@ -257,42 +257,31 @@ const Login = () => {
       <Box
         sx={{
           display: "flex",
-          justifyContent: "center",
+          justifyContent: "space-evenly",
           alignItems: "center",
           paddingBottom: "40px",
           paddingTop: "20px",
+          paddingLeft:"10px",
+          paddingRight:"18px"
         }}
       >
-        <Box className="login" sx={{position:"relative"}}>
+        <Box className="login" sx={{position:"relative", width:"100%"}}>
           <Typography
             sx={{
               fontWeight: "700",
               fontSize: "20px",
-              color: currentTab === "login" ? "#7848ED" : "#fff",
+              color: currentTab === "login" ? "#7848ED" : "#462A71",
+              textAlign:"center"
             }}
           >
             Login
           </Typography>
-          <Box
-          sx={{
-            position: "absolute",
-            width: "10px",
-            height: "10px",
-            background:
-              "linear-gradient(0deg, #181223 -1.51%, #7648ED 74.36%, #AA8EF2 202.93%)",
-            clipPath: "polygon(50% 0%, 0% 100%, 100% 100%)",
-            transition: " 0.5s ease-in-out",
-            translate: "0px",
-            bottom:"-13px",
-            left:"45%"
-          }}
-        ></Box>
         <Box
           className="underlined"
           sx={{
             position: "absolute",
-            width: "57px",
-            height: "5px",
+            width: "100%",
+            height: "3px",
             background:
               "linear-gradient(0deg, #181223 -1.51%, #7648ED 74.36%, #AA8EF2 202.93%)",
             borderRadius: "6px",
@@ -303,14 +292,7 @@ const Login = () => {
           }}
         ></Box>
         </Box>
-        <Box
-          sx={{
-            margin: "0px 10px",
-          }}
-        >
-          <Typography sx={{ fontSize: "20px", color: "#979797" }}>/</Typography>
-        </Box>
-        <Box className="sign-up">
+        <Box className="sign-up" sx={{width:"100%", textAlign:"center", position:"relative"}}>
           <Typography
             className="cursor-pointer"
             onClick={() => {
@@ -322,10 +304,25 @@ const Login = () => {
                 transport: "xhr",
               });
             }}
-            sx={{ fontWeight: "700", fontSize: "20px", color: "#979797" }}
+            sx={{ fontWeight: "700", fontSize: "20px", color: "#462A71" }}
           >
             Sign Up
           </Typography>
+          <Box
+          className="underlined"
+          sx={{
+            position: "absolute",
+            width: "100%",
+            height: "3px",
+            background:
+              "#462A71",
+            borderRadius: "6px",
+            transition: " 0.5s ease-in-out",
+            translate: "0px",
+            bottom:"-14px",
+            left:"2px"
+          }}
+        ></Box>
         </Box>
       </Box>
       <Box

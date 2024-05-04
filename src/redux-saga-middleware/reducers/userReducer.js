@@ -910,8 +910,8 @@ const userReducer = (
       return {
         ...state, 
         isUpgradeGuest: false, 
-        typeVerifyOTP: "upgrade", 
-        phoneUpgrade: payload
+        typeVerifyOTP: "register", 
+        registerPhone: payload
        }
     }
     case "SAVE_PHONE_UPGRADE" : {

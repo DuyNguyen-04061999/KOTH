@@ -938,7 +938,12 @@ function* getUpgradeGuestSaga(dataRequest) {
         yield put(clickTab("otpVerifyAccount"));
         yield put(getUpgradeGuestSuccess(payload?.phone))
         yield put(saveCreateAccInfo(payload));
-        toast.success(data?.message)
+        yield put(
+          showToastNotification({
+            type: "success",
+            message:data?.message || "Something went wrong!",
+          })
+        );
         localStorage.removeItem("checkUpgrade")
       }
     }
@@ -946,7 +951,12 @@ function* getUpgradeGuestSaga(dataRequest) {
   } catch(err) {
     upgrade = 0
     yield put(getUpgradeGuestFail())
-    toast.error(err)
+    yield put(
+      showToastNotification({
+        type: "error",
+        message: err || "Something went wrong!",
+      })
+    );
   }
 }
 
