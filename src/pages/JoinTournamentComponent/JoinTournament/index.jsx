@@ -57,7 +57,7 @@ import {
   toggleExtra,
   toggleTournamentShow,
 } from "../../../redux-saga-middleware/reducers/tournamentReducer";
-import { toggleCheckProfileDialog } from "../../../redux-saga-middleware/reducers/userReducer";
+import { getMyInfor, toggleCheckProfileDialog } from "../../../redux-saga-middleware/reducers/userReducer";
 import { isJson, sliceString } from "../../../utils/helper";
 import { imageDesktop, images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
@@ -158,8 +158,10 @@ export default function JoinTournament() {
   }
 
 
+
   const handlePlayTour = () => {
     if (token) {
+      dispatch(getMyInfor())
       dispatch(getScoreGame())
       if (scoreGame === 0) {
         handleJoinTour(true);
