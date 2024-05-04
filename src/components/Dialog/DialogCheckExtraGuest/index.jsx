@@ -83,36 +83,20 @@ export default function DialogCheckExtraGuest() {
                 marginTop:"20px"
               }}
             >
-              Guest Out of Extra
+              Guest Out of Play
             </Typography>
             <Typography
               sx={{
                 color: "#9384B7",
                 textAlign: "center",
                 textOverflow: "ellipsis",
-                fontSize: "12px",
+                fontSize: "16px",
                 fontStyle: "normal",
                 fontWeight: "500",
                 lineHeight: "nomal",
               }}
             >
-              You have run out of plays in this Promotion. Please join other
-              promotions or register and purchase Extra to continue.
-            </Typography>
-            <Typography
-              sx={{
-                color: "#9384B7",
-                textAlign: "center",
-                textOverflow: "ellipsis",
-                fontSize: "12px",
-                fontStyle: "normal",
-                fontWeight: "500",
-                lineHeight: "nomal",
-                marginTop: "20px",
-                marginBottom: "20px !important",
-              }}
-            >
-              Would you like to register?
+              You're out of play in this promotion. Sign up now to participate and unlock exclusive rewards
             </Typography>
           </Box>
           <Box
