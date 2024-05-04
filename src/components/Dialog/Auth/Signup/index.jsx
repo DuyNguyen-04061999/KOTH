@@ -311,9 +311,11 @@ export default function Signup(props) {
           paddingBottom: "40px",
           paddingTop: "20px",
           position: "relative",
+          paddingLeft:"10px",
+          paddingRight:"18px"
         }}
       >
-        <Box className="login">
+        <Box className="login" sx={{width:"100%", position:"relative"}}>
           <Typography
             className="cursor-pointer"
             onClick={() => {
@@ -328,50 +330,48 @@ export default function Signup(props) {
             sx={{
               fontWeight: "700",
               fontSize: "20px",
-              color: currentTab === "login" ? "#7848ED" : "#979797",
+              color: currentTab === "login" ? "#7848ED" : "#462A71",
+              textAlign:"center"
             }}
           >
             Login
           </Typography>
+          <Box
+          className="underlined"
+          sx={{
+            position: "absolute",
+            width: "100%",
+            height: "3px",
+            background:
+              "#462A71",
+            borderRadius: "6px",
+            transition: " 0.5s ease-in-out",
+            translate: "0px",
+            bottom:"-14px",
+            left:"2px"
+          }}
+        ></Box>
           <Box className="underlined"></Box>
         </Box>
-        <Box
-          sx={{
-            margin: "0px 10px",
-          }}
-        >
-          <Typography sx={{ fontSize: "20px", color: "#979797" }}>/</Typography>
-        </Box>
-        <Box className="sign-up" sx={{position:"relative !important"}}>
+        <Box className="sign-up" sx={{position:"relative !important", width:"100%"}}>
           <Typography
-            sx={{ fontWeight: "700", fontSize: "20px", color: currentTab === "signup" ? "#7848ED" : "#fff" }}
+            sx={{ fontWeight: "700", fontSize: "20px", color: currentTab === "signup" ? "#7848ED" : "#462A71", textAlign:"center" }}
           >
             Sign Up
           </Typography>
-          <Box
-          sx={{
-            position: "absolute",
-            width: "10px",
-            height: "10px",
-            background:
-              "linear-gradient(0deg, #181223 -1.51%, #7648ED 74.36%, #AA8EF2 202.93%)",
-            clipPath: "polygon(50% 0%, 0% 100%, 100% 100%)",
-            bottom:"-13px",
-            left:"45%",
-            transition: " 0.5s ease-in-out",
-          }}
-        ></Box>
         <Box
           className="underlined"
           sx={{
             position: "absolute",
-            width: currentTab === "signup" ? "76px" : "57px",
-            height: "5px",
-            background: "linear-gradient(0deg, #181223 -1.51%, #7648ED 74.36%, #AA8EF2 202.93%)",
+            width: "100%",
+            height: "3px",
+            background:
+              "linear-gradient(0deg, #181223 -1.51%, #7648ED 74.36%, #AA8EF2 202.93%)",
             borderRadius: "6px",
-            bottom:"-14px",
-            left:"2px",
             transition: " 0.5s ease-in-out",
+            translate: "0px",
+            bottom:"-14px",
+            left:"2px"
           }}
         ></Box>
         </Box>

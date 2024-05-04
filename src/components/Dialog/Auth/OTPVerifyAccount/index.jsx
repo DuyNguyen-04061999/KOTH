@@ -58,21 +58,11 @@ export default function OTPVerifyAccount() {
           sendOtpReady({
             otp: otp,
             type: "register",
-            // email: user?.userEmail,
+            email: user?.userEmail,
             phone: user?.userPhone,
           })
         );
         break;
-        case "upgrade":
-          dispatch(
-            sendOtpReady({
-              otp: otp,
-              type: "upgrade",
-              phone:  phoneUpgrade,
-            })
-          );
-          
-          break;
       default:
         return false;
     }
@@ -249,18 +239,18 @@ export default function OTPVerifyAccount() {
           />
         </Box>
         <Box sx={{ width: "48%" }}>
-          {otp?.length < 6 ? (
+          {/* {otp?.length < 6 ? (
             <AnimButton type="disable" text="NEXT" />
           ) : isVerifyOTP ? (
             <AnimButton type="loading" text="NEXT" />
-          ) : (
+          ) : ( */}
             <AnimButton
               type="primary"
               text="NEXT"
               onClick={handleVerifyOTP}
               isSubmitBtn
             />
-          )}
+
         </Box>
       </Box>
     </Box>
