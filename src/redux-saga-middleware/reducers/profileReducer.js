@@ -118,7 +118,6 @@ const profileReducer = (
         address2: payload?.address2 ,
         birthday: payload?.birthday,
         city: payload?.city ,
-        email: payload?.email ,
         gender: payload?.gender ,
         nickName: payload?.nickName ,
         state:payload?.state ,
