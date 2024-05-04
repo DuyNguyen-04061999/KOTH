@@ -64,17 +64,22 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // if (token || localStorage.getItem("token")) {
+    if (token || localStorage.getItem("token")) {
       dispatch(
         getRefactorDetailAuthPromotion({
           id,
-          token: token || localStorage.getItem("token_guest"),
+          token: token ,
         })
       );
-    // } else {
-    //   dispatch(getRefactorDetailPromotion(id));
-    // }
-  }, [token, dispatch, id, localStorage.getItem("token_guest")]);
+    } else if(localStorage.getItem("token_guest"))  {
+      dispatch(
+        getRefactorDetailAuthPromotion({
+          id,
+          token: localStorage.getItem("token_guest"),
+        })
+      );
+    }
+  }, [token,localStorage.getItem("token_guest")]);
 
   const handleJoinTour = (sub) => {
       dispatch(
