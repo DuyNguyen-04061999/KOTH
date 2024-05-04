@@ -48,7 +48,8 @@ export default function OTPVerifyAccount() {
           sendOtpReady({
             otp: otp,
             type: "register",
-            phone: registerPhone ,
+            email: registerEmail,
+            phone: registerPhone,
           })
         );
         

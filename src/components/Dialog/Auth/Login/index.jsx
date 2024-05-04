@@ -21,21 +21,22 @@ import AnimButton from "../../../AnimButton";
 
 const Login = () => {
   const dispatch = useDispatch();
-  const [phone, setPhone] = useState(
+  const [username, setUsername] = useState(
     localStorage?.getItem("account") || ""
   );
   const [password, setPassword] = useState(localStorage?.getItem("pass") || "");
-  const [phoneError, setPhoneError] = useState("");
+  const [usernameError, setUsernameError] = useState("");
   const [disabledBtn, setDisabledBtn] = useState(false);
   const [displayPassword, setDisplayPassword] = useState(false);
   const { isLogin, isLoginFail, isLoginSuccess } = useSelector(
     (state) => state.userReducer
   );
-  const { currentTab } = useSelector((state) => state.authReducer);
+  const { refCodeRegister, currentTab } = useSelector((state) => state.authReducer);
+
   const { t } = useTranslation("auth");
 
-  const handleChangePhone = (e) => {
-    setPhone(e.target.value);
+  const handleChangeUsername = (e) => {
+    setUsername(e.target.value);
   };
 
   const handleChangePassword = (e) => {
@@ -51,23 +52,11 @@ const Login = () => {
     setDisplayPassword(!displayPassword);
   };
 
-  const checkIfNumber = (event) => {
-    /**
-     * Allowing: Integers | Backspace | Tab | Delete | Left & Right arrow keys
-     **/
-    const regex = new RegExp(
-      /(^\d*$)|(Backspace|Tab|Delete|ArrowLeft|ArrowRight|\(|\)|-)/
-    );
-
-    return !event.key.match(regex) && event.preventDefault();
-  };
-
-
   const sendLogin = (e) => {
     setHandsUp(false);
     setCheck(false);
     e.preventDefault();
-    if (!phone || !password) {
+    if (!username || !password) {
       dispatch(
         showToastNotification({
           type: "error",
@@ -75,11 +64,20 @@ const Login = () => {
         })
       );
     } else {
-       if (validatePhoneNumber(phone)) {
+      if (validateEmail(username)) {
         dispatch(
           loginReady({
-            phone: phone,
+            email: username,
             password: password,
+            remember: remember,
+          })
+        );
+      } else if (validatePhoneNumber(username)) {
+        dispatch(
+          loginReady({
+            phone: username,
+            password: password,
+            remember: remember,
           })
         );
       }
@@ -88,23 +86,23 @@ const Login = () => {
 
   useEffect(() => {
     if (
-      !validatePhoneNumber(phone) &&
-      phone !== "" &&
+      !validateEmail(username) &&
+      !validatePhoneNumber(username) &&
+      username !== "" &&
       password !== ""
     ) {
-      setPhoneError("Please enter a valid phone number!");
+      setUsernameError("Please enter a valid email or phone number!");
     } else {
-      setPhoneError("");
+      setUsernameError("");
     }
-  }, [phone, password]);
-
+  }, [username, password]);
   useEffect(() => {
-    if (phoneError || phone === "" || password === "") {
+    if (usernameError || username === "" || password === "") {
       setDisabledBtn(true);
     } else {
       setDisabledBtn(false);
     }
-  }, [phoneError, phone, password]);
+  }, [usernameError, username, password]);
 
   //---------------------------- Rive Project ----------------------------
 
@@ -133,8 +131,8 @@ const Login = () => {
       return;
     }
     let numberOfChar = 0;
-    if (phone && lookState) {
-      numberOfChar = parseFloat(phone.split("").length);
+    if (username && lookState) {
+      numberOfChar = parseFloat(username.split("").length);
       lookState.value = numberOfChar;
     }
   };
@@ -160,17 +158,12 @@ const Login = () => {
 
   const [remember, setRemember] = useState(false);
 
-  const handleChangeRemember = () => {
-    setRemember(!remember);
-  }
-
   useEffect(() => {
-   if(remember) {
-    localStorage.setItem("account", phone)
-    localStorage.setItem("pass", password)
-   }
-  }, [remember]);
- 
+    if (localStorage.getItem("account") && localStorage.getItem("pass")) {
+      setRemember(true);
+    }
+  }, []);
+
   const BpIcon = styled("span")(({ theme }) => ({
     borderRadius: 3,
     width: 16,
@@ -344,52 +337,22 @@ const Login = () => {
           <Box
             sx={{ flexDirection: "row", alignItems: "center", display: "flex" }}
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              fill="none"
-              viewBox="0 0 24 24"
-              style={{
-                position: "absolute",
-                top: "10px",
-                left: device === "Desktop" ? "8px" : "6px",
-              }}
-            >
-              <g>
-                <path
-                  fill="#7C81F2"
-                  d="M14.979 23H7.99a2.236 2.236 0 01-2.233-2.234V4.234A2.236 2.236 0 017.99 2h6.988c1.233.001 2.232 1 2.233 2.234v16.532A2.236 2.236 0 0114.98 23zM11.485 3.909a.955.955 0 100 1.91.955.955 0 000-1.91zm1.432 16.227h-2.864a.477.477 0 100 .955h2.864a.477.477 0 100-.955z"
-                ></path>
-              </g>
-            </svg>
-            <Typography
-              sx={{
-                position: "absolute",
-                top: "12px",
-                left: device === "Mobile" ? "24px" : "30px",
-                color: "#979797",
-                fontWeight: "600",
-              }}
-            >
-              (+1){" "}
-            </Typography>
+            <img src={sign.up03} alt="..." width={17} height={"auto"} />
             <Input
-              type="text"
-              defaultValue={phone || localStorage.getItem("account")}
-              placeholder={ t("Phone number")}
-              onFocus={() => {
-                setHandsUp(false);
-                setCheck(true);
-              }}
-              onKeyDown={checkIfNumber}
-              onChange={(e) => {
-                setLook();
-                handleChangePhone(e);
-              }}
-              onBlur={() => {
-                setCheck(false);
-              }}
+               type="text"
+               defaultValue={username || localStorage.getItem("account")}
+               placeholder={t("Email") + "/" + t("Phone number")}
+               onFocus={() => {
+                 setHandsUp(false);
+                 setCheck(true);
+               }}
+               onChange={(e) => {
+                 setLook();
+                 handleChangeUsername(e);
+               }}
+               onBlur={() => {
+                 setCheck(false);
+               }}
               sx={{
                 "&:before": {
                   borderBottom: " 0px solid !important ",
@@ -405,7 +368,7 @@ const Login = () => {
                 },
                 color: "white",
                 fontWeight: "500",
-                padding: "0px 0px 0px 60px !important",
+                padding: "0px 0px 0px 12px !important",
                 width: "100%",
               }}
             />
@@ -413,7 +376,7 @@ const Login = () => {
           <Typography
             sx={{ textAlign: "start", color: "#F05153", fontSize: "13px" }}
           >
-            {phone && phoneError ? phoneError : ""}
+            {/* {phone && phoneError ? phoneError : ""} */}
           </Typography>
         </FormControl>
         <FormControl
@@ -499,7 +462,7 @@ const Login = () => {
         >
           <Box className="text-white">
             <BpCheckbox
-              onChange={handleChangeRemember}
+              onChange={() => setRemember(!remember)}
               checked={remember}
             />
             Remember me?
