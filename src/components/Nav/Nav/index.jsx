@@ -952,7 +952,7 @@ export default function Navbar({isNav}) {
                                                     overflow: "hidden",
                                                 }}
                                             >
-                                                {t("Joined")}
+                                                {t("Played")}
                                             </Typography>
                                         </Box>
                                     </Box>

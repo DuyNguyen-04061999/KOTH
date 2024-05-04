@@ -113,7 +113,19 @@ const profileReducer = (
     case "EDIT_PROFILE":
       return { ...state, isEditProfile: true };
     case "EXIT_EDIT_PROFILE":
-      return { ...state, isEditProfile: false };
+      return { ...state, isEditProfile: false , 
+        address1: payload?.address1 ,
+        address2: payload?.address2 ,
+        birthday: payload?.birthday,
+        city: payload?.city ,
+        email: payload?.email ,
+        gender: payload?.gender ,
+        nickName: payload?.nickName ,
+        state:payload?.state ,
+        zipcode: payload?.zipCode ,
+        lastName:payload?.lastName ,
+        firstName: payload?.firstName 
+       };
     case "SAVE_DATA_PROFILE":
       return {
         ...state,

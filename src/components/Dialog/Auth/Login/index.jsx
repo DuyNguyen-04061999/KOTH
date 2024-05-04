@@ -160,12 +160,17 @@ const Login = () => {
 
   const [remember, setRemember] = useState(false);
 
-  useEffect(() => {
-    if (localStorage.getItem("account") && localStorage.getItem("pass")) {
-      setRemember(true);
-    }
-  }, []);
+  const handleChangeRemember = () => {
+    setRemember(!remember);
+  }
 
+  useEffect(() => {
+   if(remember) {
+    localStorage.setItem("account", phone)
+    localStorage.setItem("pass", password)
+   }
+  }, [remember]);
+ 
   const BpIcon = styled("span")(({ theme }) => ({
     borderRadius: 3,
     width: 16,
@@ -497,7 +502,7 @@ const Login = () => {
         >
           <Box className="text-white">
             <BpCheckbox
-              onChange={() => setRemember(!remember)}
+              onChange={handleChangeRemember}
               checked={remember}
             />
             Remember me?

@@ -907,11 +907,12 @@ const userReducer = (
       return {...state, isUpgradeGuest: true}
     }
     case "GET_UPGRADE_GUEST_SUCCESS" : {
-      console.log(payload);
-      return {...state, 
+      return {
+        ...state, 
         isUpgradeGuest: false, 
-        typeVerifyOTP: "register",  
-        registerPhone: type?.phone , }
+        typeVerifyOTP: "upgrade", 
+        phoneUpgrade: payload
+       }
     }
     case "SAVE_PHONE_UPGRADE" : {
       return {...state,  phoneUpgrade: type?.phone, }
