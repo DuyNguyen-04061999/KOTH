@@ -321,6 +321,8 @@ export default function ResultEndGame() {
                       lineHeight: "normal",
                       color: "#7848ED",
                       cursor: "pointer",
+                      marginTop:"15px !important",
+                      marginLeft: "0px !important"
                     }}
                   >
                     Continue with Guest Mode

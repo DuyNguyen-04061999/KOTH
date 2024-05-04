@@ -25,6 +25,9 @@ const CompleteExtra = ({
   const handleClose = () => {
     dispatch(closePopupCompleteExtra())
     dispatch(getScoreGame())
+    if(typeCompleteExtra === "firstPlay") {
+    dispatch(getClaimFirstGamePlay())
+    }
   };
 
   const handleConfirm = () => {};
@@ -345,7 +348,9 @@ const CompleteExtra = ({
             )}
             <Box>
               {typeCompleteExtra === "firstPlay" ? (
-                <Typography onClick={handleClose} sx={{ color: " #7848ED", cursor: "pointer" }}>
+                <Typography onClick={() => {
+                  handleClose()
+                }} sx={{ color: " #7848ED", cursor: "pointer" }}>
                   skip
                 </Typography>
               ) : typeCompleteExtra === "secondPlay" ? (

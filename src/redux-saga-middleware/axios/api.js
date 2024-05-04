@@ -8,7 +8,7 @@ export const API = axios.create({
   headers: {
     "Content-Type": "multipart/form-data",
     Authorization: "Bearer " + (localStorage.getItem("token") || localStorage.getItem("token_guest")) ,
-    "x-access-token": localStorage.getItem("token"),
+    "x-access-token": (localStorage.getItem("token") || localStorage.getItem("token_guest")),
     "x-time-zone": -new Date().getTimezoneOffset() / 60,
   },
 });

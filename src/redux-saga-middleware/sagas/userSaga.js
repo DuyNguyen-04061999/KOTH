@@ -103,17 +103,17 @@ function* loginSaga(dataRequest) {
         _socket.emit("loginSocial", {
           token: data?.data?.token,
         });
-        if (payload?.remember) {
-          localStorage.setItem(
-            "account",
-            payload?.email || payload?.phone || ""
-          );
-          localStorage.setItem("pass", payload?.password);
-        } else {
-          localStorage.removeItem("account");
-          localStorage.removeItem("pass");
-          localStorage.removeItem("firstPlayGame")
-        }
+        // if (payload?.remember) {
+        //   localStorage.setItem(
+        //     "account",
+        //     payload?.email || payload?.phone || ""
+        //   );
+        //   localStorage.setItem("pass", payload?.password);
+        // } else {
+        //   localStorage.removeItem("account");
+        //   localStorage.removeItem("pass");
+        //   localStorage.removeItem("firstPlayGame")
+        // }
         yield put(
           showToastNotification({
             type: authNotification.signIn.signInSuccess.type,
@@ -232,7 +232,19 @@ function* updateProfileSaga(dataRequest) {
       const { status, data } = res;
       if (status === 200 || status === 201) {
         yield put(closeProfileDialog());
-        yield put(exitEditProfile());
+        yield put(exitEditProfile({
+          address1: payload?.address1 || "",
+          address2: payload?.address2 || "",
+          birthday: payload?.birthday,
+          city: payload?.city || "",
+          email: payload?.email || "",
+          gender: payload?.gender || 0,
+          nickName: payload?.nickName || "",
+          state:payload?.state || "",
+          zipcode: payload?.zipCode || "",
+          lastName:payload?.lastName || "",
+          firstName: payload?.firstName || ""
+        }));
         yield put(
           showToastNotification({
             type: "success",
@@ -924,15 +936,17 @@ function* getUpgradeGuestSaga(dataRequest) {
       const {status, data} = res
       if(status === 200 || status === 201) {
         yield put(clickTab("otpVerifyAccount"));
-        yield put(getUpgradeGuestSuccess(data?.data))
+        yield put(getUpgradeGuestSuccess(payload?.phone))
         yield put(saveCreateAccInfo(payload));
         toast.success(data?.message)
+        localStorage.removeItem("checkUpgrade")
       }
     }
+    upgrade = 0
   } catch(err) {
-    console.log(err);
+    upgrade = 0
     yield put(getUpgradeGuestFail())
-    toast.error("err")
+    toast.error(err)
   }
 }
 
