@@ -328,10 +328,10 @@ const Login = () => {
           variant="standard"
           sx={{
             width: "100%",
-            backgroundColor: "#1f1733",
+            backgroundColor: "#271C39",
             padding: "10px",
             borderRadius: "5px",
-            marginBottom: "20px",
+            marginBottom: "16px",
           }}
         >
           <Box
@@ -383,7 +383,7 @@ const Login = () => {
           variant="standard"
           sx={{
             width: "100%",
-            backgroundColor: "#1f1733",
+            backgroundColor: "#271C39",
             padding: "10px",
             borderRadius: "5px",
             flexDirection: "row",
@@ -495,25 +495,22 @@ const Login = () => {
           {isLogin ? (
             <AnimButton
               onClick={sendLogin}
-              text="LOGIN"
+              text="Login"
               type="loading"
-              isHasIcon
               isSubmitBtn
             />
           ) : disabledBtn ? (
             <AnimButton
               onClick={sendLogin}
-              text={t("LOGIN")}
+              text={t("Login")}
               type="disable"
-              isHasIcon
               isSubmitBtn
             />
           ) : (
             <AnimButton
               onClick={sendLogin}
-              text={t("LOGIN")}
+              text={t("Login")}
               type="primary"
-              isHasIcon
               isSubmitBtn
             />
           )}

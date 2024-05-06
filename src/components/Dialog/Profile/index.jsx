@@ -127,7 +127,6 @@ export default function DialogProfile(props) {
   const handleChange = (event) => {
     setGender(Number(event.target.value));
   };
-
   useEffect(() => {
     setFName(firstName);
     setLName(lastName);
@@ -2511,14 +2510,14 @@ export default function DialogProfile(props) {
                         text={"CANCEL"}
                         onClick={() => {
                           setTab(0);
-                          dispatch(exitEditProfile());
-                          setAddressLine1(address1 || "");
-                          setAddressLine2(address2 || "");
-                          setCityOption(city || "");
-                          setDName(nickName || "");
-                          setStateOption(state || "");
-                          setZcode(zipCode || "");
-                          setValue(dayjs(birthDay) || new Date());
+                          // dispatch(exitEditProfile());
+                          setAddressLine1(address1 );
+                          setAddressLine2(address2 );
+                          setCityOption(city );
+                          setDName(nickName );
+                          setStateOption(state );
+                          setZcode(zipCode );
+                          setValue(dayjs(birthDay) );
                         }}
                       />
                     </Box>
@@ -2553,18 +2552,18 @@ export default function DialogProfile(props) {
       <Dialog
         fullScreen={width && width < 576}
         open={open}
-        onClose={() => {
-          setTab(0);
-          dispatch(exitEditProfile());
-          setAddressLine1(address1 || "");
-          setAddressLine2(address2 || "");
-          setCityOption(city || "");
-          setDName(nickName || "");
-          setStateOption(state || "");
-          setZcode(zipCode || "");
-          setValue(dayjs(birthDay) || new Date());
-          handleShowProfile();
-        }}
+        // onClose={() => {
+        //   setTab(0);
+        //   dispatch(exitEditProfile());
+        //   setAddressLine1(address1);
+        //   setAddressLine2(address2);
+        //   setCityOption(city);
+        //   setDName(nickName);
+        //   setStateOption(state);
+        //   setZcode(zipCode);
+        //   setValue(dayjs(birthDay));
+        //   handleShowProfile();
+        // }}
         maxWidth={"lg"}
         TransitionComponent={Transition}
         PaperProps={{
