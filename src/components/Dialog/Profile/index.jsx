@@ -2554,14 +2554,14 @@ export default function DialogProfile(props) {
         open={open}
         onClose={() => {
           setTab(0);
-          dispatch(exitEditProfile());
-          setAddressLine1(address1 || "");
-          setAddressLine2(address2 || "");
-          setCityOption(city || "");
-          setDName(nickName || "");
-          setStateOption(state || "");
-          setZcode(zipCode || "");
-          setValue(dayjs(birthDay) || new Date());
+          // dispatch(exitEditProfile());
+          setAddressLine1(address1);
+          setAddressLine2(address2);
+          setCityOption(city);
+          setDName(nickName);
+          setStateOption(state);
+          setZcode(zipCode);
+          setValue(dayjs(birthDay));
           handleShowProfile();
         }}
         maxWidth={"lg"}
