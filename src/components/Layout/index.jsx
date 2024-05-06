@@ -180,7 +180,10 @@ export default function Layout(props) {
         dispatch(getUserGuest());
       }
     }
-    dispatch(getUserInfoReady());
+    
+    if(localStorage.getItem("token")) {
+      dispatch(getUserInfoReady());
+    }
   }, [tokenGuest, localStorage.getItem("token")]);
 
   useEffect(() => {
