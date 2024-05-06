@@ -536,6 +536,21 @@ export const getClaimFirstGamePlayFail = (data) => {
   }
 }
 
+export const saveTokenGuest = (data) => {
+  return {
+    type: "SAVE_TOKEN_GUEST",
+    payload: data
+  }
+}
+
+export const clearTokenGuest = (data) => {
+  return {
+    type: "CLEAR_TOKEN_GUEST",
+    payload: data
+  }
+}
+
+
 const userReducer = (
   state = {
     tokenUser: "",
@@ -590,7 +605,8 @@ const userReducer = (
     isFetchingUnbanUser: false,
     isUpgradeGuest:false,
     phoneUpgrade:"",
-    isFirstClaimGamePlay: false
+    isFirstClaimGamePlay: false,
+    tokenGuest: ""
   },
   action
 ) => {
@@ -928,6 +944,12 @@ const userReducer = (
     }
     case "GET_CLAIM_FIRST_GAME_PLAY_FAIL" : {
       return {...state, isFirstClaimGamePlay: false}
+    }
+    case "SAVE_TOKEN_GUEST" : {
+      return {...state, tokenGuest: payload}
+    }
+    case "CLEAR_TOKEN_GUEST" : {
+      return {...state, tokenGuest: ""}
     }
     default:
       return state;

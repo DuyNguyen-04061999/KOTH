@@ -93,6 +93,7 @@ export default function JoinTournament() {
     countTicket,
     listJoinedTour,
     isFullInfo,
+    tokenGuest
   } = useSelector((state) => state.userReducer);
   const { width } = useWindowDimensions();
   const [openVoucher, setOpenVoucher] = useState(false);
@@ -137,15 +138,17 @@ export default function JoinTournament() {
           token: token ,
         })
       );
-    } else if(localStorage.getItem("token_guest"))  {
+    } else if(tokenGuest)  {
+      console.log(tokenGuest);
       dispatch(
         getRefactorDetailAuthPromotion({
           id,
-          token: localStorage.getItem("token_guest"),
+          token:tokenGuest,
         })
       );
     }
-  }, [token,localStorage.getItem("token_guest")]);
+
+  }, [token,tokenGuest]);
  
 
   const handleJoinTour = (sub) => {

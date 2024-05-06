@@ -144,6 +144,7 @@ export default function Layout(props) {
     user,
     openTransactionDialog,
     openReasonDialog,
+    tokenGuest
   } = useSelector((state) => state.userReducer);
   const { chatPopup, badgechat } = useSelector((state) => state.chatReducer);
   const { listSetting } = useSelector((state) => state.settingReducer);
@@ -164,12 +165,12 @@ export default function Layout(props) {
   };
 
   useEffect(() => {
-    if (!localStorage.getItem("token_guest") && !localStorage.getItem("token")) {
+    if (!tokenGuest && !localStorage.getItem("token")) {
       dispatch(getUserGuest());
     } else if(!localStorage.getItem("token")){
       dispatch(getUserInfoReady());
       try {
-        const decoded = jwtDecode(localStorage.getItem("token_guest"));
+        const decoded = jwtDecode(tokenGuest);
         const expiredTime = new Date(decoded?.iat * 1000);
         const currentTime = Date.now() / 1000;
         if (expiredTime < currentTime) {
@@ -181,7 +182,7 @@ export default function Layout(props) {
 
     }
     
-  }, [localStorage.getItem("token_guest")]);
+  }, [tokenGuest]);
 
   useEffect(() => {
     if(token) {

@@ -29,10 +29,10 @@ export default function ResultEndGame() {
     (state) => state.tournamentReducer
   );
   const { width } = useWindowDimensions();
-  const tokenGuest = getTokenGuest();
   const {
     tokenUser,
     // countTicket
+    tokenGuest
   } = useSelector((state) => state.userReducer);
   const token = localStorage.getItem("token")
   const dispatch = useDispatch();
@@ -63,7 +63,7 @@ export default function ResultEndGame() {
     dispatch(
       getRefactorDetailAuthPromotion({
         id,
-        token: tokenUser || localStorage.getItem("token_guest"),
+        token: tokenUser || tokenGuest,
       })
     );
     dispatch(CheckGuestUpgrade(true))
@@ -119,7 +119,7 @@ export default function ResultEndGame() {
     dispatch(
       getRefactorDetailAuthPromotion({
         id,
-        token: tokenUser || localStorage.getItem("token_guest"),
+        token: tokenUser || tokenGuest,
       })
     );
     dispatch(getUserInfoReady());

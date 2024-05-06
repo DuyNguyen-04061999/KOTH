@@ -47,7 +47,6 @@ const CompleteExtra = ({
   const handleDoneStep2 = () => {
     dispatch(closePopupCompleteExtra())
     dispatch(getMyInfor())
-
   }
   const handleSecondPlay = () => {
     dispatch(openPopupCompleteProfile({

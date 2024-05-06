@@ -9,13 +9,14 @@ class promotionService {
   }
 
   async callDetailPromotionToken(dataRequest) {
+    console.log(dataRequest);
     const res = await PROMOTION_API.get("/api/promotions/auth/detail/" + dataRequest?.id,
       {
         headers: {
           "Content-Type": "application/json",
-          "x-access-refactor-token":( localStorage.getItem("token") || localStorage.getItem("token_guest")),
-          Authorization: `Bearer ${ localStorage.getItem("token") || localStorage.getItem("token_guest")}`,
-          authorization: `Bearer ${ localStorage.getItem("token") || localStorage.getItem("token_guest")}`,
+          "x-access-refactor-token":( localStorage.getItem("token") || dataRequest?.token || localStorage.getItem("token_guest")),
+          Authorization: `Bearer ${ localStorage.getItem("token") || dataRequest?.token || localStorage.getItem("token_guest")}`,
+          authorization: `Bearer ${ localStorage.getItem("token") || dataRequest?.token || localStorage.getItem("token_guest")}`,
         },
       }
     );
