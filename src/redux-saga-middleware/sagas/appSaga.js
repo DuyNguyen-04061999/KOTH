@@ -143,7 +143,7 @@ function* getUserGuestSaga(dataRequest) {
       yield put(saveTokenGuest(data?.data?.token))
      const pid = window.location.pathname.split('/')[2];
      console.log(window.location.pathname);
-     if(window.location.pathname !== "/home" || window.location.pathname !== "/" ) {
+     if(pid.length > 2) {
       yield put(getRefactorDetailAuthPromotion({
         id: pid,
         token: data?.data?.token
