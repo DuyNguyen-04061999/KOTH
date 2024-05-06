@@ -44,6 +44,7 @@ function* getPromotionDetailToken(dataRequest) {
     if (proDetailAuthCount === 1) {
       const { payload } = dataRequest;
       const res = yield call(PromotionService.callDetailPromotionToken, payload);
+      console.log(res);
       const { data, status } = res
       if (status === 200 || status === 201) {
         yield put(getRefactorDetailAuthPromotionSuccess(data));

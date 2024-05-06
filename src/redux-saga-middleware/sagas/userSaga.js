@@ -31,6 +31,7 @@ import {
 import {
   banUserFail,
   banUserSuccess,
+  clearTokenGuest,
   forgetPasswordFail,
   forgetPasswordSuccess,
   getCityAndStateProfileFail,
@@ -97,7 +98,8 @@ function* loginSaga(dataRequest) {
       const res = yield call(userService.login, payload);
       const { status, data } = res;
       if (status === 200 || status === 201) {
-        localStorage.removeItem("token_guest")
+        // localStorage.removeItem("token_guest")
+        yield put(clearTokenGuest())
         yield delay(500);
         yield put(loginSuccess(data?.data));
         _socket.emit("loginSocial", {
