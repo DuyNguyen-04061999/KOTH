@@ -953,13 +953,18 @@ function* getUpgradeGuestSaga(dataRequest) {
       }
     }
     upgrade = 0
-  } catch(err) {
+  } catch(error) {
     upgrade = 0
     yield put(getUpgradeGuestFail())
     yield put(
       showToastNotification({
-        type: "error",
-        message: err || "Something went wrong!",
+        type: error?.type || "error",
+        message: i18n?.t(
+          error?.message || "Register failed! Something went wrong!",
+          {
+            ns: "noti",
+          }
+        ),
       })
     );
   }

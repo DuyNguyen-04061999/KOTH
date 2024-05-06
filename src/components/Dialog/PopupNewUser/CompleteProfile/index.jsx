@@ -85,6 +85,10 @@ const CompleteProfile = ({
     email,
     birthDay,
     gender,
+    address1,
+    address2,
+    city,
+    zipCode,
   } = useSelector((state) => state.profileReducer);
   const { state } = useSelector((state) => state.profileReducer);
   const [value, setValue] = useState("");
@@ -98,21 +102,23 @@ const CompleteProfile = ({
   const [addressLine1, setAddressLine1] = useState("");
   const [zCode, setZcode] = useState("");
   const [cityOption, setCityOption] = useState("");
-  const [validEmail,setValidEmail] = useState(false)
-  const [disableButtonStep2,setDiascleButtonStep2] = useState(true)
+  const [validEmail, setValidEmail] = useState(false);
+  const [disableButtonStep2, setDiascleButtonStep2] = useState(true);
 
+  useEffect(() => {
+    if (birthDay) {
+      setValue(dayjs(birthDay));
+    }
+    setGender(gender);
+    setEmail(email);
+    setFirstName(firstName);
+    setLastName(lastName);
+    setAddressLine1(address1);
+    setCityOption(city)
+    setZcode(zipCode)
+    setStateOption(state)
+  }, [birthDay, gender, email, firstName, lastName, address1,city,zipCode]);
 
-    useEffect(() => {
-          if(birthDay){
-            setValue(dayjs(birthDay))
-          }
-          setGender(gender)
-          setEmail(email)
-          setFirstName(firstName)
-          setLastName(lastName)
-        
-    }, [birthDay, gender, email,firstName,lastName])
-  
   const handleChangeState = (event, newValue) => {
     if (newValue) {
       setStateOption(newValue?.name);
@@ -141,12 +147,17 @@ const CompleteProfile = ({
   }, [valueGender, value, valueEmail, valueFirstName, valueLastName]);
 
   useEffect(() => {
-    if(addressLine1 === "" || zCode === "" || cityOption === "" || stateOption === "") {
-      setDiascleButtonStep2(true)
+    if (
+      addressLine1 === "" ||
+      zCode === "" ||
+      cityOption === "" ||
+      stateOption === ""
+    ) {
+      setDiascleButtonStep2(true);
     } else {
-      setDiascleButtonStep2(false)
+      setDiascleButtonStep2(false);
     }
-  },[addressLine1,zCode,cityOption,stateOption])
+  }, [addressLine1, zCode, cityOption, stateOption]);
 
   useEffect(() => {
     setValidEmail(validateEmail(valueEmail));
@@ -181,7 +192,7 @@ const CompleteProfile = ({
       })
     );
     dispatch(closePopupCompleteProfile());
-    dispatch(getMyInfor())
+    dispatch(getMyInfor());
   };
 
   const handleClose = () => {
@@ -191,7 +202,7 @@ const CompleteProfile = ({
         type: "doneStep1",
       })
     );
-    dispatch(getMyInfor())
+    dispatch(getMyInfor());
   };
 
   const handleConfirm = () => {
@@ -204,7 +215,7 @@ const CompleteProfile = ({
         gender: valueGender,
       })
     );
-    dispatch(getUserInfoReady())
+    dispatch(getUserInfoReady());
   };
   const { width } = useWindowDimensions();
 
@@ -269,22 +280,22 @@ const CompleteProfile = ({
         }}
       >
         <Box>
-         {stepProfile === "step1" ? (
-          <></>
-         ) : (
-          <Close
-          sx={{
-            position: "absolute",
-            top: "10px",
-            right: "10px",
-            color: "white",
-            fontSize: "30px",
-            zIndex: 1,
-            cursor: "pointer",
-          }}
-          onClick={handleClose}
-        />
-         )}
+          {stepProfile === "step1" ? (
+            <></>
+          ) : (
+            <Close
+              sx={{
+                position: "absolute",
+                top: "10px",
+                right: "10px",
+                color: "white",
+                fontSize: "30px",
+                zIndex: 1,
+                cursor: "pointer",
+              }}
+              onClick={handleClose}
+            />
+          )}
         </Box>
         {stepProfile === "step1" ? (
           <Box
@@ -595,16 +606,16 @@ const CompleteProfile = ({
                   </BgWithTooltip>
                 </FormControl>{" "}
                 {!validEmail && email !== null && (
-            <Typography
-              sx={{
-                textAlign: "start",
-                color: "#F05153",
-                fontSize: "13px",
-              }}
-            >
-              Please enter a valid email
-            </Typography>
-          )}{" "}
+                  <Typography
+                    sx={{
+                      textAlign: "start",
+                      color: "#F05153",
+                      fontSize: "13px",
+                    }}
+                  >
+                    Please enter a valid email
+                  </Typography>
+                )}{" "}
                 <FormControl
                   className="Birthday d-flex flex-column align-items-start"
                   variant="standard"
@@ -695,18 +706,18 @@ const CompleteProfile = ({
                     />
                   </LocalizationProvider>
                   {dateError ? (
-                             <Typography
-                               sx={{
-                                 fontSize: "10px",
-                                 marginTop: "6px",
-                                 color: "#e75857",
-                               }}
-                             >
-                               {dateError}
-                             </Typography>
-                           ) : (
-                             <></>
-                           )}
+                    <Typography
+                      sx={{
+                        fontSize: "10px",
+                        marginTop: "6px",
+                        color: "#e75857",
+                      }}
+                    >
+                      {dateError}
+                    </Typography>
+                  ) : (
+                    <></>
+                  )}
                 </FormControl>
                 <FormControl
                   variant="standard"

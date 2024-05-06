@@ -366,7 +366,7 @@ export default function Signup(props) {
             width: "100%",
             height: "3px",
             background:
-              "linear-gradient(0deg, #181223 -1.51%, #7648ED 74.36%, #AA8EF2 202.93%)",
+              "linear-gradient(0deg, #271C39 -1.51%, #7648ED 74.36%, #AA8EF2 202.93%)",
             borderRadius: "6px",
             transition: " 0.5s ease-in-out",
             translate: "0px",
@@ -381,11 +381,12 @@ export default function Signup(props) {
           variant="standard"
           sx={{
             width: "100%",
-            backgroundColor: "#1a132d",
+            backgroundColor: "#271C39",
             padding: width > 576 ? "6px 10px" : "5px",
             borderRadius: width > 576 ? "5px" : "4px",
-            marginBottom: width > 992 ? "16px" : "12px",
+            marginBottom: width > 992 ? "4px" : "4px",
             flexDirection: "column",
+            border: !validPhone && phone ? "1px solid #F05153" : "none"
           }}
         >
           <Box
@@ -480,7 +481,7 @@ export default function Signup(props) {
               >
                 <Box
                   sx={{
-                    backgroundColor: "#1a132d",
+                    backgroundColor: "#271C39",
                     position: "absolute",
                     right: "10px",
                     top: "8px",
@@ -493,7 +494,9 @@ export default function Signup(props) {
               </BgWithTooltip>
             )}
           </Box>
-          {!validPhone && phone && (
+        
+        </FormControl>
+        {!validPhone && phone && (
             <Typography
               sx={{
                 textAlign: "start",
@@ -504,15 +507,15 @@ export default function Signup(props) {
               Please enter a valid phone number
             </Typography>
           )}{" "}
-        </FormControl>
         <FormControl
           variant="standard"
           sx={{
             width: "100%",
-            backgroundColor: "#1a132d",
+            backgroundColor: "#271C39",
             padding: width > 576 ? "6px 10px" : "5px",
             borderRadius: width > 576 ? "5px" : "4px",
-            marginBottom: width > 992 ? "16px" : "12px",
+            marginBottom: width > 992 ? "4px" : "4px",
+            marginTop:"12px"
           }}
         >
           <img
@@ -812,10 +815,11 @@ export default function Signup(props) {
           variant="standard"
           sx={{
             width: "100%",
-            backgroundColor: "#1a132d",
+            backgroundColor: "#271C39",
             padding: width > 576 ? "6px 10px" : "5px",
             borderRadius: width > 576 ? "5px" : "4px",
-            marginBottom: width > 992 ? "16px" : "12px",
+            marginBottom: width > 992 ? "4px" : "4px",
+            border: passSai === true && c_password !== "" ? "1px solid #F05153" : "none"
           }}
         >
           <img
@@ -892,20 +896,22 @@ export default function Signup(props) {
           </Box>
           <span className="text-danger">{textC_pass}</span>
           {/* )} */}
-          {passSai === true && c_password !== "" ? (
-            <span className="text-danger">Password does not match</span>
+         
+        </FormControl>
+        {passSai === true && c_password !== "" ? (
+            <Typography sx={{fontSize:"13px" , color:"#F05153"}} >Password does not match</Typography>
           ) : (
             ""
           )}
-        </FormControl>
         <FormControl
           variant="standard"
           sx={{
             width: "100%",
-            backgroundColor: "#1a132d",
+            backgroundColor: "#271C39",
             padding: width > 576 ? "6px 10px" : "5px",
             borderRadius: width > 576 ? "5px" : "4px",
             marginBottom: "16px",
+            marginTop:"12px"
           }}
         >
           <img
@@ -1006,20 +1012,18 @@ export default function Signup(props) {
         >
           <div className="btn-conteiner">
             {disabledBtn ? (
-              <AnimButton type="disable" text={t("Sign up")} isHasIcon />
+              <AnimButton type="disable" text={t("Sign up")} />
             ) : isRegister ? (
               <AnimButton
                 onClick={handleSubmitSignUp}
                 text={t("Sign up")}
                 type="loading"
-                isHasIcon
               />
             ) : (
               <AnimButton
                 onClick={handleSubmitSignUp}
                 text={t("Sign up")}
                 type="primary"
-                isHasIcon
                 isSubmitBtn
               />
             )}
