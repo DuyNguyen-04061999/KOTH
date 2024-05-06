@@ -139,7 +139,6 @@ export default function JoinTournament() {
         })
       );
     } else if(tokenGuest)  {
-      console.log(tokenGuest);
       dispatch(
         getRefactorDetailAuthPromotion({
           id,

@@ -64,7 +64,6 @@ export default function Dialoglg() {
       setTransData(despositData);
     }
   }, [transData, withdrawData, despositData]);
-
   useEffect(() => {
     const socket = _socket;
     setSocket(socket);
@@ -78,9 +77,8 @@ export default function Dialoglg() {
     dispatch(toggleLoginDialog());
     dispatch(clickTab("login"));
   };
-
+  
   const handleCloseProfile = () => {};
-
   const logout = () => {
     dispatch(logoutReady());
     dispatch(closeChatPopup(false));
@@ -99,7 +97,7 @@ export default function Dialoglg() {
     <div className="dialog" style={{
       display:"flex"
     }}>
-      {token === "" || token === null || token === undefined ? (
+      {token === "" || token === null || token === undefined || user?.isGuest ? (
         <>
           <Box className="btn-group">
             <button className="btn-sign-up signin" onClick={handleClickSignIn}>
@@ -113,7 +111,7 @@ export default function Dialoglg() {
                 {t("Sign In")}
               </span>
             </button>
-            {token && (
+            {user?.isGuest === false && (
               <div
                 className="btn-sign-up"
                 onClick={() => {

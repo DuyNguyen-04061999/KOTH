@@ -9,7 +9,6 @@ class promotionService {
   }
 
   async callDetailPromotionToken(dataRequest) {
-    console.log(dataRequest);
     const res = await PROMOTION_API.get("/api/promotions/auth/detail/" + dataRequest?.id,
       {
         headers: {
