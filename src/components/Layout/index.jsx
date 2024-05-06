@@ -167,8 +167,8 @@ export default function Layout(props) {
   useEffect(() => {
     if (!tokenGuest && !localStorage.getItem("token")) {
       dispatch(getUserGuest());
-    } else if(!localStorage.getItem("token")){
-      dispatch(getUserInfoReady());
+    } 
+    else if(!localStorage.getItem("token")){
       try {
         const decoded = jwtDecode(tokenGuest);
         const expiredTime = new Date(decoded?.iat * 1000);
@@ -179,10 +179,9 @@ export default function Layout(props) {
       } catch(e){
         dispatch(getUserGuest());
       }
-
     }
-    
-  }, [tokenGuest]);
+    dispatch(getUserInfoReady());
+  }, [tokenGuest, localStorage.getItem("token")]);
 
   useEffect(() => {
     if(token) {

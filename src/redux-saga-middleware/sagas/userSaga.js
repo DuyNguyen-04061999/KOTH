@@ -451,7 +451,7 @@ function* userInfoSaga(dataRequest) {
         });
         yield put(getUserInfoSuccess(data?.data));
         yield put(saveNickNameWhenLogin(data?.data?.nickName));
-       if(tokenUser) {
+       if(tokenUser && data?.data?.user?.isGuest === false) {
         if (
           // data?.data?.user?.userVerifiedEmail === 0 &&
           // data?.data?.user?.userVerifiedPhone === 0
