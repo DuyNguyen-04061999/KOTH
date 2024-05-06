@@ -73,8 +73,7 @@ export default function ResultEndGame() {
   };
 
   const handleConfirm = () => {
-    if(tokenUser || localStorage.getItem("token")) {
-
+    if(user?.isGuest === false) {
       if (check === "check") {
         dispatch(
           openPopupCompleteExtra({

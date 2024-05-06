@@ -93,7 +93,8 @@ export default function JoinTournament() {
     countTicket,
     listJoinedTour,
     isFullInfo,
-    tokenGuest
+    tokenGuest,
+    user
   } = useSelector((state) => state.userReducer);
   const { width } = useWindowDimensions();
   const [openVoucher, setOpenVoucher] = useState(false);
@@ -162,7 +163,7 @@ export default function JoinTournament() {
 
 
   const handlePlayTour = () => {
-    if (token) {
+    if (user?.isGuest === false) {
       dispatch(getMyInfor())
       dispatch(getScoreGame())
       if (scoreGame === 0) {
