@@ -30,34 +30,29 @@ import ParagraphLoading from "../../../components/LoadingComponent/ParagraphLoad
 import {
   getScoreGame,
   openPopupCompleteExtra,
-  openPopupCompleteProfile,
-  updateFromRouter,
+  updateFromRouter
 } from "../../../redux-saga-middleware/reducers/appReducer";
 import {
   openDialogCheckExtraGuest,
-  openSubscribeDialog,
-  toggleLoginDialog,
-  toggleShareTour,
+  toggleShareTour
 } from "../../../redux-saga-middleware/reducers/authReducer";
 import { updateDetailTour } from "../../../redux-saga-middleware/reducers/playgameReducer";
 import {
   finishGame,
   finishVideo,
   getRefactorDetailAuthPromotion,
-  getRefactorDetailPromotion,
   joinPromotion,
   saveCurrentPromotionShare,
   startGameInPromotion,
-  startGameInPromotionFail,
+  startGameInPromotionFail
 } from "../../../redux-saga-middleware/reducers/promotionReducer";
 import {
   CheckGuestUpgrade,
   saveBoughtTournament,
   saveIdTournament,
-  toggleExtra,
-  toggleTournamentShow,
+  toggleExtra
 } from "../../../redux-saga-middleware/reducers/tournamentReducer";
-import { getMyInfor, toggleCheckProfileDialog } from "../../../redux-saga-middleware/reducers/userReducer";
+import { getMyInfor } from "../../../redux-saga-middleware/reducers/userReducer";
 import { isJson, sliceString } from "../../../utils/helper";
 import { imageDesktop, images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
@@ -67,7 +62,6 @@ import GameInTournament from "../GameInTournament";
 import GamePreview from "../JoinTournamentMobile/GamePreview";
 import LeaderBoard from "../LeaderBoard";
 import PlayGame from "../PlayGame";
-import { getTokenGuest } from "../../../utils/getTokenGuest";
 
 ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS_ID);
 

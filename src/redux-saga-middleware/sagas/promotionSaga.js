@@ -1,14 +1,14 @@
+import { jwtDecode } from "jwt-decode";
 import { call, put, takeEvery } from "redux-saga/effects";
+import { store } from "../config/configRedux";
 import { showToastNotification } from "../reducers/alertReducer";
+import { toggleStartGame } from "../reducers/appReducer";
 import { getListNotification } from "../reducers/notificationReducer";
 import { updateDetailTour } from "../reducers/playgameReducer";
 import { getRefactorDetailAuthPromotion, getRefactorDetailAuthPromotionFail, getRefactorDetailAuthPromotionSuccess, getRefactorDetailPromotionFail, getRefactorDetailPromotionSuccess, joinPromotionFail, joinPromotionSuccess, startGameInPromotion, startGameInPromotionFail, startGameInPromotionSuccess } from "../reducers/promotionReducer";
 import { refreshTokenAction } from "../reducers/refreshReducer";
 import { updateListPromotionJoined } from "../reducers/userReducer";
 import promotionService from "../services/promotionService";
-import { getTokenGuest } from "../../utils/getTokenGuest";
-import { toggleStartGame } from "../reducers/appReducer";
-import { useParams } from "react-router-dom";
 const PromotionService = new promotionService();
 
 let proDetailCount = 0
@@ -116,15 +116,19 @@ function* startGameInPromotionSaga(dataRequest) {
   try {
     startGameCount += 1
     if (startGameCount === 1) {
-      const tokenGuest = getTokenGuest()
+      const token = store.getState()?.userReducer?.tokenUser || ""
       const { payload } = dataRequest;
       const res = yield call(PromotionService.startGameInPromotion, payload);
       const { data, status } = res
       if (status === 200 || status === 201) {
         yield put(startGameInPromotionSuccess(data));
         yield put(toggleStartGame(true));
-        if(!tokenGuest) {
-          yield put(refreshTokenAction());
+        if(token) {
+          const decoded = jwtDecode(token);
+          const { role } = decoded
+          if(role !== "guest") {
+            yield put(refreshTokenAction());
+          }
         }
       } else {
         yield put(startGameInPromotionFail());
