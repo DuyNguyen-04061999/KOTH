@@ -216,6 +216,9 @@ const CompleteProfile = ({
       })
     );
     dispatch(getUserInfoReady());
+    setFirstName('')
+    setLastName('')
+    setEmail('')
   };
   const { width } = useWindowDimensions();
 
