@@ -60,10 +60,16 @@ export default function ResultEndGame() {
   const check = localStorage.getItem("firstPlayGame");
 
   const handleToSignUp = () => {
+    dispatch(
+      getRefactorDetailAuthPromotion({
+        id,
+        token: tokenUser || localStorage.getItem("token_guest"),
+      })
+    );
     dispatch(CheckGuestUpgrade(true))
+    dispatch(toggleCloseResultEndGame());
     dispatch(toggleLoginDialog());
     dispatch(clickTab("signup"));
-    dispatch(toggleCloseResultEndGame());
   };
 
   const handleConfirm = () => {
