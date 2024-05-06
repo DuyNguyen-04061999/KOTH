@@ -2552,18 +2552,18 @@ export default function DialogProfile(props) {
       <Dialog
         fullScreen={width && width < 576}
         open={open}
-        onClose={() => {
-          setTab(0);
-          // dispatch(exitEditProfile());
-          setAddressLine1(address1);
-          setAddressLine2(address2);
-          setCityOption(city);
-          setDName(nickName);
-          setStateOption(state);
-          setZcode(zipCode);
-          setValue(dayjs(birthDay));
-          handleShowProfile();
-        }}
+        // onClose={() => {
+        //   setTab(0);
+        //   dispatch(exitEditProfile());
+        //   setAddressLine1(address1);
+        //   setAddressLine2(address2);
+        //   setCityOption(city);
+        //   setDName(nickName);
+        //   setStateOption(state);
+        //   setZcode(zipCode);
+        //   setValue(dayjs(birthDay));
+        //   handleShowProfile();
+        // }}
         maxWidth={"lg"}
         TransitionComponent={Transition}
         PaperProps={{
