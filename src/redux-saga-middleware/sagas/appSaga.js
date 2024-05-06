@@ -142,15 +142,15 @@ function* getUserGuestSaga(dataRequest) {
       // yield put(getUserInfoReady(data?.data?.token))
       yield put(saveTokenGuest(data?.data?.token))
      const pid = window.location.pathname.split('/')[2];
-     console.log(window.location.pathname);
-     if(pid.length > 2) {
+     if(window.location.pathname.split('/').length > 2) {
       yield put(getRefactorDetailAuthPromotion({
         id: pid,
         token: data?.data?.token
       }
       ))
-      localStorage.setItem("token", data?.data?.token)
+     
      }
+     localStorage.setItem("token", data?.data?.token)
     }
   } catch (err) {
     console.log(err);
