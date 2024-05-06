@@ -946,7 +946,7 @@ const userReducer = (
       return {...state, isFirstClaimGamePlay: false}
     }
     case "SAVE_TOKEN_GUEST" : {
-      return {...state, tokenGuest: payload}
+      return {...state, tokenGuest: payload, tokenUser: payload}
     }
     case "CLEAR_TOKEN_GUEST" : {
       return {...state, tokenGuest: ""}
