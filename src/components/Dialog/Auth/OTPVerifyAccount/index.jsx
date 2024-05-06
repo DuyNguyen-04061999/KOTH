@@ -12,8 +12,12 @@ import {
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
 import AnimButton from "../../../AnimButton";
 import { getUserGuest } from "../../../../redux-saga-middleware/reducers/appReducer";
+import { getRefactorDetailAuthPromotion } from "../../../../redux-saga-middleware/reducers/promotionReducer";
+import { useParams } from "react-router-dom";
 
 export default function OTPVerifyAccount() {
+  
+  const { id } = useParams();
   const { device } = useSelector((state) => state.deviceReducer);
   // const { createAccInfo } = useSelector((state) => state.authReducer);
   const {
@@ -236,6 +240,14 @@ export default function OTPVerifyAccount() {
               setTimeout(() => {
                 dispatch(getUserInfoReady())
               },[2000])
+              if(localStorage.getItem("token_guest")) {
+                dispatch(
+                  getRefactorDetailAuthPromotion({
+                    id,
+                    token: localStorage.getItem("token_guest"),
+                  })
+                );
+              }
             }}
           />
         </Box>
