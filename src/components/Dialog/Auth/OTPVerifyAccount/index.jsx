@@ -4,14 +4,20 @@ import OTPInput from "react-otp-input";
 import { useDispatch, useSelector } from "react-redux";
 import { closeLoginDialog } from "../../../../redux-saga-middleware/reducers/authReducer";
 import {
+  getUserInfoReady,
   logoutReady,
   resendOtpReady,
   sendOtpReady,
 } from "../../../../redux-saga-middleware/reducers/userReducer";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
 import AnimButton from "../../../AnimButton";
+import { getUserGuest } from "../../../../redux-saga-middleware/reducers/appReducer";
+import { getRefactorDetailAuthPromotion } from "../../../../redux-saga-middleware/reducers/promotionReducer";
+import { useParams } from "react-router-dom";
 
 export default function OTPVerifyAccount() {
+  
+  const { id } = useParams();
   const { device } = useSelector((state) => state.deviceReducer);
   // const { createAccInfo } = useSelector((state) => state.authReducer);
   const {
@@ -21,8 +27,9 @@ export default function OTPVerifyAccount() {
     typeVerifyOTP,
     resenOTPSuccess,
     isVerifyOTP,
+    phoneUpgrade,
+    tokenGuest
   } = useSelector((state) => state.userReducer);
-
   const { width } = useWindowDimensions();
   const [otp, setOtp] = useState("");
   const dispatch = useDispatch();
@@ -39,7 +46,6 @@ export default function OTPVerifyAccount() {
 
     return () => clearInterval(timer);
   }, [timeLeft]);
-
   const handleVerifyOTP = () => {
     switch (typeVerifyOTP) {
       case "register":
@@ -51,6 +57,7 @@ export default function OTPVerifyAccount() {
             phone: registerPhone,
           })
         );
+        
         break;
       case "reVerify":
         dispatch(
@@ -78,7 +85,7 @@ export default function OTPVerifyAccount() {
       case "register":
         dispatch(
           resendOtpReady({
-            email: registerEmail,
+            // email: registerEmail,
             phone: registerPhone,
             type: "register",
           })
@@ -87,7 +94,7 @@ export default function OTPVerifyAccount() {
       case "reVerify":
         dispatch(
           resendOtpReady({
-            email: user?.userEmail,
+            // email: user?.userEmail,
             phone: user?.userPhone,
             type: "register",
           })
@@ -120,7 +127,7 @@ export default function OTPVerifyAccount() {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        background: "#271C39",
+        background: "#181223",
         height: "100%",
         justifyContent: "center",
         padding: device === "Mobile" ? "0px 20px 0px 20px" : "0px 30px",
@@ -231,22 +238,25 @@ export default function OTPVerifyAccount() {
             onClick={() => {
               dispatch(logoutReady());
               dispatch(closeLoginDialog());
+              setTimeout(() => {
+                dispatch(getUserInfoReady())
+              },[2000])
             }}
           />
         </Box>
         <Box sx={{ width: "48%" }}>
-          {otp?.length < 6 ? (
+          {/* {otp?.length < 6 ? (
             <AnimButton type="disable" text="NEXT" />
           ) : isVerifyOTP ? (
             <AnimButton type="loading" text="NEXT" />
-          ) : (
+          ) : ( */}
             <AnimButton
               type="primary"
               text="NEXT"
               onClick={handleVerifyOTP}
               isSubmitBtn
             />
-          )}
+
         </Box>
       </Box>
     </Box>

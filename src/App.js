@@ -34,6 +34,7 @@ import {
 import {
   getListBet,
   getListWinner,
+  getUserGuest,
 } from "./redux-saga-middleware/reducers/appReducer";
 import {
   getNavTablet,
@@ -66,6 +67,8 @@ import useWindowDimensions from "./utils/useWindowDimensions";
 import Referal from "./pages/Referal";
 import { News } from "./pages/News/Component";
 import NewsDetail from "./pages/News/NewsDetail";
+import { getTokenGuest } from "./utils/getTokenGuest";
+import { jwtDecode } from "jwt-decode";
 
 const LazyNewHomePage = lazy(() => import("./pages/NewHomePageComponent"));
 const LazyPackage = lazy(() => import("./pages/PackagePage"));
@@ -94,9 +97,8 @@ function App() {
   useTracking(process.env.REACT_APP_GOOGLE_ANALYTICS_ID);
 
   const { startGameCheck } = store.getState().appReducer;
-  const { tokenUser, user } = store.getState().userReducer;
+  const { tokenUser, user, tokenGuest } = store.getState().userReducer;
   const { currentTab } = store.getState().authReducer;
-
   const { orientation } = store.getState().gameReducer;
   const [socket, setSocket] = useState(null);
 
@@ -273,11 +275,7 @@ function App() {
     };
   }, [socket]);
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!tokenUser || !token) {
-    }
-  }, [tokenUser]);
+  
 
   useEffect(() => {
     const onPageLoad = () => {
@@ -362,13 +360,12 @@ function App() {
       );
     }
   }, []);
-
   useEffect(() => {
     const onPageLoad = () => {
       const token = localStorage.getItem("token");
       if ((token || tokenUser) && currentTab !== "otpVerifyAccount") {
         store.dispatch(getUserInfoReady(token || tokenUser));
-      }
+      } 
     };
 
     if (document.readyState === "complete") {

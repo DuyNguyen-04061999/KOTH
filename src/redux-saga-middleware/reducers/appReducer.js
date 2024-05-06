@@ -244,6 +244,98 @@ export const getListDisplayNameFail = (data) => {
   };
 };
 
+export const getUserGuest = (data) => {
+  return {
+    type: "GET_USER_GUEST",
+    payload:data}
+  }
+export const openPopupCompleteExtra = (data) => {
+  return {
+    type: "OPEN_POPUP_COMPLETE_EXTRA",
+    payload: data,
+  };
+};
+
+export const getUserGuestSuccess = (data) => {
+  return {
+    type: "GET_USER_GUEST_SUCCESS",
+    payload:data }
+  }
+export const closePopupCompleteExtra = (data) => {
+  return {
+    type: "CLOSE_POPUP_COMPLETE_EXTRA",
+    payload: data,
+  };
+};
+
+export const getUserGuestFail = (data) => {
+  return {
+    type: "GET_USER_GUEST_FAIL",
+    payload: data }
+  }
+export const openPopupCompleteProfile = (data) => {
+  return {
+    type: "OPEN_POPUP_COMPLETE_PROFILE",
+    payload: data,
+  };
+};
+
+export const closePopupCompleteProfile = (data) => {
+  return {
+    type: "CLOSE_POPUP_COMPLETE_PROFILE",
+    payload: data,
+  };
+};
+
+export const getTypeFirstPlay = (data) => {
+  return {
+    type: "GET_TYPE_FIRST_PLAY",
+    payload: data,
+  };
+};
+
+export const getTypeDoneStep1 = (data) => {
+  return {
+    type: "GET_TYPE_DONE_STEP_1",
+    payload: data,
+  };
+};
+
+export const getTypeDoneStep2 = (data) => {
+  return {
+    type: "GET_TYPE_DONE_STEP_2",
+    payload: data,
+  };
+};
+
+export const getTypeSecondPlay = (data) => {
+  return {
+    type: "GET_TYPE_SECOND_PLAY",
+    payload: data,
+  };
+};
+
+export const getScoreGame = (data) => {
+  return {
+    type: "GET_SCORE_GAME",
+    payload: data,
+  };
+};
+
+export const getScoreGameSuccess = (data) => {
+  return {
+    type: "GET_SCORE_GAME_SUCCESS",
+    payload: data,
+  };
+};
+
+export const getScoreGameFail = (data) => {
+  return {
+    type: "GET_SCORE_GAME_FAIL",
+    payload: data,
+  };
+};
+
 const appReducer = (
   state = {
     isFetchListFaq: false,
@@ -270,6 +362,14 @@ const appReducer = (
     countDownNewYear: 0,
     listDisplayName: [],
     isFetchDisplayName: false,
+    isUserGuest: false,
+    tokenGuest:"",
+    typeCompleteExtra: "firstPlay",
+    isOpenPopupCompleteExtra: false,
+    stepProfile: "step1",
+    isOpenCompleteProfile: false,
+    isFetchScore: false,
+    scoreGame: "",
   },
   action
 ) => {
@@ -359,6 +459,44 @@ const appReducer = (
       return { ...state, listDisplayName: payload, isFetchDisplayName: false };
     case "GET_LIST_DISPLAY_NAME_FAIL":
       return { ...state, isFetchDisplayName: false };
+    case "GET_USER_GUEST":
+      return { ...state, isUserGuest: true };
+    case "GET_USER_GUEST_SUCCESS":
+      return { ...state, isUserGuest: false };
+    case "GET_USER_GUEST_FAIL ":
+      return { ...state, isUserGuest: false };
+    case "OPEN_POPUP_COMPLETE_EXTRA": {
+      return {
+        ...state,
+        isOpenPopupCompleteExtra: true,
+        typeCompleteExtra: payload?.type,
+      };
+    }
+    case "CLOSE_POPUP_COMPLETE_EXTRA": {
+      return { ...state, isOpenPopupCompleteExtra: false };
+    }
+    case "OPEN_POPUP_COMPLETE_PROFILE":
+      return {
+        ...state,
+        isOpenCompleteProfile: true,
+        stepProfile: payload?.type,
+      };
+    case "CLOSE_POPUP_COMPLETE_PROFILE":
+      return { ...state, isOpenCompleteProfile: false };
+    case "GET_TYPE_FIRST_PLAY":
+      return { ...state, typeCompleteExtra: payload?.type };
+    case "GET_TYPE_SECOND_PLAY":
+      return { ...state, typeCompleteExtra: payload?.type };
+    case "GET_TYPE_DONE_STEP_1":
+      return { ...state, typeCompleteExtra: payload?.type };
+    case "GET_TYPE_DONE_STEP_2":
+      return { ...state, typeCompleteExtra: payload?.type };
+    case "GET_SCORE_GAME":
+      return { ...state, isFetchScore: true };
+    case "GET_SCORE_GAME_SUCCESS":
+      return { ...state, isFetchScore: false, scoreGame: payload?.totalPlays };
+    case "GET_SCORE_GAME_FAIL":
+      return { ...state, isFetchScore: false };
     default:
       return { ...state };
   }

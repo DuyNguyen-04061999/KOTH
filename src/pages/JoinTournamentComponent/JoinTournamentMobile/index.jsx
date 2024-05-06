@@ -28,12 +28,21 @@ import DetailVoucher from "../DetailVoucher";
 import GameInTournament from "../GameInTournament";
 import LeaderBoard from "../LeaderBoard/index";
 import "./index.scss";
+import { getScoreGame, openPopupCompleteExtra } from "../../../redux-saga-middleware/reducers/appReducer";
 
 export default function JoinTournamentMobile({ handleOnClickStartGame }) {
   const { detailTournament } = useSelector((state) => state.playgameReducer);
   const { isGetDetailPromotion, isGetDetailAuthPromotion } = useSelector(
     (state) => state.promotionReducer
   );
+  const { scoreGame } = useSelector((state) => state.appReducer);
+  const {
+    firstName,
+    lastName,
+    email,
+    birthDay,
+    gender,
+  } = useSelector((state) => state.profileReducer);
   const [currentResult, setCurrentResult] = useState(false);
   const [rewardPopup, setRewardPopup] = useState(false);
   const [openVoucher, setOpenVoucher] = useState(false);
@@ -44,6 +53,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
     uPack,
     listJoinedTour,
     countTicket,
+    tokenGuest
   } = useSelector((state) => state.userReducer);
   const typographyStyle = {
     textAlign: "start",
@@ -59,43 +69,95 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
       dispatch(
         getRefactorDetailAuthPromotion({
           id,
-          token,
+          token: token ,
         })
       );
-    } else {
-      dispatch(getRefactorDetailPromotion(id));
+    } else if(tokenGuest)  {
+      dispatch(
+        getRefactorDetailAuthPromotion({
+          id,
+          token: tokenGuest,
+        })
+      );
     }
-  }, [token, dispatch, id]);
+  }, [token,tokenGuest]);
+
+  const handleJoinTour = (sub) => {
+      dispatch(
+        joinPromotion({
+          tournamentId: detailTournament?.id,
+          sub: sub ? sub : null,
+        })
+      );
+  }
 
   const handlePlayTour = () => {
-    if (detailTournament?.extra === 0 && countTicket === 0) {
-      dispatch(toggleExtra());
-      return;
+    if (token) {
+      dispatch(getScoreGame())
+      if (scoreGame === 0) {
+        handleJoinTour(true);
+        localStorage.setItem("firstPlayGame", "check");
+        return;
+      }
+      if (detailTournament?.extra === 0 && countTicket === 0) {
+        dispatch(toggleExtra());
+        return;
+      } else {
+        if (
+          firstName === null ||
+          lastName === null ||
+          email === null ||
+          gender === "" ||
+          birthDay === "" ||
+          firstName === "" ||
+          lastName === "" || 
+          email === "" 
+        ) {
+          dispatch(
+            openPopupCompleteExtra({
+              type: "secondPlay"
+            })
+          );
+        } else {
+          if(!listJoinedTour?.includes(id)) {
+            handleJoinTour(true);
+          } else {
+           dispatch(startGameInPromotion({
+            tournamentId: id
+          }))
+          }
+        }
+      }
     } else {
-      dispatch(
-        startGameInPromotion({
-          tournamentId: id,
-        })
-      );
+      if(detailTournament?.extra === 0 && countTicket === 0) {
+        
+        dispatch(openDialogCheckExtraGuest())
+        return
+       } else {
+        handleJoinTour(true)
+        dispatch(CheckGuestUpgrade(true))
+        localStorage.setItem("checkUpgrade", 'upgrade')
+       }
     }
   };
 
-  const handleJoinTour = () => {
-    if (token) {
-      if (
-        (detailTournament?.tournamentVip !== 0 && uPack === null) ||
-        (detailTournament?.tournamentVip !== 0 &&
-          uPack &&
-          uPack?.remain === "Expired")
-      ) {
-        dispatch(toggleTournamentShow());
-      } else {
-        dispatch(openSubscribeDialog());
-      }
-    } else {
-      dispatch(toggleLoginDialog());
-    }
-  };
+
+  // const handleJoinTour = () => {
+  //   if (token) {
+  //     if (
+  //       (detailTournament?.tournamentVip !== 0 && uPack === null) ||
+  //       (detailTournament?.tournamentVip !== 0 &&
+  //         uPack &&
+  //         uPack?.remain === "Expired")
+  //     ) {
+  //       dispatch(toggleTournamentShow());
+  //     } else {
+  //       dispatch(openSubscribeDialog());
+  //     }
+  //   } else {
+  //     dispatch(toggleLoginDialog());
+  //   }
+  // };
 
   const handleClickOpen = () => {};
   const navigate = useNavigate();

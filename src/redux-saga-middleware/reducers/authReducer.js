@@ -242,6 +242,20 @@ export const closeSubscribeDialog = (data) => {
   };
 };
 
+export const openDialogCheckExtraGuest = (data) => {
+  return {
+    type: "OPEN_DIALOG_CHECK_EXTRA_GUEST",
+    payload: data
+  }
+}
+
+export const closeDialogCheckExtraGuest = (data) => {
+  return {
+    type: "CLOSE_DIALOG_CHECK_EXTRA_GUEST",
+    payload: data
+  }
+}
+
 const authReducer = (
   state = {
     isLoginDialog: false,
@@ -277,6 +291,7 @@ const authReducer = (
     nameReset: "",
     isVerifyDialog: false,
     isSubscribeDialog: false,
+    isCheckExtraGuest: false
   },
   action
 ) => {
@@ -407,6 +422,12 @@ const authReducer = (
       return { ...state, uPack: payload || {} };
     case "UPDATE_USERNAME_WHEN_RESET": {
       return { ...state, nameReset: payload || "" };
+    }
+    case "OPEN_DIALOG_CHECK_EXTRA_GUEST" : {
+      return {...state, isCheckExtraGuest: true}
+    }
+    case "CLOSE_DIALOG_CHECK_EXTRA_GUEST" : {
+      return {...state, isCheckExtraGuest: false}
     }
     default:
       return state;

@@ -25,6 +25,8 @@ import { callListSendingRequest } from "../../redux-saga-middleware/reducers/add
 import { showToastNotification } from "../../redux-saga-middleware/reducers/alertReducer";
 import {
   changeRouter,
+  getScoreGame,
+  getUserGuest,
   openDoubleDayDialog,
   randomRenderPopup,
   toggleStartGame,
@@ -58,7 +60,7 @@ import {
 } from "../../redux-saga-middleware/reducers/settingReducer";
 import { toggleAlertStripeProcess } from "../../redux-saga-middleware/reducers/stripeReducer";
 import { toggleCloseResultEndGame } from "../../redux-saga-middleware/reducers/tournamentReducer";
-import { updateUserToken } from "../../redux-saga-middleware/reducers/userReducer";
+import { getMyInfor, getUserInfoReady, updateUserToken } from "../../redux-saga-middleware/reducers/userReducer";
 import { compareDate, compareDateInUSA } from "../../utils/config";
 import { imageDesktop, images } from "../../utils/images";
 import { systemNotification } from "../../utils/notification";
@@ -90,6 +92,10 @@ import RenewalBadgePopup from "../Dialog/Packages/NotiCheckout/renewalBadgePopup
 import RenewalNotiPopup from "../Dialog/Packages/NotiCheckout/renewalNotiPopup";
 import TransactionHistory from "../Dialog/TransactionHistory";
 import DialogBanUser from "../Dialog/DialogBanUser";
+import CompleteExtra from "../Dialog/PopupNewUser/CompleteExtra";
+import CompleteProfile from "../Dialog/PopupNewUser/CompleteProfile";
+import DialogCheckExtraGuest from "../Dialog/DialogCheckExtraGuest";
+import { jwtDecode } from "jwt-decode";
 
 const Main = muiStyled("main", {
   shouldForwardProp: (prop) => prop !== "open",
@@ -138,10 +144,11 @@ export default function Layout(props) {
     user,
     openTransactionDialog,
     openReasonDialog,
+    tokenGuest
   } = useSelector((state) => state.userReducer);
   const { chatPopup, badgechat } = useSelector((state) => state.chatReducer);
   const { listSetting } = useSelector((state) => state.settingReducer);
-  const { router, startGameCheck, fromRouter, countDownDoubleDay } =
+  const { router, startGameCheck, fromRouter, countDownDoubleDay} =
     useSelector((state) => state.appReducer);
   const { width } = useWindowDimensions();
   const navigate = useNavigate();
@@ -153,10 +160,35 @@ export default function Layout(props) {
   const handleCloseDropDown = () => {
     setOpenDropdown(false);
   };
-
   const handleMouseEnter = () => {
     setDebounceTab(true);
   };
+
+  useEffect(() => {
+    if (!tokenGuest && !localStorage.getItem("token")) {
+      dispatch(getUserGuest());
+    } else if(!localStorage.getItem("token")){
+      dispatch(getUserInfoReady());
+      try {
+        const decoded = jwtDecode(tokenGuest);
+        const expiredTime = new Date(decoded?.iat * 1000);
+        const currentTime = Date.now() / 1000;
+        if (expiredTime < currentTime) {
+          dispatch(getUserGuest());
+        }
+      } catch(e){
+        dispatch(getUserGuest());
+      }
+
+    }
+    
+  }, [tokenGuest]);
+
+  useEffect(() => {
+    if(token) {
+      dispatch(getMyInfor())
+    }
+  },[token])
 
   useEffect(() => {
     let timeOutId = undefined;
@@ -321,6 +353,12 @@ export default function Layout(props) {
       }
     }
   }, [query, dispatch, isAlertDialog]);
+
+  useEffect(() => {
+    if(token) {
+      dispatch(getScoreGame())
+    }
+  },[token])
 
   useEffect(() => {
     if (isChangeLocation) {
@@ -495,6 +533,9 @@ export default function Layout(props) {
       <NotificationDialog />
       <RenewalBadgePopup />
       <RenewalNotiPopup />
+      <CompleteExtra />
+      <CompleteProfile />
+      <DialogCheckExtraGuest />
       {params && params?.get("game") && params?.get("game") === "revive" && (
         <PackagePaypalDialog />
       )}

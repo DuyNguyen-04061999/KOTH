@@ -1,28 +1,23 @@
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { Box, FormControl, Input, Tooltip, Typography } from "@mui/material";
-import MenuItem from "@mui/material/MenuItem";
-import Select from "@mui/material/Select";
 import { withStyles } from "@mui/styles";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { showToastNotification } from "../../../../redux-saga-middleware/reducers/alertReducer";
 import { clickTab } from "../../../../redux-saga-middleware/reducers/authReducer";
-import { registerReady } from "../../../../redux-saga-middleware/reducers/userReducer";
+import { getUpgradeGuest, registerReady, savePhoenUpgrade } from "../../../../redux-saga-middleware/reducers/userReducer";
 import { images, sign } from "../../../../utils/images";
 import { systemNotification } from "../../../../utils/notification";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
-import { validateNickName } from "../../../../utils/validateNickName";
 import { validatePhoneNumber } from "../../../../utils/validatePhoneNumber";
-import { validateEmail } from "../../../../utils/validationEmail";
 import AnimButton from "../../../AnimButton";
+import ReactGA from "react-ga4";
 import "./index.scss";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
-import { getListDisplayName } from "../../../../redux-saga-middleware/reducers/appReducer";
+
+import { useRive, useStateMachineInput } from "@rive-app/react-canvas";
+import { riveFile } from "../../../../utils/rive";
 
 const BgWithTooltip = withStyles({
   tooltip: {
@@ -34,14 +29,9 @@ const BgWithTooltip = withStyles({
 
 export default function Signup(props) {
   const { t } = useTranslation("auth");
-  // const [gender] = useState(0);
   const dispatch = useDispatch();
-  const [displayName, setDisplayName] = useState([]);
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("");
   const [c_password, setC_password] = useState("");
-  const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [ref, setRef] = useState("");
   const [disabledBtn, setDisabledBtn] = useState(true);
@@ -49,27 +39,20 @@ export default function Signup(props) {
   const [passSai, setPassSai] = useState(false);
   const [displayPassword, setDisplayPassword] = useState(false);
   const [displayPasswordC, setDisplayPasswordC] = useState(false);
-  const [validEmail, setValidEmail] = useState(false);
   const [validPhone, setValidPhone] = useState(false);
-  const [validDisplayName, setValidDisplayName] = useState(true);
-  const [validFirstName, setValidFirstName] = useState(false);
-  const [validLastName, setValidLastName] = useState(false);
-  const [popupList, setPopupList] = useState(false);
-  const { refCodeRegister } = useSelector((state) => state.authReducer);
+
+  const { refCodeRegister, currentTab } = useSelector((state) => state.authReducer);
   const { listSetting } = useSelector((state) => state.settingReducer);
-  const { isRegister } = useSelector((state) => state.userReducer);
+  const { isRegister,isUpgradeGuest } = useSelector((state) => state.userReducer);
   const { listDisplayName } = useSelector((state) => state.appReducer);
+  const {isCheckGuest} = useSelector((state) => state.tournamentReducer)
+ 
   const handleSetPassword = () => {
     setDisplayPassword(!displayPassword);
   };
   const handleSetPasswordC = () => {
     setDisplayPasswordC(!displayPasswordC);
   };
-
-  // useEffect(() => {
-  //   const combinedText = firstName + lastName;
-  //   setDisplayName(combinedText);
-  // }, [firstName, lastName]);
 
   const handleSubmitSignUp = (e) => {
     e.preventDefault();
@@ -81,7 +64,11 @@ export default function Signup(props) {
         })
       );
     } else {
-      sendRegister();
+      if(localStorage.getItem("checkUpgrade") === 'upgrade') {
+        handleRegisterGuestUpgrade()
+      } else {
+        sendRegister();
+      }
     }
   };
 
@@ -115,6 +102,44 @@ export default function Signup(props) {
     );
   };
 
+  // ---------------MACHINE-------------
+
+  const STATE_MACHINE_NAME = "State Machine 1";
+  const { rive, RiveComponent } = useRive({
+    src: riveFile.casual_pepe,
+    stateMachines: STATE_MACHINE_NAME,
+    autoplay: true,
+  });
+  const checkState = useStateMachineInput(rive, STATE_MACHINE_NAME, "Look");
+  const lookState = useStateMachineInput(
+    rive,
+    STATE_MACHINE_NAME,
+    "Text_Number"
+  );
+  const handsUp = useStateMachineInput(rive, STATE_MACHINE_NAME, "Password");
+  const success = useStateMachineInput(rive, STATE_MACHINE_NAME, "Success");
+  const fail = useStateMachineInput(rive, STATE_MACHINE_NAME, "Fail");
+  const setCheck = (data) => {
+    if (checkState) {
+      checkState.value = data;
+    }
+  };
+  const setLook = (data) => {
+    if (!lookState || !checkState) {
+      return;
+    }
+    let numberOfChar = 0;
+    if (phone && lookState) {
+      numberOfChar = parseFloat(phone.split("").length);
+      lookState.value = numberOfChar;
+    }
+  };
+  const setHandsUp = (data) => {
+    if (handsUp) {
+      handsUp.value = data;
+    }
+  };
+
   //------------------------------------------------------------------
   const [textC_pass, setTextC_pass] = useState("");
   const [characterPass, setCharacterPass] = useState(false);
@@ -122,19 +147,9 @@ export default function Signup(props) {
   const [passOneLetter, setPassOneLetter] = useState(false);
   const [hasUppercase, setHasUppercase] = useState(false);
   const [agree, setAgree] = useState(false);
-  const [displaynameValue, setDisplaynameValue] = useState("");
-  const [gender, setGender] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
-  const handleChange = (event, newValue) => {
-    setGender(Number(event.target.value));
-  };
-
-  const handleDisplaynameChange = (event, newValue) => {
-    setDisplaynameValue(event?.target?.value);
-    setPopupList(false);
-  };
 
   const handleChangePass = (e) => {
     const newPassword = e.target.value;
@@ -183,28 +198,9 @@ export default function Signup(props) {
     };
   }, []);
 
-  useEffect(() => {
-    if (firstName !== "" && lastName !== "") {
-      dispatch(
-        getListDisplayName({
-          firstName: firstName,
-          lastName: lastName,
-        })
-      );
-      setPopupList(true);
-    }
-  }, [firstName, lastName]);
-
-  useEffect(() => {
-    if (listDisplayName) {
-      setDisplayName(listDisplayName);
-    }
-  }, [listDisplayName]);
 
   useEffect(() => {
     if (
-      gender === "" ||
-      displaynameValue === "" ||
       password === "" ||
       c_password === "" ||
       passSai === true ||
@@ -212,10 +208,8 @@ export default function Signup(props) {
       passOneLetter === false ||
       passOneNumber === false ||
       hasUppercase === false ||
-      !validateEmail(email) ||
-      !validateNickName(displaynameValue) ||
       !validatePhoneNumber(phone) ||
-      !agree
+      !agree 
     ) {
       setDisabledBtn(true);
     } else {
@@ -224,16 +218,13 @@ export default function Signup(props) {
   }, [
     password,
     c_password,
-    email,
     characterPass,
-    gender,
     hasUppercase,
     passOneLetter,
     passOneNumber,
     passSai,
-    displaynameValue,
     phone,
-    agree,
+    agree
   ]);
 
   useEffect(() => {
@@ -245,26 +236,31 @@ export default function Signup(props) {
     }
   }, [
     c_password,
-    email,
     password,
     hasUppercase,
     characterPass,
     passOneNumber,
     passOneLetter,
   ]);
+  const handleRegisterGuestUpgrade = () => {
+    if(!isUpgradeGuest) {
+      dispatch(
+        getUpgradeGuest({
+          phone: phone,
+          password: password,
+        })
+      )
+    }
+    localStorage.removeItem("firstPlayGame")
+  }
 
   const sendRegister = () => {
     if (!disabledBtn) {
       dispatch(
         registerReady({
           password: password,
-          email: email,
           phone: phone,
           ref: refCodeRegister ? refCodeRegister : ref,
-          gender: gender,
-          userFirstName: firstName,
-          userLastName: lastName,
-          nickName: displaynameValue,
         })
       );
     } else {
@@ -287,138 +283,110 @@ export default function Signup(props) {
   }, [password, c_password]);
 
   useEffect(() => {
-    setValidEmail(validateEmail(email));
     setValidPhone(validatePhoneNumber(phone));
-  }, [email, phone]);
+  }, [ phone]);
 
-  useEffect(() => {
-    setValidDisplayName(validateNickName(displaynameValue));
-    setValidFirstName(firstName?.length >= 1);
-    setValidLastName(lastName?.length >= 1);
-  }, [displaynameValue, firstName, lastName]);
 
   const { orientation } = useSelector((state) => state.gameReducer);
   const { device } = useSelector((state) => state.deviceReducer);
+
   return (
     <Box
       className="signup"
       sx={{
         width: "100%",
-        paddingTop: "30px",
         height: "100%",
       }}
     >
-      <Box component="form" className="p-2 ps-2 pe-3" noValidate>
-        <Box>
+      <Box sx={{ width: "100%", display: "flex", justifyContent: "center" }}>
+        <Box sx={{ width: "320px", height: "240px" }}>
+          <RiveComponent />
+        </Box>
+      </Box>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          paddingBottom: "40px",
+          paddingTop: "20px",
+          position: "relative",
+          paddingLeft:"10px",
+          paddingRight:"18px"
+        }}
+      >
+        <Box className="login" sx={{width:"100%", position:"relative"}}>
           <Typography
-            variant="h5"
-            className="text-center text-white"
+            className="cursor-pointer"
+            onClick={() => {
+              dispatch(clickTab("login"));
+              ReactGA.event("start_signup", {
+                category: "start_signup",
+                action: "click",
+                nonInteraction: true,
+                transport: "xhr",
+              });
+            }}
             sx={{
-              marginBottom: width < 992 ? "20px !important" : "30px !important",
-              fontSize: width < 992 ? "20px" : "24px",
+              fontWeight: "700",
+              fontSize: "20px",
+              color: currentTab === "login" ? "#7848ED" : "#462A71",
+              textAlign:"center"
             }}
           >
-            {t("Sign up")}
+            Login
           </Typography>
-        </Box>
-        <FormControl
-          variant="standard"
-          sx={{
-            width: "100%",
-            backgroundColor: "#1a132d",
-            padding: width > 576 ? "6px 10px" : "5px",
-            borderRadius: width > 576 ? "5px" : "4px",
-            marginBottom: width > 992 ? "16px" : "12px",
-            flexDirection: "column",
-          }}
-        >
           <Box
-            sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}
+          className="underlined"
+          sx={{
+            position: "absolute",
+            width: "100%",
+            height: "3px",
+            background:
+              "#462A71",
+            borderRadius: "6px",
+            transition: " 0.5s ease-in-out",
+            translate: "0px",
+            bottom:"-14px",
+            left:"2px"
+          }}
+        ></Box>
+          <Box className="underlined"></Box>
+        </Box>
+        <Box className="sign-up" sx={{position:"relative !important", width:"100%"}}>
+          <Typography
+            sx={{ fontWeight: "700", fontSize: "20px", color: currentTab === "signup" ? "#7848ED" : "#462A71", textAlign:"center" }}
           >
-            <img src={sign.up03} alt="..." width={18} height={18} />
-            <Input
-              type="email"
-              name="email"
-              onChange={(e) => {
-                setEmail(e.target.value);
-              }}
-              value={email}
-              placeholder={t("Email")}
-              sx={{
-                "&:before": {
-                  borderBottom: " 0px solid !important ",
-                  "&:hover": {
-                    borderBottom: "0px solid !important",
-                  },
-                },
-                "&:after": {
-                  borderBottom: "0px solid !important",
-                },
-                "&:hover": {
-                  border: "none",
-                },
-                color: validEmail ? "#4FBF67" : "white",
-                fontWeight: "500",
-                padding: "0px 0px 0px 16px !important",
-                width: "100%",
-              }}
-            />{" "}
-            {validEmail && <CheckIconSVG />}
-            {!validEmail && (
-              <BgWithTooltip
-                enterTouchDelay={0}
-                enterDelay={0}
-                enterNextDelay={0}
-                title={
-                  <Box>
-                    {" "}
-                    <Typography sx={{ textAlign: "start", fontSize: "12px" }}>
-                      {t("Correct example: superman0@gmail.com")}
-                    </Typography>
-                  </Box>
-                }
-                placement="left"
-                sx={{
-                  backgroundColor: "white",
-                  color: "red",
-                }}
-              >
-                <Box
-                  sx={{
-                    backgroundColor: "#1a132d",
-                    position: "absolute",
-                    right: "10px",
-                    top: "8px",
-                    cursor: "pointer",
-                    zIndex: 1,
-                  }}
-                  component={"img"}
-                  src={images.ToolTipIcon}
-                ></Box>
-              </BgWithTooltip>
-            )}
-          </Box>
-          {!validEmail && email !== "" && (
-            <Typography
-              sx={{
-                textAlign: "start",
-                color: "#F05153",
-                fontSize: "13px",
-              }}
-            >
-              Please enter a valid email
-            </Typography>
-          )}{" "}
-        </FormControl>
+            Sign Up
+          </Typography>
+        <Box
+          className="underlined"
+          sx={{
+            position: "absolute",
+            width: "100%",
+            height: "3px",
+            background:
+              "linear-gradient(0deg, #271C39 -1.51%, #7648ED 74.36%, #AA8EF2 202.93%)",
+            borderRadius: "6px",
+            transition: " 0.5s ease-in-out",
+            translate: "0px",
+            bottom:"-14px",
+            left:"2px"
+          }}
+        ></Box>
+        </Box>
+      </Box>
+      <Box component="form" className="p-2 ps-2 pe-3" noValidate>
         <FormControl
           variant="standard"
           sx={{
             width: "100%",
-            backgroundColor: "#1a132d",
+            backgroundColor: "#271C39",
             padding: width > 576 ? "6px 10px" : "5px",
             borderRadius: width > 576 ? "5px" : "4px",
-            marginBottom: width > 992 ? "16px" : "12px",
+            marginBottom: width > 992 ? "4px" : "4px",
             flexDirection: "column",
+            border: !validPhone && phone ? "1px solid #F05153" : "none"
           }}
         >
           <Box
@@ -456,13 +424,21 @@ export default function Signup(props) {
             </Typography>
             <Input
               type="text"
-              name="number"
+              name="text"
               onChange={(e) => {
+                setLook();
                 setPhone(e.target.value);
               }}
               value={phone}
               placeholder={t("Phone number")}
               onKeyDown={checkIfNumber}
+              onFocus={() => {
+                setHandsUp(false);
+                setCheck(true);
+              }}
+              onBlur={() => {
+                setCheck(false);
+              }}
               sx={{
                 "&:before": {
                   borderBottom: " 0px solid !important ",
@@ -505,7 +481,7 @@ export default function Signup(props) {
               >
                 <Box
                   sx={{
-                    backgroundColor: "#1a132d",
+                    backgroundColor: "#271C39",
                     position: "absolute",
                     right: "10px",
                     top: "8px",
@@ -518,7 +494,9 @@ export default function Signup(props) {
               </BgWithTooltip>
             )}
           </Box>
-          {!validPhone && phone && (
+        
+        </FormControl>
+        {!validPhone && phone && (
             <Typography
               sx={{
                 textAlign: "start",
@@ -529,367 +507,15 @@ export default function Signup(props) {
               Please enter a valid phone number
             </Typography>
           )}{" "}
-        </FormControl>
-        <Box
-          sx={{
-            width: "100%",
-            display: "flex",
-            justifyContent: "space-between",
-          }}
-        >
-          <FormControl
-            variant="standard"
-            sx={{
-              width: "48%",
-              backgroundColor: "#1a132d",
-              padding: width > 576 ? "6px 12px" : "5px",
-              borderRadius: width > 576 ? "5px" : "4px",
-              marginBottom: width > 992 ? "16px" : "12px",
-              flexDirection: "row",
-              alignItems: "center",
-            }}
-          >
-            <img src={sign.up01} alt="..." width={18} height={18} />
-            <Input
-              type="text"
-              name="firstName"
-              onChange={(e) => {
-                setFirstName(e.target.value);
-              }}
-              value={firstName}
-              placeholder={t("First name")}
-              sx={{
-                "&:before": {
-                  borderBottom: " 0px solid !important ",
-                  "&:hover": {
-                    borderBottom: "0px solid !important",
-                  },
-                },
-                "&:after": {
-                  borderBottom: "0px solid !important",
-                },
-                "&:hover": {
-                  border: "none",
-                },
-                color: validFirstName ? "#4FBF67" : "white",
-                fontWeight: "500",
-                marginLeft: "16px",
-              }}
-            />{" "}
-          </FormControl>
-          <FormControl
-            variant="standard"
-            sx={{
-              width: "48%",
-              backgroundColor: "#1a132d",
-              padding: width > 576 ? "6px 12px" : "5px",
-              borderRadius: width > 576 ? "5px" : "4px",
-              marginBottom: width > 992 ? "16px" : "12px",
-              flexDirection: "row",
-              alignItems: "center",
-            }}
-          >
-            <img src={sign.up01} alt="..." width={18} height={18} />
-            <Input
-              type="text"
-              name="lastName"
-              onChange={(e) => {
-                setLastName(e.target.value);
-              }}
-              value={lastName}
-              placeholder={t("Last name")}
-              sx={{
-                "&:before": {
-                  borderBottom: " 0px solid !important ",
-                  "&:hover": {
-                    borderBottom: "0px solid !important",
-                  },
-                },
-                "&:after": {
-                  borderBottom: "0px solid !important",
-                },
-                "&:hover": {
-                  border: "none",
-                },
-                color: validLastName ? "#4FBF67" : "white",
-                fontWeight: "500",
-                marginLeft: "16px",
-              }}
-            />{" "}
-          </FormControl>
-        </Box>
         <FormControl
           variant="standard"
           sx={{
             width: "100%",
-            backgroundColor: "#1a132d",
-            padding: width > 576 ? "6px 12px" : "5px",
-            borderRadius: width > 576 ? "5px" : "4px",
-            marginBottom: width > 992 ? "16px" : "12px",
-            flexDirection: "row",
-            alignItems: "center",
-            color: "white",
-            "& .MuiInputBase-root": {
-              color: "white",
-            },
-            position: "relative",
-          }}
-        >
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
-              width: "100%",
-              color: "white",
-            }}
-          >
-            <img src={sign.up01} alt="..." width={18} height={18} />
-            {/* <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={displaynameValue}
-              label="Display Name"
-              inputProps={{
-                MenuProps: {
-                  sx: {
-                    zIndex: 1321,
-                  },
-                  PaperProps: {
-                    sx: {
-                      backgroundColor: "#443565",
-                      color: "white",
-                    },
-                  },
-                },
-              }}
-              onChange={handleDisplaynameChange}
-              sx={{
-                marginLeft: "12px",
-                padding: "0px",
-                marginTop: "3px",
-                width: "100%",
-                "& .MuiSelect-nativeInput": {
-                  position: "relative",
-                  width: "2%",
-                },
-                "&:before": {
-                  borderBottom: " 0px solid !important ",
-                  "&:hover": {
-                    borderBottom: "0px solid !important",
-                  },
-                },
-                "&:after": {
-                  borderBottom: "0px solid !important",
-                },
-                "&:hover": {
-                  border: "none",
-                },
-                "& .MuiSvgIcon-root": {
-                  color: "#7C81F2",
-                },
-              }}
-              placeholder="Enter Your Display Name"
-            >
-              {displayName?.map((e,index) => {
-                return <MenuItem key={index} value={e}>{e}</MenuItem>
-              })}
-            </Select> */}
-            <Input
-              type="text"
-              name="displayname"
-              onChange={handleDisplaynameChange}
-              value={displaynameValue}
-              placeholder="Display Name"
-              sx={{
-                "&:before": {
-                  borderBottom: " 0px solid !important ",
-                  "&:hover": {
-                    borderBottom: "0px solid !important",
-                  },
-                },
-                "&:after": {
-                  borderBottom: "0px solid !important",
-                },
-                "&:hover": {
-                  border: "none",
-                },
-                color: validDisplayName ? "#4FBF67" : "white",
-                fontWeight: "500",
-                padding: "0px 0px 0px 16px !important",
-                width: "100%",
-              }}
-            />{" "}
-            <Box
-              ref={dropdownRef}
-              className="dropdown"
-              sx={{
-                display: popupList === true ? "inline-block" : "none",
-                position: "absolute",
-                top: 40,
-                left: 0,
-                zIndex: 10,
-                backgroundColor: "#443565",
-                borderRadius: "8px",
-                width: "100%",
-              }}
-            >
-              <List>
-                {displayName?.map((e, index) => {
-                  return (
-                    <ListItem
-                      disablePadding
-                      key={index}
-                      onClick={() => {
-                        setDisplaynameValue(e);
-                        setPopupList(false);
-                      }}
-                    >
-                      <ListItemButton>
-                        <ListItemText primary={e} />
-                      </ListItemButton>
-                    </ListItem>
-                  );
-                })}
-              </List>
-            </Box>
-            {validDisplayName && <CheckIconSVG />}
-            {!validDisplayName && (
-              <BgWithTooltip
-                enterTouchDelay={0}
-                enterDelay={0}
-                enterNextDelay={0}
-                title={
-                  <Box>
-                    {" "}
-                    <Typography sx={{ textAlign: "start", fontSize: "12px" }}>
-                      Your display name must be 12 characters or less and not
-                      contain special characters. Display name are case
-                      sensitive (e.g., Examplename)
-                    </Typography>
-                  </Box>
-                }
-                placement="left"
-                sx={{
-                  backgroundColor: "white",
-                  color: "red",
-                }}
-              >
-                <Box
-                  sx={{
-                    backgroundColor: "#1a132d",
-                    position: "absolute",
-                    right: "10px",
-                    top: "8px",
-                    cursor: "pointer",
-                    zIndex: 1,
-                  }}
-                  component={"img"}
-                  src={images.ToolTipIcon}
-                ></Box>
-              </BgWithTooltip>
-            )}
-          </Box>
-        </FormControl>
-        {displaynameValue.length > 12 && (
-          <Typography
-            sx={{
-              textAlign: "start",
-              color: "#F05153",
-              fontSize: "13px",
-              paddingBottom: "10px",
-            }}
-          >
-            Please enter a valid display name
-          </Typography>
-        )}{" "}
-        <FormControl
-          variant="standard"
-          sx={{
-            marginTop: "",
-            width: "100%",
-            backgroundColor: "#1a132d",
-            borderRadius: width > 576 ? "5px" : "4px",
-            marginBottom: width > 992 ? "16px" : "12px",
-            flexDirection: "row",
-            alignItems: "center",
-            padding: width > 576 ? "6px 12px" : "5px",
-
-            color: "white",
-            "& .MuiInputBase-root": {
-              color: "white",
-            },
-          }}
-        >
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
-              width: "100%",
-            }}
-          >
-            <img src={sign.up01} alt="..." width={18} height={18} />
-
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={gender}
-              label="gender"
-              inputProps={{
-                MenuProps: {
-                  sx: {
-                    zIndex: 1321,
-                  },
-                  PaperProps: {
-                    sx: {
-                      backgroundColor: "#443565",
-                      color: "white",
-                    },
-                  },
-                },
-              }}
-              onChange={handleChange}
-              sx={{
-                marginLeft: "12px",
-                padding: "0px",
-                marginTop: "3px",
-                width: "100%",
-                "& .MuiSelect-nativeInput": {
-                  position: "relative",
-                  width: "2%",
-                },
-                "&:before": {
-                  borderBottom: " 0px solid !important ",
-                  "&:hover": {
-                    borderBottom: "0px solid !important",
-                  },
-                },
-                "&:after": {
-                  borderBottom: "0px solid !important",
-                },
-                "&:hover": {
-                  border: "none",
-                },
-                "& .MuiSvgIcon-root": {
-                  color: "#7C81F2",
-                },
-              }}
-            >
-              <MenuItem value={"0"}>Male</MenuItem>
-              <MenuItem value={"1"}>Female</MenuItem>
-              {/* <MenuItem value={30}>Thirty</MenuItem> */}
-            </Select>
-          </Box>
-        </FormControl>
-        <FormControl
-          variant="standard"
-          sx={{
-            width: "100%",
-            backgroundColor: "#1a132d",
+            backgroundColor: "#271C39",
             padding: width > 576 ? "6px 10px" : "5px",
             borderRadius: width > 576 ? "5px" : "4px",
-            marginBottom: width > 992 ? "16px" : "12px",
+            marginBottom: width > 992 ? "4px" : "4px",
+            marginTop:"12px"
           }}
         >
           <img
@@ -909,6 +535,17 @@ export default function Signup(props) {
             placeholder="Password"
             autoComplete="new-password"
             onChange={handleChangePass}
+            onBlur={() => {
+              setHandsUp(false);
+              setCheck(false);
+            }}
+            onMouseLeave={() => {
+              setHandsUp(false);
+              setCheck(false);
+            }}
+            onFocus={() => {
+              setHandsUp(true);
+            }}
             value={password}
             sx={{
               "&:before": {
@@ -1178,10 +815,11 @@ export default function Signup(props) {
           variant="standard"
           sx={{
             width: "100%",
-            backgroundColor: "#1a132d",
+            backgroundColor: "#271C39",
             padding: width > 576 ? "6px 10px" : "5px",
             borderRadius: width > 576 ? "5px" : "4px",
-            marginBottom: width > 992 ? "16px" : "12px",
+            marginBottom: width > 992 ? "4px" : "4px",
+            border: passSai === true && c_password !== "" ? "1px solid #F05153" : "none"
           }}
         >
           <img
@@ -1201,6 +839,17 @@ export default function Signup(props) {
             autoComplete="new-password"
             onChange={(e) => {
               setC_password(e.target.value);
+            }}
+            onBlur={() => {
+              setHandsUp(false);
+              setCheck(false);
+            }}
+            onMouseLeave={() => {
+              setHandsUp(false);
+              setCheck(false);
+            }}
+            onFocus={() => {
+              setHandsUp(true);
             }}
             value={c_password}
             placeholder="Confirm Password"
@@ -1245,112 +894,24 @@ export default function Signup(props) {
               />
             )}
           </Box>
-          {/* {c_password && c_password.length > 15 && (
-            <span className="text-danger">no more than 15 characters</span>
-          )} */}
-          {/* {c_password && c_password !== password && ( */}
           <span className="text-danger">{textC_pass}</span>
           {/* )} */}
-          {passSai === true && c_password !== "" ? (
-            <span className="text-danger">Password does not match</span>
+         
+        </FormControl>
+        {passSai === true && c_password !== "" ? (
+            <Typography sx={{fontSize:"13px" , color:"#F05153"}} >Password does not match</Typography>
           ) : (
             ""
           )}
-        </FormControl>
-        {/* <FormControl
-          variant="standard"
-          sx={{
-            width: "100%",
-            backgroundColor: "#1a132d",
-            padding: width > 576 ? "6px 10px" : "5px",
-            borderRadius: width > 576 ? "5px" : "4px",
-            marginBottom: width > 992 ? "16px" : "12px",
-          }}
-        >
-          <img
-            src={sign.up03}
-            alt="..."
-            width={18}
-            height={"auto"}
-            style={{
-              position: "absolute",
-              top: "13px",
-              left: width > 576 ? "10px" : "8px",
-            }}
-          />
-          <Input
-            type="text"
-            name="email"
-            placeholder="Email"
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
-            value={email}
-            sx={{
-              "&:before": {
-                borderBottom: "0px solid !important",
-                "&:hover": {
-                  borderBottom: "0px solid !important",
-                },
-              },
-              "&:after": {
-                borderBottom: "0px solid !important",
-              },
-              "&:hover": {
-                border: "none",
-              },
-              color: "white",
-              fontWeight: "500",
-              padding: "0px 0px 0px 35px !important",
-            }}
-          />{" "}
-          {!validateEmail(email) && email !== "" && (
-            <Typography
-              sx={{ textAlign: "start", color: "#F05153", fontSize: "13px" }}
-            >
-              Please enter a valid email
-            </Typography>
-          )}{" "}
-          <BgWithTooltip
-            enterTouchDelay={0}
-            enterDelay={0}
-            enterNextDelay={0}
-            title={
-              <Box>
-                {" "}
-                <Typography sx={{ textAlign: "start", fontSize: "12px" }}>
-                  Correct example: superman0@gmail.com
-                </Typography>
-              </Box>
-            }
-            placement="right"
-            sx={{
-              backgroundColor: "white",
-              color: "red",
-            }}
-          >
-            <Box
-              sx={{
-                backgroundColor: "#1a132d",
-                position: "absolute",
-                right: "10px",
-                top: "8px",
-                cursor: "pointer",
-                zIndex: 1,
-              }}
-              component={"img"}
-              src={images.ToolTipIcon}
-            ></Box>
-          </BgWithTooltip>
-        </FormControl> */}
         <FormControl
           variant="standard"
           sx={{
             width: "100%",
-            backgroundColor: "#1a132d",
+            backgroundColor: "#271C39",
             padding: width > 576 ? "6px 10px" : "5px",
             borderRadius: width > 576 ? "5px" : "4px",
             marginBottom: "16px",
+            marginTop:"12px"
           }}
         >
           <img
@@ -1451,53 +1012,22 @@ export default function Signup(props) {
         >
           <div className="btn-conteiner">
             {disabledBtn ? (
-              <AnimButton type="disable" text={t("Sign up")} isHasIcon />
+              <AnimButton type="disable" text={t("Sign up")} />
             ) : isRegister ? (
               <AnimButton
                 onClick={handleSubmitSignUp}
                 text={t("Sign up")}
                 type="loading"
-                isHasIcon
               />
             ) : (
               <AnimButton
                 onClick={handleSubmitSignUp}
                 text={t("Sign up")}
                 type="primary"
-                isHasIcon
                 isSubmitBtn
               />
             )}
           </div>
-        </Box>
-        <Box>
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <Typography
-              sx={{ color: "white", fontSize: width < 992 ? "12px" : "16px" }}
-            >
-              {" "}
-              {t("Already registered?")}
-            </Typography>
-            <Typography
-              onClick={() => {
-                dispatch(clickTab("login"));
-              }}
-              sx={{
-                color: "#FF9F38",
-                cursor: "pointer",
-                fontWeight: "700",
-                fontSize: width < 992 ? "12px" : "16px",
-              }}
-            >
-              {t("Sign in")}
-            </Typography>
-          </Box>
         </Box>
       </Box>
     </Box>

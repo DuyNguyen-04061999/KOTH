@@ -2,10 +2,13 @@ import { call, put, takeEvery } from "redux-saga/effects";
 import { showToastNotification } from "../reducers/alertReducer";
 import { getListNotification } from "../reducers/notificationReducer";
 import { updateDetailTour } from "../reducers/playgameReducer";
-import { getRefactorDetailAuthPromotion, getRefactorDetailAuthPromotionFail, getRefactorDetailAuthPromotionSuccess, getRefactorDetailPromotionFail, getRefactorDetailPromotionSuccess, joinPromotionFail, joinPromotionSuccess, startGameInPromotionFail, startGameInPromotionSuccess } from "../reducers/promotionReducer";
+import { getRefactorDetailAuthPromotion, getRefactorDetailAuthPromotionFail, getRefactorDetailAuthPromotionSuccess, getRefactorDetailPromotionFail, getRefactorDetailPromotionSuccess, joinPromotionFail, joinPromotionSuccess, startGameInPromotion, startGameInPromotionFail, startGameInPromotionSuccess } from "../reducers/promotionReducer";
 import { refreshTokenAction } from "../reducers/refreshReducer";
 import { updateListPromotionJoined } from "../reducers/userReducer";
 import promotionService from "../services/promotionService";
+import { getTokenGuest } from "../../utils/getTokenGuest";
+import { toggleStartGame } from "../reducers/appReducer";
+import { useParams } from "react-router-dom";
 const PromotionService = new promotionService();
 
 let proDetailCount = 0
@@ -41,6 +44,7 @@ function* getPromotionDetailToken(dataRequest) {
     if (proDetailAuthCount === 1) {
       const { payload } = dataRequest;
       const res = yield call(PromotionService.callDetailPromotionToken, payload);
+      console.log(res);
       const { data, status } = res
       if (status === 200 || status === 201) {
         yield put(getRefactorDetailAuthPromotionSuccess(data));
@@ -76,20 +80,23 @@ function* joinPromotionSaga(dataRequest) {
           id: payload?.tournamentId,
           token: localStorage.getItem("token")
         }));
-        yield put(
-          showToastNotification({
-            type: "success",
-            message: "Join promotion successfully!",
-          })
-        );
+        yield put(startGameInPromotion({
+          tournamentId: payload?.tournamentId
+        }))
+        // yield put(
+        //   showToastNotification({
+        //     type: "success",
+        //     message: "Join promotion successfully!",
+        //   })
+        // );
       } else {
         yield put(joinPromotionFail());
-        yield put(
-          showToastNotification({
-            type: "error",
-            message: "Join promotion failed! Something went wrong",
-          })
-        );
+        // yield put(
+        //   showToastNotification({
+        //     type: "error",
+        //     message: "Join promotion failed! Something went wrong",
+        //   })
+        // );
       }
     }
     joinCount = 0
@@ -110,12 +117,16 @@ function* startGameInPromotionSaga(dataRequest) {
   try {
     startGameCount += 1
     if (startGameCount === 1) {
+      const tokenGuest = getTokenGuest()
       const { payload } = dataRequest;
       const res = yield call(PromotionService.startGameInPromotion, payload);
       const { data, status } = res
       if (status === 200 || status === 201) {
         yield put(startGameInPromotionSuccess(data));
-        yield put(refreshTokenAction());
+        yield put(toggleStartGame(true));
+        if(!tokenGuest) {
+          yield put(refreshTokenAction());
+        }
       } else {
         yield put(startGameInPromotionFail());
       }

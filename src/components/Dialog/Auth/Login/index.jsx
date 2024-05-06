@@ -31,6 +31,8 @@ const Login = () => {
   const { isLogin, isLoginFail, isLoginSuccess } = useSelector(
     (state) => state.userReducer
   );
+  const { refCodeRegister, currentTab } = useSelector((state) => state.authReducer);
+
   const { t } = useTranslation("auth");
 
   const handleChangeUsername = (e) => {
@@ -234,13 +236,86 @@ const Login = () => {
     <Box
       sx={{
         width: "100%",
-        paddingTop: "90px",
         height: "100%",
+        display:"flex",
+        justifyContent:"flex-start",
+        flexDirection:"column"
       }}
     >
       <Box sx={{ width: "100%", display: "flex", justifyContent: "center" }}>
         <Box sx={{ width: "320px", height: "240px" }}>
           <RiveComponent />
+        </Box>
+      </Box>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-evenly",
+          alignItems: "center",
+          paddingBottom: "40px",
+          paddingTop: "20px",
+          paddingLeft:"10px",
+          paddingRight:"18px"
+        }}
+      >
+        <Box className="login" sx={{position:"relative", width:"100%"}}>
+          <Typography
+            sx={{
+              fontWeight: "700",
+              fontSize: "20px",
+              color: currentTab === "login" ? "#7848ED" : "#462A71",
+              textAlign:"center"
+            }}
+          >
+            Login
+          </Typography>
+        <Box
+          className="underlined"
+          sx={{
+            position: "absolute",
+            width: "100%",
+            height: "3px",
+            background:
+              "linear-gradient(0deg, #181223 -1.51%, #7648ED 74.36%, #AA8EF2 202.93%)",
+            borderRadius: "6px",
+            transition: " 0.5s ease-in-out",
+            translate: "0px",
+            bottom:"-14px",
+            left:"2px"
+          }}
+        ></Box>
+        </Box>
+        <Box className="sign-up" sx={{width:"100%", textAlign:"center", position:"relative"}}>
+          <Typography
+            className="cursor-pointer"
+            onClick={() => {
+              dispatch(clickTab("signup"));
+              ReactGA.event("start_signup", {
+                category: "start_signup",
+                action: "click",
+                nonInteraction: true,
+                transport: "xhr",
+              });
+            }}
+            sx={{ fontWeight: "700", fontSize: "20px", color: "#462A71" }}
+          >
+            Sign Up
+          </Typography>
+          <Box
+          className="underlined"
+          sx={{
+            position: "absolute",
+            width: "100%",
+            height: "3px",
+            background:
+              "#462A71",
+            borderRadius: "6px",
+            transition: " 0.5s ease-in-out",
+            translate: "0px",
+            bottom:"-14px",
+            left:"2px"
+          }}
+        ></Box>
         </Box>
       </Box>
       <Box
@@ -253,10 +328,10 @@ const Login = () => {
           variant="standard"
           sx={{
             width: "100%",
-            backgroundColor: "#1f1733",
+            backgroundColor: "#271C39",
             padding: "10px",
             borderRadius: "5px",
-            marginBottom: "20px",
+            marginBottom: "16px",
           }}
         >
           <Box
@@ -264,20 +339,20 @@ const Login = () => {
           >
             <img src={sign.up03} alt="..." width={17} height={"auto"} />
             <Input
-              type="text"
-              defaultValue={username || localStorage.getItem("account")}
-              placeholder={t("Email") + "/" + t("Phone number")}
-              onFocus={() => {
-                setHandsUp(false);
-                setCheck(true);
-              }}
-              onChange={(e) => {
-                setLook();
-                handleChangeUsername(e);
-              }}
-              onBlur={() => {
-                setCheck(false);
-              }}
+               type="text"
+               defaultValue={username || localStorage.getItem("account")}
+               placeholder={t("Email") + "/" + t("Phone number")}
+               onFocus={() => {
+                 setHandsUp(false);
+                 setCheck(true);
+               }}
+               onChange={(e) => {
+                 setLook();
+                 handleChangeUsername(e);
+               }}
+               onBlur={() => {
+                 setCheck(false);
+               }}
               sx={{
                 "&:before": {
                   borderBottom: " 0px solid !important ",
@@ -293,23 +368,22 @@ const Login = () => {
                 },
                 color: "white",
                 fontWeight: "500",
-                marginLeft: "16px",
+                padding: "0px 0px 0px 12px !important",
                 width: "100%",
-                backgroundColor: "transparent",
               }}
             />
           </Box>
           <Typography
             sx={{ textAlign: "start", color: "#F05153", fontSize: "13px" }}
           >
-            {username && usernameError ? usernameError : ""}
+            {/* {phone && phoneError ? phoneError : ""} */}
           </Typography>
         </FormControl>
         <FormControl
           variant="standard"
           sx={{
             width: "100%",
-            backgroundColor: "#1f1733",
+            backgroundColor: "#271C39",
             padding: "10px",
             borderRadius: "5px",
             flexDirection: "row",
@@ -421,54 +495,25 @@ const Login = () => {
           {isLogin ? (
             <AnimButton
               onClick={sendLogin}
-              text="SIGN IN"
+              text="Login"
               type="loading"
-              isHasIcon
               isSubmitBtn
             />
           ) : disabledBtn ? (
             <AnimButton
               onClick={sendLogin}
-              text={t("Sign in")}
+              text={t("Login")}
               type="disable"
-              isHasIcon
               isSubmitBtn
             />
           ) : (
             <AnimButton
               onClick={sendLogin}
-              text={t("Sign in")}
+              text={t("Login")}
               type="primary"
-              isHasIcon
               isSubmitBtn
             />
           )}
-        </Box>
-        <Box className="d-flex justify-content-center mt-4">
-          <Box className="d-flex" sx={{ alignItems: "center" }}>
-            <Typography
-              sx={{
-                color: "white",
-                fontWeight: "600",
-              }}
-            >
-              {t("New User?")}
-            </Typography>
-            <Typography
-              onClick={() => {
-                dispatch(clickTab("signup"));
-                ReactGA.event("start_signup", {
-                  category: "start_signup",
-                  action: "click",
-                  nonInteraction: true,
-                  transport: "xhr",
-                });
-              }}
-              sx={{ color: "#FF9F38", cursor: "pointer", fontWeight: "600" }}
-            >
-              {t("Create Account")}
-            </Typography>
-          </Box>
         </Box>
       </Box>
     </Box>

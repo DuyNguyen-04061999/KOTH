@@ -19,16 +19,19 @@ import OTPResetPassword from "../Auth/OTPResetPassword";
 import { default as OTPVerifyAccount } from "../Auth/OTPVerifyAccount";
 import Signup from "../Auth/Signup";
 import "./../Auth/Signin/index.scss";
+import { getRefactorDetailAuthPromotion } from "../../../redux-saga-middleware/reducers/promotionReducer";
+import { useParams } from "react-router-dom";
 
 export default function SimpleDialog(props) {
   const { currentTab, isLoginDialog } = useSelector(
     (state) => state.authReducer
   );
-
+  const {id} = useParams()
   const dispatch = useDispatch();
   const { width } = useWindowDimensions();
   const { device } = useSelector((state) => state.deviceReducer);
   const { orientation } = useSelector((state) => state.gameReducer);
+  const {tokenGuest} = useSelector((state) => state.userReducer)
   const handleClose = () => {
     dispatch(closeLoginDialog());
     dispatch(closeVerifyDialog());
@@ -40,6 +43,14 @@ export default function SimpleDialog(props) {
         dispatch(clickTab("login"));
       }
     }, 500);
+    if(tokenGuest) {
+      dispatch(
+        getRefactorDetailAuthPromotion({
+          id,
+          token:tokenGuest,
+        })
+      );
+    }
   };
 
   return ReactDOM.createPortal(
@@ -47,22 +58,22 @@ export default function SimpleDialog(props) {
       {device === "Mobile" && width < 576 ? (
         <>
           <Dialog
-            onClose={handleClose}
+            // onClose={handleClose}
             open={isLoginDialog}
             fullScreen={true}
             sx={{
-              backgroundColor: "#291e3b",
+              backgroundColor: "#181223",
               height: "100%",
               width: "100%",
               zIndex: "1320",
               ".MuiPaper-root": {
-                backgroundColor: "#291e3b",
+                backgroundColor: "#181223",
               },
             }}
           >
             <Box
               sx={{
-                backgroundColor: "#291e3b",
+                backgroundColor: "#181223",
                 // height: "100%",
                 width: "100%",
                 display: "flex",
@@ -118,7 +129,7 @@ export default function SimpleDialog(props) {
             }
             sx={{
               ".MuiPaper-root": {
-                backgroundColor: "#291e3b",
+                backgroundColor: "#181223",
                 height: "100%",
                 overflowX: "hidden",
                 display: "flex",
@@ -129,7 +140,7 @@ export default function SimpleDialog(props) {
           >
             <Box
               sx={{
-                backgroundColor: "#291e3b",
+                backgroundColor: "#181223",
                 height: "100%",
                 width: device === "Desktop" ? "50%" : "100%",
                 display: "flex",
@@ -171,11 +182,15 @@ export default function SimpleDialog(props) {
             {device === "Desktop" ? (
               <Box
                 sx={{
-                  backgroundColor: "#19133e",
+                  backgroundColor: "#181223",
                   color: "white",
                   height: "100%",
                   position: "relative",
                   width: "50%",
+                  backgroundImage: `url(${imageHome.signInBgBanner})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  backgroundRepeat: "no-repeat",
                 }}
               >
                 <Box
@@ -185,10 +200,6 @@ export default function SimpleDialog(props) {
                       device === "Mobile" && orientation === "landscape"
                         ? "auto"
                         : "100%",
-                    backgroundImage: `url(${imageHome.signInBgBanner})`,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                    backgroundRepeat: "no-repeat",
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",

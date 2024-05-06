@@ -12,9 +12,9 @@ export const PROMOTION_API = axios.create({
   timeout: process.env.REACT_APP_REQUEST_TIMEOUT || 10000,
   headers: {
     "Content-Type": "multipart/form-data",
-    Authorization: "Bearer " + localStorage.getItem("token"),
-    authorization: "Bearer " + localStorage.getItem("token"),
-    "x-access-refactor-token": localStorage.getItem("token"),
+    Authorization: "Bearer " + (localStorage.getItem("token") || localStorage.getItem("token_guest")) ,
+    authorization: "Bearer " + (localStorage.getItem("token") || localStorage.getItem("token_guest")),
+    "x-access-refactor-token": (localStorage.getItem("token") || localStorage.getItem("token_guest")),
     'x-time-zone': - new Date().getTimezoneOffset()/60,
     'Cache-Control': 'no-cache',
     'Pragma': 'no-cache',
@@ -28,7 +28,7 @@ PROMOTION_API.interceptors.request.use((config) => {
 });
 
 (function () {
-  let authToken = localStorage.getItem("token");
+  let authToken = (localStorage.getItem("token") || localStorage.getItem("token_guest"));
   if (authToken === "null" || authToken === null) {
     axios.defaults.headers.common.Authorization = null;
   } else {

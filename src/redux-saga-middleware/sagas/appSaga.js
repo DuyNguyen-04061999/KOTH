@@ -12,10 +12,16 @@ import {
   getListFaqSuccess,
   getListWinnerFail,
   getListWinnerSuccess,
+  getUserGuestFail,
+  getUserGuestSuccess,
+  getScoreGameFail,
+  getScoreGameSuccess,
   saveTimeCloseDialog,
   saveTimeCloseNewYearDialog,
 } from "../reducers/appReducer";
 import AppService from "../services/appService";
+import { getUserInfoReady, saveTokenGuest } from "../reducers/userReducer";
+import { getRefactorDetailAuthPromotion } from "../reducers/promotionReducer";
 const appService = new AppService();
 
 function* getListFaqSaga(dataRequest) {
@@ -126,6 +132,43 @@ function* getListDisplayNameSaga(dataRequest) {
   }
 }
 
+function* getUserGuestSaga(dataRequest) {
+  try{
+    const {payload} = dataRequest
+    const res = yield call(appService.getUserGuest, payload)
+    const {status, data} = res
+    if(status === 200 || status === 201) {
+      yield put(getUserGuestSuccess(data))
+      // yield put(getUserInfoReady(data?.data?.token))
+      yield put(saveTokenGuest(data?.data?.token))
+     const pid = window.location.pathname.split('/')[2];
+      yield put(getRefactorDetailAuthPromotion({
+        id: pid,
+        token: data?.data?.token
+      }
+      ))
+      localStorage.setItem("token_guest", data?.data?.token)
+    }
+  } catch (err) {
+    console.log(err);
+    yield put(getUserGuestFail())
+  }
+}
+
+function* getScoreGameSaga(dataRequest) {
+  try {
+    const {payload} = dataRequest;
+    const res = yield call(appService.getScoreGame, payload)
+    const { status, data } = res
+    if(status === 200 || status === 201) {
+      yield put(getScoreGameSuccess(data))
+    }
+  } catch (err) {
+    console.log(err);
+    yield put(getScoreGameFail())
+  }
+}
+
 function* appSaga() {
   yield takeEvery("GET_LIST_FAQ", getListFaqSaga);
   yield takeEvery("GET_LIST_BET", getListBetSaga);
@@ -135,6 +178,8 @@ function* appSaga() {
   yield takeEvery("FIND_PEOPLE", findPeopleSaga);
   yield takeEvery("CLOSE_NEWYEAR_POPUP", closeNewYearPopupSaga);
   yield takeEvery("GET_LIST_DISPLAY_NAME", getListDisplayNameSaga)
+  yield takeEvery("GET_USER_GUEST",getUserGuestSaga)
+  yield takeEvery("GET_SCORE_GAME", getScoreGameSaga)
 }
 
 export default appSaga;

@@ -32,6 +32,8 @@ import { showToastNotification } from "../../../redux-saga-middleware/reducers/a
 import { exitEditProfile } from "../../../redux-saga-middleware/reducers/profileReducer";
 import {
   getCityAndStateProfile,
+  getClaimPrizeInfo,
+  getClaimPrizeOptional,
   updateProfileUser,
 } from "../../../redux-saga-middleware/reducers/userReducer";
 import { images } from "../../../utils/images";
@@ -125,7 +127,6 @@ export default function DialogProfile(props) {
   const handleChange = (event) => {
     setGender(Number(event.target.value));
   };
-
   useEffect(() => {
     setFName(firstName);
     setLName(lastName);
@@ -376,11 +377,11 @@ export default function DialogProfile(props) {
                             fontWeight: "300",
                           }}
                         >
-                          Remaining days: {`${uPack?.remain.slice(0, -1)}`}
+                          Remaining days: {`${uPack?.remain?.slice(0, -1)}`}
                         </Typography>
                       </Box>
                     ) : (
-                      ""
+                     <></>
                     )}
                   </Box>
                 )}
@@ -598,16 +599,32 @@ export default function DialogProfile(props) {
                         >
                           Email address
                         </Typography>
-                        {device === "Mobile" ? (
-                          <Typography
-                            sx={{
-                              fontSize: "14px",
-                              fontWeight: "500",
-                              textOverflow: "clip",
-                            }}
-                          >
-                            {email}
-                          </Typography>
+                        {email !== null ||
+                        email !== undefined ||
+                        email !== "" ? (
+                          <>
+                            {device === "Mobile" ? (
+                              <Typography
+                                sx={{
+                                  fontSize: "14px",
+                                  fontWeight: "500",
+                                  textOverflow: "clip",
+                                }}
+                              >
+                                {email}
+                              </Typography>
+                            ) : (
+                              <Typography
+                                sx={{
+                                  fontSize: "14px",
+                                  fontWeight: "500",
+                                  textOverflow: "clip",
+                                }}
+                              >
+                                {email?.slice(0, 25)}
+                              </Typography>
+                            )}
+                          </>
                         ) : (
                           <Typography
                             sx={{
@@ -616,7 +633,7 @@ export default function DialogProfile(props) {
                               textOverflow: "clip",
                             }}
                           >
-                            {email.slice(0, 25)}
+                            {email?.slice(0, 25)}
                           </Typography>
                         )}
                       </Box>
@@ -693,7 +710,10 @@ export default function DialogProfile(props) {
                       }}
                     />
                     <Box className="Renewal d-flex align-items-center mb-2">
-                      <Box
+                     
+                      {uPack !== null && uPack?.remain !== "Expired" ? (
+                        <>
+                           <Box
                         sx={{
                           padding: "10px",
                           borderRadius: "50%",
@@ -731,8 +751,7 @@ export default function DialogProfile(props) {
                           />
                         </svg>
                       </Box>
-                      {uPack !== null || uPack !== undefined ? (
-                        <Box
+                            <Box
                           sx={{
                             display: "flex",
                             flexDirection: "column",
@@ -750,7 +769,7 @@ export default function DialogProfile(props) {
                           >
                             Remaining days
                           </Typography>
-                          {uPack?.remain === "undefined" ? (
+                          {uPack?.remain === "undefined" || uPack?.remain === null ? (
                             <Typography
                               sx={{
                                 fontSize: "14px",
@@ -786,7 +805,8 @@ export default function DialogProfile(props) {
                           ) : (
                             <></>
                           )}
-                        </Box>
+                            </Box>
+                        </>
                       ) : (
                         <></>
                       )}
@@ -1049,16 +1069,32 @@ export default function DialogProfile(props) {
                             >
                               Email address
                             </Typography>
-                            {device === "Mobile" ? (
-                              <Typography
-                                sx={{
-                                  fontSize: "14px",
-                                  fontWeight: "500",
-                                  textOverflow: "clip",
-                                }}
-                              >
-                                {email}
-                              </Typography>
+                            {email !== null ||
+                            email !== undefined ||
+                            email !== "" ? (
+                              <>
+                                {device === "Mobile" ? (
+                                  <Typography
+                                    sx={{
+                                      fontSize: "14px",
+                                      fontWeight: "500",
+                                      textOverflow: "clip",
+                                    }}
+                                  >
+                                    {email}
+                                  </Typography>
+                                ) : (
+                                  <Typography
+                                    sx={{
+                                      fontSize: "14px",
+                                      fontWeight: "500",
+                                      textOverflow: "clip",
+                                    }}
+                                  >
+                                    {email?.slice(0, 25)}
+                                  </Typography>
+                                )}
+                              </>
                             ) : (
                               <Typography
                                 sx={{
@@ -1067,7 +1103,7 @@ export default function DialogProfile(props) {
                                   textOverflow: "clip",
                                 }}
                               >
-                                {email.slice(0, 25)}
+                                {email?.slice(0, 25)}
                               </Typography>
                             )}
                           </Box>
@@ -1226,15 +1262,28 @@ export default function DialogProfile(props) {
                                 >
                                   Remaining days
                                 </Typography>
-                                {!uPack?.remain || !uPack ? (
-                                  <Typography
-                                    sx={{
-                                      fontSize: "14px",
-                                      fontWeight: "500",
-                                    }}
-                                  >
-                                    You are not a VIP
-                                  </Typography>
+                                {uPack !== null ? (
+                                  <>
+                                    {!uPack?.remain || !uPack ? (
+                                      <Typography
+                                        sx={{
+                                          fontSize: "14px",
+                                          fontWeight: "500",
+                                        }}
+                                      >
+                                        You are not a VIP
+                                      </Typography>
+                                    ) : (
+                                      <Typography
+                                        sx={{
+                                          fontSize: "14px",
+                                          fontWeight: "500",
+                                        }}
+                                      >
+                                        {`${uPack?.remain?.slice(0, -1)}`}
+                                      </Typography>
+                                    )}
+                                  </>
                                 ) : (
                                   <Typography
                                     sx={{
@@ -1242,7 +1291,7 @@ export default function DialogProfile(props) {
                                       fontWeight: "500",
                                     }}
                                   >
-                                    {`${uPack?.remain.slice(0, -1)}`}
+                                    {`${uPack?.remain?.slice(0, -1)}`}
                                   </Typography>
                                 )}
                                 {uPack?.isRenewPackage === true ? (
@@ -2461,14 +2510,14 @@ export default function DialogProfile(props) {
                         text={"CANCEL"}
                         onClick={() => {
                           setTab(0);
-                          dispatch(exitEditProfile());
-                          setAddressLine1(address1 || "");
-                          setAddressLine2(address2 || "");
-                          setCityOption(city || "");
-                          setDName(nickName || "");
-                          setStateOption(state || "");
-                          setZcode(zipCode || "");
-                          setValue(dayjs(birthDay) || new Date());
+                          // dispatch(exitEditProfile());
+                          setAddressLine1(address1 );
+                          setAddressLine2(address2 );
+                          setCityOption(city );
+                          setDName(nickName );
+                          setStateOption(state );
+                          setZcode(zipCode );
+                          setValue(dayjs(birthDay) );
                         }}
                       />
                     </Box>
@@ -2496,24 +2545,25 @@ export default function DialogProfile(props) {
       </Grid>
     );
   };
+  
 
   return ReactDOM.createPortal(
     <>
       <Dialog
         fullScreen={width && width < 576}
         open={open}
-        onClose={() => {
-          setTab(0);
-          dispatch(exitEditProfile());
-          setAddressLine1(address1 || "");
-          setAddressLine2(address2 || "");
-          setCityOption(city || "");
-          setDName(nickName || "");
-          setStateOption(state || "");
-          setZcode(zipCode || "");
-          setValue(dayjs(birthDay) || new Date());
-          handleShowProfile();
-        }}
+        // onClose={() => {
+        //   setTab(0);
+        //   dispatch(exitEditProfile());
+        //   setAddressLine1(address1);
+        //   setAddressLine2(address2);
+        //   setCityOption(city);
+        //   setDName(nickName);
+        //   setStateOption(state);
+        //   setZcode(zipCode);
+        //   setValue(dayjs(birthDay));
+        //   handleShowProfile();
+        // }}
         maxWidth={"lg"}
         TransitionComponent={Transition}
         PaperProps={{
