@@ -12,16 +12,16 @@ import {
   getListFaqSuccess,
   getListWinnerFail,
   getListWinnerSuccess,
-  getUserGuestFail,
-  getUserGuestSuccess,
   getScoreGameFail,
   getScoreGameSuccess,
+  getUserGuestFail,
+  getUserGuestSuccess,
   saveTimeCloseDialog,
   saveTimeCloseNewYearDialog,
 } from "../reducers/appReducer";
-import AppService from "../services/appService";
-import { getUserInfoReady, saveTokenGuest } from "../reducers/userReducer";
 import { getRefactorDetailAuthPromotion } from "../reducers/promotionReducer";
+import { saveTokenGuest } from "../reducers/userReducer";
+import AppService from "../services/appService";
 const appService = new AppService();
 
 function* getListFaqSaga(dataRequest) {

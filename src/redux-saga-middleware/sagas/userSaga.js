@@ -3,6 +3,7 @@ import ReactGA from "react-ga4";
 import { call, delay, getContext, put, takeEvery } from "redux-saga/effects";
 import i18n from "../../i18n/i18n";
 import { authNotification } from "../../utils/notification";
+import { store } from "../config/configRedux";
 import _socket from "../config/socket";
 import { showToastNotification } from "../reducers/alertReducer";
 import { closePopupCompleteProfile, getUserGuest, openDialogGif, openPopupCompleteExtra, openPopupCompleteProfile } from "../reducers/appReducer";
@@ -18,8 +19,7 @@ import {
 import {
   clickTabChat,
   updateBannedChatWorld,
-  updateIsActiveChatWorld,
-  updateUnBannedChatWorld,
+  updateUnBannedChatWorld
 } from "../reducers/chatReducer";
 import {
   closeProfileDialog,
@@ -44,7 +44,6 @@ import {
   getClaimPrizeOptional,
   getClaimPrizeOptionalFail,
   getClaimPrizeOptionalSuccess,
-  getMyInfor,
   getMyInforFail,
   getMyInforSuccess,
   getUpgradeGuestFail,
@@ -62,7 +61,6 @@ import {
   reVerifyAccountSuccess,
   registerFail,
   registerSuccess,
-  removeTokenUser,
   resendOtpFail,
   resendOtpSuccess,
   resetPasswordFail,
@@ -77,12 +75,9 @@ import {
   updateProfileUserFail,
   updateProfileUserSuccess,
   updateUserToken,
-  updateVerifyOTPType,
+  updateVerifyOTPType
 } from "../reducers/userReducer";
 import UserService from "../services/userService";
-import { store } from "../config/configRedux";
-import { toast } from "react-toastify";
-import { getTokenGuest } from "../../utils/getTokenGuest";
 
 const userService = new UserService();
 
@@ -440,7 +435,6 @@ function* userInfoSaga(dataRequest) {
     userInfoCount += 1;
     if (userInfoCount === 1) {
       const { tokenUser, user } = store.getState().userReducer
-      const tokenGuest = getTokenGuest()
       const { payload } = dataRequest;
       const res = yield call(userService.userInfo, payload);
       const { status, data } = res;

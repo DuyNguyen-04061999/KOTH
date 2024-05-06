@@ -1,14 +1,16 @@
 import { Close } from "@mui/icons-material";
-import { Box, Dialog, Grid, Typography } from "@mui/material";
+import { Box, Dialog, Typography } from "@mui/material";
 import React from "react";
 import ReactDOM from "react-dom";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import {
   clickTab,
   closeLoginDialog,
   closeVerifyDialog,
 } from "../../../redux-saga-middleware/reducers/authReducer";
+import { getRefactorDetailAuthPromotion } from "../../../redux-saga-middleware/reducers/promotionReducer";
 import { logoutReady } from "../../../redux-saga-middleware/reducers/userReducer";
 import { imageHome, sign } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
@@ -19,8 +21,6 @@ import OTPResetPassword from "../Auth/OTPResetPassword";
 import { default as OTPVerifyAccount } from "../Auth/OTPVerifyAccount";
 import Signup from "../Auth/Signup";
 import "./../Auth/Signin/index.scss";
-import { getRefactorDetailAuthPromotion } from "../../../redux-saga-middleware/reducers/promotionReducer";
-import { useParams } from "react-router-dom";
 
 export default function SimpleDialog(props) {
   const { currentTab, isLoginDialog } = useSelector(
@@ -31,7 +31,7 @@ export default function SimpleDialog(props) {
   const { width } = useWindowDimensions();
   const { device } = useSelector((state) => state.deviceReducer);
   const { orientation } = useSelector((state) => state.gameReducer);
-  const {tokenGuest} = useSelector((state) => state.userReducer)
+  const {tokenUser} = useSelector((state) => state.userReducer)
   const handleClose = () => {
     dispatch(closeLoginDialog());
     dispatch(closeVerifyDialog());
@@ -43,13 +43,15 @@ export default function SimpleDialog(props) {
         dispatch(clickTab("login"));
       }
     }, 500);
-    if(tokenGuest) {
-      dispatch(
-        getRefactorDetailAuthPromotion({
-          id,
-          token:tokenGuest,
-        })
-      );
+    if(tokenUser) {
+      if(id && id !== 'undefined') {
+        dispatch(
+          getRefactorDetailAuthPromotion({
+            id,
+            token: tokenUser,
+          })
+        );
+      }
     }
   };
 

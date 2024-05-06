@@ -1,3 +1,4 @@
+import { Close } from "@mui/icons-material";
 import { Box, DialogActions, Typography } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import * as React from "react";
@@ -8,21 +9,19 @@ import {
   toggleStartGame,
 } from "../../../redux-saga-middleware/reducers/appReducer";
 import {
+  clickTab,
+  toggleLoginDialog,
+} from "../../../redux-saga-middleware/reducers/authReducer";
+import {
   finishGame,
   finishVideo,
   getRefactorDetailAuthPromotion,
 } from "../../../redux-saga-middleware/reducers/promotionReducer";
 import { CheckGuestUpgrade, toggleCloseResultEndGame } from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import { getClaimFirstGamePlay, getUserInfoReady } from "../../../redux-saga-middleware/reducers/userReducer";
-import useWindowDimensions from "../../../utils/useWindowDimensions";
-import { Close } from "@mui/icons-material";
-import AnimButton from "../../AnimButton";
 import { images } from "../../../utils/images";
-import {
-  clickTab,
-  toggleLoginDialog,
-} from "../../../redux-saga-middleware/reducers/authReducer";
-import { getTokenGuest } from "../../../utils/getTokenGuest";
+import useWindowDimensions from "../../../utils/useWindowDimensions";
+import AnimButton from "../../AnimButton";
 
 export default function ResultEndGame() {
   const { endGameScore, isResultEndGame } = useSelector(
