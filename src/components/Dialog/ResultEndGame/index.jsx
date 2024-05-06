@@ -265,6 +265,7 @@ export default function ResultEndGame() {
                     fontStyle: "normal",
                     textTransform: "capitalize",
                     lineHeight: "130%",
+                    textAlign:"center"
                   }}
                 >
                   Sign Up to save progress and get coins.
