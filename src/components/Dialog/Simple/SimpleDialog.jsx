@@ -19,16 +19,19 @@ import OTPResetPassword from "../Auth/OTPResetPassword";
 import { default as OTPVerifyAccount } from "../Auth/OTPVerifyAccount";
 import Signup from "../Auth/Signup";
 import "./../Auth/Signin/index.scss";
+import { getRefactorDetailAuthPromotion } from "../../../redux-saga-middleware/reducers/promotionReducer";
+import { useParams } from "react-router-dom";
 
 export default function SimpleDialog(props) {
   const { currentTab, isLoginDialog } = useSelector(
     (state) => state.authReducer
   );
-
+  const {id} = useParams()
   const dispatch = useDispatch();
   const { width } = useWindowDimensions();
   const { device } = useSelector((state) => state.deviceReducer);
   const { orientation } = useSelector((state) => state.gameReducer);
+  const {tokenGuest} = useSelector((state) => state.userReducer)
   const handleClose = () => {
     dispatch(closeLoginDialog());
     dispatch(closeVerifyDialog());
@@ -40,6 +43,14 @@ export default function SimpleDialog(props) {
         dispatch(clickTab("login"));
       }
     }, 500);
+    if(tokenGuest) {
+      dispatch(
+        getRefactorDetailAuthPromotion({
+          id,
+          token:tokenGuest,
+        })
+      );
+    }
   };
 
   return ReactDOM.createPortal(

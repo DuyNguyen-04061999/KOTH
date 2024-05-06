@@ -20,7 +20,8 @@ import {
   saveTimeCloseNewYearDialog,
 } from "../reducers/appReducer";
 import AppService from "../services/appService";
-import { getUserInfoReady } from "../reducers/userReducer";
+import { getUserInfoReady, saveTokenGuest } from "../reducers/userReducer";
+import { getRefactorDetailAuthPromotion } from "../reducers/promotionReducer";
 const appService = new AppService();
 
 function* getListFaqSaga(dataRequest) {
@@ -139,6 +140,13 @@ function* getUserGuestSaga(dataRequest) {
     if(status === 200 || status === 201) {
       yield put(getUserGuestSuccess(data))
       // yield put(getUserInfoReady(data?.data?.token))
+      yield put(saveTokenGuest(data?.data?.token))
+     const pid = window.location.pathname.split('/')[2];
+      yield put(getRefactorDetailAuthPromotion({
+        id: pid,
+        token: data?.data?.token
+      }
+      ))
       localStorage.setItem("token_guest", data?.data?.token)
     }
   } catch (err) {

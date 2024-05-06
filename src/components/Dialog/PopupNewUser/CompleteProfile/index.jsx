@@ -75,7 +75,7 @@ const CompleteProfile = ({
   isSecondDay = false,
 }) => {
   const dispatch = useDispatch();
-  const { user, stateProfile } = useSelector((state) => state.userReducer);
+  const { user, stateProfile, isUpdateProfileFirstPlay } = useSelector((state) => state.userReducer);
   const { stepProfile, isOpenCompleteProfile } = useSelector(
     (state) => state.appReducer
   );
@@ -216,9 +216,10 @@ const CompleteProfile = ({
       })
     );
     dispatch(getUserInfoReady());
-    setFirstName('')
-    setLastName('')
-    setEmail('')
+    if(isUpdateProfileFirstPlay === false) {
+      setFirstName('')
+      setEmail('')
+    }
   };
   const { width } = useWindowDimensions();
 

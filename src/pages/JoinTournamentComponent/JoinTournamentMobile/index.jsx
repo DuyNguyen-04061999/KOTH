@@ -53,6 +53,7 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
     uPack,
     listJoinedTour,
     countTicket,
+    tokenGuest
   } = useSelector((state) => state.userReducer);
   const typographyStyle = {
     textAlign: "start",
@@ -71,15 +72,15 @@ export default function JoinTournamentMobile({ handleOnClickStartGame }) {
           token: token ,
         })
       );
-    } else if(localStorage.getItem("token_guest"))  {
+    } else if(tokenGuest)  {
       dispatch(
         getRefactorDetailAuthPromotion({
           id,
-          token: localStorage.getItem("token_guest"),
+          token: tokenGuest,
         })
       );
     }
-  }, [token,localStorage.getItem("token_guest")]);
+  }, [token,tokenGuest]);
 
   const handleJoinTour = (sub) => {
       dispatch(

@@ -97,10 +97,9 @@ function App() {
   useTracking(process.env.REACT_APP_GOOGLE_ANALYTICS_ID);
 
   const { startGameCheck } = store.getState().appReducer;
-  const { tokenUser, user } = store.getState().userReducer;
+  const { tokenUser, user, tokenGuest } = store.getState().userReducer;
   const { currentTab } = store.getState().authReducer;
   const { orientation } = store.getState().gameReducer;
-  const tokenGuest = getTokenGuest();
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {

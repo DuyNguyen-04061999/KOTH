@@ -27,7 +27,8 @@ export default function OTPVerifyAccount() {
     typeVerifyOTP,
     resenOTPSuccess,
     isVerifyOTP,
-    phoneUpgrade
+    phoneUpgrade,
+    tokenGuest
   } = useSelector((state) => state.userReducer);
   const { width } = useWindowDimensions();
   const [otp, setOtp] = useState("");
@@ -240,14 +241,6 @@ export default function OTPVerifyAccount() {
               setTimeout(() => {
                 dispatch(getUserInfoReady())
               },[2000])
-              if(localStorage.getItem("token_guest")) {
-                dispatch(
-                  getRefactorDetailAuthPromotion({
-                    id,
-                    token: localStorage.getItem("token_guest"),
-                  })
-                );
-              }
             }}
           />
         </Box>
