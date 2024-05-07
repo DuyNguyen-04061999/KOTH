@@ -18,7 +18,7 @@ const CompleteExtra = ({
 }) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.userReducer);
-  const { isOpenPopupCompleteExtra, typeCompleteExtra } = useSelector(
+  const { isOpenPopupCompleteExtra, typeCompleteExtra , scoreGame} = useSelector(
     (state) => state.appReducer
   );
 
@@ -26,7 +26,7 @@ const CompleteExtra = ({
     dispatch(closePopupCompleteExtra())
     dispatch(getScoreGame())
     if(typeCompleteExtra === "firstPlay") {
-    dispatch(getClaimFirstGamePlay())
+      dispatch(getClaimFirstGamePlay())
     }
     dispatch(getMyInfor())
   };
