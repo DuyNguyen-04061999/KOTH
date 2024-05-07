@@ -100,17 +100,17 @@ function* loginSaga(dataRequest) {
         _socket.emit("loginSocial", {
           token: data?.data?.token,
         });
-        // if (payload?.remember) {
-        //   localStorage.setItem(
-        //     "account",
-        //     payload?.email || payload?.phone || ""
-        //   );
-        //   localStorage.setItem("pass", payload?.password);
-        // } else {
-        //   localStorage.removeItem("account");
-        //   localStorage.removeItem("pass");
-        //   localStorage.removeItem("firstPlayGame")
-        // }
+        if (payload?.remember) {
+          localStorage.setItem(
+            "account",
+            payload?.email || payload?.phone || ""
+          );
+          localStorage.setItem("pass", payload?.password);
+        } else {
+          localStorage.removeItem("account");
+          localStorage.removeItem("pass");
+          localStorage.removeItem("firstPlayGame")
+        }
         yield put(
           showToastNotification({
             type: authNotification.signIn.signInSuccess.type,
