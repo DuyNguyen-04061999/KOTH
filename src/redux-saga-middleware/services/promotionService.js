@@ -1,4 +1,3 @@
-import { getTokenGuest } from "../../utils/getTokenGuest";
 import { PROMOTION_API } from "../axios/promotionApi";
 
 class promotionService {
@@ -13,9 +12,9 @@ class promotionService {
       {
         headers: {
           "Content-Type": "application/json",
-          "x-access-refactor-token":( localStorage.getItem("token") || dataRequest?.token || localStorage.getItem("token_guest")),
-          Authorization: `Bearer ${ localStorage.getItem("token") || dataRequest?.token || localStorage.getItem("token_guest")}`,
-          authorization: `Bearer ${ localStorage.getItem("token") || dataRequest?.token || localStorage.getItem("token_guest")}`,
+          "x-access-refactor-token":( localStorage.getItem("token") || dataRequest?.token ),
+          Authorization: `Bearer ${ localStorage.getItem("token") || dataRequest?.token }`,
+          authorization: `Bearer ${ localStorage.getItem("token") || dataRequest?.token}`,
         },
       }
     );
@@ -25,7 +24,7 @@ class promotionService {
 
   async joinPromotion(dataRequest) {
     const headers = {
-      "x-access-refactor-token": localStorage.getItem("token") ||  getTokenGuest(),
+      "x-access-refactor-token": localStorage.getItem("token"),
       "Content-Type": "application/json",
     };
     const res = await PROMOTION_API.post("/api/promotions/join-promotion", dataRequest,
@@ -39,7 +38,7 @@ class promotionService {
 
   async startGameInPromotion(dataRequest) {
     const headers = {
-      "x-access-refactor-token": (localStorage.getItem("token") || localStorage.getItem("token_guest")),
+      "x-access-refactor-token": (localStorage.getItem("token") ),
       "Content-Type": "application/json",
     };
     const res = await PROMOTION_API.post("/api/promotions/start-game-promotion", dataRequest,
