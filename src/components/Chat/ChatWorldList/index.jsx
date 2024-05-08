@@ -16,6 +16,13 @@ import {
 } from "../../../redux-saga-middleware/reducers/addFriendReducer";
 import { showToastNotification } from "../../../redux-saga-middleware/reducers/alertReducer";
 import { openLoginDialog } from "../../../redux-saga-middleware/reducers/authReducer";
+import {
+  clickTabChat,
+  updateContacterUsername,
+  updateCurrentContacter,
+  updateFriendChat,
+  updateFriendNickName,
+} from "../../../redux-saga-middleware/reducers/chatReducer";
 import { toggleProfileDialog } from "../../../redux-saga-middleware/reducers/profileReducer";
 import { setWaitingNav } from "../../../redux-saga-middleware/reducers/roomReducer";
 import {
@@ -24,18 +31,12 @@ import {
   unBanUserReady,
   updateCurrentBannedUser,
 } from "../../../redux-saga-middleware/reducers/userReducer";
+import { CheckToken } from "../../../utils/checkToken";
 import { images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import UserChatLoadingList from "../../LoadingComponent/UserChatLoading";
-import "./index.scss";
 import WinnerNotification from "../WinnerNotification";
-import {
-  clickTabChat,
-  updateContacterUsername,
-  updateCurrentContacter,
-  updateFriendChat,
-  updateFriendNickName,
-} from "../../../redux-saga-middleware/reducers/chatReducer";
+import "./index.scss";
 
 export default function ChatWorldList() {
   const chatBox = useRef(null);
@@ -60,6 +61,7 @@ export default function ChatWorldList() {
   const [gameId, setGameId] = useState(0);
   const [roomId, setRoomId] = useState(0);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const decodeToken = CheckToken()
 
   useEffect(() => {
     endOfMessageRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -163,7 +165,7 @@ export default function ChatWorldList() {
 
   const handleAddFriend = (username) => {
     setIsButtonDisabled(true);
-    if (!tokenUser) {
+    if (decodeToken?.role === "guest") {
       dispatch(openLoginDialog());
     } else {
       socket.emit("addFriend", {

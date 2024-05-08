@@ -1,44 +1,39 @@
+import { Close } from "@mui/icons-material";
 import {
+  Autocomplete,
   Box,
   Dialog,
   DialogActions,
-  Typography,
   FormControl,
   Input,
-  Tooltip,
-  Autocomplete,
   TextField,
+  Tooltip,
+  Typography,
 } from "@mui/material";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import { styled, withStyles } from "@mui/styles";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
-import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { useDispatch, useSelector } from "react-redux";
-import { imageHome, images, sign } from "../../../../utils/images";
-import AnimButton from "../../../AnimButton";
-import useWindowDimensions from "../../../../utils/useWindowDimensions";
-import { Close, FlareSharp } from "@mui/icons-material";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
+import {
+  closePopupCompleteProfile,
+  openPopupCompleteExtra
+} from "../../../../redux-saga-middleware/reducers/appReducer";
 import {
   getCityAndStateProfile,
   getMyInfor,
   getUserInfoReady,
-  updateProfileFirstPlay,
-  updateProfileUser,
+  updateProfileFirstPlay
 } from "../../../../redux-saga-middleware/reducers/userReducer";
-import { styled, withStyles } from "@mui/styles";
-import {
-  closePopupCompleteExtra,
-  closePopupCompleteProfile,
-  openPopupCompleteExtra,
-  openPopupCompleteProfile,
-} from "../../../../redux-saga-middleware/reducers/appReducer";
+import useWindowDimensions from "../../../../utils/useWindowDimensions";
 import { validateEmail } from "../../../../utils/validationEmail";
-import dayjs from "dayjs";
+import AnimButton from "../../../AnimButton";
 
 const CssTextField = styled(TextField)({
   "& .MuiOutlinedInput-root": {
@@ -216,10 +211,6 @@ const CompleteProfile = ({
       })
     );
     dispatch(getUserInfoReady());
-    if(isUpdateProfileFirstPlay === false) {
-      setFirstName('')
-      setEmail('')
-    }
   };
   const { width } = useWindowDimensions();
 
@@ -1034,7 +1025,7 @@ const CompleteProfile = ({
                     autoHighlight
                     disableClearable
                     onChange={handleChangeState}
-                    isOptionEqualToValue={(option, value) =>
+                    isOptionEqualToValue={(option, value) => 
                       option && option.name === value.name
                     }
                     getOptionLabel={(option) => (option && option.name) || ""}

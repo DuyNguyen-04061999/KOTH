@@ -123,7 +123,7 @@ export default function SimpleDialog(props) {
       ) : (
         <>
           <Dialog
-            onClose={handleClose}
+            // onClose={handleClose}
             open={isLoginDialog}
             maxWidth={"md"}
             fullScreen={

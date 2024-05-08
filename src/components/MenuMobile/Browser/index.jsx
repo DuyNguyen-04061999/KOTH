@@ -12,6 +12,7 @@ import {
   toggleLoginDialog,
 } from "../../../redux-saga-middleware/reducers/authReducer";
 import { toggleGameLogDialog } from "../../../redux-saga-middleware/reducers/gameReducer";
+import { CheckToken } from "../../../utils/checkToken";
 import { getAppType } from "../../../utils/helper";
 import { images, navbar } from "../../../utils/images";
 import { imagesReferral } from "../../../utils/imagesReferral";
@@ -26,7 +27,7 @@ export default function Browser(props) {
   const { isDropdownNav } = useSelector((state) => state.authReducer);
   const { tokenUser: token } = useSelector((state) => state.userReducer);
   const { tabHelpCenter } = useSelector((state) => state.helpcenterReducer);
-
+  const decodeToken = CheckToken()
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [socket, setSocket] = useState(null);
@@ -1443,7 +1444,7 @@ export default function Browser(props) {
                         : "#A89CD7",
                   }}
                   onClick={() => {
-                    if (!token) {
+                    if (decodeToken?.role === "guest") {
                       dispatch(clickTab("login"));
                       dispatch(toggleLoginDialog());
                     } else {
