@@ -494,7 +494,11 @@ export default function ChatWorldList() {
                   ) : (
                     <Box
                       sx={{
-                        background: e?.isActiveSender ? "#443565" : "#8B8891",
+                        background: e?.isDeleted
+                          ? "#8B8891"
+                          : e?.isActiveSender
+                          ? "#443565"
+                          : "#8B8891",
                         width: "fit-content",
                         maxWidth: width < 576 ? width - 100 : 200,
                         fontSize: "14px",
@@ -601,6 +605,14 @@ export default function ChatWorldList() {
                               </Box>
                             </Box>
                           </Box>
+                        ) : e?.isDeleted ? (
+                          <Box
+                            sx={{
+                              backgroundColor: "#8B8891",
+                            }}
+                          >
+                            The message was removed by Moderator
+                          </Box>
                         ) : e?.isActiveSender ? (
                           <span
                             style={{
@@ -651,6 +663,7 @@ export default function ChatWorldList() {
     }
     return () => {};
   }, [socket, dispatch, tokenUser]);
+  console.log("data: ", chatWorld);
   return (
     <Box sx={{ position: "relative" }}>
       <Box
@@ -773,7 +786,44 @@ export default function ChatWorldList() {
                   <span>Private chat</span>
                 </Box>
               </MenuItem>
-            )}
+            )}{" "}
+          {user?.userRole === "Moderator" && !currContacter?.isDeleted && (
+            <MenuItem
+              onClick={() => {
+                console.log(currContacter);
+              }}
+              sx={{
+                padding: "5px",
+              }}
+            >
+              <Box
+                className="p-2 text-white"
+                sx={{
+                  background: "#7848ED",
+                  width: "100%",
+                  fontWeight: "bold",
+                  borderRadius: "4px",
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="18"
+                  height="18"
+                  style={{ marginRight: "8px" }}
+                  viewBox="0 0 16 16"
+                  fill="none"
+                >
+                  <path
+                    d="M4.66406 14C4.2974 14 3.98362 13.8696 3.72273 13.6087C3.46184 13.3478 3.33117 13.0338 3.33073 12.6667V4H2.66406V2.66667H5.9974V2H9.9974V2.66667H13.3307V4H12.6641V12.6667C12.6641 13.0333 12.5336 13.3473 12.2727 13.6087C12.0118 13.87 11.6978 14.0004 11.3307 14H4.66406ZM5.9974 11.3333H7.33073V5.33333H5.9974V11.3333ZM8.66406 11.3333H9.9974V5.33333H8.66406V11.3333Z"
+                    fill="white"
+                  />
+                </svg>
+                <span>Delete chat</span>
+              </Box>
+            </MenuItem>
+          )}
           {user?.userRole === "Moderator" &&
             (currContacter?.isActiveSender ? (
               <MenuItem
