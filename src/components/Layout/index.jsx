@@ -62,6 +62,7 @@ import {
 import { toggleAlertStripeProcess } from "../../redux-saga-middleware/reducers/stripeReducer";
 import { toggleCloseResultEndGame } from "../../redux-saga-middleware/reducers/tournamentReducer";
 import { getMyInfor, getUserInfoReady, updateUserToken } from "../../redux-saga-middleware/reducers/userReducer";
+import { CheckToken } from "../../utils/checkToken";
 import { compareDate, compareDateInUSA } from "../../utils/config";
 import { imageDesktop, images } from "../../utils/images";
 import { systemNotification } from "../../utils/notification";
@@ -156,6 +157,8 @@ export default function Layout(props) {
   const { device } = useSelector((state) => state.deviceReducer);
   const [openDropdown, setOpenDropdown] = useState(false);
   const [debounceTab, setDebounceTab] = useState(false);
+  const decodeToken = CheckToken()
+
   const handleCloseDropDown = () => {
     setOpenDropdown(false);
   };
@@ -297,7 +300,7 @@ export default function Layout(props) {
             `/api/get-refcode-by-username/${userName}`
           );
           if (response && response?.data && response?.data?.ref) {
-            if (!token && !localStorage.getItem("token")) {
+            if (decodeToken?.role === "guest") {
               dispatch(addRefCodeRegister(response?.data?.ref));
               dispatch(clickTab("signup"));
               dispatch(openLoginDialog());

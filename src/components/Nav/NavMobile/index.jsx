@@ -15,14 +15,15 @@ import {
 } from "../../../redux-saga-middleware/reducers/chatReducer";
 import { openNotificationDialog } from "../../../redux-saga-middleware/reducers/dialogReducer";
 import { toggleWalletDialog } from "../../../redux-saga-middleware/reducers/walletReducer";
+import { CheckToken } from "../../../utils/checkToken";
 import { getFontSizeDependOnWidth } from "../../../utils/config";
 import { getAppType } from "../../../utils/helper";
 import { popup } from "../../../utils/images";
+import { secondNotiComparison } from "../../../utils/timeDiff";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import MenuBrowser from "../../MenuMobile/Browser";
 import MenuChat from "../../MenuMobile/Chat";
 import "./index.scss";
-import { secondNotiComparison } from "../../../utils/timeDiff";
 
 export default function NavMobile() {
   const { tokenUser: token } = useSelector((state) => state.userReducer);
@@ -39,6 +40,7 @@ export default function NavMobile() {
   const [hideNavMobile, setHideNavMobile] = useState("block");
   const { width } = useWindowDimensions();
   const dispatch = useDispatch();
+  const decodeToken = CheckToken()
   useEffect(() => {
     if (isProfileDialog === true) {
       setHideNavMobile("none");
@@ -1073,7 +1075,7 @@ export default function NavMobile() {
                         dispatch(updateOpenMess(false));
                         setOpenSearch(false);
                         dispatch(updateOpenMenu(false));
-                        if (token) {
+                        if (decodeToken?.role !== "guest") {
                           dispatch(openNotificationDialog());
                           setRead(true);
                           localStorage.setItem(

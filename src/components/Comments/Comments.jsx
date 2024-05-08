@@ -1,16 +1,18 @@
 import { Box, Typography } from "@mui/material";
 import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { getListComment } from "../../redux-saga-middleware/reducers/commentReducer";
+import { CheckToken } from "../../utils/checkToken";
+import useWindowDimensions from "../../utils/useWindowDimensions";
 import CommentItem from "./CommentItem";
 import FullCommnet from "./FullCommnet";
-import useWindowDimensions from "../../utils/useWindowDimensions";
-import { useDispatch, useSelector } from "react-redux";
-import { getListComment } from "../../redux-saga-middleware/reducers/commentReducer";
-import { useParams } from "react-router-dom";
 
 export default function Comments() {
   const { width } = useWindowDimensions();
   const { userAvatar, tokenUser } = useSelector((state) => state.userReducer);
   const { id } = useParams();
+  const decodeToken = CheckToken()
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getListComment(id));
@@ -40,7 +42,7 @@ export default function Comments() {
           Comments
         </Typography>
       </Box>
-      {tokenUser && <CommentItem userAvatar={userAvatar} type="personal" />}
+      {decodeToken?.role !== "guest" && <CommentItem userAvatar={userAvatar} type="personal" />}
       <Box
         sx={{
           width: "100%",
