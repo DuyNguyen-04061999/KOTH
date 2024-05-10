@@ -44,6 +44,7 @@ import {
   updateChatWorld,
 } from "../../redux-saga-middleware/reducers/chatReducer";
 // import { openNotificationDialog } from "../../redux-saga-middleware/reducers/dialogReducer";
+import { jwtDecode } from "jwt-decode";
 import { addListNotificationSuccess } from "../../redux-saga-middleware/reducers/notificationReducer";
 import { updateChangeLocation } from "../../redux-saga-middleware/reducers/packageReducer";
 import {
@@ -65,6 +66,7 @@ import {
   getUserInfoReady,
   updateUserToken,
 } from "../../redux-saga-middleware/reducers/userReducer";
+import { CheckToken } from "../../utils/checkToken";
 import { compareDate, compareDateInUSA } from "../../utils/config";
 import { imageDesktop, images } from "../../utils/images";
 import { systemNotification } from "../../utils/notification";
@@ -72,14 +74,19 @@ import useWindowDimensions from "../../utils/useWindowDimensions";
 import ChatDrawer from "../Chat/ChatDrawer/ChatDrawer";
 import DialogVerify from "../Dialog/Auth/DialogVerify";
 import AuthDialog from "../Dialog/Auth/Signin";
+import DialogBanUser from "../Dialog/DialogBanUser";
+import DialogCheckExtraGuest from "../Dialog/DialogCheckExtraGuest";
 import DialogExclusive from "../Dialog/DialogExclusive";
 import DialogGift from "../Dialog/DialogGift";
 import DialogSubscribe from "../Dialog/DialogSubscribe";
 import DoubleDayDialog from "../Dialog/DoubleDay";
-import DoubleDayPackDialog from "../Dialog/DoubleDayPack";
 import NotiFunds from "../Dialog/NotiFunds";
 import NotificationDialog from "../Dialog/Notification/NotificationDialog";
+import RenewalBadgePopup from "../Dialog/Packages/NotiCheckout/renewalBadgePopup";
+import RenewalNotiPopup from "../Dialog/Packages/NotiCheckout/renewalNotiPopup";
 import PackagePaypalDialog from "../Dialog/Packages/PackagePaypalDialog";
+import CompleteExtra from "../Dialog/PopupNewUser/CompleteExtra";
+import CompleteProfile from "../Dialog/PopupNewUser/CompleteProfile";
 import DialogProfile from "../Dialog/Profile";
 import ShareTour from "../Dialog/ShareTour";
 import SimpleDialog from "../Dialog/Simple/SimpleDialog";
@@ -87,19 +94,12 @@ import StripeAlertComponent from "../Dialog/Stripe/StripeAlertComponent";
 import SubscriptionDialog from "../Dialog/Subscription";
 import TicketCheckOut from "../Dialog/TicketCheckOut";
 import TouramentShow from "../Dialog/Tourament/showBuy";
+import TransactionHistory from "../Dialog/TransactionHistory";
 import Navbar from "../Nav/Nav";
 import NavMobile from "../Nav/NavMobile";
+import NotificationBage from "../NotificationBage";
 import history from "../Router/history";
 import "./index.scss";
-import NotificationBage from "../NotificationBage";
-import RenewalBadgePopup from "../Dialog/Packages/NotiCheckout/renewalBadgePopup";
-import RenewalNotiPopup from "../Dialog/Packages/NotiCheckout/renewalNotiPopup";
-import TransactionHistory from "../Dialog/TransactionHistory";
-import DialogBanUser from "../Dialog/DialogBanUser";
-import CompleteExtra from "../Dialog/PopupNewUser/CompleteExtra";
-import CompleteProfile from "../Dialog/PopupNewUser/CompleteProfile";
-import DialogCheckExtraGuest from "../Dialog/DialogCheckExtraGuest";
-import { jwtDecode } from "jwt-decode";
 import DeleteChatConfirm from "../Dialog/DeleteChatConfirm";
 
 const Main = muiStyled("main", {
@@ -164,6 +164,8 @@ export default function Layout(props) {
   const { device } = useSelector((state) => state.deviceReducer);
   const [openDropdown, setOpenDropdown] = useState(false);
   const [debounceTab, setDebounceTab] = useState(false);
+  const decodeToken = CheckToken();
+
   const handleCloseDropDown = () => {
     setOpenDropdown(false);
   };
@@ -186,7 +188,10 @@ export default function Layout(props) {
         dispatch(getUserGuest());
       }
     }
-    dispatch(getUserInfoReady());
+
+    if (localStorage.getItem("token")) {
+      dispatch(getUserInfoReady());
+    }
   }, [tokenGuest, localStorage.getItem("token")]);
 
   useEffect(() => {
@@ -301,7 +306,7 @@ export default function Layout(props) {
             `/api/get-refcode-by-username/${userName}`
           );
           if (response && response?.data && response?.data?.ref) {
-            if (!token && !localStorage.getItem("token")) {
+            if (decodeToken?.role === "guest") {
               dispatch(addRefCodeRegister(response?.data?.ref));
               dispatch(clickTab("signup"));
               dispatch(openLoginDialog());

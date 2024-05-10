@@ -3,6 +3,7 @@ import ReactGA from "react-ga4";
 import { call, delay, getContext, put, takeEvery } from "redux-saga/effects";
 import i18n from "../../i18n/i18n";
 import { authNotification } from "../../utils/notification";
+import { store } from "../config/configRedux";
 import _socket from "../config/socket";
 import { showToastNotification } from "../reducers/alertReducer";
 import {
@@ -26,7 +27,6 @@ import {
   clostDeleteChatConfirmPopup,
   deleteChatSuccess,
   updateBannedChatWorld,
-  updateIsActiveChatWorld,
   updateUnBannedChatWorld,
 } from "../reducers/chatReducer";
 import {
@@ -52,7 +52,6 @@ import {
   getClaimPrizeOptional,
   getClaimPrizeOptionalFail,
   getClaimPrizeOptionalSuccess,
-  getMyInfor,
   getMyInforFail,
   getMyInforSuccess,
   getUpgradeGuestFail,
@@ -70,7 +69,6 @@ import {
   reVerifyAccountSuccess,
   registerFail,
   registerSuccess,
-  removeTokenUser,
   resendOtpFail,
   resendOtpSuccess,
   resetPasswordFail,
@@ -88,9 +86,7 @@ import {
   updateVerifyOTPType,
 } from "../reducers/userReducer";
 import UserService from "../services/userService";
-import { store } from "../config/configRedux";
 import { toast } from "react-toastify";
-import { getTokenGuest } from "../../utils/getTokenGuest";
 
 const userService = new UserService();
 
@@ -111,17 +107,17 @@ function* loginSaga(dataRequest) {
         _socket.emit("loginSocial", {
           token: data?.data?.token,
         });
-        // if (payload?.remember) {
-        //   localStorage.setItem(
-        //     "account",
-        //     payload?.email || payload?.phone || ""
-        //   );
-        //   localStorage.setItem("pass", payload?.password);
-        // } else {
-        //   localStorage.removeItem("account");
-        //   localStorage.removeItem("pass");
-        //   localStorage.removeItem("firstPlayGame")
-        // }
+        if (payload?.remember) {
+          localStorage.setItem(
+            "account",
+            payload?.email || payload?.phone || ""
+          );
+          localStorage.setItem("pass", payload?.password);
+        } else {
+          localStorage.removeItem("account");
+          localStorage.removeItem("pass");
+          localStorage.removeItem("firstPlayGame");
+        }
         yield put(
           showToastNotification({
             type: authNotification.signIn.signInSuccess.type,
@@ -450,7 +446,6 @@ function* userInfoSaga(dataRequest) {
     userInfoCount += 1;
     if (userInfoCount === 1) {
       const { tokenUser, user } = store.getState().userReducer;
-      const tokenGuest = getTokenGuest();
       const { payload } = dataRequest;
       const res = yield call(userService.userInfo, payload);
       const { status, data } = res;

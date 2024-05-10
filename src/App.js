@@ -22,6 +22,9 @@ import ListGamePage from "./pages/GameManager/ListGamePage";
 import UploadGamePreview from "./pages/GameManager/UploadGamePreview";
 import UploadPage from "./pages/GameManager/UploadPage";
 import UploadSkinPage from "./pages/GameManager/UploadSkinPage";
+import { News } from "./pages/News/Component";
+import NewsDetail from "./pages/News/NewsDetail";
+import Referal from "./pages/Referal";
 import Tournament from "./pages/Tournament";
 import TypeGamePage from "./pages/TypeGame";
 import { persistor, store } from "./redux-saga-middleware/config/configRedux";
@@ -33,8 +36,7 @@ import {
 } from "./redux-saga-middleware/reducers/alertReducer";
 import {
   getListBet,
-  getListWinner,
-  getUserGuest,
+  getListWinner
 } from "./redux-saga-middleware/reducers/appReducer";
 import {
   getNavTablet,
@@ -64,11 +66,6 @@ import { getAppType } from "./utils/helper";
 import { images } from "./utils/images";
 import { useTracking } from "./utils/useTracking";
 import useWindowDimensions from "./utils/useWindowDimensions";
-import Referal from "./pages/Referal";
-import { News } from "./pages/News/Component";
-import NewsDetail from "./pages/News/NewsDetail";
-import { getTokenGuest } from "./utils/getTokenGuest";
-import { jwtDecode } from "jwt-decode";
 
 const LazyNewHomePage = lazy(() => import("./pages/NewHomePageComponent"));
 const LazyPackage = lazy(() => import("./pages/PackagePage"));

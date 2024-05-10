@@ -1,3 +1,4 @@
+import { Close } from "@mui/icons-material";
 import { Box, DialogActions, Typography } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import * as React from "react";
@@ -8,21 +9,19 @@ import {
   toggleStartGame,
 } from "../../../redux-saga-middleware/reducers/appReducer";
 import {
+  clickTab,
+  toggleLoginDialog,
+} from "../../../redux-saga-middleware/reducers/authReducer";
+import {
   finishGame,
   finishVideo,
   getRefactorDetailAuthPromotion,
 } from "../../../redux-saga-middleware/reducers/promotionReducer";
 import { CheckGuestUpgrade, toggleCloseResultEndGame } from "../../../redux-saga-middleware/reducers/tournamentReducer";
-import { getUserInfoReady } from "../../../redux-saga-middleware/reducers/userReducer";
-import useWindowDimensions from "../../../utils/useWindowDimensions";
-import { Close } from "@mui/icons-material";
-import AnimButton from "../../AnimButton";
+import { getClaimFirstGamePlay, getUserInfoReady } from "../../../redux-saga-middleware/reducers/userReducer";
 import { images } from "../../../utils/images";
-import {
-  clickTab,
-  toggleLoginDialog,
-} from "../../../redux-saga-middleware/reducers/authReducer";
-import { getTokenGuest } from "../../../utils/getTokenGuest";
+import useWindowDimensions from "../../../utils/useWindowDimensions";
+import AnimButton from "../../AnimButton";
 
 export default function ResultEndGame() {
   const { endGameScore, isResultEndGame } = useSelector(
@@ -34,11 +33,11 @@ export default function ResultEndGame() {
     // countTicket
     tokenGuest
   } = useSelector((state) => state.userReducer);
+  const {scoreGames} = useSelector((state) => state.appReducer)
   const token = localStorage.getItem("token")
   const dispatch = useDispatch();
-
   const { id } = useParams();
-
+  const {user} = useSelector((state) => state.userReducer);
   const handleClose = () => {
     localStorage.removeItem("buyPackage");
     localStorage.removeItem("newNumberTicket");
@@ -73,7 +72,7 @@ export default function ResultEndGame() {
   };
 
   const handleConfirm = () => {
-    if(tokenUser || localStorage.getItem("token")) {
+    if(user?.isGuest === false) {
       if (check === "check") {
         dispatch(
           openPopupCompleteExtra({
@@ -87,6 +86,7 @@ export default function ResultEndGame() {
         dispatch(toggleStartGame(false));
         dispatch(finishGame());
         dispatch(finishVideo());
+        dispatch(getClaimFirstGamePlay())
         // if (tokenUser || localStorage.getItem("token")) {
           dispatch(
             getRefactorDetailAuthPromotion({
@@ -184,7 +184,7 @@ export default function ResultEndGame() {
             }}
           >
             <Box sx={{ marginTop: "12px", marginBottom: "12px" }}>
-              { token ? (
+              { user?.isGuest === false ? (
                 <>
                   {" "}
                   <Typography
@@ -249,7 +249,7 @@ export default function ResultEndGame() {
               </Box>
             </Box>
           </Box>
-          {token ? (
+          {user?.isGuest === false ? (
             <>
               
             </>
@@ -281,7 +281,7 @@ export default function ResultEndGame() {
               flexDirection: "column",
             }}
           >
-            {token ? (
+            {user?.isGuest === false ? (
               <>
               <AnimButton
                   onClick={() => handleConfirm()}
@@ -300,7 +300,7 @@ export default function ResultEndGame() {
               </>
             )}
             <Box className="mt-2">
-              {token ? (
+              {user?.isGuest === false ? (
                 <>
                 <Typography
                     sx={{

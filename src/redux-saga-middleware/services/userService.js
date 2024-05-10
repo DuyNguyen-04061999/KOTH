@@ -117,20 +117,9 @@ class UserService {
     const res = await PROMOTION_API.get("/api/authenticate/me", {
       headers: {
         "Content-Type": "application/json",
-        "x-access-refactor-token":
-          dataRequest ||
-          localStorage.getItem("token") ||
-          localStorage.getItem("token_guest"),
-        Authorization: `Bearer ${
-          dataRequest ||
-          localStorage.getItem("token") ||
-          localStorage.getItem("token_guest")
-        }`,
-        authorization: `Bearer ${
-          dataRequest ||
-          localStorage.getItem("token") ||
-          localStorage.getItem("token_guest")
-        }`,
+        "x-access-refactor-token": dataRequest || localStorage.getItem("token"),
+        Authorization: `Bearer ${dataRequest || localStorage.getItem("token")}`,
+        authorization: `Bearer ${dataRequest || localStorage.getItem("token")}`,
       },
     });
     return res;
@@ -288,9 +277,9 @@ class UserService {
     const res = await PROMOTION_API.put(`/api/guest/upgrade`, dataRequest, {
       headers: {
         "Content-Type": "application/json",
-        "x-access-refactor-token": localStorage.getItem("token_guest"),
-        Authorization: `Bearer ${localStorage.getItem("token_guest")}`,
-        authorization: `Bearer ${localStorage.getItem("token_guest")}`,
+        "x-access-refactor-token": localStorage.getItem("token"),
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
     return res;
