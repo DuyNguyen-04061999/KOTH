@@ -272,8 +272,6 @@ function App() {
     };
   }, [socket]);
 
-  
-
   useEffect(() => {
     const onPageLoad = () => {
       const token = localStorage.getItem("token");
@@ -362,7 +360,7 @@ function App() {
       const token = localStorage.getItem("token");
       if ((token || tokenUser) && currentTab !== "otpVerifyAccount") {
         store.dispatch(getUserInfoReady(token || tokenUser));
-      } 
+      }
     };
 
     if (document.readyState === "complete") {
