@@ -11,12 +11,12 @@ import settingSaga from "./settingSaga";
 import stripeSaga from "./stripeSaga";
 import tournamentSaga from "./tournamentSaga";
 import commentSaga from "./commentSaga";
-import { default as authSaga, default as userSaga } from "./userSaga";
 import addFriendSaga from "./addFriendSaga";
 import likeDislikeSaga from "./likeDislikeSaga";
 import referralSaga from "./referralSaga";
 import transactionSaga from "./transactionSaga";
 import listNewsSaga from "./newsSaga";
+import authSaga from "./userSaga";
 
 function* watchAll() {
   yield all([
@@ -26,7 +26,6 @@ function* watchAll() {
     stripeSaga(),
     helpcenterSaga(),
     promotionSaga(),
-    userSaga(),
     authSaga(),
     packageSaga(),
     settingSaga(),

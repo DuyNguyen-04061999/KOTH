@@ -60,7 +60,11 @@ import {
 } from "../../redux-saga-middleware/reducers/settingReducer";
 import { toggleAlertStripeProcess } from "../../redux-saga-middleware/reducers/stripeReducer";
 import { toggleCloseResultEndGame } from "../../redux-saga-middleware/reducers/tournamentReducer";
-import { getMyInfor, getUserInfoReady, updateUserToken } from "../../redux-saga-middleware/reducers/userReducer";
+import {
+  getMyInfor,
+  getUserInfoReady,
+  updateUserToken,
+} from "../../redux-saga-middleware/reducers/userReducer";
 import { compareDate, compareDateInUSA } from "../../utils/config";
 import { imageDesktop, images } from "../../utils/images";
 import { systemNotification } from "../../utils/notification";
@@ -96,6 +100,7 @@ import CompleteExtra from "../Dialog/PopupNewUser/CompleteExtra";
 import CompleteProfile from "../Dialog/PopupNewUser/CompleteProfile";
 import DialogCheckExtraGuest from "../Dialog/DialogCheckExtraGuest";
 import { jwtDecode } from "jwt-decode";
+import DeleteChatConfirm from "../Dialog/DeleteChatConfirm";
 
 const Main = muiStyled("main", {
   shouldForwardProp: (prop) => prop !== "open",
@@ -144,11 +149,13 @@ export default function Layout(props) {
     user,
     openTransactionDialog,
     openReasonDialog,
-    tokenGuest
+    tokenGuest,
   } = useSelector((state) => state.userReducer);
-  const { chatPopup, badgechat } = useSelector((state) => state.chatReducer);
+  const { chatPopup, badgechat, isOpenConfirmDelete } = useSelector(
+    (state) => state.chatReducer
+  );
   const { listSetting } = useSelector((state) => state.settingReducer);
-  const { router, startGameCheck, fromRouter, countDownDoubleDay} =
+  const { router, startGameCheck, fromRouter, countDownDoubleDay } =
     useSelector((state) => state.appReducer);
   const { width } = useWindowDimensions();
   const navigate = useNavigate();
@@ -167,8 +174,7 @@ export default function Layout(props) {
   useEffect(() => {
     if (!tokenGuest && !localStorage.getItem("token")) {
       dispatch(getUserGuest());
-    } 
-    else if(!localStorage.getItem("token")){
+    } else if (!localStorage.getItem("token")) {
       try {
         const decoded = jwtDecode(tokenGuest);
         const expiredTime = new Date(decoded?.iat * 1000);
@@ -176,7 +182,7 @@ export default function Layout(props) {
         if (expiredTime < currentTime) {
           dispatch(getUserGuest());
         }
-      } catch(e){
+      } catch (e) {
         dispatch(getUserGuest());
       }
     }
@@ -184,10 +190,10 @@ export default function Layout(props) {
   }, [tokenGuest, localStorage.getItem("token")]);
 
   useEffect(() => {
-    if(token) {
-      dispatch(getMyInfor())
+    if (token) {
+      dispatch(getMyInfor());
     }
-  },[token])
+  }, [token]);
 
   useEffect(() => {
     let timeOutId = undefined;
@@ -354,10 +360,10 @@ export default function Layout(props) {
   }, [query, dispatch, isAlertDialog]);
 
   useEffect(() => {
-    if(token) {
-      dispatch(getScoreGame())
+    if (token) {
+      dispatch(getScoreGame());
     }
-  },[token])
+  }, [token]);
 
   useEffect(() => {
     if (isChangeLocation) {
@@ -521,6 +527,7 @@ export default function Layout(props) {
       {openTransactionDialog && <TransactionHistory />}
       <StripeAlertComponent />
       {openReasonDialog && <DialogBanUser />}
+      {isOpenConfirmDelete && <DeleteChatConfirm />}
       <ShareTour />
       <SubscriptionDialog />
       <TouramentShow />

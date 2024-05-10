@@ -31,6 +31,7 @@ import "./index.scss";
 import WinnerNotification from "../WinnerNotification";
 import {
   clickTabChat,
+  openDeleteChatConfirmPopup,
   updateContacterUsername,
   updateCurrentContacter,
   updateFriendChat,
@@ -663,7 +664,6 @@ export default function ChatWorldList() {
     }
     return () => {};
   }, [socket, dispatch, tokenUser]);
-  console.log("data: ", chatWorld);
   return (
     <Box sx={{ position: "relative" }}>
       <Box
@@ -790,7 +790,7 @@ export default function ChatWorldList() {
           {user?.userRole === "Moderator" && !currContacter?.isDeleted && (
             <MenuItem
               onClick={() => {
-                console.log(currContacter);
+                dispatch(openDeleteChatConfirmPopup());
               }}
               sx={{
                 padding: "5px",

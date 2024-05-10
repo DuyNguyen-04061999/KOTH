@@ -100,7 +100,6 @@ export default function ComponentChat() {
       // socket?.off()
     };
   }, [socket, roomId, gameId, navigate, dispatch]);
-  console.log(friendMessages);
   const renderChat = friendMessages.map((e, index) => {
     return (
       <Box

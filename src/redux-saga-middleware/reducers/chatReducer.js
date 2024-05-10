@@ -111,6 +111,12 @@ export const updateFriendChat = (data) => {
     payload: data,
   };
 };
+export const updateCurrentContacter = (data) => {
+  return {
+    type: "UPDATE_CURRENT_CONTACTER",
+    payload: data,
+  };
+};
 export const openDeleteChatConfirmPopup = (data) => {
   return {
     type: "OPEN_DELETE_CHAT_CONFIRM_POPUP",
@@ -131,7 +137,7 @@ export const deleteChatReady = (data) => {
 };
 export const deleteChatSuccess = (data) => {
   return {
-    type: "DELETE_CHAT_READY_SUCCESS",
+    type: "DELETE_CHAT_SUCCESS",
     payload: data,
   };
 };
@@ -159,7 +165,6 @@ const chatReducer = (
     currContacter: {},
     //-------------------- Delete chat --------------------
     isOpenConfirmDelete: false,
-    currentDeleteMessId: -1,
     isDeleteChatReady: false,
   },
   action
@@ -176,7 +181,6 @@ const chatReducer = (
       return {
         ...state,
         isOpenConfirmDelete: false,
-        currentDeleteMessId: payload,
       };
     }
     case "DELETE_CHAT_READY": {
@@ -191,7 +195,7 @@ const chatReducer = (
         isDeleteChatReady: false,
       };
     }
-    case "DELETE_CHAT_READY_SUCCESS": {
+    case "DELETE_CHAT_SUCCESS": {
       return {
         ...state,
         isDeleteChatReady: false,
