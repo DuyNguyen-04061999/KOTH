@@ -26,14 +26,29 @@ class UserService {
     );
     return res;
   }
+  async deleteMessenger(dataRequest) {
+    const res = await PROMOTION_API.delete("/api/socials/remove-message", {
+      data: { ...dataRequest },
+      headers: {
+        "Content-Type": "application/json",
+        "x-access-refactor-token": localStorage.getItem("token"),
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    return res;
+  }
 
   async verifyOtp(dataRequest) {
     const res = await PROMOTION_API.post(
       "/api/authenticate/verify-otp",
-      dataRequest,
+      { ...dataRequest },
       {
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "multipart/form-data",
+          "x-access-refactor-token": localStorage.getItem("token"),
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }
     );
@@ -56,7 +71,7 @@ class UserService {
   async updateNewPassword(dataRequest) {
     const res = await PROMOTION_API.post(
       "/api/authenticate/update-new-password",
-      dataRequest,
+      { ...dataRequest, token: localStorage.getItem("token") },
       {
         headers: {
           "Content-Type": "application/json",
@@ -102,8 +117,8 @@ class UserService {
     const res = await PROMOTION_API.get("/api/authenticate/me", {
       headers: {
         "Content-Type": "application/json",
-        "x-access-refactor-token": dataRequest || localStorage.getItem("token") ,
-        Authorization: `Bearer ${dataRequest || localStorage.getItem("token") }`,
+        "x-access-refactor-token": dataRequest || localStorage.getItem("token"),
+        Authorization: `Bearer ${dataRequest || localStorage.getItem("token")}`,
         authorization: `Bearer ${dataRequest || localStorage.getItem("token")}`,
       },
     });
@@ -259,19 +274,15 @@ class UserService {
   }
 
   async upgradeGuestService(dataRequest) {
-    const res = await PROMOTION_API.put(
-      `/api/guest/upgrade`,
-      dataRequest,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          "x-access-refactor-token": localStorage.getItem("token"),
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-          authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      }
-    )
-    return res
+    const res = await PROMOTION_API.put(`/api/guest/upgrade`, dataRequest, {
+      headers: {
+        "Content-Type": "application/json",
+        "x-access-refactor-token": localStorage.getItem("token"),
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    return res;
   }
 
   async getClaimFirstGamePlay(dataRequest) {
@@ -295,6 +306,5 @@ class UserService {
     return res;
   }
 }
-
 
 export default UserService;
