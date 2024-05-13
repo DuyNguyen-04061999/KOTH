@@ -25,7 +25,7 @@ export default function Browser(props) {
   const { t } = useTranslation("navigation");
   const { open, handleShowMenu } = props;
   const { isDropdownNav } = useSelector((state) => state.authReducer);
-  const { tokenUser: token } = useSelector((state) => state.userReducer);
+  const { tokenUser: token, user } = useSelector((state) => state.userReducer);
   const { tabHelpCenter } = useSelector((state) => state.helpcenterReducer);
   const decodeToken = CheckToken()
   const dispatch = useDispatch();
@@ -961,7 +961,7 @@ export default function Browser(props) {
                       borderRadius: "5px",
                     }}
                     onClick={() => {
-                      if (token) {
+                      if (user?.isGuest === false) {
                         navigate("/joined-promotion");
                         handleShowMenu();
                       } else {
