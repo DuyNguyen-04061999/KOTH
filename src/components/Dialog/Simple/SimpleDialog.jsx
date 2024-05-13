@@ -26,12 +26,12 @@ export default function SimpleDialog(props) {
   const { currentTab, isLoginDialog } = useSelector(
     (state) => state.authReducer
   );
-  const {id} = useParams()
+  const { id } = useParams();
   const dispatch = useDispatch();
   const { width } = useWindowDimensions();
   const { device } = useSelector((state) => state.deviceReducer);
   const { orientation } = useSelector((state) => state.gameReducer);
-  const {tokenUser} = useSelector((state) => state.userReducer)
+  const { tokenUser } = useSelector((state) => state.userReducer);
   const handleClose = () => {
     dispatch(closeLoginDialog());
     dispatch(closeVerifyDialog());
@@ -43,8 +43,8 @@ export default function SimpleDialog(props) {
         dispatch(clickTab("login"));
       }
     }, 500);
-    if(tokenUser) {
-      if(id && id !== 'undefined') {
+    if (tokenUser) {
+      if (id && id !== "undefined") {
         dispatch(
           getRefactorDetailAuthPromotion({
             id,
@@ -127,7 +127,7 @@ export default function SimpleDialog(props) {
             open={isLoginDialog}
             maxWidth={"md"}
             fullScreen={
-              device === "Mobile" || device === "Tablet" ? true : false
+             device === "Tablet" ? true : false
             }
             sx={{
               ".MuiPaper-root": {
@@ -147,7 +147,7 @@ export default function SimpleDialog(props) {
                 width: device === "Desktop" ? "50%" : "100%",
                 display: "flex",
                 alignItems: "center",
-                overflow: device === "Mobile" ? "visible" : "auto",
+                overflow: "auto",
               }}
               className="p-2"
             >
@@ -223,7 +223,7 @@ export default function SimpleDialog(props) {
                         fontWeight: "800",
                         marginTop: "20px",
                         marginLeft: "0px !important",
-                        textAlign:"center"
+                        textAlign: "center",
                       }}
                     >
                       PLAY4PROMO

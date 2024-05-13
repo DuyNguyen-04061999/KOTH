@@ -983,7 +983,7 @@ export default function Browser(props) {
                         overflow: "hidden",
                       }}
                     >
-                      {t("Joined")}
+                      {t("Played")}
                     </span>
                   </Box>
                 </Box>

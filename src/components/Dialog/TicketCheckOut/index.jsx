@@ -4,31 +4,27 @@ import {
   Box,
   Button,
   Dialog,
-  FormControl,
   Grid,
-  MenuItem,
-  Select,
-  Typography,
   Tooltip,
+  Typography
 } from "@mui/material";
-import { useEffect, useState, useTransition } from "react";
+import { withStyles } from "@mui/styles";
+import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
+import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import _socket from "../../../redux-saga-middleware/config/socket";
-import { withStyles } from "@mui/styles";
 import { getCheckOut } from "../../../redux-saga-middleware/reducers/checkoutReducer";
 import {
   closeCheckWallet,
-  deleteCurrentPackage,
-  toggleCheckWallet,
+  toggleCheckWallet
 } from "../../../redux-saga-middleware/reducers/walletReducer";
 import { formatMoney } from "../../../utils/helper";
 import { images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import AnimButton from "../../AnimButton";
 import "./index.scss";
-import { useTranslation } from "react-i18next";
 
 const BgWithTooltip = withStyles({
   tooltip: {
@@ -42,6 +38,7 @@ export default function TicketCheckOut() {
   const { isCheckWallet, typeWallet, goldCombo, totalExtra } = useSelector(
     (state) => state.walletReducer
   );
+  const {device} = useSelector((state) => state.deviceReducer)
   const { t } = useTranslation("auth");
   const { idPackage } = useSelector((state) => state.authReducer);
   const { listSetting } = useSelector((state) => state.settingReducer);
@@ -167,7 +164,9 @@ export default function TicketCheckOut() {
       })
     );
     setSl(1);
-    // dispatch(toggleCheckWallet());
+    if(device === "Mobile") {
+      dispatch(toggleCheckWallet());
+    }
   };
   const btnBuyTicket = (event) => {
     event.currentTarget.disabled = true;
@@ -181,7 +180,9 @@ export default function TicketCheckOut() {
       })
     );
     setSl(1);
-    // dispatch(toggleCheckWallet());
+    if(device === "Mobile") {
+      dispatch(toggleCheckWallet());
+    }
   };
 
   useEffect(() => {
@@ -389,9 +390,9 @@ export default function TicketCheckOut() {
                         color: "white",
                         backgroundColor: typeWallet?.includes("sub")
                           ? "gray !important"
-                          : "" || typeWallet?.includes("normal")
+                          : "rgba(0, 0, 0, 0.12)" || typeWallet?.includes("normal")
                           ? "#7848ED"
-                          : "",
+                          : "rgba(0, 0, 0, 0.12)",
                         borderRadius: "0px",
                         padding: "0px",
                         minWidth: "auto",
@@ -399,6 +400,11 @@ export default function TicketCheckOut() {
                         height: "30px",
                         "&:hover": {
                           backgroundColor: "#7848ED",
+                        },
+                        "& .MuiButtonBase-root-MuiButton-root" : {
+                          "& .Mui-disabled" : {
+                            backgroundColor:"transparent !important"
+                          }
                         },
                       }}
                     >
@@ -439,9 +445,9 @@ export default function TicketCheckOut() {
                         color: "white",
                         backgroundColor: typeWallet?.includes("sub")
                           ? "gray !important"
-                          : "" || typeWallet?.includes("normal")
+                          : "rgba(0, 0, 0, 0.12)" || typeWallet?.includes("normal")
                           ? "#7848ED !important"
-                          : "",
+                          : "rgba(0, 0, 0, 0.12)",
                         borderRadius: "0px",
                         padding: "0px",
                         minWidth: "auto",
@@ -449,6 +455,11 @@ export default function TicketCheckOut() {
                         height: "30px",
                         "&:hover": {
                           backgroundColor: "gray",
+                        },
+                        "& .MuiButtonBase-root-MuiButton-root" : {
+                          "& .Mui-disabled" : {
+                            backgroundColor:"transparent !important"
+                          }
                         },
                       }}
                     >
