@@ -72,7 +72,7 @@ export default function ResultEndGame() {
   };
   const handleConfirm = () => {
     if(user?.isGuest === false) {
-      if (scoreGames === "0") {
+      if (scoreGames === 0) {
         dispatch(
           openPopupCompleteExtra({
             type: "firstPlay",

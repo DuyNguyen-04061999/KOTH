@@ -263,7 +263,7 @@ export default function DialogProfile(props) {
 
   const handleAddFriend = (username) => {
     if(user?.isGuest === true) {
-      dispatch(toggleLoginDialog)
+      dispatch(toggleLoginDialog())
     } else {
       socket.emit("addFriend", {
         username: userNameProfile,

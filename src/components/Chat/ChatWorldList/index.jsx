@@ -735,7 +735,7 @@ export default function ChatWorldList() {
             </Box>
           </MenuItem>
           {(user?.userRole === "Moderator" || currContacter?.isModMessage) &&
-            user?.isGuest === false && (
+            tokenUser && (
               <MenuItem
                 onClick={() => {
                   dispatch(clickTabChat(false));
