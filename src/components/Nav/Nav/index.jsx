@@ -28,7 +28,7 @@ export default function Navbar({isNav}) {
         (state) => state.authReducer
     );
     const {device} = useSelector((state) => state.deviceReducer);
-    const {tokenUser: token} = useSelector((state) => state.userReducer);
+    const {tokenUser: token, user} = useSelector((state) => state.userReducer);
     const [socket, setSocket] = useState(null);
     useEffect(() => {
         const socket = _socket;
@@ -932,7 +932,7 @@ export default function Navbar({isNav}) {
                                                 },
                                             }}
                                             onClick={() => {
-                                                if (token) {
+                                                if (user?.isGuest === false) {
                                                     navigate("/joined-promotion");
                                                 } else {
                                                     dispatch(openLoginDialog());

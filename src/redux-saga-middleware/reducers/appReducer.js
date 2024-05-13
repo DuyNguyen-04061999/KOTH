@@ -369,7 +369,7 @@ const appReducer = (
     stepProfile: "step1",
     isOpenCompleteProfile: false,
     isFetchScore: false,
-    scoreGame: "",
+    scoreGame: 0,
   },
   action
 ) => {
