@@ -369,26 +369,30 @@ export default function ChatGlobal(props) {
                   View Profile
                 </Box>
               </MenuItem>
-              <MenuItem onClick={handleDeleteFriend}>
-                <Box
-                  className="p-2 text-white cursor-pointer"
-                  onClick={() => {
-                    if (width < 576) {
-                      handleShow();
-                    } else {
-                    }
-                  }}
-                  sx={{
-                    background: "linear-gradient(180deg, #843ff0, #7748ed)",
-                    width: "100%",
-                    borderRadius: 1,
-                    fontWeight: "bold",
-                  }}
-                >
-                  <DeleteFriendIcon className="me-2 pb-1" />
-                  Delete Friend
-                </Box>
-              </MenuItem>
+              {user?.userRole === "Moderator" ? (
+                <></>
+              ) : (
+                <MenuItem onClick={handleDeleteFriend}>
+                  <Box
+                    className="p-2 text-white cursor-pointer"
+                    onClick={() => {
+                      if (width < 576) {
+                        handleShow();
+                      } else {
+                      }
+                    }}
+                    sx={{
+                      background: "linear-gradient(180deg, #843ff0, #7748ed)",
+                      width: "100%",
+                      borderRadius: 1,
+                      fontWeight: "bold",
+                    }}
+                  >
+                    <DeleteFriendIcon className="me-2 pb-1" />
+                    Delete Friend
+                  </Box>
+                </MenuItem>
+              )}
             </Menu>
           )}
           <Box
