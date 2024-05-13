@@ -793,6 +793,7 @@ export default function ChatWorldList() {
             <MenuItem
               onClick={() => {
                 dispatch(openDeleteChatConfirmPopup());
+                setAnchorEl(null);
               }}
               sx={{
                 padding: "5px",
@@ -947,9 +948,9 @@ export default function ChatWorldList() {
                   {checkExistInFriendList(currContacter?.messageFromName) &&
                   tokenUser ? (
                     <Box
-                      onClick={() =>
-                        handleDeleteFriend(currContacter?.messageFromName)
-                      }
+                      onClick={() => {
+                        handleDeleteFriend(currContacter?.messageFromName);
+                      }}
                       className="p-1 text-white"
                       sx={{
                         background: "linear-gradient(180deg, #843ff0, #7748ed)",

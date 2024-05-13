@@ -118,7 +118,7 @@ export default function DialogBanUser() {
             style={{
               width: "90%",
               resize: "none",
-              height: width < 576 ? "50px" : "100px",
+              height: width < 576 ? "200px" : "100px",
               backgroundColor: "#271C39",
               border: "none",
               outline: "none",
