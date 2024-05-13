@@ -87,6 +87,7 @@ import {
 } from "../reducers/userReducer";
 import UserService from "../services/userService";
 import { toast } from "react-toastify";
+import { images } from "../../utils/images";
 
 const userService = new UserService();
 
@@ -1009,7 +1010,17 @@ function* deleteChatSaga(dataRequest) {
     if (status === 201) {
       yield put(deleteChatSuccess(payload));
       yield put(clostDeleteChatConfirmPopup());
-      toast.success("The message has been deleted successfully");
+      toast.success("The message has been deleted successfully", {
+        icon: ({ theme, type }) => (
+          <img
+            style={{ width: "20px", marginRight: "10px" }}
+            alt="..."
+            src={images.successIcon}
+          />
+        ),
+        position: "top-center",
+        className: "success-background",
+      });
     }
   } catch (err) {
     console.log(err);
