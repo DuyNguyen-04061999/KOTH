@@ -88,7 +88,7 @@ const CompleteProfile = ({
   const { state } = useSelector((state) => state.profileReducer);
   const [value, setValue] = useState("");
   const [dateError, setDateError] = useState("");
-  const [valueGender, setGender] = useState("");
+  const [valueGender, setGender] = useState(0);
   const [stateOption, setStateOption] = useState("");
   const [valueFirstName, setFirstName] = useState("");
   const [valueLastName, setLastName] = useState("");
@@ -133,6 +133,8 @@ const CompleteProfile = ({
       valueEmail === "" ||
       value === null ||
       value === undefined ||
+      valueGender === undefined ||
+      valueGender === null ||
       !validateEmail(valueEmail)
     ) {
       setDisableButton(true);
@@ -254,7 +256,7 @@ const CompleteProfile = ({
       </svg>
     );
   };
-
+  
   return ReactDOM.createPortal(
     <div>
       <Dialog
