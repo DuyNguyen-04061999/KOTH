@@ -1,15 +1,15 @@
+import { Close } from "@mui/icons-material";
 import { Box, Dialog, DialogActions, Typography } from "@mui/material";
 import React from "react";
 import ReactDOM from "react-dom";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { useDispatch, useSelector } from "react-redux";
-import { imageHome, images } from "../../../../utils/images";
-import AnimButton from "../../../AnimButton";
+import { closePopupCompleteExtra, getScoreGame, openPopupCompleteProfile } from "../../../../redux-saga-middleware/reducers/appReducer";
+import { getClaimFirstGamePlay, getMyInfor } from "../../../../redux-saga-middleware/reducers/userReducer";
+import { images } from "../../../../utils/images";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
-import { Close } from "@mui/icons-material";
-import { closePopupCompleteExtra, getScoreGame, getTypeDoneStep1, getTypeDoneStep2, getTypeFirstPlay, getTypeSecondPlay, openPopupCompleteProfile } from "../../../../redux-saga-middleware/reducers/appReducer";
-import { getClaimFirstGamePlay, getClaimPrizeInfo, getClaimPrizeOptional, getMyInfor } from "../../../../redux-saga-middleware/reducers/userReducer";
+import AnimButton from "../../../AnimButton";
 
 const CompleteExtra = ({
   bonusName = "Value extra pack",
@@ -37,6 +37,7 @@ const CompleteExtra = ({
     dispatch(openPopupCompleteProfile({
       type:"step1"
     }))
+    localStorage.removeItem("check")
     dispatch(closePopupCompleteExtra())
   }
   const handleDoneStep1 = () => {

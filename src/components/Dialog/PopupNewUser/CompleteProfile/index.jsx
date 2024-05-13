@@ -212,6 +212,8 @@ const CompleteProfile = ({
         gender: valueGender,
       })
     );
+    setFirstName("")
+    setEmail("")
     dispatch(getUserInfoReady());
   };
   const { width } = useWindowDimensions();
