@@ -4,18 +4,18 @@ import ReactDOM from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { closeDoubleDayDialog } from "../../../redux-saga-middleware/reducers/appReducer";
-import { images } from "../../../utils/images";
-import useWindowDimensions from "../../../utils/useWindowDimensions";
 import {
   clickTab,
   toggleLoginDialog,
 } from "../../../redux-saga-middleware/reducers/authReducer";
+import { images } from "../../../utils/images";
+import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 const DoubleDayDialog = () => {
   const { width } = useWindowDimensions();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { tokenUser } = useSelector((state) => state.userReducer);
+  const { tokenUser, user } = useSelector((state) => state.userReducer);
   const { showDoubleDayDialog, randomRender } = useSelector(
     (state) => state.appReducer
   );
@@ -50,7 +50,7 @@ const DoubleDayDialog = () => {
                   //   handleClose();
                   //   navigate("/promotion-detail/" + hotTournament[0].id);
                   // }
-                  if (tokenUser) {
+                  if (user?.isGuest === false) {
                     navigate("/home");
                   } else {
                     dispatch(clickTab("signup"));
@@ -100,7 +100,7 @@ const DoubleDayDialog = () => {
                   //   handleClose();
                   //   navigate("/promotion-detail/" + hotTournament[0].id);
                   // }
-                  if (tokenUser) {
+                  if (user?.isGuest === false) {
                     navigate("/home");
                   } else {
                     dispatch(clickTab("signup"));
