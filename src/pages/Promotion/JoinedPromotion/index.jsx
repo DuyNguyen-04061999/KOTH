@@ -10,7 +10,6 @@ import BannerLoading from "../../../components/LoadingComponent/BannerLoading";
 import MainLayout from "../../../components/MainLayout/MainLayout";
 import history from "../../../components/Router/history";
 import SlickSlider from "../../../components/SlickSlider";
-import FilterPromotion from "../../../components/filterPromotion";
 import { updateJoinedPage } from "../../../redux-saga-middleware/reducers/promotionReducer";
 import { getJoinedTour } from "../../../redux-saga-middleware/reducers/tournamentReducer";
 import { imageDesktop } from "../../../utils/images";
@@ -37,7 +36,7 @@ export default function JoinedPromotion() {
   const { joinedTournament, isFetchJoined, noDataJoined } = useSelector(
     (state) => state.tournamentReducer
   );
-  const { tokenUser } = useSelector((state) => state.userReducer);
+  const { tokenUser, user } = useSelector((state) => state.userReducer);
   const { joinedPag } = useSelector((state) => state.promotionReducer);
   const [data, setData] = useState(null);
   const [itemQuantity, setItemQuantity] = useState(0);
@@ -50,23 +49,28 @@ export default function JoinedPromotion() {
   }, [width, dispatch]);
 
   useEffect(() => {
-    if (joinedTournament && joinedTournament.length > 0) {
-      var newArray = [];
-      for (let i = 0; i < joinedTournament?.length; i++) {
-        if (joinedTournament[i].tournamentStatus === 1) {
-          newArray.unshift(joinedTournament[i]);
-        } else if (joinedTournament[i].tournamentStatus === 2) {
-          newArray.push(joinedTournament[i]);
+    if(user?.isGuest === false) {
+      if (joinedTournament !== null && joinedTournament.length > 0) {
+        var newArray = [];
+        for (let i = 0; i < joinedTournament?.length; i++) {
+          if (joinedTournament[i].tournamentStatus === 1) {
+            newArray.unshift(joinedTournament[i]);
+          } else if (joinedTournament[i].tournamentStatus === 2) {
+            newArray.push(joinedTournament[i]);
+          }
         }
-      }
-      setData(newArray);
+        setData(newArray);
+      } 
+    } else {
+      setData([])
     }
   }, [joinedTournament]);
+
   useEffect(() => {
-    if (!tokenUser) {
+    if (user?.isGuest === true) {
       navigate("/");
     }
-  }, [tokenUser, navigate]);
+  }, [user?.isGuest, navigate]);
 
   useEffect(() => {
     dispatch(getJoinedTour());

@@ -70,10 +70,9 @@ export default function ResultEndGame() {
     dispatch(toggleLoginDialog());
     dispatch(clickTab("signup"));
   };
-
   const handleConfirm = () => {
     if(user?.isGuest === false) {
-      if (check === "check") {
+      if (scoreGames === "0") {
         dispatch(
           openPopupCompleteExtra({
             type: "firstPlay",

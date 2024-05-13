@@ -16,6 +16,14 @@ import {
 } from "../../../redux-saga-middleware/reducers/addFriendReducer";
 import { showToastNotification } from "../../../redux-saga-middleware/reducers/alertReducer";
 import { openLoginDialog } from "../../../redux-saga-middleware/reducers/authReducer";
+import {
+  clickTabChat,
+  openDeleteChatConfirmPopup,
+  updateContacterUsername,
+  updateCurrentContacter,
+  updateFriendChat,
+  updateFriendNickName,
+} from "../../../redux-saga-middleware/reducers/chatReducer";
 import { toggleProfileDialog } from "../../../redux-saga-middleware/reducers/profileReducer";
 import { setWaitingNav } from "../../../redux-saga-middleware/reducers/roomReducer";
 import {
@@ -29,14 +37,6 @@ import { images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import UserChatLoadingList from "../../LoadingComponent/UserChatLoading";
 import WinnerNotification from "../WinnerNotification";
-import {
-  clickTabChat,
-  openDeleteChatConfirmPopup,
-  updateContacterUsername,
-  updateCurrentContacter,
-  updateFriendChat,
-  updateFriendNickName,
-} from "../../../redux-saga-middleware/reducers/chatReducer";
 import "./index.scss";
 
 export default function ChatWorldList() {
@@ -735,7 +735,7 @@ export default function ChatWorldList() {
             </Box>
           </MenuItem>
           {(user?.userRole === "Moderator" || currContacter?.isModMessage) &&
-            tokenUser && (
+            user?.isGuest === false && (
               <MenuItem
                 onClick={() => {
                   dispatch(clickTabChat(false));

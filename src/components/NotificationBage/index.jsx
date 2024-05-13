@@ -15,7 +15,6 @@ export default function NotificationBage() {
   const [read, setRead] = useState(true);
   const decodeToken = CheckToken()
 
-
   useEffect(() => {
     for (let index = 0; index < listNotifiaction.length; index++) {
       const element = listNotifiaction[index];
@@ -61,7 +60,7 @@ export default function NotificationBage() {
           ></path>
         </svg>
       </div>
-      {!read && token && (
+      {!read && decodeToken?.role !== "guest" && (
         <Box
           className="position-absolute rounded-circle"
           sx={{
