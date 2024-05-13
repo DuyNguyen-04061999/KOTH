@@ -11,10 +11,10 @@ import { useDispatch, useSelector } from "react-redux";
 import _socket from "../../../redux-saga-middleware/config/socket";
 import { showToastNotification } from "../../../redux-saga-middleware/reducers/alertReducer";
 import { toggleLoginDialog } from "../../../redux-saga-middleware/reducers/authReducer";
+import { clickTabChat } from "../../../redux-saga-middleware/reducers/chatReducer";
 import { popup } from "../../../utils/images";
 import ChatFriendList from "../../Chat/ChatFriendList";
 import ChatWorldList from "../../Chat/ChatWorldList";
-import { clickTabChat } from "../../../redux-saga-middleware/reducers/chatReducer";
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
@@ -49,13 +49,14 @@ export default function DialogChat(props) {
   const { startGameCheck } = useSelector((state) => state.appReducer);
   const { tabChat } = useSelector((state) => state.chatReducer);
   const [socket, setSocket] = useState(null);
+  const {user} = useSelector((state) => state.userReducer);
   const { t } = useTranslation("global");
   useEffect(() => {
     const socket = _socket;
     setSocket(socket);
   }, []);
   const clickRenderPerson = () => {
-    if (!token) {
+    if (user?.isGuest === true) {
       dispatch(toggleLoginDialog());
     } else {
       dispatch(clickTabChat(false));
@@ -74,7 +75,7 @@ export default function DialogChat(props) {
   };
   const handleOnKeyDown = (e) => {
     if (!startGameCheck) {
-      if (token === null || token === "") {
+      if (user?.isGuest === true) {
         dispatch(toggleLoginDialog());
       } else {
         if (tabChat === true) {
@@ -96,7 +97,7 @@ export default function DialogChat(props) {
 
   const handleOnClickSendMessageWorld = () => {
     if (!startGameCheck) {
-      if (token === null || token === "") {
+      if (user?.isGuest === true) {
         dispatch(toggleLoginDialog());
       } else {
         if (tabChat === true) {
