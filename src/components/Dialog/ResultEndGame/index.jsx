@@ -72,13 +72,13 @@ export default function ResultEndGame() {
   };
   const handleConfirm = () => {
     if(user?.isGuest === false) {
-      if (scoreGames === 0) {
+      if (check === "check") {
         dispatch(
           openPopupCompleteExtra({
             type: "firstPlay",
           })
         );
-        localStorage.removeItem("firstPlayGame");
+        // localStorage.removeItem("firstPlayGame");
         localStorage.removeItem("buyPackage");
         localStorage.removeItem("newNumberTicket");
         dispatch(toggleCloseResultEndGame());
