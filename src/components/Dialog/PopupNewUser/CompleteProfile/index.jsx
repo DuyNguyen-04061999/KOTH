@@ -212,12 +212,12 @@ const CompleteProfile = ({
         gender: valueGender,
       })
     );
-    setFirstName("")
-    setEmail("")
+    // setFirstName("")
+    // setEmail("")
+    localStorage.removeItem("firstPlayGame")
     dispatch(getUserInfoReady());
   };
   const { width } = useWindowDimensions();
-
   const returnIcon = () => {
     return (
       <svg
@@ -939,10 +939,11 @@ const CompleteProfile = ({
                     </svg>
                   </Box>
                   <Input
-                    id="input-with-icon-adornment"
+                    id="address"
+                    name="address"
                     type="text"
                     onChange={(e) => setAddressLine1(e.target.value)}
-                    value={addressLine1}
+                    value={addressLine1 || ""}
                     placeholder="Address"
                     sx={{
                       "&:before": {
@@ -1079,7 +1080,7 @@ const CompleteProfile = ({
                     id="input-with-icon-adornment"
                     type="text"
                     onChange={(e) => setCityOption(e.target.value)}
-                    value={cityOption}
+                    value={cityOption || ""}
                     placeholder="City"
                     sx={{
                       "&:before": {

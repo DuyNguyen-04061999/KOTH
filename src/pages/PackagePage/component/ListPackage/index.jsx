@@ -57,7 +57,7 @@ export default function ListPackage(props) {
   } = props;
   // const packageCategory = 'prenium flow'
   const [socket, setSocket] = useState(null);
-  const { tokenUser: token, uPack } = useSelector((state) => state.userReducer);
+  const { tokenUser: token, uPack, user } = useSelector((state) => state.userReducer);
 
   const { isFetchListPackage } = useSelector((state) => state.packageReducer);
   const { t } = useTranslation("package");
@@ -73,7 +73,7 @@ export default function ListPackage(props) {
   }, [socket]);
 
   const handleBuyPackage = () => {
-    if (token === null || token === "" || token === undefined) {
+    if (user?.isGuest === true) {
       dispatch(toggleLoginDialog());
     } else {
       if (token) {
