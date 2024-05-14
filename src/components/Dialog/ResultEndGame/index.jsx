@@ -39,7 +39,7 @@ export default function ResultEndGame() {
     // countTicket
     tokenGuest,
   } = useSelector((state) => state.userReducer);
-  const { scoreGames } = useSelector((state) => state.appReducer);
+  const { scoreGame } = useSelector((state) => state.appReducer);
   const token = localStorage.getItem("token");
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -62,7 +62,6 @@ export default function ResultEndGame() {
     }
   };
 
-  console.log(isResultEndGame);
 
   const check = localStorage.getItem("firstPlayGame");
 
@@ -81,7 +80,7 @@ export default function ResultEndGame() {
   const handleConfirm = () => {
     dispatch(toggleCloseResultEndGame());
     if (user?.isGuest === false) {
-      if (check === "check") {
+      if (scoreGame === 0 ) {
         dispatch(
           openPopupCompleteExtra({
             type: "firstPlay",
