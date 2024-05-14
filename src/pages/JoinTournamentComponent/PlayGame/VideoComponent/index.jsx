@@ -4,11 +4,8 @@ import { Box } from "@mui/system";
 import React, { useEffect, useRef, useState } from "react";
 import ReactGA from "react-ga4";
 import { useSelector } from "react-redux";
-import { video } from "../../../../utils/images";
-import { revealImg } from "../../../../utils/revealImages";
+import { imageDesktop, video } from "../../../../utils/images";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
-import { Link } from "react-router-dom";
-import { imageDesktop } from "../../../../utils/images";
 
 ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS_ID);
 
@@ -108,7 +105,7 @@ export default function VideoComponent(props) {
           <source
             src={
               detailTournament?.tournamentVideo
-                ? process.env.REACT_APP_SOCKET_SERVER +
+                ? `https://storage.googleapis.com/web-system-files` +
                   "/" +
                   detailTournament?.tournamentVideo
                 : video.LogoAnim
