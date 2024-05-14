@@ -57,7 +57,11 @@ export default function ListPackage(props) {
   } = props;
   // const packageCategory = 'prenium flow'
   const [socket, setSocket] = useState(null);
-  const { tokenUser: token, uPack, user } = useSelector((state) => state.userReducer);
+  const {
+    tokenUser: token,
+    uPack,
+    user,
+  } = useSelector((state) => state.userReducer);
 
   const { isFetchListPackage } = useSelector((state) => state.packageReducer);
   const { t } = useTranslation("package");
@@ -636,20 +640,39 @@ export default function ListPackage(props) {
               <></>
             )}
             <Box sx={{ marginTop: "6px", width: "100%", marginBottom: "4px" }}>
-              <AnimButton
-                upperCase={false}
-                text={t("Buy Now")}
-                type={"primary"}
-                // type={"disable"}
-                onClick={handleBuyPackage}
-                style={{
-                  padding: "8px 3px",
-                  color: "white",
-                  background: "#BE48ED",
-                  backdropFilter: " blur(4px)",
-                  fontSize: "16px ",
-                }}
-              ></AnimButton>
+              {packageCategory === "sub" ? (
+                <AnimButton
+                  upperCase={false}
+                  text={t("Buy Now")}
+                  // type={"primary"}
+                  type={"disable"}
+                  // onClick={handleBuyPackage}
+                  style={{
+                    padding: "8px 3px",
+                    color: "white",
+                    // background: "#BE48ED",
+                    background: "#979797",
+                    backdropFilter: " blur(4px)",
+                    fontSize: "16px ",
+                  }}
+                ></AnimButton>
+              ) : (
+                <AnimButton
+                  upperCase={false}
+                  text={t("Buy Now")}
+                  type={"primary"}
+                  // type={"disable"}
+                  onClick={handleBuyPackage}
+                  style={{
+                    padding: "8px 3px",
+                    color: "white",
+                    background: "#BE48ED",
+                    // background: "#979797",
+                    backdropFilter: " blur(4px)",
+                    fontSize: "16px ",
+                  }}
+                ></AnimButton>
+              )}
             </Box>
           </Box>
         </Box>
