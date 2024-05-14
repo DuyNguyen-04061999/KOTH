@@ -17,8 +17,14 @@ import {
   finishVideo,
   getRefactorDetailAuthPromotion,
 } from "../../../redux-saga-middleware/reducers/promotionReducer";
-import { CheckGuestUpgrade, toggleCloseResultEndGame } from "../../../redux-saga-middleware/reducers/tournamentReducer";
-import { getClaimFirstGamePlay, getUserInfoReady } from "../../../redux-saga-middleware/reducers/userReducer";
+import {
+  CheckGuestUpgrade,
+  toggleCloseResultEndGame,
+} from "../../../redux-saga-middleware/reducers/tournamentReducer";
+import {
+  getClaimFirstGamePlay,
+  getUserInfoReady,
+} from "../../../redux-saga-middleware/reducers/userReducer";
 import { images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import AnimButton from "../../AnimButton";
@@ -31,13 +37,13 @@ export default function ResultEndGame() {
   const {
     tokenUser,
     // countTicket
-    tokenGuest
+    tokenGuest,
   } = useSelector((state) => state.userReducer);
-  const {scoreGames} = useSelector((state) => state.appReducer)
-  const token = localStorage.getItem("token")
+  const { scoreGames } = useSelector((state) => state.appReducer);
+  const token = localStorage.getItem("token");
   const dispatch = useDispatch();
   const { id } = useParams();
-  const {user} = useSelector((state) => state.userReducer);
+  const { user } = useSelector((state) => state.userReducer);
   const handleClose = () => {
     localStorage.removeItem("buyPackage");
     localStorage.removeItem("newNumberTicket");
@@ -65,36 +71,35 @@ export default function ResultEndGame() {
         token: tokenUser || tokenGuest,
       })
     );
-    dispatch(CheckGuestUpgrade(true))
+    dispatch(CheckGuestUpgrade(true));
     dispatch(toggleCloseResultEndGame());
     dispatch(toggleLoginDialog());
     dispatch(clickTab("signup"));
   };
   const handleConfirm = () => {
-    if(user?.isGuest === false) {
+    if (user?.isGuest === false) {
       if (check === "check") {
         dispatch(
           openPopupCompleteExtra({
             type: "firstPlay",
           })
         );
-        // localStorage.removeItem("firstPlayGame");
+        dispatch()
+        localStorage.removeItem("firstPlayGame");
         localStorage.removeItem("buyPackage");
         localStorage.removeItem("newNumberTicket");
         dispatch(toggleCloseResultEndGame());
         dispatch(toggleStartGame(false));
         dispatch(finishGame());
         dispatch(finishVideo());
-        dispatch(getClaimFirstGamePlay())
-        // if (tokenUser || localStorage.getItem("token")) {
-          dispatch(
-            getRefactorDetailAuthPromotion({
-              id,
-              token: tokenUser,
-            })
-          );
-          dispatch(getUserInfoReady());
-        // }
+        dispatch(getClaimFirstGamePlay());
+        dispatch(
+          getRefactorDetailAuthPromotion({
+            id,
+            token: tokenUser,
+          })
+        );
+        dispatch(getUserInfoReady());
       } else {
         localStorage.removeItem("buyPackage");
         localStorage.removeItem("newNumberTicket");
@@ -103,30 +108,30 @@ export default function ResultEndGame() {
         dispatch(finishGame());
         dispatch(finishVideo());
         // if (tokenUser || localStorage.getItem("token")) {
-          dispatch(
-            getRefactorDetailAuthPromotion({
-              id,
-              token: tokenUser,
-            })
-          );
-          dispatch(getUserInfoReady());
+        dispatch(
+          getRefactorDetailAuthPromotion({
+            id,
+            token: tokenUser,
+          })
+        );
+        dispatch(getUserInfoReady());
         // }
       }
     } else {
-    dispatch(CheckGuestUpgrade(true))
-    dispatch(toggleCloseResultEndGame());
-    dispatch(
-      getRefactorDetailAuthPromotion({
-        id,
-        token: tokenUser || tokenGuest,
-      })
-    );
-    dispatch(getUserInfoReady());
-    dispatch(toggleStartGame(false));
-    dispatch(finishGame());
-    dispatch(finishVideo());
-    localStorage.removeItem("buyPackage");
-        localStorage.removeItem("newNumberTicket");
+      dispatch(CheckGuestUpgrade(true));
+      dispatch(toggleCloseResultEndGame());
+      dispatch(
+        getRefactorDetailAuthPromotion({
+          id,
+          token: tokenUser || tokenGuest,
+        })
+      );
+      dispatch(getUserInfoReady());
+      dispatch(toggleStartGame(false));
+      dispatch(finishGame());
+      dispatch(finishVideo());
+      localStorage.removeItem("buyPackage");
+      localStorage.removeItem("newNumberTicket");
     }
   };
 
@@ -183,25 +188,10 @@ export default function ResultEndGame() {
             }}
           >
             <Box sx={{ marginTop: "12px", marginBottom: "12px" }}>
-              { user?.isGuest === false ? (
+              {user?.isGuest === false ? (
                 <>
                   {" "}
                   <Typography
-                  sx={{
-                    fontSize: width < 576 ? "24px" : "24px",
-                    fontWeight: 800,
-                    color: "white",
-                    fontStyle: "normal",
-                    textTransform: "capitalize",
-                    lineHeight: "130%",
-                  }}
-                >
-                  TOTAL SCORE
-                </Typography>
-                 
-                </>
-              ) : (
-                <Typography
                     sx={{
                       fontSize: width < 576 ? "24px" : "24px",
                       fontWeight: 800,
@@ -211,8 +201,22 @@ export default function ResultEndGame() {
                       lineHeight: "130%",
                     }}
                   >
-                    SAVE PROGRESS
+                    TOTAL SCORE
                   </Typography>
+                </>
+              ) : (
+                <Typography
+                  sx={{
+                    fontSize: width < 576 ? "24px" : "24px",
+                    fontWeight: 800,
+                    color: "white",
+                    fontStyle: "normal",
+                    textTransform: "capitalize",
+                    lineHeight: "130%",
+                  }}
+                >
+                  SAVE PROGRESS
+                </Typography>
               )}
             </Box>
             <Box
@@ -249,13 +253,16 @@ export default function ResultEndGame() {
             </Box>
           </Box>
           {user?.isGuest === false ? (
-            <>
-              
-            </>
+            <></>
           ) : (
             <>
               <Box>
-                <Box component={"img"} alt="..." src={images.crossbar} sx={{width:"100%"}}></Box>
+                <Box
+                  component={"img"}
+                  alt="..."
+                  src={images.crossbar}
+                  sx={{ width: "100%" }}
+                ></Box>
                 <Typography
                   sx={{
                     fontSize: width < 576 ? "14px" : "14px",
@@ -264,12 +271,17 @@ export default function ResultEndGame() {
                     fontStyle: "normal",
                     textTransform: "capitalize",
                     lineHeight: "130%",
-                    textAlign:"center"
+                    textAlign: "center",
                   }}
                 >
                   Sign Up to save progress and get coins.
                 </Typography>
-                <Box component={"img"} alt="..." src={images.crossbar} sx={{width:"100%"}}></Box>
+                <Box
+                  component={"img"}
+                  alt="..."
+                  src={images.crossbar}
+                  sx={{ width: "100%" }}
+                ></Box>
               </Box>
             </>
           )}
@@ -282,12 +294,11 @@ export default function ResultEndGame() {
           >
             {user?.isGuest === false ? (
               <>
-              <AnimButton
+                <AnimButton
                   onClick={() => handleConfirm()}
                   type="primary"
                   text="Continue"
                 ></AnimButton>
-                
               </>
             ) : (
               <>
@@ -301,7 +312,7 @@ export default function ResultEndGame() {
             <Box className="mt-2">
               {user?.isGuest === false ? (
                 <>
-                <Typography
+                  <Typography
                     sx={{
                       textAlign: "center",
                       fontSize: "18px",
@@ -313,7 +324,6 @@ export default function ResultEndGame() {
                   >
                     View your game history
                   </Typography>
-                  
                 </>
               ) : (
                 <>
@@ -327,8 +337,8 @@ export default function ResultEndGame() {
                       lineHeight: "normal",
                       color: "#7848ED",
                       cursor: "pointer",
-                      marginTop:"15px !important",
-                      marginLeft: "0px !important"
+                      marginTop: "15px !important",
+                      marginLeft: "0px !important",
                     }}
                   >
                     Continue with Guest Mode
