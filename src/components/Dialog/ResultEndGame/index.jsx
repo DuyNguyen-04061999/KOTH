@@ -62,6 +62,8 @@ export default function ResultEndGame() {
     }
   };
 
+  console.log(isResultEndGame);
+
   const check = localStorage.getItem("firstPlayGame");
 
   const handleToSignUp = () => {
@@ -77,6 +79,7 @@ export default function ResultEndGame() {
     dispatch(clickTab("signup"));
   };
   const handleConfirm = () => {
+    dispatch(toggleCloseResultEndGame());
     if (user?.isGuest === false) {
       if (check === "check") {
         dispatch(
@@ -84,11 +87,9 @@ export default function ResultEndGame() {
             type: "firstPlay",
           })
         );
-        dispatch()
         localStorage.removeItem("firstPlayGame");
         localStorage.removeItem("buyPackage");
         localStorage.removeItem("newNumberTicket");
-        dispatch(toggleCloseResultEndGame());
         dispatch(toggleStartGame(false));
         dispatch(finishGame());
         dispatch(finishVideo());
@@ -103,7 +104,6 @@ export default function ResultEndGame() {
       } else {
         localStorage.removeItem("buyPackage");
         localStorage.removeItem("newNumberTicket");
-        dispatch(toggleCloseResultEndGame());
         dispatch(toggleStartGame(false));
         dispatch(finishGame());
         dispatch(finishVideo());
@@ -119,7 +119,6 @@ export default function ResultEndGame() {
       }
     } else {
       dispatch(CheckGuestUpgrade(true));
-      dispatch(toggleCloseResultEndGame());
       dispatch(
         getRefactorDetailAuthPromotion({
           id,
