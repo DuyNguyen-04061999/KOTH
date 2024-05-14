@@ -52,7 +52,7 @@ import {
   saveIdTournament,
   toggleExtra
 } from "../../../redux-saga-middleware/reducers/tournamentReducer";
-import { getMyInfor } from "../../../redux-saga-middleware/reducers/userReducer";
+import { getUserInfoReady } from "../../../redux-saga-middleware/reducers/userReducer";
 import { isJson, sliceString } from "../../../utils/helper";
 import { imageDesktop, images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
@@ -144,7 +144,7 @@ export default function JoinTournament() {
 
   }, [token,tokenGuest]);
  
-
+console.log(user)
   const handleJoinTour = (sub) => {
       dispatch(
         joinPromotion({
@@ -158,7 +158,7 @@ export default function JoinTournament() {
 
   const handlePlayTour = () => {
     if (user?.isGuest === false) {
-      dispatch(getMyInfor())
+      dispatch(getUserInfoReady())
       dispatch(getScoreGame())
       if (scoreGame === 0) {
         handleJoinTour(true);
@@ -170,14 +170,16 @@ export default function JoinTournament() {
         return;
       } else {
         if (
-          firstName === null ||
-          lastName === null ||
-          email === null ||
-          gender === "" ||
-          birthDay === "" ||
-          firstName === "" ||
-          lastName === "" || 
-          email === "" 
+          user?.userFirstName === null ||
+          user?.userLastName === null ||
+          user?.userEmail === null ||
+          user?.userGender === "" ||
+          user?.userAccount?.accountBirthday === "" ||
+          user?.userFirstName === "" ||
+          user?.userLastName === "" || 
+          user?.userEmail === ""  ||
+          user?.userGender === null || 
+          user?.userAccount?.accountBirthday === null
         ) {
           dispatch(
             openPopupCompleteExtra({
