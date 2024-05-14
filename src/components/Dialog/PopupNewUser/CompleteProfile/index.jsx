@@ -27,7 +27,6 @@ import {
 } from "../../../../redux-saga-middleware/reducers/appReducer";
 import {
   getCityAndStateProfile,
-  getMyInfor,
   getUserInfoReady,
   updateProfileFirstPlay
 } from "../../../../redux-saga-middleware/reducers/userReducer";
@@ -189,6 +188,7 @@ const CompleteProfile = ({
         zipcode: zCode,
       })
     );
+    dispatch(getUserInfoReady())
   };
   const handleSkipStep2 = () => {
     dispatch(
@@ -197,7 +197,7 @@ const CompleteProfile = ({
       })
     );
     dispatch(closePopupCompleteProfile());
-    dispatch(getMyInfor());
+    dispatch(getUserInfoReady())
   };
 
   const handleClose = () => {
@@ -207,7 +207,7 @@ const CompleteProfile = ({
         type: "doneStep1",
       })
     );
-    dispatch(getMyInfor());
+    dispatch(getUserInfoReady())
   };
 
   const handleConfirm = () => {
