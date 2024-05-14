@@ -1,44 +1,38 @@
+import { Close } from "@mui/icons-material";
 import {
+  Autocomplete,
   Box,
   Dialog,
   DialogActions,
-  Typography,
   FormControl,
   Input,
-  Tooltip,
-  Autocomplete,
   TextField,
+  Tooltip,
+  Typography,
 } from "@mui/material";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import { styled, withStyles } from "@mui/styles";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
-import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { useDispatch, useSelector } from "react-redux";
-import { imageHome, images, sign } from "../../../../utils/images";
-import AnimButton from "../../../AnimButton";
-import useWindowDimensions from "../../../../utils/useWindowDimensions";
-import { Close, FlareSharp } from "@mui/icons-material";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
+import {
+  closePopupCompleteProfile,
+  openPopupCompleteExtra
+} from "../../../../redux-saga-middleware/reducers/appReducer";
 import {
   getCityAndStateProfile,
-  getMyInfor,
   getUserInfoReady,
-  updateProfileFirstPlay,
-  updateProfileUser,
+  updateProfileFirstPlay
 } from "../../../../redux-saga-middleware/reducers/userReducer";
-import { styled, withStyles } from "@mui/styles";
-import {
-  closePopupCompleteExtra,
-  closePopupCompleteProfile,
-  openPopupCompleteExtra,
-  openPopupCompleteProfile,
-} from "../../../../redux-saga-middleware/reducers/appReducer";
+import useWindowDimensions from "../../../../utils/useWindowDimensions";
 import { validateEmail } from "../../../../utils/validationEmail";
-import dayjs from "dayjs";
+import AnimButton from "../../../AnimButton";
 
 const CssTextField = styled(TextField)({
   "& .MuiOutlinedInput-root": {
@@ -93,7 +87,7 @@ const CompleteProfile = ({
   const { state } = useSelector((state) => state.profileReducer);
   const [value, setValue] = useState("");
   const [dateError, setDateError] = useState("");
-  const [valueGender, setGender] = useState("");
+  const [valueGender, setGender] = useState(0);
   const [stateOption, setStateOption] = useState("");
   const [valueFirstName, setFirstName] = useState("");
   const [valueLastName, setLastName] = useState("");
@@ -138,6 +132,8 @@ const CompleteProfile = ({
       valueEmail === "" ||
       value === null ||
       value === undefined ||
+      valueGender === undefined ||
+      valueGender === null ||
       !validateEmail(valueEmail)
     ) {
       setDisableButton(true);
@@ -151,7 +147,15 @@ const CompleteProfile = ({
       addressLine1 === "" ||
       zCode === "" ||
       cityOption === "" ||
-      stateOption === ""
+      stateOption === "" || 
+      addressLine1 === null ||
+      zCode === null ||
+      cityOption === null ||
+      stateOption === null ||
+      addressLine1 === undefined ||
+      zCode === undefined ||
+      cityOption === undefined ||
+      stateOption === undefined
     ) {
       setDiascleButtonStep2(true);
     } else {
@@ -184,6 +188,7 @@ const CompleteProfile = ({
         zipcode: zCode,
       })
     );
+    dispatch(getUserInfoReady())
   };
   const handleSkipStep2 = () => {
     dispatch(
@@ -192,7 +197,7 @@ const CompleteProfile = ({
       })
     );
     dispatch(closePopupCompleteProfile());
-    dispatch(getMyInfor());
+    dispatch(getUserInfoReady())
   };
 
   const handleClose = () => {
@@ -202,7 +207,7 @@ const CompleteProfile = ({
         type: "doneStep1",
       })
     );
-    dispatch(getMyInfor());
+    dispatch(getUserInfoReady())
   };
 
   const handleConfirm = () => {
@@ -215,14 +220,12 @@ const CompleteProfile = ({
         gender: valueGender,
       })
     );
+    // setFirstName("")
+    // setEmail("")
+    localStorage.removeItem("firstPlayGame")
     dispatch(getUserInfoReady());
-    if(isUpdateProfileFirstPlay === false) {
-      setFirstName('')
-      setEmail('')
-    }
   };
   const { width } = useWindowDimensions();
-
   const returnIcon = () => {
     return (
       <svg
@@ -263,7 +266,7 @@ const CompleteProfile = ({
       </svg>
     );
   };
-
+  
   return ReactDOM.createPortal(
     <div>
       <Dialog
@@ -771,7 +774,7 @@ const CompleteProfile = ({
                     <Select
                       labelId="demo-simple-select-label"
                       id="demo-simple-select"
-                      value={valueGender}
+                      value={valueGender || 0}
                       label="gender"
                       inputProps={{
                         MenuProps: {
@@ -944,10 +947,11 @@ const CompleteProfile = ({
                     </svg>
                   </Box>
                   <Input
-                    id="input-with-icon-adornment"
+                    id="address"
+                    name="address"
                     type="text"
                     onChange={(e) => setAddressLine1(e.target.value)}
-                    value={addressLine1}
+                    value={addressLine1 || ""}
                     placeholder="Address"
                     sx={{
                       "&:before": {
@@ -1034,7 +1038,7 @@ const CompleteProfile = ({
                     autoHighlight
                     disableClearable
                     onChange={handleChangeState}
-                    isOptionEqualToValue={(option, value) =>
+                    isOptionEqualToValue={(option, value) => 
                       option && option.name === value.name
                     }
                     getOptionLabel={(option) => (option && option.name) || ""}
@@ -1084,7 +1088,7 @@ const CompleteProfile = ({
                     id="input-with-icon-adornment"
                     type="text"
                     onChange={(e) => setCityOption(e.target.value)}
-                    value={cityOption}
+                    value={cityOption || ""}
                     placeholder="City"
                     sx={{
                       "&:before": {

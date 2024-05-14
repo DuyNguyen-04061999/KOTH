@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
 import { Badge, Box } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { openNotificationDialog } from "../../redux-saga-middleware/reducers/dialogReducer";
 import { openLoginDialog } from "../../redux-saga-middleware/reducers/authReducer";
+import { openNotificationDialog } from "../../redux-saga-middleware/reducers/dialogReducer";
+import { CheckToken } from "../../utils/checkToken";
 import { secondNotiComparison } from "../../utils/timeDiff";
 
 export default function NotificationBage() {
@@ -12,6 +13,7 @@ export default function NotificationBage() {
     (state) => state.notificationReducer
   );
   const [read, setRead] = useState(true);
+  const decodeToken = CheckToken()
 
   useEffect(() => {
     for (let index = 0; index < listNotifiaction.length; index++) {
@@ -31,7 +33,7 @@ export default function NotificationBage() {
     <Badge
       badgeContent={""}
       onClick={() => {
-        if (token) {
+        if (decodeToken?.role !== "guest") {
           dispatch(openNotificationDialog());
           setRead(true);
           localStorage.setItem("newNotiId", listNotifiaction[0]?.id);
@@ -58,7 +60,7 @@ export default function NotificationBage() {
           ></path>
         </svg>
       </div>
-      {!read && token && (
+      {!read && decodeToken?.role !== "guest" && (
         <Box
           className="position-absolute rounded-circle"
           sx={{

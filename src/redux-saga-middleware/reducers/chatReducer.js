@@ -117,6 +117,36 @@ export const updateCurrentContacter = (data) => {
     payload: data,
   };
 };
+export const openDeleteChatConfirmPopup = (data) => {
+  return {
+    type: "OPEN_DELETE_CHAT_CONFIRM_POPUP",
+    payload: data,
+  };
+};
+export const clostDeleteChatConfirmPopup = (data) => {
+  return {
+    type: "CLOSE_DELETE_CHAT_CONFIRM_POPUP",
+    payload: data,
+  };
+};
+export const deleteChatReady = (data) => {
+  return {
+    type: "DELETE_CHAT_READY",
+    payload: data,
+  };
+};
+export const deleteChatSuccess = (data) => {
+  return {
+    type: "DELETE_CHAT_SUCCESS",
+    payload: data,
+  };
+};
+export const deleteChatFail = (data) => {
+  return {
+    type: "DELETE_CHAT_FAIL",
+    payload: data,
+  };
+};
 
 const chatReducer = (
   state = {
@@ -133,11 +163,50 @@ const chatReducer = (
     userFriendNickName: "",
     openFriendChat: false,
     currContacter: {},
+    //-------------------- Delete chat --------------------
+    isOpenConfirmDelete: false,
+    isDeleteChatReady: false,
   },
   action
 ) => {
   let { type, payload } = action;
   switch (type) {
+    case "OPEN_DELETE_CHAT_CONFIRM_POPUP": {
+      return {
+        ...state,
+        isOpenConfirmDelete: true,
+      };
+    }
+    case "CLOSE_DELETE_CHAT_CONFIRM_POPUP": {
+      return {
+        ...state,
+        isOpenConfirmDelete: false,
+      };
+    }
+    case "DELETE_CHAT_READY": {
+      return {
+        ...state,
+        isDeleteChatReady: true,
+      };
+    }
+    case "DELETE_CHAT_FAIL": {
+      return {
+        ...state,
+        isDeleteChatReady: false,
+      };
+    }
+    case "DELETE_CHAT_SUCCESS": {
+      return {
+        ...state,
+        isDeleteChatReady: false,
+        chatWorld: state.chatWorld?.map((item) => {
+          if (item?.id === payload) {
+            return { ...item, isDeleted: true };
+          }
+          return item;
+        }),
+      };
+    }
     case "UPDATE_CURRENT_CONTACTER": {
       return {
         ...state,

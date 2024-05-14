@@ -1,5 +1,6 @@
 import AddFriendIcon from "@mui/icons-material/Person";
 import DeleteFriendIcon from "@mui/icons-material/PersonRemove";
+import PriorityHigh from "@mui/icons-material/PriorityHigh";
 import { Box, Dialog, Menu, MenuItem } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,11 +10,10 @@ import { showToastNotification } from "../../../redux-saga-middleware/reducers/a
 import { toggleProfileDialog } from "../../../redux-saga-middleware/reducers/profileReducer";
 import { getUserByUsername } from "../../../redux-saga-middleware/reducers/userReducer";
 import { inpChat } from "../../../utils/cssFrom";
-import { images, popup } from "../../../utils/images";
+import { popup } from "../../../utils/images";
 import { images280423_l } from "../../../utils/images280423_l";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import ComponentChat from "../componentChat";
-import PriorityHigh from "@mui/icons-material/PriorityHigh";
 
 const ChatRoot = styled.input`
   display: flex;
@@ -57,7 +57,7 @@ export default function ChatGlobal(props) {
   }, []);
 
   useEffect(() => {
-    if (tokenUser === null || tokenUser === "") {
+    if (user?.isGuest === true) {
       chatInput.current.reset();
     }
   }, [tokenUser]);
@@ -369,26 +369,30 @@ export default function ChatGlobal(props) {
                   View Profile
                 </Box>
               </MenuItem>
-              <MenuItem onClick={handleDeleteFriend}>
-                <Box
-                  className="p-2 text-white cursor-pointer"
-                  onClick={() => {
-                    if (width < 576) {
-                      handleShow();
-                    } else {
-                    }
-                  }}
-                  sx={{
-                    background: "linear-gradient(180deg, #843ff0, #7748ed)",
-                    width: "100%",
-                    borderRadius: 1,
-                    fontWeight: "bold",
-                  }}
-                >
-                  <DeleteFriendIcon className="me-2 pb-1" />
-                  Delete Friend
-                </Box>
-              </MenuItem>
+              {user?.userRole === "Moderator" ? (
+                <></>
+              ) : (
+                <MenuItem onClick={handleDeleteFriend}>
+                  <Box
+                    className="p-2 text-white cursor-pointer"
+                    onClick={() => {
+                      if (width < 576) {
+                        handleShow();
+                      } else {
+                      }
+                    }}
+                    sx={{
+                      background: "linear-gradient(180deg, #843ff0, #7748ed)",
+                      width: "100%",
+                      borderRadius: 1,
+                      fontWeight: "bold",
+                    }}
+                  >
+                    <DeleteFriendIcon className="me-2 pb-1" />
+                    Delete Friend
+                  </Box>
+                </MenuItem>
+              )}
             </Menu>
           )}
           <Box

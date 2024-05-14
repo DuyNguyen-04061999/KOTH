@@ -57,7 +57,7 @@ export default function ListPackage(props) {
   } = props;
   // const packageCategory = 'prenium flow'
   const [socket, setSocket] = useState(null);
-  const { tokenUser: token, uPack } = useSelector((state) => state.userReducer);
+  const { tokenUser: token, uPack, user } = useSelector((state) => state.userReducer);
 
   const { isFetchListPackage } = useSelector((state) => state.packageReducer);
   const { t } = useTranslation("package");
@@ -73,7 +73,7 @@ export default function ListPackage(props) {
   }, [socket]);
 
   const handleBuyPackage = () => {
-    if (token === null || token === "" || token === undefined) {
+    if (user?.isGuest === true) {
       dispatch(toggleLoginDialog());
     } else {
       if (token) {
@@ -313,7 +313,7 @@ export default function ListPackage(props) {
               sx={{
                 transform: "translate(0px,-34px)",
                 minHeight: packageCategory === "sub" ? "25%" : "20%",
-                overflow:"auto",
+                overflow: "auto",
                 maxHeight: packageCategory === "sub" ? "25%" : "20%",
               }}
             >
@@ -639,14 +639,13 @@ export default function ListPackage(props) {
               <AnimButton
                 upperCase={false}
                 text={t("Buy Now")}
-                // type={"primary"}
-                type={"disable"}
-                // onClick={handleBuyPackage}
+                type={"primary"}
+                // type={"disable"}
+                onClick={handleBuyPackage}
                 style={{
                   padding: "8px 3px",
                   color: "white",
-                  // background: "#BE48ED",
-                  background: "#979797",
+                  background: "#BE48ED",
                   backdropFilter: " blur(4px)",
                   fontSize: "16px ",
                 }}

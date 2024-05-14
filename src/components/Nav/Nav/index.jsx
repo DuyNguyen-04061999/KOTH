@@ -1,34 +1,34 @@
-import {Box, Typography, useTheme} from "@mui/material";
-import {useEffect, useState} from "react";
-import {useTranslation} from "react-i18next";
-import {useDispatch, useSelector} from "react-redux";
-import {useLocation, useNavigate} from "react-router-dom";
+import { Box, Typography, useTheme } from "@mui/material";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
 import _socket from "../../../redux-saga-middleware/config/socket";
-import {updateFromRouter} from "../../../redux-saga-middleware/reducers/appReducer";
+import { updateFromRouter } from "../../../redux-saga-middleware/reducers/appReducer";
 import {
     clickTab,
     openLoginDialog,
     showDropdown,
     toggleLoginDialog,
 } from "../../../redux-saga-middleware/reducers/authReducer";
-import {toggleGameLogDialog} from "../../../redux-saga-middleware/reducers/gameReducer";
-import {getAppType} from "../../../utils/helper";
-import {images, navbar} from "../../../utils/images";
+import { toggleGameLogDialog } from "../../../redux-saga-middleware/reducers/gameReducer";
+import { CheckToken } from "../../../utils/checkToken";
+import { getAppType } from "../../../utils/helper";
+import { images, navbar } from "../../../utils/images";
+import { imagesReferral } from "../../../utils/imagesReferral";
 import "../Nav/Nav.scss";
-import NavPromotionTablet from "./NavPromotionTablet";
-import {imagesReferral} from "../../../utils/imagesReferral";
 
 export default function Navbar({isNav}) {
     const {t} = useTranslation("navigation");
     const navigate = useNavigate();
     const dispatch = useDispatch();
-
+    const decodeToken = CheckToken()
     const [tablet, setTablet] = useState("");
     const {isDropdownNav, isNavTablet} = useSelector(
         (state) => state.authReducer
     );
     const {device} = useSelector((state) => state.deviceReducer);
-    const {tokenUser: token} = useSelector((state) => state.userReducer);
+    const {tokenUser: token, user} = useSelector((state) => state.userReducer);
     const [socket, setSocket] = useState(null);
     useEffect(() => {
         const socket = _socket;
@@ -932,7 +932,7 @@ export default function Navbar({isNav}) {
                                                 },
                                             }}
                                             onClick={() => {
-                                                if (token) {
+                                                if (user?.isGuest === false) {
                                                     navigate("/joined-promotion");
                                                 } else {
                                                     dispatch(openLoginDialog());
@@ -1518,7 +1518,7 @@ export default function Navbar({isNav}) {
                                 marginTop: "16px"
                             }}
                             onClick={() => {
-                                if (!token) {
+                                if (decodeToken?.role === "guest") {
                                     dispatch(clickTab("login"));
                                     dispatch(toggleLoginDialog());
                                 } else {

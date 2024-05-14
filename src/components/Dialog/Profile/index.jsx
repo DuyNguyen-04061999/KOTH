@@ -29,13 +29,12 @@ import { useDispatch, useSelector } from "react-redux";
 import _socket from "../../../redux-saga-middleware/config/socket";
 import { cancelRequestingFriend } from "../../../redux-saga-middleware/reducers/addFriendReducer";
 import { showToastNotification } from "../../../redux-saga-middleware/reducers/alertReducer";
-import { exitEditProfile } from "../../../redux-saga-middleware/reducers/profileReducer";
+import { toggleLoginDialog } from "../../../redux-saga-middleware/reducers/authReducer";
 import {
   getCityAndStateProfile,
-  getClaimPrizeInfo,
-  getClaimPrizeOptional,
-  updateProfileUser,
+  updateProfileUser
 } from "../../../redux-saga-middleware/reducers/userReducer";
+import { openRenewalBadgePopup } from "../../../redux-saga-middleware/reducers/walletReducer";
 import { images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import { validateNickName } from "../../../utils/validateNickName";
@@ -43,7 +42,6 @@ import AnimButton from "../../AnimButton";
 import LoadingEffect from "../../LoadingComponent";
 import AvatarPicker from "./AvatarPicker";
 import "./index.scss";
-import { openRenewalBadgePopup } from "../../../redux-saga-middleware/reducers/walletReducer";
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
@@ -264,9 +262,13 @@ export default function DialogProfile(props) {
   };
 
   const handleAddFriend = (username) => {
-    socket.emit("addFriend", {
-      username: userNameProfile,
-    });
+    if(user?.isGuest === true) {
+      dispatch(toggleLoginDialog())
+    } else {
+      socket.emit("addFriend", {
+        username: userNameProfile,
+      });
+    }
   };
 
   const handleCancelFriend = (username) => {

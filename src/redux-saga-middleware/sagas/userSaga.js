@@ -6,7 +6,13 @@ import { authNotification } from "../../utils/notification";
 import { store } from "../config/configRedux";
 import _socket from "../config/socket";
 import { showToastNotification } from "../reducers/alertReducer";
-import { closePopupCompleteProfile, getUserGuest, openDialogGif, openPopupCompleteExtra, openPopupCompleteProfile } from "../reducers/appReducer";
+import {
+  closePopupCompleteProfile,
+  getUserGuest,
+  openDialogGif,
+  openPopupCompleteExtra,
+  openPopupCompleteProfile,
+} from "../reducers/appReducer";
 import {
   clickTab,
   closeLoginDialog,
@@ -18,8 +24,10 @@ import {
 } from "../reducers/authReducer";
 import {
   clickTabChat,
+  clostDeleteChatConfirmPopup,
+  deleteChatSuccess,
   updateBannedChatWorld,
-  updateUnBannedChatWorld
+  updateUnBannedChatWorld,
 } from "../reducers/chatReducer";
 import {
   closeProfileDialog,
@@ -75,13 +83,13 @@ import {
   updateProfileUserFail,
   updateProfileUserSuccess,
   updateUserToken,
-  updateVerifyOTPType
+  updateVerifyOTPType,
 } from "../reducers/userReducer";
 import UserService from "../services/userService";
+import { toast } from "react-toastify";
+import { images } from "../../utils/images";
 
 const userService = new UserService();
-
-
 
 var loginCount = 0;
 function* loginSaga(dataRequest) {
@@ -94,23 +102,23 @@ function* loginSaga(dataRequest) {
       const { status, data } = res;
       if (status === 200 || status === 201) {
         // localStorage.removeItem("token_guest")
-        yield put(clearTokenGuest())
+        yield put(clearTokenGuest());
         yield delay(500);
         yield put(loginSuccess(data?.data));
         _socket.emit("loginSocial", {
           token: data?.data?.token,
         });
-        // if (payload?.remember) {
-        //   localStorage.setItem(
-        //     "account",
-        //     payload?.email || payload?.phone || ""
-        //   );
-        //   localStorage.setItem("pass", payload?.password);
-        // } else {
-        //   localStorage.removeItem("account");
-        //   localStorage.removeItem("pass");
-        //   localStorage.removeItem("firstPlayGame")
-        // }
+        if (payload?.remember) {
+          localStorage.setItem(
+            "account",
+            payload?.email || payload?.phone || ""
+          );
+          localStorage.setItem("pass", payload?.password);
+        } else {
+          localStorage.removeItem("account");
+          localStorage.removeItem("pass");
+          localStorage.removeItem("firstPlayGame");
+        }
         yield put(
           showToastNotification({
             type: authNotification.signIn.signInSuccess.type,
@@ -229,19 +237,21 @@ function* updateProfileSaga(dataRequest) {
       const { status, data } = res;
       if (status === 200 || status === 201) {
         yield put(closeProfileDialog());
-        yield put(exitEditProfile({
-          address1: payload?.address1 || "",
-          address2: payload?.address2 || "",
-          birthday: payload?.birthday,
-          city: payload?.city || "",
-          email: payload?.email || "",
-          gender: payload?.gender || 0,
-          nickName: payload?.nickName || "",
-          state:payload?.state || "",
-          zipcode: payload?.zipCode || "",
-          lastName:payload?.lastName || "",
-          firstName: payload?.firstName || ""
-        }));
+        yield put(
+          exitEditProfile({
+            address1: payload?.address1 || "",
+            address2: payload?.address2 || "",
+            birthday: payload?.birthday,
+            city: payload?.city || "",
+            email: payload?.email || "",
+            gender: payload?.gender || 0,
+            nickName: payload?.nickName || "",
+            state: payload?.state || "",
+            zipcode: payload?.zipCode || "",
+            lastName: payload?.lastName || "",
+            firstName: payload?.firstName || "",
+          })
+        );
         yield put(
           showToastNotification({
             type: "success",
@@ -256,7 +266,7 @@ function* updateProfileSaga(dataRequest) {
             checkFullInfor: data?.data?.checkFullInfor,
           })
         );
-        yield put(getClaimPrizeOptional())
+        yield put(getClaimPrizeOptional());
       } else {
         yield put(
           showToastNotification({
@@ -283,85 +293,87 @@ function* updateProfileSaga(dataRequest) {
   }
 }
 
-
-
-let updateFirstPlay = 0
+let updateFirstPlay = 0;
 function* updateProfileFirstPlay(dataRequest) {
-  const {stepProfile} = store.getState().appReducer
-  try{
-    updateFirstPlay += 1
-   if(updateFirstPlay === 1) {
-    const { payload } = dataRequest;
-    const res = yield call(userService.updateProfile, payload);
-    const { status, data } = res;
-    if(stepProfile === "step1") {
-      if (status === 200 || status === 201) {
-        yield put(
-          showToastNotification({
-            type: "success",
-            message: i18n?.t("Update profile successfully!", { ns: "auth" }),
-          })
-        );
-        yield put(openPopupCompleteProfile({
-          type:"step2"
-        }))
-        yield put(getClaimPrizeInfo())
-        yield delay(3000);
-        yield put(
-          updateProfileFirstPlaySuccess({
-            avatar: data?.data?.avatar,
-            nickName: data?.data?.nickName,
-            checkFullInfor: data?.data?.checkFullInfor,
-          })
-        );
-      } else {
-        yield put(
-          showToastNotification({
-            type: "error",
-            message: i18n?.t(data?.message, {
-              ns: "auth",
-            }),
-          })
-        );
-        yield put(updateProfileFirstPlayFail());
-      }
-    } else if(stepProfile === "step2") {
-      if (status === 200 || status === 201) {
-        yield put(
-          showToastNotification({
-            type: "success",
-            message: i18n?.t("Update profile successfully!", { ns: "auth" }),
-          })
-        );
-        yield put(closePopupCompleteProfile())
-        yield put(openPopupCompleteExtra({
-          type:"doneStep2"
-        }))
-        yield put(getClaimPrizeOptional())
-        yield delay(3000);
-        yield put(
-          updateProfileFirstPlaySuccess({
-            avatar: data?.data?.avatar,
-            nickName: data?.data?.nickName,
-            checkFullInfor: data?.data?.checkFullInfor,
-          })
-        );
-      } else {
-        yield put(
-          showToastNotification({
-            type: "error",
-            message: i18n?.t("Update profile failed! Something went wrong!", {
-              ns: "auth",
-            }),
-          })
-        );
-        yield put(updateProfileFirstPlayFail());
+  const { stepProfile } = store.getState().appReducer;
+  try {
+    updateFirstPlay += 1;
+    if (updateFirstPlay === 1) {
+      const { payload } = dataRequest;
+      const res = yield call(userService.updateProfile, payload);
+      const { status, data } = res;
+      if (stepProfile === "step1") {
+        if (status === 200 || status === 201) {
+          yield put(
+            showToastNotification({
+              type: "success",
+              message: i18n?.t("Update profile successfully!", { ns: "auth" }),
+            })
+          );
+          yield put(
+            openPopupCompleteProfile({
+              type: "step2",
+            })
+          );
+          yield put(getClaimPrizeInfo());
+          yield delay(3000);
+          yield put(
+            updateProfileFirstPlaySuccess({
+              avatar: data?.data?.avatar,
+              nickName: data?.data?.nickName,
+              checkFullInfor: data?.data?.checkFullInfor,
+            })
+          );
+        } else {
+          yield put(
+            showToastNotification({
+              type: "error",
+              message: i18n?.t(data?.message, {
+                ns: "auth",
+              }),
+            })
+          );
+          yield put(updateProfileFirstPlayFail());
+        }
+      } else if (stepProfile === "step2") {
+        if (status === 200 || status === 201) {
+          yield put(
+            showToastNotification({
+              type: "success",
+              message: i18n?.t("Update profile successfully!", { ns: "auth" }),
+            })
+          );
+          yield put(closePopupCompleteProfile());
+          yield put(
+            openPopupCompleteExtra({
+              type: "doneStep2",
+            })
+          );
+          yield put(getClaimPrizeOptional());
+          yield delay(3000);
+          yield put(
+            updateProfileFirstPlaySuccess({
+              avatar: data?.data?.avatar,
+              nickName: data?.data?.nickName,
+              checkFullInfor: data?.data?.checkFullInfor,
+            })
+          );
+        } else {
+          yield put(
+            showToastNotification({
+              type: "error",
+              message: i18n?.t("Update profile failed! Something went wrong!", {
+                ns: "auth",
+              }),
+            })
+          );
+          yield put(updateProfileFirstPlayFail());
+        }
       }
     }
-   }
-   updateFirstPlay = 0
-  } catch(err) {
-    updateFirstPlay = 0
+    updateFirstPlay = 0;
+  } catch (err) {
+    updateFirstPlay = 0;
     yield put(
       showToastNotification({
         type: "error",
@@ -401,7 +413,7 @@ function* logoutSaga(dataRequest) {
             ),
           })
         );
-        yield put(getUserGuest())
+        yield put(getUserGuest());
       } else {
         yield put(logoutFail());
         yield put(
@@ -434,7 +446,7 @@ function* userInfoSaga(dataRequest) {
   try {
     userInfoCount += 1;
     if (userInfoCount === 1) {
-      const { tokenUser, user } = store.getState().userReducer
+      const { tokenUser, user } = store.getState().userReducer;
       const { payload } = dataRequest;
       const res = yield call(userService.userInfo, payload);
       const { status, data } = res;
@@ -445,16 +457,16 @@ function* userInfoSaga(dataRequest) {
         });
         yield put(getUserInfoSuccess(data?.data));
         yield put(saveNickNameWhenLogin(data?.data?.nickName));
-       if(tokenUser && data?.data?.user?.isGuest === false) {
-        if (
-          // data?.data?.user?.userVerifiedEmail === 0 &&
-          // data?.data?.user?.userVerifiedPhone === 0
-          data?.data?.user?.userVerifiedPhone === 0
-        ) {
-          yield put(updateVerifyOTPType("reVerify"));
-          yield put(openVerifyDialog());
+        if (tokenUser && data?.data?.user?.isGuest === false) {
+          if (
+            // data?.data?.user?.userVerifiedEmail === 0 &&
+            // data?.data?.user?.userVerifiedPhone === 0
+            data?.data?.user?.userVerifiedPhone === 0
+          ) {
+            yield put(updateVerifyOTPType("reVerify"));
+            yield put(openVerifyDialog());
+          }
         }
-       }
         yield put(closeLoginDialog());
       } else {
         yield put(getUserInfoFail());
@@ -863,76 +875,76 @@ function* unBanUserSaga(dataRequest) {
 let prizeInfo = 0;
 function* getClaimPrizeInfoSaga(dataRequest) {
   try {
-    prizeInfo +=1
-    if(prizeInfo === 1) {
-      const {payload} = dataRequest
-      const res = yield call(userService.getPrizeInfoService, payload)
-      const {status, data} = res
-      if(status === 200 || status === 201) {
-        yield put(getClaimPrizeInfoSuccess(data))
+    prizeInfo += 1;
+    if (prizeInfo === 1) {
+      const { payload } = dataRequest;
+      const res = yield call(userService.getPrizeInfoService, payload);
+      const { status, data } = res;
+      if (status === 200 || status === 201) {
+        yield put(getClaimPrizeInfoSuccess(data));
         yield put(
           showToastNotification({
             type: "success",
-            message:data?.message || "Something went wrong!",
+            message: data?.message || "Something went wrong!",
           })
         );
       }
     }
-    prizeInfo = 0
+    prizeInfo = 0;
   } catch (err) {
-    prizeInfo = 0
+    prizeInfo = 0;
     console.log(err);
-    yield put(getClaimPrizeInfoFail())
+    yield put(getClaimPrizeInfoFail());
     yield put(
       showToastNotification({
         type: "error",
-        message:err || "Something went wrong!",
+        message: err || "Something went wrong!",
       })
     );
   }
 }
 
-let prizeOptional = 0
-function* getClaimPrizeOptionalSaga(dataRequest) { 
+let prizeOptional = 0;
+function* getClaimPrizeOptionalSaga(dataRequest) {
   try {
-    prizeOptional += 1
-    if(prizeOptional === 1) {
-      const {payload} = dataRequest;
-      const res = yield call(userService.getPrizeOptionalService, payload)
-      const {status, data} = res
-      if(status === 200 || status === 201) {
-        yield put(getClaimPrizeOptionalSuccess(data))
+    prizeOptional += 1;
+    if (prizeOptional === 1) {
+      const { payload } = dataRequest;
+      const res = yield call(userService.getPrizeOptionalService, payload);
+      const { status, data } = res;
+      if (status === 200 || status === 201) {
+        yield put(getClaimPrizeOptionalSuccess(data));
         yield put(
           showToastNotification({
             type: "success",
-            message:data?.message || "Something went wrong!",
+            message: data?.message || "Something went wrong!",
           })
         );
       }
     }
   } catch (err) {
     console.log(err);
-    yield put(getClaimPrizeOptionalFail())
+    yield put(getClaimPrizeOptionalFail());
     yield put(
       showToastNotification({
         type: "error",
-        message:err || "Something went wrong!",
+        message: err || "Something went wrong!",
       })
     );
   }
 }
 
-let upgrade = 0
+let upgrade = 0;
 function* getUpgradeGuestSaga(dataRequest) {
   try {
-    upgrade +=1
-    if(upgrade ===1) {
-      const {payload} = dataRequest
-      const res = yield call(userService.upgradeGuestService, payload)
-      const {status, data} = res
-      if(status === 200 || status === 201) {
+    upgrade += 1;
+    if (upgrade === 1) {
+      const { payload } = dataRequest;
+      const res = yield call(userService.upgradeGuestService, payload);
+      const { status, data } = res;
+      if (status === 200 || status === 201) {
         yield put(clickTab("otpVerifyAccount"));
-        yield put(getUpgradeGuestSuccess(payload?.phone))
+        yield put(getUpgradeGuestSuccess(payload?.phone));
         yield put(saveCreateAccInfo(payload));
         yield put(
           showToastNotification({
@@ -945,13 +957,13 @@ function* getUpgradeGuestSaga(dataRequest) {
             ),
           })
         );
-        localStorage.removeItem("checkUpgrade")
+        localStorage.removeItem("checkUpgrade");
       }
     }
-    upgrade = 0
-  } catch(error) {
-    upgrade = 0
-    yield put(getUpgradeGuestFail())
+    upgrade = 0;
+  } catch (error) {
+    upgrade = 0;
+    yield put(getUpgradeGuestFail());
     yield put(
       showToastNotification({
         type: error?.type || "error",
@@ -966,34 +978,59 @@ function* getUpgradeGuestSaga(dataRequest) {
   }
 }
 
-let claimFirstPlay = 0
-function* getClaimFirstGamePlaySaga(dataRequest) { 
+let claimFirstPlay = 0;
+function* getClaimFirstGamePlaySaga(dataRequest) {
   try {
-    claimFirstPlay += 1
-    if(claimFirstPlay === 1) {
-      const {payload} = dataRequest
-      const res = yield call(userService.getClaimFirstGamePlay, payload)
-      const {status, data} = res
-      if(status === 200 || status === 201) {
-        yield put(getClaimFirstGamePlaySuccess(data))
+    claimFirstPlay += 1;
+    if (claimFirstPlay === 1) {
+      const { payload } = dataRequest;
+      const res = yield call(userService.getClaimFirstGamePlay, payload);
+      const { status, data } = res;
+      if (status === 200 || status === 201) {
+        yield put(getClaimFirstGamePlaySuccess(data));
         yield put(
           showToastNotification({
             type: "success",
-            message:data?.message || "Something went wrong!",
+            message: data?.message || "Something went wrong!",
           })
         );
       }
     }
   } catch (err) {
     console.log(err);
-    yield put(getClaimFirstGamePlayFail())
+    yield put(getClaimFirstGamePlayFail());
   }
+}
 
+function* deleteChatSaga(dataRequest) {
+  try {
+    const { payload } = dataRequest;
+    const res = yield call(userService.deleteMessenger, { messageId: payload });
+    const { status, data } = res;
+    if (status === 201) {
+      yield put(deleteChatSuccess(payload));
+      yield put(clostDeleteChatConfirmPopup());
+      toast.success("The message has been deleted successfully", {
+        icon: ({ theme, type }) => (
+          <img
+            style={{ width: "20px", marginRight: "10px" }}
+            alt="..."
+            src={images.successIcon}
+          />
+        ),
+        position: "top-center",
+        className: "success-background",
+      });
+    }
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 function* authSaga() {
   yield takeEvery("LOGIN_READY", loginSaga);
   yield takeEvery("REGISTER_READY", registerSaga);
+  yield takeEvery("DELETE_CHAT_READY", deleteChatSaga);
   yield takeEvery("BAN_USER_READY", banUserSaga);
   yield takeEvery("UNBAN_USER_READY", unBanUserSaga);
   yield takeEvery("UPDATE_PROFILE_USER", updateProfileSaga);
@@ -1007,11 +1044,11 @@ function* authSaga() {
   yield takeEvery("GET_USER_BY_USERNAME", getUserByUsernameSaga);
   yield takeEvery("GET_MY_INFOR", getMyInforSaga);
   yield takeEvery("GET_CITY_AND_STATE_PROFILE", getCityAndStateProfilSaga);
-  yield takeEvery("UPDATE_PROFILE_FIRST_PLAY", updateProfileFirstPlay)
-  yield takeEvery("GET_CLAIM_PRIZE_INFO", getClaimPrizeInfoSaga)
-  yield takeEvery("GET_CLAIM_PRIZE_OPTIONAL",getClaimPrizeOptionalSaga)
-  yield takeEvery("GET_UPGRADE_GUEST",getUpgradeGuestSaga)
-  yield takeEvery("GET_CLAIM_FIRST_GAME_PLAY", getClaimFirstGamePlaySaga)
+  yield takeEvery("UPDATE_PROFILE_FIRST_PLAY", updateProfileFirstPlay);
+  yield takeEvery("GET_CLAIM_PRIZE_INFO", getClaimPrizeInfoSaga);
+  yield takeEvery("GET_CLAIM_PRIZE_OPTIONAL", getClaimPrizeOptionalSaga);
+  yield takeEvery("GET_UPGRADE_GUEST", getUpgradeGuestSaga);
+  yield takeEvery("GET_CLAIM_FIRST_GAME_PLAY", getClaimFirstGamePlaySaga);
 }
 
 export default authSaga;

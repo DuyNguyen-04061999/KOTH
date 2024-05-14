@@ -940,7 +940,7 @@ const userReducer = (
       return {...state, isFirstClaimGamePlay: true}
     }
     case "GET_CLAIM_FIRST_GAME_PLAY_SUCCESS" : {
-      return {...state, isFirstClaimGamePlay: false, countTicket: state.countTicket + 5}
+      return {...state, isFirstClaimGamePlay: false}
     }
     case "GET_CLAIM_FIRST_GAME_PLAY_FAIL" : {
       return {...state, isFirstClaimGamePlay: false}

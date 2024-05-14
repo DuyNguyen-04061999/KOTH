@@ -1,6 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { openLoginDialog } from "../../redux-saga-middleware/reducers/authReducer";
 import {
   dislikeGamePromotion,
   getLikeDislikeCount,
@@ -14,14 +15,13 @@ import {
 } from "../../redux-saga-middleware/reducers/likeDislikeReducer";
 import { imageHome } from "../../utils/images";
 import LoadingLikeDislike from "./LoadingLikeDislike";
-import { openLoginDialog } from "../../redux-saga-middleware/reducers/authReducer";
 export default function LikeDislikeGame(props) {
   const { gameId } = props;
   const dispatch = useDispatch();
   const { listGameLiked, listGameDisLiked, countLikeDislike } = useSelector(
     (state) => state.likeDislikeReducer
   );
-  const { tokenUser } = useSelector((state) => state.userReducer);
+  const { tokenUser, user } = useSelector((state) => state.userReducer);
   const [likeCount, setLikeCount] = useState(0);
   const [disLikeCount, setDisLikeCount] = useState(0);
 
@@ -42,7 +42,7 @@ export default function LikeDislikeGame(props) {
     setDisLikeCount(countLikeDislike?.countGameDisLiked);
   }, [countLikeDislike]);
   const handleOnClickLikeGame = () => {
-    if (tokenUser) {
+    if (user?.isGuest === false) {
       dispatch(updateIsReady(true));
       if (!listGameLiked?.includes(gameId)) {
         if (listGameDisLiked?.includes(gameId)) {
@@ -70,7 +70,7 @@ export default function LikeDislikeGame(props) {
   };
 
   const handleOnClickDislikeGame = () => {
-    if (tokenUser) {
+    if (user?.isGuest === false) {
       dispatch(updateIsReady(true));
       if (!listGameDisLiked?.includes(gameId)) {
         if (listGameLiked?.includes(gameId)) {

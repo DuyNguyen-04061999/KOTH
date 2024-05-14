@@ -222,7 +222,7 @@ export default function ChatFriendList() {
 
     setListFriendSort(list);
   }, [listFriend]);
-
+  console.log(listFriendSort);
   const renderListFriend = listFriendSort?.map((e, index) => {
     return (
       <Box key={index}>
@@ -282,11 +282,15 @@ export default function ChatFriendList() {
                     letterSpacing: "1px",
                   }}
                 >
-                  {e?.receiveMessages?.map((e_m, i_e_m) => (
-                    <span style={{ width: "140px" }} key={i_e_m}>
-                      {e_m?.messageContent?.slice(0, 10)}
-                    </span>
-                  ))}
+                  {e?.receiveMessages?.map((e_m, i_e_m) =>
+                    e_m?.messageType === "Private" ? (
+                      <span style={{ width: "140px" }} key={i_e_m}>
+                        {e_m?.messageContent?.slice(0, 10)}
+                      </span>
+                    ) : (
+                      <></>
+                    )
+                  )}
                 </p>
               </Box>
             </Box>
@@ -412,8 +416,8 @@ export default function ChatFriendList() {
         className="chat-content p-3"
         sx={{
           backgroundColor: "#2e233d",
-          height:"100%",
-          overflow:"scroll",
+          height: "100%",
+          overflow: "scroll",
           "&::-webkit-scrollbar": {
             width: "0rem",
           },

@@ -19,6 +19,7 @@ import {
   toggleLoginDialog,
 } from "../../../redux-saga-middleware/reducers/authReducer";
 import { getListPromotionNew } from "../../../redux-saga-middleware/reducers/tournamentReducer";
+import { CheckToken } from "../../../utils/checkToken";
 import { getAppType } from "../../../utils/helper";
 import { imageDesktop, images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
@@ -28,6 +29,7 @@ const NewFooter = lazy(() => import("../../NewFooter"));
 export default function NewHomePage() {
   const { width } = useWindowDimensions();
   const { t } = useTranslation("home");
+  const decodeToken = CheckToken()
   const {
     hotTournament,
     hotWeekTour,
@@ -181,7 +183,7 @@ export default function NewHomePage() {
                             if (i?.bannerType === "package") {
                               navigate("/packages");
                             } else if (i?.bannerType === "new") {
-                              if (!token) {
+                              if (decodeToken?.role === "guest") {
                                 dispatch(clickTab("signup"));
                                 dispatch(toggleLoginDialog());
                               } else {

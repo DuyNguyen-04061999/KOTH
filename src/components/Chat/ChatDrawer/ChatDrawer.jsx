@@ -12,6 +12,7 @@ import {
   toggleLoginDialog,
 } from "../../../redux-saga-middleware/reducers/authReducer";
 import { clickTabChat } from "../../../redux-saga-middleware/reducers/chatReducer";
+import { CheckToken } from "../../../utils/checkToken";
 import { images280423_l } from "../../../utils/images280423_l";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import ChatFriendList from "../ChatFriendList";
@@ -54,6 +55,7 @@ const ChatDrawer = () => {
   const { tokenUser, resetInputValue } = useSelector(
     (state) => state.userReducer
   );
+  const decodeToken = CheckToken()
   const { t } = useTranslation("global");
   const { startGameCheck } = useSelector((state) => state.appReducer);
   useEffect(() => {
@@ -75,7 +77,7 @@ const ChatDrawer = () => {
           chatInput.current.childNodes[0].value &&
           chatInput.current.childNodes[0].value.trim() !== ""
         ) {
-          if (tokenUser) {
+          if (decodeToken?.role !== "guest") {
             socket?.emit("chat", {
               type: "World",
               toId: 0,
@@ -104,7 +106,7 @@ const ChatDrawer = () => {
           chatInput.current.childNodes[0].value &&
           chatInput.current.childNodes[0].value.trim() !== ""
         ) {
-          if (tokenUser) {
+          if (decodeToken?.role !== "guest") {
             socket?.emit("chat", {
               type: "World",
               toId: 0,
@@ -244,9 +246,7 @@ const ChatDrawer = () => {
                 }}
                 onClick={() => {
                   if (
-                    tokenUser === null ||
-                    tokenUser === "" ||
-                    tokenUser === undefined
+                    decodeToken?.role === "guest"
                   ) {
                     dispatch(toggleLoginDialog());
                   } else {

@@ -16,6 +16,14 @@ import {
 } from "../../../redux-saga-middleware/reducers/addFriendReducer";
 import { showToastNotification } from "../../../redux-saga-middleware/reducers/alertReducer";
 import { openLoginDialog } from "../../../redux-saga-middleware/reducers/authReducer";
+import {
+  clickTabChat,
+  openDeleteChatConfirmPopup,
+  updateContacterUsername,
+  updateCurrentContacter,
+  updateFriendChat,
+  updateFriendNickName,
+} from "../../../redux-saga-middleware/reducers/chatReducer";
 import { toggleProfileDialog } from "../../../redux-saga-middleware/reducers/profileReducer";
 import { setWaitingNav } from "../../../redux-saga-middleware/reducers/roomReducer";
 import {
@@ -24,18 +32,12 @@ import {
   unBanUserReady,
   updateCurrentBannedUser,
 } from "../../../redux-saga-middleware/reducers/userReducer";
+import { CheckToken } from "../../../utils/checkToken";
 import { images } from "../../../utils/images";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import UserChatLoadingList from "../../LoadingComponent/UserChatLoading";
-import "./index.scss";
 import WinnerNotification from "../WinnerNotification";
-import {
-  clickTabChat,
-  updateContacterUsername,
-  updateCurrentContacter,
-  updateFriendChat,
-  updateFriendNickName,
-} from "../../../redux-saga-middleware/reducers/chatReducer";
+import "./index.scss";
 
 export default function ChatWorldList() {
   const chatBox = useRef(null);
@@ -60,6 +62,7 @@ export default function ChatWorldList() {
   const [gameId, setGameId] = useState(0);
   const [roomId, setRoomId] = useState(0);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const decodeToken = CheckToken();
 
   useEffect(() => {
     endOfMessageRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -163,7 +166,7 @@ export default function ChatWorldList() {
 
   const handleAddFriend = (username) => {
     setIsButtonDisabled(true);
-    if (!tokenUser) {
+    if (decodeToken?.role === "guest") {
       dispatch(openLoginDialog());
     } else {
       socket.emit("addFriend", {
@@ -494,7 +497,11 @@ export default function ChatWorldList() {
                   ) : (
                     <Box
                       sx={{
-                        background: e?.isActiveSender ? "#443565" : "#8B8891",
+                        background: e?.isDeleted
+                          ? "#8B8891"
+                          : e?.isActiveSender
+                          ? "#443565"
+                          : "#8B8891",
                         width: "fit-content",
                         maxWidth: width < 576 ? width - 100 : 200,
                         fontSize: "14px",
@@ -600,6 +607,14 @@ export default function ChatWorldList() {
                                 </Box>
                               </Box>
                             </Box>
+                          </Box>
+                        ) : e?.isDeleted ? (
+                          <Box
+                            sx={{
+                              backgroundColor: "#8B8891",
+                            }}
+                          >
+                            The message was removed by Moderator
                           </Box>
                         ) : e?.isActiveSender ? (
                           <span
@@ -773,7 +788,45 @@ export default function ChatWorldList() {
                   <span>Private chat</span>
                 </Box>
               </MenuItem>
-            )}
+            )}{" "}
+          {user?.userRole === "Moderator" && !currContacter?.isDeleted && (
+            <MenuItem
+              onClick={() => {
+                dispatch(openDeleteChatConfirmPopup());
+                setAnchorEl(null);
+              }}
+              sx={{
+                padding: "5px",
+              }}
+            >
+              <Box
+                className="p-2 text-white"
+                sx={{
+                  background: "#7848ED",
+                  width: "100%",
+                  fontWeight: "bold",
+                  borderRadius: "4px",
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="18"
+                  height="18"
+                  style={{ marginRight: "8px" }}
+                  viewBox="0 0 16 16"
+                  fill="none"
+                >
+                  <path
+                    d="M4.66406 14C4.2974 14 3.98362 13.8696 3.72273 13.6087C3.46184 13.3478 3.33117 13.0338 3.33073 12.6667V4H2.66406V2.66667H5.9974V2H9.9974V2.66667H13.3307V4H12.6641V12.6667C12.6641 13.0333 12.5336 13.3473 12.2727 13.6087C12.0118 13.87 11.6978 14.0004 11.3307 14H4.66406ZM5.9974 11.3333H7.33073V5.33333H5.9974V11.3333ZM8.66406 11.3333H9.9974V5.33333H8.66406V11.3333Z"
+                    fill="white"
+                  />
+                </svg>
+                <span>Delete chat</span>
+              </Box>
+            </MenuItem>
+          )}
           {user?.userRole === "Moderator" &&
             (currContacter?.isActiveSender ? (
               <MenuItem
@@ -895,9 +948,9 @@ export default function ChatWorldList() {
                   {checkExistInFriendList(currContacter?.messageFromName) &&
                   tokenUser ? (
                     <Box
-                      onClick={() =>
-                        handleDeleteFriend(currContacter?.messageFromName)
-                      }
+                      onClick={() => {
+                        handleDeleteFriend(currContacter?.messageFromName);
+                      }}
                       className="p-1 text-white"
                       sx={{
                         background: "linear-gradient(180deg, #843ff0, #7748ed)",

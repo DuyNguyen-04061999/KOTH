@@ -1,13 +1,12 @@
 import { Box } from "@mui/material";
 import React, { useState } from "react";
-import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Slider from "react-slick";
 
-import useWindowDimensions from "../../../utils/useWindowDimensions";
 import { images } from "../../../utils/images";
+import useWindowDimensions from "../../../utils/useWindowDimensions";
 
 export default function SliderNews(props) {
   const [selectedIndex, setIndex] = useState(0);
@@ -102,7 +101,7 @@ export default function SliderNews(props) {
                   }}
                   component={"img"}
                   alt="..."
-                  // src={`https://storage.googleapis.com/play4promo_bucket/public/promotions/undefined_avatar_1712848051864.png`}
+                  // src={`https://storage.googleapis.com/play4promo_bucket/public/iphone15pro%2523m0222_1708593627049-bannerdk_iphone15.png`}
                   src={
                     item?.thumbnail
                       ? process.env.REACT_APP_SOCKET_SERVER + "/" +
