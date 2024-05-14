@@ -144,7 +144,6 @@ export default function JoinTournament() {
 
   }, [token,tokenGuest]);
  
-console.log(user)
   const handleJoinTour = (sub) => {
       dispatch(
         joinPromotion({
@@ -162,7 +161,7 @@ console.log(user)
       dispatch(getScoreGame())
       if (scoreGame === 0) {
         handleJoinTour(true);
-        localStorage.setItem("firstPlayGame", "check");
+        // localStorage.setItem("firstPlayGame", "check");
         return;
       }
       if (detailTournament?.extra === 0 && countTicket === 0) {
@@ -170,16 +169,7 @@ console.log(user)
         return;
       } else {
         if (
-          user?.userFirstName === null ||
-          user?.userLastName === null ||
-          user?.userEmail === null ||
-          user?.userGender === "" ||
-          user?.userAccount?.accountBirthday === "" ||
-          user?.userFirstName === "" ||
-          user?.userLastName === "" || 
-          user?.userEmail === ""  ||
-          user?.userGender === null || 
-          user?.userAccount?.accountBirthday === null
+          user?.userEmail === null 
         ) {
           dispatch(
             openPopupCompleteExtra({
