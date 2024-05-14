@@ -148,7 +148,15 @@ const CompleteProfile = ({
       addressLine1 === "" ||
       zCode === "" ||
       cityOption === "" ||
-      stateOption === ""
+      stateOption === "" || 
+      addressLine1 === null ||
+      zCode === null ||
+      cityOption === null ||
+      stateOption === null ||
+      addressLine1 === undefined ||
+      zCode === undefined ||
+      cityOption === undefined ||
+      stateOption === undefined
     ) {
       setDiascleButtonStep2(true);
     } else {
