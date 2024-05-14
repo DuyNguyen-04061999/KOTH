@@ -73,9 +73,23 @@ const persistConfig = {
   storage,
 };
 
+const customMiddleware =  ({ dispatch, getState }) =>
+  next =>
+  action => {
+    // The thunk middleware looks for any functions that were passed to `store.dispatch`.
+    // If this "action" is really a function, call it and return the result.
+    if (typeof action === 'function') {
+      // Inject the store's `dispatch` and `getState` methods, as well as any "extra arg"
+      return action(dispatch, getState, extraArgument)
+    }
+
+    // Otherwise, pass the action down the middleware chain as usual
+    return next(action)
+  }
+
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-let store = createStore(persistedReducer, applyMiddleware(sagaMiddleware, logger));
+let store = createStore(persistedReducer, applyMiddleware(sagaMiddleware, process.env.REACT_APP_ENV === "development"? logger : customMiddleware));
 let persistor = persistStore(store);
 
 sagaMiddleware.run(rootSaga);
