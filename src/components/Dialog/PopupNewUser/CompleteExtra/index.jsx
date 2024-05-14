@@ -45,18 +45,18 @@ const CompleteExtra = ({
   }
   const handleDoneStep1 = () => {
     dispatch(closePopupCompleteExtra())
-    dispatch(getMyInfor())
-
+    dispatch(getUserInfoReady())
   }
   const handleDoneStep2 = () => {
     dispatch(closePopupCompleteExtra())
-    dispatch(getMyInfor())
+    dispatch(getUserInfoReady())
   }
   const handleSecondPlay = () => {
     dispatch(openPopupCompleteProfile({
       type:"step1"
     }))
     localStorage.removeItem("firstPlayGame")
+    dispatch(getUserInfoReady())
     // dispatch(getTypeSecondPlay({
     //   type: "secondPlay"
     // }))
