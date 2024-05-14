@@ -657,7 +657,6 @@ const userReducer = (
         isLoginFail: payload,
       };
     case "GET_USER_INFO_SUCCESS":
-      console.log(state?.countTicket);
       return {
         ...state,
         isGetInfoUser: false,
@@ -715,8 +714,6 @@ const userReducer = (
         isLogout: true,
       };
     case "LOG_OUT_SUCCESS":
-      console.log(state?.countTicket);
-
       return {
         ...state,
         isLogout: false,
@@ -782,12 +779,8 @@ const userReducer = (
     case "UPDATE_LIST_PROMOTION_JOINED":
       return { ...state, listJoinedTour: [...state.listJoinedTour, payload] };
     case "UPDATE_COUNT_EXTRA_AFTER_PLAY_GAME":
-      console.log(state?.countTicket);
-
       return { ...state, countTicket: state.countTicket - payload };
     case "UPDATE_COUNT_TICKET":
-      console.log(state?.countTicket);
-
       return { ...state, countTicket: state.countTicket + payload };
     case "UPDATE_VERIFY_OTP_TYPE":
       return { ...state, typeVerifyOTP: payload || "" };
@@ -877,8 +870,6 @@ const userReducer = (
       return {...state, isClaimPrizeInfo: true}
     }
     case "GET_CLAIM_PRIZE_INFO_SUCCESS" : {
-      console.log(state?.countTicket);
-
       return {...state, isClaimPrizeInfo: false, countTicket: state.countTicket + 5 }
     }
     case "GET_CLAIM_PRIZE_INFO_FAIL" : {
@@ -888,8 +879,6 @@ const userReducer = (
       return {...state,isClaimPrizeOptional: true}
     }
     case "GET_CLAIM_PRIZE_OPTIONAL_SUCCESS" : {
-      console.log(state?.countTicket);
-
       return {...state,isClaimPrizeOptional: false , countTicket: state.countTicket + 5}
     }
     case "GET_CLAIM_PRIZE_OPTIONAL_FAIL" : {
