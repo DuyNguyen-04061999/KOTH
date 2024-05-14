@@ -99,7 +99,6 @@ export default function ResultEndGame() {
             token: tokenUser,
           })
         );
-        dispatch(getUserInfoReady());
       } else {
         localStorage.removeItem("buyPackage");
         localStorage.removeItem("newNumberTicket");

@@ -89,7 +89,7 @@ const customMiddleware =  ({ dispatch, getState }) =>
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-let store = createStore(persistedReducer, applyMiddleware(sagaMiddleware, process.env.REACT_APP_ENV === "development"? logger : customMiddleware));
+let store = createStore(persistedReducer, applyMiddleware(sagaMiddleware, process.env.REACT_APP_ENV !== "development"? logger : customMiddleware));
 let persistor = persistStore(store);
 
 sagaMiddleware.run(rootSaga);
