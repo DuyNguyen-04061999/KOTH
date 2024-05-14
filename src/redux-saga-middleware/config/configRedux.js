@@ -80,7 +80,7 @@ const customMiddleware =  ({ dispatch, getState }) =>
     // If this "action" is really a function, call it and return the result.
     if (typeof action === 'function') {
       // Inject the store's `dispatch` and `getState` methods, as well as any "extra arg"
-      return action(dispatch, getState, extraArgument)
+      return action(dispatch, getState)
     }
 
     // Otherwise, pass the action down the middleware chain as usual
