@@ -6,7 +6,7 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { useDispatch, useSelector } from "react-redux";
 import { closePopupCompleteExtra, getScoreGame, openPopupCompleteProfile } from "../../../../redux-saga-middleware/reducers/appReducer";
-import { getClaimFirstGamePlay, getMyInfor } from "../../../../redux-saga-middleware/reducers/userReducer";
+import { getClaimFirstGamePlay, getMyInfor, getUserInfoReady } from "../../../../redux-saga-middleware/reducers/userReducer";
 import { images } from "../../../../utils/images";
 import useWindowDimensions from "../../../../utils/useWindowDimensions";
 import AnimButton from "../../../AnimButton";
@@ -21,12 +21,14 @@ const CompleteExtra = ({
   const { isOpenPopupCompleteExtra, typeCompleteExtra , scoreGame} = useSelector(
     (state) => state.appReducer
   );
-
+  
   const handleClose = () => {
     dispatch(closePopupCompleteExtra())
     dispatch(getScoreGame())
-    if(typeCompleteExtra === "firstPlay") {
+    if(typeCompleteExtra === "firstPlay" || typeCompleteExtra === "secondPlay") {
       dispatch(getClaimFirstGamePlay())
+      localStorage.removeItem("firstPlayGame")
+      dispatch(getUserInfoReady())
     }
     dispatch(getMyInfor())
   };
@@ -37,7 +39,8 @@ const CompleteExtra = ({
     dispatch(openPopupCompleteProfile({
       type:"step1"
     }))
-    localStorage.removeItem("check")
+    localStorage.removeItem("firstPlayGame")
+    dispatch(getUserInfoReady())
     dispatch(closePopupCompleteExtra())
   }
   const handleDoneStep1 = () => {
@@ -53,6 +56,7 @@ const CompleteExtra = ({
     dispatch(openPopupCompleteProfile({
       type:"step1"
     }))
+    localStorage.removeItem("firstPlayGame")
     // dispatch(getTypeSecondPlay({
     //   type: "secondPlay"
     // }))
