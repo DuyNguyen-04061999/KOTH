@@ -17,6 +17,7 @@ export default function SlickSlider(props) {
   const [selectedIndex, setIndex] = useState(0);
   const { device } = useSelector((state) => state.deviceReducer);
   const { orientation } = useSelector((state) => state.gameReducer);
+  const {user} = useSelector((state) => state.userReducer)
   const { width } = useWindowDimensions();
   const {
     images: img,
@@ -114,7 +115,7 @@ export default function SlickSlider(props) {
                     if (item?.bannerType === "package") {
                       navigate("/packages");
                     } else if (item?.bannerType === "new") {
-                      if (!token) {
+                      if (user?.isGuest === true) {
                         dispatch(clickTab("signup"));
                         dispatch(toggleLoginDialog());
                       } else {

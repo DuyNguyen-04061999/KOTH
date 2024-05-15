@@ -774,7 +774,7 @@ const CompleteProfile = ({
                     <Select
                       labelId="demo-simple-select-label"
                       id="demo-simple-select"
-                      value={valueGender || 0}
+                      value={valueGender}
                       label="gender"
                       inputProps={{
                         MenuProps: {
