@@ -25,7 +25,7 @@ const CompleteExtra = ({
   const handleClose = () => {
     dispatch(closePopupCompleteExtra())
     dispatch(getScoreGame())
-    if(typeCompleteExtra === "firstPlay" || typeCompleteExtra === "secondPlay") {
+    if(typeCompleteExtra === "firstPlay") {
       dispatch(getClaimFirstGamePlay())
       localStorage.removeItem("firstPlayGame")
       dispatch(getUserInfoReady())
